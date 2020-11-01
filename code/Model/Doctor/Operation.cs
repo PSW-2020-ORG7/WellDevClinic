@@ -14,7 +14,7 @@ namespace Model.Doctor
         public String Description { get; set; }
         public Period Period { get; set; }
         public Room Room { get; set; }
-        public long Id;
+        public long Id { get; set; }
         public User Patient { get; set; }
 
         public Operation( long id, User patient, Users.Doctor doctor, string description, Period period, Room room)
@@ -40,6 +40,8 @@ namespace Model.Doctor
         {
             Id = id;
         }
+
+        public Operation() { }
 
         public long GetId()
         {

@@ -23,6 +23,8 @@ namespace Model.Users
             Address = address;
         }
 
+        public Secretary() { }
+
         override
         public long GetId()
         {

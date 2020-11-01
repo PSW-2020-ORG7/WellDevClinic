@@ -9,7 +9,7 @@ namespace Model.Doctor
 {
    public class Hospitalization : IIdentifiable<long>
     {
-        public long Id;
+        public long Id { get; set; }
         public Period Period { get; set; }
         public Room Room { get; set; }
         public Model.Users.Doctor Doctor { get; set; }
@@ -38,7 +38,9 @@ namespace Model.Doctor
             Room = room;
         }
 
-        public Hospitalization(long id)
+        public Hospitalization() { }
+
+       public Hospitalization(long id)
         {
             Id = id;
         }

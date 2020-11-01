@@ -7,7 +7,7 @@ namespace Model.PatientSecretary
 {
    public class Prescription: IIdentifiable<long>
    {
-        public long Id;
+        public long Id { get; set; }
         public Period Period { get; set; }
         public List<Drug> Drug { get; set; }
 

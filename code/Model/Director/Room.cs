@@ -2,12 +2,13 @@ using Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Director
 {
     public class Room : IIdentifiable<long>
     {
-        public Dictionary<Equipment, int> Equipment_inventory { get; set; }
+        [NotMapped] public Dictionary<Equipment, int> Equipment_inventory { get; set; }
 
         public string RoomCode { get; set; }
 

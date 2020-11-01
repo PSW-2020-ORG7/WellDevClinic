@@ -38,6 +38,11 @@ namespace Model.Director
             this.Id = id;
         }
 
+        public Equipment()
+        {
+            
+        }
+
         public long GetId()
         {
             return Id;

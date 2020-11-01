@@ -5,7 +5,7 @@ namespace Model.Users
 {
    public class Town : Repository.IIdentifiable<long>
    {
-        public long Id;
+        public long Id { get; set; }
         public String Name { get; set; }
         public String PostalNumber { get; set; }
         public State State { get; set; }
@@ -24,6 +24,11 @@ namespace Model.Users
         public Town(long id)
         {
             Id = id;
+        }
+
+        public Town()
+        {
+            
         }
 
         public Town(long id, long stateID)

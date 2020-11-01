@@ -6,15 +6,18 @@ namespace Model.Dto
 {
    public class DoctorReportDTO
    {
-        public Prescription Prescription { get; set; }
-        public Anemnesis Anemnesis { get; set; }
-        public Patient Patient { get; set; }
-
         public DoctorReportDTO(Prescription prescription, Anemnesis anemnesis, Patient patient)
         {
-            Prescription = prescription;
+            this.prescription = prescription;
             Anemnesis = anemnesis;
             Patient = patient;
         }
+        public DoctorReportDTO() { }
+        public Prescription prescription { get; set; }
+        public Anemnesis Anemnesis { get; set; }
+        public Patient Patient { get; set; }
+        public long Id { get; set; }
+
+
     }
 }

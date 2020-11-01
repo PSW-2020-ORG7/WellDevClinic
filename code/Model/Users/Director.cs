@@ -24,6 +24,10 @@ namespace Model.Users
             Address = address;
         }
 
+        public Director() { }
+
+
+
         public override long GetId()
         {
             return Id;

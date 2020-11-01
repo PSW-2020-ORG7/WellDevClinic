@@ -22,9 +22,9 @@ namespace bolnica.Repository.CSV.Converter
             try
             {
                 string[] tokens = entityCSVFormat.Split(_delimiter.ToCharArray());
-                return new Article(
-                    long.Parse(tokens[0]),
-                   (DateTime)DateTime.Parse(tokens[1]), new Doctor(long.Parse(tokens[2])), tokens[3], tokens[4]);
+                return new Article(); // Maja migracija
+                   /*long.Parse(tokens[0]),
+                  (DateTime)DateTime.Parse(tokens[1]), new Doctor(long.Parse(tokens[2])), tokens[3], tokens[4]); */
             }
             catch (Exception e)
             {

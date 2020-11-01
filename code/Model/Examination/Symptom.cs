@@ -8,7 +8,7 @@ namespace Model.PatientSecretary
    public class Symptom : IIdentifiable<long>
     {
       public String Name { get; set; }
-        public long Id;
+        public long Id { get; set; }
 
         public Symptom(string name)
         {
@@ -18,6 +18,11 @@ namespace Model.PatientSecretary
         public Symptom(long id)
         {
             Id = id;
+        }
+
+        public Symptom()
+        {
+            
         }
 
         public Symptom(long id, string name)

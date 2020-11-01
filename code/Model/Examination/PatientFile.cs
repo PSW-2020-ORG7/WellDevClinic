@@ -13,7 +13,7 @@ namespace Model.PatientSecretary
       public List<Examination> Examination { get; set; }
       public List<Allergy> Allergy { get; set; }
 
-        public long Id;
+        public long Id { get; set; }
 
         public PatientFile(long id)
         {

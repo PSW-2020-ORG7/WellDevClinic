@@ -42,5 +42,10 @@ namespace Model.Director
         {
             Id = id;
         }
+
+        public Renovation()
+        {
+            
+        }
     }
 }

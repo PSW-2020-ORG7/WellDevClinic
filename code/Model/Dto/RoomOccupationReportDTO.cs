@@ -11,7 +11,7 @@ namespace bolnica.Model.Dto
     public class RoomOccupationReportDTO
     {
         public Room room { get; set; }
-
+        public long Id { get; set; }
         public List<Renovation> renovations { get; set; }
 
         public List<Operation> operations { get; set; }

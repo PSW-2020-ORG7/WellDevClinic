@@ -74,6 +74,11 @@ namespace Model.Users
             this.Id = id;
         }
 
+        public Doctor()
+        {
+           
+        }
+
         public override long GetId()
         {
           return this.Id;

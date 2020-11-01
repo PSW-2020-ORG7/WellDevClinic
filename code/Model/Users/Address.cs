@@ -5,7 +5,7 @@ namespace Model.Users
 {
    public class Address : IIdentifiable<long>
    {
-        public long Id;
+        public long Id { get; set; }
         public String Street { get; set; }
         public int Number { get; set; }
         public String FullAddress { get; set; }
@@ -30,6 +30,8 @@ namespace Model.Users
             Id = id;
             Town = new Town(townID, stateID);
         }
+
+        public Address() { }
 
         public String GetFullAddress()
         {

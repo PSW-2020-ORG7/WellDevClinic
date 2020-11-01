@@ -32,6 +32,7 @@ namespace Service
         }
         public DoctorReportDTO GenerateAnamnesisPrescriptionReport(Examination examination)
         {
+
             DoctorReportDTO retVal = new DoctorReportDTO(examination.Prescription, examination.Anemnesis, (Patient)examination.User);
             return retVal;    
         }

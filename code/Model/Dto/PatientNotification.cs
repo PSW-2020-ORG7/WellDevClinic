@@ -33,6 +33,11 @@ namespace bolnica.Model.Dto
             Id = id;
         }
 
+        public PatientNotification()
+        {
+            
+        }
+
         public long GetId()
         {
             return Id; 

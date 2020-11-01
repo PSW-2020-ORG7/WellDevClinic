@@ -42,7 +42,8 @@ namespace bolnica.Repository.CSV.Converter
                 String[] hospitalization = tokens[2].Split(_arrayDelimiter.ToCharArray());
                 for (int i = 0; i < hospitalization.Length; i++)
                 {
-                    hospitalizationList.Add(new Hospitalization(long.Parse(hospitalization[i])));
+                    hospitalizationList.Add(new Hospitalization()); // Maja migracija
+                    /*long.Parse(hospitalization[i])));*/
                 }
             }
             patientFile.Hospitalization = hospitalizationList;
@@ -53,7 +54,8 @@ namespace bolnica.Repository.CSV.Converter
                 String[] operation = tokens[3].Split(_arrayDelimiter.ToCharArray());
                 for (int i = 0; i < operation.Length; i++)
                 {
-                    operationList.Add(new Operation(long.Parse(operation[i])));
+                    operationList.Add(new Operation()); // Maja migracija
+                        /*long.Parse(operation[i])));*/
                 }
             }
             patientFile.Operation = operationList;

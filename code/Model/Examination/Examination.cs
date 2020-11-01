@@ -9,7 +9,7 @@ namespace Model.PatientSecretary
 {
    public class Examination : IIdentifiable<long>
    {
-        public long Id;
+        public long Id { get; set; }
         public User User { get; set; }
         public Model.Users.Doctor Doctor { get; set; }
         public Period Period { get; set; }
@@ -71,6 +71,8 @@ namespace Model.PatientSecretary
         {
             Id = id;
         }
+
+        public Examination() { }
 
         public long GetId()
         {

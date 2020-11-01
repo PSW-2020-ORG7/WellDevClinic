@@ -12,8 +12,8 @@ namespace Model.Users
     {
       public Period Shift { get; set; }
 
-      public long Id;
-      public List<Period> ScheduledPeriods { get; set; }
+        public long Id { get; set; }
+        public List<Period> ScheduledPeriods { get; set; }
       public Doctor doctor { get; set; }
       public Room room { get; set; }
 
@@ -36,6 +36,11 @@ namespace Model.Users
         {
             this.Id = id;
         }
+        public BusinessDay()
+        {
+            
+        }
+
         public long GetId()
         {
             return this.Id;

@@ -9,13 +9,19 @@ namespace bolnica.Model.Dto
 {
    public class BusinessDayDTO
     {
-      public Doctor Doctor { get; set; }
+        public long Id { get; set; }
+        public Doctor Doctor { get; set; }
       public Period Period { get; set; }
       public Boolean PatientScheduling = false;
     public BusinessDayDTO(Doctor doctor, Period period)
         {
             this.Doctor = doctor;
             this.Period = period;
+        }
+
+        public BusinessDayDTO()
+        {
+            
         }
 
     }

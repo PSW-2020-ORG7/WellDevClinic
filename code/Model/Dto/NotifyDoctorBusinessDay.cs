@@ -12,11 +12,16 @@ namespace bolnica.Model.Dto
     {
         public Period shift { get; set; }
         public Room room { get; set; }
+        public long Id { get; set; }
 
         public NotifyDoctorBusinessDay(Period shift, Room room)
         {
             this.shift = shift;
             this.room = room;
+        }
+        public NotifyDoctorBusinessDay()
+        {
+            
         }
     }
 }

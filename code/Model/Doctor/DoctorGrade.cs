@@ -1,17 +1,20 @@
+using Castle.Components.DictionaryAdapter;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web.UI.WebControls;
+
 
 namespace Model.Doctor
 {
    public class DoctorGrade : IIdentifiable<long>
     {
-        public Dictionary<String, double> GradesForEachQuestions { get; set; }
+        [NotMapped] public Dictionary<String, double> GradesForEachQuestions { get; set; }
         public int NumberOfGrades { get; set; }
 
-        public long Id;
+        public long Id { get; set; }
 
         public double AverageGrade
         {

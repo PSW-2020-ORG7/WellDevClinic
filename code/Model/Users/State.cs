@@ -5,7 +5,7 @@ namespace Model.Users
 {
    public class State : Repository.IIdentifiable<long>
    {
-        public long Id;
+        public long Id { get; set; }
         public String Name { get; set; }
         public String Code { get; set; }
 
@@ -24,7 +24,12 @@ namespace Model.Users
             Id = id;
         }
 
-      public List<Town> GetTown()
+        public State()
+        {
+            
+        }
+
+        public List<Town> GetTown()
       {
          if (town == null)
             town = new List<Town>();
