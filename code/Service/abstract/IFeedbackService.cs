@@ -9,7 +9,7 @@ namespace bolnica.Service
 {
     interface IFeedbackService
     {
-        void LeaveFeedback(Feedback feedback);
+        Feedback LeaveFeedback(Feedback feedback);
 
         Feedback GetFeedback(long id);
 

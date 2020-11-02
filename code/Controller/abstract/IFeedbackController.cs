@@ -10,14 +10,7 @@ namespace bolnica.Controller
 {
     public interface IFeedbackController : IController<Feedback,long>
     {
-        void LeaveFeedback(Feedback feedback);
-
-        Feedback GetFeedback(long id);
-
-
-        void PublishFeedback(Feedback feedback);
-
-
+        
 
     }
 }

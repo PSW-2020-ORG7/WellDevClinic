@@ -2,6 +2,7 @@
 using bolnica.Model.Users;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Metadata;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,17 +21,27 @@ namespace bolnica.Repository
 
         public void Delete(Feedback entity)
         {
-            throw new NotImplementedException();
+            Feedback f = myDbContext.Feedback.SingleOrDefault(feedback => feedback.Id == entity.Id);
+            if(f != null)
+            {
+                myDbContext.Feedback.Remove(f);
+                myDbContext.SaveChanges();
+            }
+
         }
 
         public void Edit(Feedback entity)
         {
-            throw new NotImplementedException();
+            Feedback f = myDbContext.Feedback.SingleOrDefault(feedback => feedback.Id == entity.Id);
+            myDbContext.Feedback.Remove(f);
+            myDbContext.Feedback.Add(entity);
+            myDbContext.SaveChanges();
         }
 
         public Feedback Get(long id)
         {
-            throw new NotImplementedException();
+            Feedback result = myDbContext.Feedback.FirstOrDefault(feedback => feedback.Id == id);
+            return result;
         }
 
         public IEnumerable<Feedback> GetAll()
@@ -42,7 +53,15 @@ namespace bolnica.Repository
 
         public Feedback Save(Feedback entity)
         {
-            throw new NotImplementedException();
+            Feedback result = myDbContext.Feedback.FirstOrDefault(feedback => feedback.Id == entity.Id);
+            if(result == null)
+            {
+                myDbContext.Feedback.Add(entity);
+                myDbContext.SaveChanges();
+                return entity;
+            }
+
+            return null;
         }
 
        

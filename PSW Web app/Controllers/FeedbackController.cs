@@ -15,28 +15,45 @@ namespace PSW_Web_app.Controllers
         private bolnica.Controller.IFeedbackController _feedbackController = new bolnica.Controller.FeedbackController();
         
         [HttpGet]
-        public List<Feedback> GetAllFeedback()
+        public IActionResult GetAllFeedback()
         {
-            return (List<Feedback>)_feedbackController.GetAll();
-            
+            List<Feedback> result = (List<Feedback>)_feedbackController.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("{id?}")]
-        public Feedback GetFeedback(long id)
+        public IActionResult GetFeedback(long id)
         {
-            return _feedbackController.GetFeedback(id);
+            Feedback feedback = _feedbackController.Get(id);
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(feedback);
+            }
         }
 
         [HttpPost]
-        public void LeaveFeedback(Feedback feedback)
+        public IActionResult LeaveFeedback(Feedback feedback)
         {
-            _feedbackController.LeaveFeedback(feedback);
+            Feedback f = _feedbackController.Save(feedback);
+            if(f == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(f);
+            }
+
         }
 
         [HttpPut]
         public void PublishFeedback(Feedback feedback)
         {
-            _feedbackController.PublishFeedback(feedback);
+            _feedbackController.Edit(feedback);
         }
 
     }

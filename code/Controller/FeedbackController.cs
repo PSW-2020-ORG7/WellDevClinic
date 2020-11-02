@@ -29,12 +29,12 @@ namespace bolnica.Controller
 
         public void Edit(Feedback entity)
         {
-            throw new NotImplementedException();
+            _feedbackService.PublishFeedback(entity);
         }
 
         public Feedback Get(long id)
         {
-            throw new NotImplementedException();
+            return _feedbackService.GetFeedback(id);
         }
 
         public IEnumerable<Feedback> GetAll()
@@ -43,24 +43,10 @@ namespace bolnica.Controller
 
         }
 
-        public Feedback GetFeedback(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LeaveFeedback(Feedback feedback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PublishFeedback(Feedback feedback)
-        {
-            throw new NotImplementedException();
-        }
 
         public Feedback Save(Feedback entity)
         {
-            throw new NotImplementedException();
+            return _feedbackService.LeaveFeedback(entity);
         }
     }
 }

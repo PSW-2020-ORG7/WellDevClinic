@@ -24,17 +24,17 @@ namespace bolnica.Service
 
         public Feedback GetFeedback(long id)
         {
-            throw new NotImplementedException();
+            return _feedbackRepository.Get(id);
         }
 
-        public void LeaveFeedback(Feedback feedback)
+        public Feedback LeaveFeedback(Feedback feedback)
         {
-            throw new NotImplementedException();
+            return _feedbackRepository.Save(feedback);
         }
 
         public void PublishFeedback(Feedback feedback)
         {
-            throw new NotImplementedException();
+            _feedbackRepository.Edit(feedback);
         }
     }
 }

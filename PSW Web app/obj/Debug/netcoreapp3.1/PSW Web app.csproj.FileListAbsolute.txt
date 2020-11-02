@@ -92,3 +92,49 @@ C:\Users\maja.adm\Downloads\WellDevClinic-develop-Vuk\WellDevClinic-develop\PSW 
 C:\Users\maja.adm\Downloads\WellDevClinic-develop-Vuk\WellDevClinic-develop\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.dll
 C:\Users\maja.adm\Downloads\WellDevClinic-develop-Vuk\WellDevClinic-develop\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.pdb
 C:\Users\maja.adm\Downloads\WellDevClinic-develop-Vuk\WellDevClinic-develop\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.genruntimeconfig.cache
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\PSW Web app.exe
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\PSW Web app.deps.json
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\PSW Web app.runtimeconfig.json
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\PSW Web app.runtimeconfig.dev.json
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\PSW Web app.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\PSW Web app.pdb
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\MySqlConnector.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\bolnica.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\bolnica.pdb
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\bin\Debug\netcoreapp3.1\bolnica.dll.config
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.csprojAssemblyReference.cache
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.AssemblyInfoInputs.cache
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.AssemblyInfo.cs
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.csproj.CoreCompileInputs.cache
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.RazorTargetAssemblyInfo.cache
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.csproj.CopyComplete
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\staticwebassets\PSW Web app.StaticWebAssets.Manifest.cache
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\staticwebassets\PSW Web app.StaticWebAssets.xml
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.dll
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.pdb
+C:\Users\maja.adm\Desktop\WellDevClinic\PSW Web app\obj\Debug\netcoreapp3.1\PSW Web app.genruntimeconfig.cache
