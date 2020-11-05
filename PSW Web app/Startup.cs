@@ -47,6 +47,7 @@ namespace PSW_Web_app
             {
                 endpoints.MapControllers();
             });
+            app.UseStaticFiles();
         }
     }
 }
