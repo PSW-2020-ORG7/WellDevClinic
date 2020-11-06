@@ -1,0 +1,23 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger: none
+pr: none
+pool:
+  vmImage: 'ubuntu-latest'
+variables:
+  buildConfiguration: 'Release'
+schedules:
+- cron: "59 11 * * 2"
+  displayName: midnight access change every 2 weeks
+  branches:
+    include:
+    - master
+  always: true
+steps:   
+- task: CmdLine@2
+  inputs:
+    script: |
+      curl -X PUT -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $(token)" https://api.github.com/orgs/PSW-2020-ORG7/teams/Developers/repos/PSW-2020-ORG7/WellDevClinic -D '{"permission":"push"}' -i
