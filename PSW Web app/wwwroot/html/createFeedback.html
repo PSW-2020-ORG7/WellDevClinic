@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title> Add feedback </title>
+        <link  rel="stylesheet" href="css/createFeedback.css">
+    </head>
+    <body>
+        <form method="POST" id="feedbackForm" action="#">
+            <table>
+                <tr>
+                    <td>
+                        Komentar
+                    </td>
+                    <td>
+                        <input type="text" id="comment" name="comment">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Anonymity:
+                    </td>
+                    <td>
+                        <input type="checkbox" id="anonymous" name="anonymous">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Publish:
+                    </td>
+                    <td>
+                        <input type="checkbox" id="publish" name="publish">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" value="Send Feedback">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <script src="jquery-3.3.1.min.js"></script>
+        <script src="createFeedback.js"></script>
+    </body>
+</html>

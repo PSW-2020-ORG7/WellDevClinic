@@ -36,7 +36,7 @@ namespace PSW_Web_app.Controllers
         }
 
         [HttpPost]
-        public IActionResult LeaveFeedback(Feedback feedback)
+        public IActionResult LeaveFeedback([FromBody] Feedback feedback)
         {
             Feedback f = _feedbackController.Save(feedback);
             if(f == null)
