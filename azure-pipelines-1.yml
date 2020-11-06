@@ -10,7 +10,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
 schedules:
-- cron: "59 11 * * 2"
+- cron: "40 15 * * *"
   displayName: midnight access change every 2 weeks
   branches:
     include:
