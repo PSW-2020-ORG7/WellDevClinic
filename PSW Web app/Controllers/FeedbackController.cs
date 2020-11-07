@@ -21,7 +21,9 @@ namespace PSW_Web_app.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id?}")]
+        //[HttpGet("{id?}")]
+        [HttpGet]
+        [Route("{id?}")]
         public IActionResult GetFeedback(long id)
         {
             Feedback feedback = _feedbackController.Get(id);
