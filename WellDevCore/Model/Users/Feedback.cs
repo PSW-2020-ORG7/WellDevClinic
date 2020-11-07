@@ -12,7 +12,7 @@ namespace bolnica.Model.Users
     {
         public long Id { get; set; }
 
-        private Patient patient;
+        private string patient;
 
         private String content;
 
@@ -26,7 +26,7 @@ namespace bolnica.Model.Users
         {
         }
 
-        public Feedback(long id, Patient patient, string content, bool isPrivate, bool publish, bool isAnonymous)
+        public Feedback(long id, string patient, string content, bool isPrivate, bool publish, bool isAnonymous)
         {
             this.Id = id;
             this.patient = patient;
@@ -36,7 +36,7 @@ namespace bolnica.Model.Users
             this.isAnonymous = isAnonymous;
         }
         
-        public Patient Patient { get => patient; set => patient = value; }
+        public string Patient { get => patient; set => patient = value; }
         public string Content { get => content; set => content = value; }
         public bool IsPrivate { get => isPrivate; set => isPrivate = value; }
         public bool Publish { get => publish; set => publish = value; }

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bolnica.Model;
 
 namespace bolnica.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201105174834_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -830,13 +832,15 @@ namespace bolnica.Migrations
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Patient")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<long?>("PatientId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Publish")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Feedback");
                 });
@@ -1207,6 +1211,13 @@ namespace bolnica.Migrations
                     b.HasOne("Model.Director.Room", "room")
                         .WithMany()
                         .HasForeignKey("roomId");
+                });
+
+            modelBuilder.Entity("bolnica.Model.Users.Feedback", b =>
+                {
+                    b.HasOne("Model.Users.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
                 });
 
             modelBuilder.Entity("Model.Users.Doctor", b =>
