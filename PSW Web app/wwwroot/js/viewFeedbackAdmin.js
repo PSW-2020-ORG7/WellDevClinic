@@ -5,12 +5,10 @@ function addFeedback(feedback) {
 	let tdText = $('<td>' + feedback.content + '</td>');
 	let tdPatient;
 	if (feedback.isAnonymous == true) {
-
 			tdPatient = $('<td>Anonymous</td>');
 	}
 	else
 			tdPatient = $('<td>' + feedback.patient + '</td>');
-
 
 	let tdPrivate;
 	if (feedback.isPrivate == true) {
