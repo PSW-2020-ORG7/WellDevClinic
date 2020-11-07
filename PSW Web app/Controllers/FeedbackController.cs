@@ -21,7 +21,9 @@ namespace PSW_Web_app.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id?}")]
+        //[HttpGet("{id?}")]
+        [HttpGet]
+        [Route("{id?}")]
         public IActionResult GetFeedback(long id)
         {
             Feedback feedback = _feedbackController.Get(id);
@@ -36,7 +38,7 @@ namespace PSW_Web_app.Controllers
         }
 
         [HttpPost]
-        public IActionResult LeaveFeedback(Feedback feedback)
+        public IActionResult LeaveFeedback([FromBody] Feedback feedback)
         {
             Feedback f = _feedbackController.Save(feedback);
             if(f == null)
