@@ -1,0 +1,50 @@
+﻿
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #009999;
+}
+
+tr {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    color: #009999;
+}
+
+
+
+table#table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div {
+    text-align: center;
+    vertical-align: middle;
+    padding: 3px;
+}
+
+form#form {
+    border: 3px solid #009999;
+    border-radius: 10px;
+}
+
+textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #009999;
+    border-radius: 10px;
+}
+
+input#patient {
+    color: #009999;
+    padding: 5px;
+    vertical-align: bottom;
+}

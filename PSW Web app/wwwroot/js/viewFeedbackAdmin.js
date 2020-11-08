@@ -5,18 +5,18 @@ function addFeedback(feedback) {
 	let tdText = $('<td>' + feedback.content + '</td>');
 	let tdPatient;
 	if (feedback.isAnonymous == true) {
-			tdPatient = $('<td>Anonymous</td>');
+		tdPatient = $('<td>Anonymous</td>');
 	}
 	else
-			tdPatient = $('<td>' + feedback.patient + '</td>');
+		tdPatient = $('<td>' + feedback.patient + '</td>');
 
 	let tdPrivate;
 	if (feedback.isPrivate == true) {
 
-			 tdPrivate = $('<td><input type = checkbox checked disabled/></td>');
+		tdPrivate = $('<td><input type = checkbox checked disabled/></td>');
 	}
 	else
-			 tdPrivate = $('<td><input type = checkbox disabled/></td>');
+		tdPrivate = $('<td><input type = checkbox disabled/></td>');
 
 	let tdPublished;
 	if (feedback.publish == true) {
@@ -43,10 +43,12 @@ function buttonFunction(item) {
 	var row = $(item).closest("tr");
 	var tds = row.find("td");
 	var code_str = tds[0].innerHTML;
-	//console.log(code_str);
-	//url = "http://localhost:49153/viewFeedbackAdmin.html?id=" + code_str;
 	url = "http://localhost:49153/html/viewFeedbackAdmin.html?id=" + code_str;
 	location.href = url;
+}
+
+function deleteTable() {
+	$('#table tbody').empty();
 }
 
 $(document).ready(function () {
@@ -58,28 +60,25 @@ $(document).ready(function () {
 		query = query.split('=');
 		code1 = query[1];
 		console.log(code1);
-		//var accommodation;
 	}
-	console.log("dosao do ajaxa");
 
 	$.get({
 		url: 'http://localhost:49153/api/feedback/' + code1,
 		success: function (feedback) {
 
 			if (code1 == "") {
-				for (let f of feedback)
+				for (let f of feedback) {
 					addFeedback(f);
+				}
+
 			}
 			else {
-				// ovde je vec preuzeo feedback sa datim id-em
-				console.log("usao u drugi ajax");
 				$.ajax({
 					url: 'http://localhost:49153/api/feedback/',
 					type: 'PUT',
 					data: JSON.stringify({ id: feedback.id, patient: feedback.patient, content: feedback.content, isPrivate: feedback.isPrivate, isAnonymous: feedback.isAnonymous, publish: true }),
 					contentType: "application/json; charset=utf-8",
 					success: function (data) {
-						alert('Uspesnoo!');
 						window.location.href = "http://localhost:49153/html/viewFeedbackAdmin.html";
 					},
 				});
@@ -88,14 +87,37 @@ $(document).ready(function () {
 		}
 	});
 
-	/*$.get({
-		url: 'http://localhost:49153/api/feedback' + code,
-		success: function (feedback) {
-			alert("uspesnoo")
-		}
-	});*/
 
+	$("#filter").on('change', function () {
+		deleteTable();
+		var filter = $("#filter").val();
+		$.get({
+			url: 'http://localhost:49153/api/feedback',
+			success: function (feedback) {
+				for (let f of feedback) {
+					if (filter == "all") {
+						addFeedback(f);
+					}
+					else if (filter == "private") {
+						if (f.isPrivate) {
+							addFeedback(f);
+						}
+					}
+					else if (filter == "pending") {
+						if (!f.publish && !f.isPrivate) {
+							addFeedback(f);
+						}
+					}
+					else {
+						if (f.publish) {
+							addFeedback(f);
+						}
+					}
+				}
+			}
+		});
 
+	});
 
 });
 

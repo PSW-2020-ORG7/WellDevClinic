@@ -3,13 +3,22 @@
 <head>
     <meta charset="utf-8" />
     <title>View feedback admin</title>
-    <link rel="stylesheet" href="./css/table.css">
+    <link rel="stylesheet" href="css/table.css">
     <script src="http://localhost:49153/js/jquery-3.3.1.min.js"></script>
     <script src="http://localhost:49153/js/viewFeedbackAdmin.js"></script>
 </head>
 <body>
 
     <h1>All feedback</h1>
+
+    <div align="center">
+        <select id="filter">
+            <option value="all">All</option>
+            <option value="private">Private</option>
+            <option value="pending">Pending</option>
+            <option value="published">Published</option>
+        </select>
+    </div>
     
         <table id="table">
             <thead>

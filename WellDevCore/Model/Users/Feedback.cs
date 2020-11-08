@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace bolnica.Model.Users
 {
+    /// <summary>
+    /// Models a feedback
+    /// </summary>
     public class Feedback:IIdentifiable<long>
     {
         public long Id { get; set; }
