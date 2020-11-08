@@ -12,10 +12,6 @@ namespace bolnica.Controller
     {
         private readonly IFeedbackService _feedbackService = new FeedbackService();
 
-        /*public FeedbackController(IFeedbackService service)
-        {
-            _feedbackService = service;
-        }*/
 
         public FeedbackController()
         {

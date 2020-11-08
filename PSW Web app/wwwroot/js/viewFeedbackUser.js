@@ -1,17 +1,24 @@
 ﻿function addFeedback(feedback) {
-	let tr = $('<tr></tr>');
-	
-	let tdContent = $('<td>' + feedback.content + '</td>');
-	let tdPatient;
+	let tr = $('<tr id="tr"></tr>');
+	let td = $('<td></td>');
+	let form = $('<form id="form" class="form-horizontal"></form>');
+
+	let patient;
 
 	if (feedback.isAnonymous) {
-		 tdPatient = $('<td>Anonymous</td>');
+		patient = "Anonymous";
 	}
 	else {
-		 tdPatient = $('<td>' + feedback.patient + '</td>');
+		patient = "Jack Smith";
 	}
+
+	let user = $('<div class="form-group row"><div class="col-sm-12"><input id="patient" readonly class="form-control-plaintext" value="'+ patient +'"></div></div>');
+	let content = $('<div  class="form-group row"><div class="col-sm-12"><textarea id="content" readonly   >'+feedback.content+'</textarea></div></div>');
 	
-	tr.append(tdPatient).append(tdContent);
+
+	form.append(user).append(content);
+	td.append(form);
+	tr.append(td);
 	$('#table tbody').append(tr);
 
 }
@@ -22,10 +29,11 @@ $(document).ready(function () {
 		url: 'http://localhost:49153/api/feedback',
 		success: function (allFeedback) {
 
-			for (let feedback of allFeedback)
+			for (let feedback of allFeedback) {
 				if (feedback.publish) {
 					addFeedback(feedback);
 				}
+			}
 		}
 	});
 });

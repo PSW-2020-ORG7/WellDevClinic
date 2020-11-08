@@ -13,7 +13,7 @@
         "commandName": "IISExpress",
         "launchBrowser": true,
      
-        "launchUrl": "http://localhost:49153/html/viewFeedbackUser.html",
+        "launchUrl": "http://localhost:49153/html/feedback.html",
 
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
