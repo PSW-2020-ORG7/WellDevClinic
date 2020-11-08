@@ -16,34 +16,47 @@ namespace bolnica.Repository
             this.myDbContext = mccf.CreateDbContext(new string[0]);
         }
 
-        //metoda kojom se briše feedback iz baze podataka sa odgovarajućim ID
+        /// <summary>
+        /// deletes specified feedback from database
+        /// </summary>
+        /// <param name="entity">specified feedback</param>
         public void Delete(Feedback entity)
         {
-            Feedback f = myDbContext.Feedback.SingleOrDefault(feedback => feedback.Id == entity.Id);
-            if(f != null)
+            Feedback result = myDbContext.Feedback.SingleOrDefault(feedback => feedback.Id == entity.Id);
+            if(result != null)
             {
-                myDbContext.Feedback.Remove(f);
+                myDbContext.Feedback.Remove(result);
                 myDbContext.SaveChanges();
             }
         }
 
-        // metoda kojom se unose izmene u bazu podataka za odgovarajući feedback
+        /// <summary>
+        /// updates specified feedback in database
+        /// </summary>
+        /// <param name="entity">specified feedback</param>
         public void Edit(Feedback entity)
         {
-            Feedback f = myDbContext.Feedback.SingleOrDefault(feedback => feedback.Id == entity.Id);
-            myDbContext.Feedback.Remove(f);
+            Feedback result = myDbContext.Feedback.SingleOrDefault(feedback => feedback.Id == entity.Id);
+            myDbContext.Feedback.Remove(result);
             myDbContext.Feedback.Add(entity);
             myDbContext.SaveChanges();
         }
 
-        // metoda kojom se dobavlja feedback sa odgovarajucim ID iz baze podataka 
+        /// <summary>
+        /// gets feedback by id
+        /// </summary>
+        /// <param name="id">id of wanted feedback</param>
+        /// <returns>object of type class Feedback with given id</returns>
         public Feedback Get(long id)
         {
             Feedback result = myDbContext.Feedback.FirstOrDefault(feedback => feedback.Id == id);
             return result;
         }
 
-        // metoda kojom se dobavlja lista feedback-ova iz baze podataka
+        /// <summary>
+        /// get all feedback from database
+        /// </summary>
+        /// <returns>IEnumerable<Feedback> with all feedback from database</returns>
         public IEnumerable<Feedback> GetAll()
         {
             List<Feedback> result = new List<Feedback>();
@@ -51,7 +64,11 @@ namespace bolnica.Repository
             return result;
         }
 
-        // metoda kojom se cuva novi feedback u bazi podataka ako feedback sa takvim ID-om ne postoji
+        /// <summary>
+        /// saves a new feedback to database
+        /// </summary>
+        /// <param name="entity">new feedback</param>
+        /// <returns>Object of type feedback</returns>
         public Feedback Save(Feedback entity)
         {
             Feedback result = myDbContext.Feedback.FirstOrDefault(feedback => feedback.Id == entity.Id);
@@ -64,7 +81,5 @@ namespace bolnica.Repository
 
             return null;
         }
-
-       
     }
 }

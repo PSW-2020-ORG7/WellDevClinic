@@ -14,9 +14,11 @@ namespace PSW_Web_app.Controllers
 
         private bolnica.Controller.IFeedbackController _feedbackController = new bolnica.Controller.FeedbackController();
 
-        /* metoda koja se pogađa HTTP GET zahtevom i poziva odgovarajuću metodu
-        * iz _feedbackController-a kako bi se dobavili svi feedback-ovi 
-        */
+        /// <summary>
+        ///calls GetAll() method from class FeedbackController 
+        ///so it can get all feedback from database
+        /// </summary>
+        /// <returns>status 200 OK response with a list of feedback</returns>
         [HttpGet]
         public IActionResult GetAllFeedback()
         {
@@ -24,10 +26,12 @@ namespace PSW_Web_app.Controllers
             return Ok(result);
         }
 
-        /* metoda koja se pogađa HTTP GET zahtevom i poziva odgovarajuću metodu
-         * iz _feedbackController-a kako bi se dobavio feedback sa odgovarajućim ID
-         */
-        //[HttpGet("{id?}")]
+        /// <summary>
+        /// calls Get(long id) method from class FeedbackController so  
+        /// it can get a feedback by given id from database
+        /// </summary>
+        /// <param name="id">id of wanted feedback</param>
+        /// <returns>iActionResult object with a specified feedback</returns>
         [HttpGet]
         [Route("{id?}")]
         public IActionResult GetFeedback(long id)
@@ -45,10 +49,12 @@ namespace PSW_Web_app.Controllers
             return actionResult;
         }
 
-        /* metoda koja se pogađa HTTP POST zahtevom i poziva odgovarajuću
-         * metodu iz _feedbackController-a kako bi se poslati feedback iz forme
-         * uskladištio u bazi
-         */
+        /// <summary>
+        /// calls Save(Feedback feedback) method from class FeedbackController so  
+        ///it can save a new feedback to database
+        /// </summary>
+        /// <param name="feedback">new feedback of Object type Feedback</param>
+        /// <returns>iActionResult object with a saved feedback</returns>
         [HttpPost]
         public IActionResult LeaveFeedback([FromBody] Feedback feedback)
         {
@@ -63,21 +69,24 @@ namespace PSW_Web_app.Controllers
                 long id = lastFeedback.Id;
                 feedback.Id = id + 1;
             }
-            Feedback f = _feedbackController.Save(feedback);
-            if(f == null || feedback.Content.Length == 0)
+            Feedback result = _feedbackController.Save(feedback);
+            if(result == null || feedback.Content.Length == 0)
             {
                 actionResult = BadRequest();
             }
             else
             {
-                actionResult = Ok(f);
+                actionResult = Ok(result);
             }
             return actionResult;
         }
 
-        /* metoda koja se pogađa HTTP PUT zahtevom i poziva odgovarajuću
-         * metodu iz _feedbackController-a kako bi se označeni feedback objavio 
-        */
+       
+       /// <summary>
+       /// calls Edit(Feedback feedback) method from class FeedbackController so  
+       ///it can update specified feedback in database
+       /// </summary>
+       /// <param name="feedback">sprecified feedback of Object type Feedback</param>
         [HttpPut]
         public void PublishFeedback(Feedback feedback)
         {

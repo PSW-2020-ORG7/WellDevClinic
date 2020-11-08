@@ -5,26 +5,19 @@ $(document).ready(function () {
 
         event.preventDefault();
         let comment = $("#comment");
-        let anonymous = $("#anonymous");
-        let private = $("#private");
-        let comment2 = document.getElementById('comment');
-        let anonymous2 = document.getElementById('anonymous');
-        let private2 = document.getElementById('private');
-        console.log(comment.val().trim.length)
-        console.log(anonymous2.checked)
-        console.log(private2.checked)
+        let anonymous = document.getElementById('anonymous');
+        let private = document.getElementById('private');
 
         if (jQuery.trim(comment.val()) != '') {
             let anonymousBool = false;
-            if (anonymous2.checked) {
+            if (anonymous.checked) {
                 anonymousBool = true;
             }
 
             let privateBool = false;
-            if (private2.checked) {
+            if (private.checked) {
                 privateBool = true;
             }
-
 
             $.post({
                 url: "http://localhost:49153/api/feedback",
