@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WellDevCore", "WellDevCore\WellDevCore.csproj", "{CA1C100A-1BCE-4743-9D43-4BD4153E792C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Web_app", "PSW Web app\PSW_Web_app.csproj", "{95FFFA54-4D60-4D5A-A59F-D980E48A94B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Web_app", "PSW_Web_app\PSW_Web_app.csproj", "{95FFFA54-4D60-4D5A-A59F-D980E48A94B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
