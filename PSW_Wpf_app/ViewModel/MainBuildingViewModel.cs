@@ -79,8 +79,8 @@ namespace WpfApp.ViewModel
                         ImageBrush imageBrush = new ImageBrush();
 
                         imageBrush.ImageSource =
-
-                            new BitmapImage(new Uri(@"C:\Users\Lenovo\Desktop\psw\WellDevClinic\WpfApp\Images\parking.jpg"));
+                            
+                            new BitmapImage(new Uri(@"C:\Users\Tamara Kovacevic\Desktop\WellDevClinic\PSW_Wpf_app\Images\parking.jpg"));
 
                         rectangle.Fill = imageBrush;
                     }

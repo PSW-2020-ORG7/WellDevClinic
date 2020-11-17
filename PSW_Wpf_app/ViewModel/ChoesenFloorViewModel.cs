@@ -102,6 +102,7 @@ namespace WpfApp.ViewModel
 
                         ImageBrush myBrush = new ImageBrush();
                         myBrush.ImageSource = new BitmapImage(new Uri(@"C:\Users\Lenovo\Desktop\psw\WellDevClinic\WpfApp\Images\info.png"));
+
                         ellipse.Fill = myBrush;
 
                         Canvas.SetLeft(ellipse, f.X);
