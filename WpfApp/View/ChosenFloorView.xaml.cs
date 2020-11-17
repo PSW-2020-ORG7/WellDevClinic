@@ -24,7 +24,7 @@ namespace WpfApp.View
         public ChosenFloorView(string build, int floor)
         {
             InitializeComponent();
-            DataContext = new ChoesenFloorViewModel(Can2, build, floor);
+            DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor);
         }
     }
 }

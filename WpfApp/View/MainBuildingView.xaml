@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="900" Background="LightGreen" >
     <Grid>
-        <Canvas x:Name="Can1" Margin="10,10,10,-0.4" Width="900" Height="500"></Canvas>
+        <Canvas x:Name="CanvasBuilding" Margin="10,10,10,-0.4" Width="900" Height="500"></Canvas>
 
     </Grid>
 </UserControl>

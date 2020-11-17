@@ -42,7 +42,7 @@ namespace WpfApp
             {
                 names.Add(e.Name);
             }
-            user1.Content = new MainBuildingView();
+            userControl.Content = new MainBuildingView();
 
         }
 
@@ -59,16 +59,14 @@ namespace WpfApp
             }
             else
             {
-                this.user1.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()));
+                this.userControl.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()));
             }
         }
 
         private void Button_Click_HOME(object sender, RoutedEventArgs e)
         {
-            this.user1.Content = new MainBuildingView();
+            this.userControl.Content = new MainBuildingView();
         }
     }
-
-
 
 }

@@ -119,9 +119,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TextFile1.csv" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="externalMap.txt" />
   </ItemGroup>
   <ItemGroup>

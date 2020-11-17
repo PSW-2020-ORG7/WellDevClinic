@@ -12,7 +12,7 @@
     </Window.Resources>
     <Grid Background="White"  DataContext="{Binding Source={StaticResource vm}}">
         <!--<Canvas Background="LightGreen" HorizontalAlignment="Left" Height="470" Margin="0" VerticalAlignment="Top" Width="655" Name="Can1"/>-->
-        <UserControl Name="user1" Margin="0,0,224.6,1.4"></UserControl>
+        <UserControl Name="userControl" Margin="0,0,224.6,1.4"></UserControl>
         <Grid Background="#FFAAC4C5" HorizontalAlignment="Left" Height="469" Margin="674,0,0,0" VerticalAlignment="Top" Width="218">
             <Grid Background="CadetBlue" HorizontalAlignment="Left" Height="370" Margin="10,55,0,0" VerticalAlignment="Top" Width="198">
                 <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" TextWrapping="Wrap" Text="Choose building:" FontSize="16" VerticalAlignment="Top" Width="150"/>

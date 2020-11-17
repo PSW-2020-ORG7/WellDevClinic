@@ -26,8 +26,7 @@ namespace WpfApp.View
         public MainBuildingView()
         {
             InitializeComponent();
-            //DataContext = new MainBuildingViewModel(Can1);
-            DataContext = new MainBuildingsViewModel(Can1);
+            DataContext = new MainBuildingsViewModel(CanvasBuilding);
 
 
         }

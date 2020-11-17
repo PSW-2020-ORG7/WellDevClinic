@@ -10,9 +10,8 @@ namespace WpfApp.ViewModel
 {
     public class ShapeViewModel
     {
-        string pathSurgical = @"~\..\..\..\surgicalBranchesFloors.txt";
         string pathMedical = @"~\..\..\..\medicalCenter.txt";
-        string pathPediatrics = @"~\..\..\..\pediatrics.txt";
+
         public static List<GraphicElement> Read()
         {
             List<GraphicElement> shapes = new List<GraphicElement>();

@@ -15,7 +15,7 @@ namespace WpfApp.ViewModel
 {
     class MainBuildingsViewModel : BindableBase
     {
-        public MainBuildingsViewModel(Canvas Can1)
+        public MainBuildingsViewModel(Canvas canvasBuilding)
         {
             List<GraphicElement> elements = new List<GraphicElement>();
             elements = ShapeViewModel.Read();
@@ -33,7 +33,7 @@ namespace WpfApp.ViewModel
                     Canvas.SetLeft(ellipse, element.X);
                     Canvas.SetTop(ellipse, element.Y);
 
-                    Can1.Children.Add(ellipse);
+                    canvasBuilding.Children.Add(ellipse);
                 }
                 else if (element.Type.Equals("Circle"))
                 {
@@ -46,8 +46,7 @@ namespace WpfApp.ViewModel
                     Canvas.SetLeft(ellipse, element.X);
                     Canvas.SetTop(ellipse, element.Y);
 
-
-                    Can1.Children.Add(ellipse);
+                    canvasBuilding.Children.Add(ellipse);
                 }
                 else
                 {
@@ -57,16 +56,15 @@ namespace WpfApp.ViewModel
                     rectangle.Height = element.Height;
 
                     VisualBrush brush = new VisualBrush();
-                    StackPanel aPanel = new StackPanel();
-                    aPanel.Background = new SolidColorBrush(Colors.CadetBlue);
+                    StackPanel panel = new StackPanel();
+                    panel.Background = new SolidColorBrush(Colors.CadetBlue);
 
                     TextBlock objectName = new TextBlock();
                     objectName.Text = element.Name;
                     objectName.FontSize = 7;
                     objectName.Margin = new Thickness(8);
-                    //someText.TextWrapping = TextWrapping.Wrap;
-                    aPanel.Children.Add(objectName);
-                    brush.Visual = aPanel;
+                    panel.Children.Add(objectName);
+                    brush.Visual = panel;
                     rectangle.Fill = brush;
                     if (element.Type.Equals("Building"))
                     {
@@ -82,7 +80,7 @@ namespace WpfApp.ViewModel
 
                         imageBrush.ImageSource =
 
-                            new BitmapImage(new Uri(@"C:\Users\Maja\Desktop\psw\WellDevClinic\WpfApp\Images\parking.jpg"));
+                            new BitmapImage(new Uri(@"C:\Users\Lenovo\Desktop\psw\WellDevClinic\WpfApp\Images\parking.jpg"));
 
                         rectangle.Fill = imageBrush;
                     }
@@ -93,7 +91,7 @@ namespace WpfApp.ViewModel
 
                     Canvas.SetLeft(rectangle, element.X);
                     Canvas.SetTop(rectangle, element.Y);
-                    Can1.Children.Add(rectangle);
+                    canvasBuilding.Children.Add(rectangle);
                     
 
                 }
@@ -101,7 +99,6 @@ namespace WpfApp.ViewModel
 
         }
         
-
         }
     }
 

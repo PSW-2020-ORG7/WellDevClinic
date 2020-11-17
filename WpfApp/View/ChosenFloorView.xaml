@@ -13,7 +13,7 @@
         <viewmodel:ChoesenFloorViewModel x:Name="um"></viewmodel:ChoesenFloorViewModel>
     </UserControl.DataContext>-->
     <Grid Background="White">
-        <Canvas Background="Azure" HorizontalAlignment="Left" Height="470" Margin="0" VerticalAlignment="Top" Width="655" Name="Can2">
+        <Canvas Background="Azure" HorizontalAlignment="Left" Height="470" Margin="0" VerticalAlignment="Top" Width="655" Name="CanvasFloor">
 
         </Canvas>
 
