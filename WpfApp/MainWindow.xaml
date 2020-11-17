@@ -18,7 +18,7 @@
                 <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" TextWrapping="Wrap" Text="Choose building:" FontSize="16" VerticalAlignment="Top" Width="150"/>
                 <ComboBox HorizontalAlignment="Left" Height="24" Margin="10,42,0,0" VerticalAlignment="Top" Width="181" ItemsSource="{Binding Path=Buildings}" Name="buildC"  DisplayMemberPath="Name"/>
                 <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,88,0,0" TextWrapping="Wrap" Text="Choose the floor:" FontSize="16" VerticalAlignment="Top" Width="150"/>
-                <ComboBox HorizontalAlignment="Left" Height="24" Margin="10,117,0,0" VerticalAlignment="Top" Width="181"  ItemsSource="{Binding Path=Floors}" Name="floorC"/>
+                <ComboBox HorizontalAlignment="Left" Height="24" Margin="10,117,0,0" VerticalAlignment="Top" Width="181"  ItemsSource="{Binding Path=FloorsCount}" Name="floorC"/>
                 <Button Content="Apply" HorizontalAlignment="Center" Height="42" Margin="10,172,7,0" VerticalAlignment="Top" Width="181" FontSize="28" FontFamily="Segoe UI Semibold" Click="Button_Click"/>
             </Grid>
             <Button FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,16,0,0" VerticalAlignment="Top" Width="40" Click="Button_Click_HOME">

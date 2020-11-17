@@ -62,579 +62,165 @@ namespace WpfApp.ViewModel
             choosenFloor = floor;
 
             List<FloorElement> floors = new List<FloorElement>();
-            List<FloorElement> floorsM = new List<FloorElement>();
-            List<FloorElement> floorsP = new List<FloorElement>();
-            floors = ShapeViewModel.ReadFloor();
-            floorsM = ShapeViewModel.ReadFloorMedical();
-            floorsP = ShapeViewModel.ReadFloorPediatric();
+            floors = getFloor(ChoosenBuilding);
 
 
-            switch (ChoosenBuilding)
+            foreach (FloorElement f in floors)
             {
-                case "Surgical":
-
-                    foreach (FloorElement f in floors)
-                    {
-                        if (f.Floor.Equals(choosenFloor))
-                        {
-
-                            if (f.Type.Equals("room"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-                                rectangle.Name = f.Name;
-                                rectangle.MouseDown += openInfo;
-
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.CadetBlue);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("counter"))
-                            {
-                                Ellipse ellipse = new Ellipse();
-                                ellipse.Width = f.Width;
-                                ellipse.Height = f.Height;
-                                //ellipse.Fill = new SolidColorBrush(Colors.Black);
-                                ellipse.Name = f.Type;
-                                ellipse.Stroke = new SolidColorBrush(Colors.Black);
-
-                                ImageBrush myBrush = new ImageBrush();
-
-
-                                myBrush.ImageSource = new BitmapImage(new Uri(@"C:\Users\Maja\Desktop\psw\WellDevClinic\WpfApp\Images\info.png"));
-
-
-
-                                ellipse.Fill = myBrush;
-
-                                Canvas.SetLeft(ellipse, f.X);
-                                Canvas.SetTop(ellipse, f.Y);
-
-
-                                Can2.Children.Add(ellipse);
-                            }
-                            else if (f.Type.Equals("restroom"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.DarkSeaGreen);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("elevator"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.LightGray);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("stairs"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Gray);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("door"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Black);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("waitingRoom"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                ImageBrush myBrush = new ImageBrush();
-
-                                myBrush.ImageSource = new BitmapImage(new Uri(@"C:\Users\Maja\Desktop\psw\WellDevClinic\WpfApp\Images\waiting-room.png"));
-                                rectangle.Fill = myBrush;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("base"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Transparent);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-
-
-                        }
-                    }
-
-
-                    ApplyingPriority?.Invoke(this, null);
-                    break;
-
-                case "MedicalCenter":
-
-                    foreach (FloorElement f in floorsM)
-                    {
-                        if (f.Floor.Equals(choosenFloor))
-                        {
-                            if (f.Type.Equals("roomP"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                //rectangle.Fill = new SolidColorBrush(Colors.CadetBlue);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-                                rectangle.Name = f.Name;
-                                rectangle.MouseDown += openInfo;
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.CadetBlue);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-
-                            }
-                            else if (f.Type.Equals("roomE"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                //rectangle.Fill = new SolidColorBrush(Colors.CadetBlue);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-                                rectangle.Name = f.Name;
-                                rectangle.MouseDown += openInfo;
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.LightSeaGreen);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-
-                            }
-                            else if (f.Type.Equals("counter"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                //rectangle.Fill = new SolidColorBrush(Colors.CadetBlue);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.CadetBlue);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("restroom"))
-                            {
-
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                //rectangle.Fill = new SolidColorBrush(Colors.CadetBlue);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.DarkSeaGreen);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("elevator"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                //rectangle.Fill = new SolidColorBrush(Colors.CadetBlue);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.LightGray);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("stairs"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                //rectangle.Fill = new SolidColorBrush(Colors.CadetBlue);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.Gray);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("door"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Black);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("waitingRoom"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Yellow);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("base"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Transparent);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-
-                        }
-                    }
-
-                    break;
-
-                case "Pediatrics":
-                    foreach (FloorElement f in floorsP)
-                    {
-                        if (f.Floor.Equals(choosenFloor))
-                        {
-
-                            if (f.Type.Equals("room"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-                                rectangle.Name = f.Name;
-                                rectangle.MouseDown += openInfo;
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.CadetBlue);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("elipsa"))
-                            {
-                                Ellipse ellipse = new Ellipse();
-                                ellipse.Width = f.Width;
-                                ellipse.Height = f.Height;
-                                ellipse.Fill = new SolidColorBrush(Colors.Yellow);
-                                ellipse.Name = f.Type;
-
-                                Canvas.SetLeft(ellipse, f.X);
-                                Canvas.SetTop(ellipse, f.Y);
-
-
-                                Can2.Children.Add(ellipse);
-                            }
-                            else if (f.Type.Equals("counter"))
-                            {
-                                Ellipse ellipse = new Ellipse();
-                                ellipse.Width = f.Width;
-                                ellipse.Height = f.Height;
-                                ellipse.Fill = new SolidColorBrush(Colors.Yellow);
-                                ellipse.Name = f.Type;
-
-                                Canvas.SetLeft(ellipse, f.X);
-                                Canvas.SetTop(ellipse, f.Y);
-
-
-                                Can2.Children.Add(ellipse);
-                            }
-                            else if (f.Type.Equals("stuf"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Orange);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("toilet"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                VisualBrush vbc = new VisualBrush();
-                                StackPanel aPanel = new StackPanel();
-                                aPanel.Background = new SolidColorBrush(Colors.DarkSeaGreen);
-
-                                // Create some text.
-                                TextBlock someText = new TextBlock();
-                                someText.Text = f.Name;
-                                someText.FontSize = 5;
-                                someText.Margin = new Thickness(8);
-                                someText.TextWrapping = TextWrapping.Wrap;
-
-                                aPanel.Children.Add(someText);
-                                // aPanel.Children.Add(button);
-                                vbc.Visual = aPanel;
-                                rectangle.Fill = vbc;
-
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-
-                            else if (f.Type.Equals("entrance"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.LightGray);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-                            else if (f.Type.Equals("base"))
-                            {
-                                Rectangle rectangle = new Rectangle();
-                                rectangle.Width = f.Width;
-                                rectangle.Height = f.Height;
-                                rectangle.Fill = new SolidColorBrush(Colors.Transparent);
-                                rectangle.Stroke = new SolidColorBrush(Colors.Black);
-
-                                Canvas.SetLeft(rectangle, f.X);
-                                Canvas.SetTop(rectangle, f.Y);
-
-                                Can2.Children.Add(rectangle);
-                            }
-
-
-                        }
-                    }
-                    break;
-
-            }
-            void openInfo(object sender, MouseButtonEventArgs e)
-            {
-                var mouseWasDownOn = e.Source as FrameworkElement;
-                if (mouseWasDownOn != null)
+                if (f.Floor.Equals(choosenFloor))
                 {
-                    string elementName = mouseWasDownOn.Name;
-                    Console.WriteLine(elementName);
-                    foreach (FloorElement f in floors)
-                    {
-                        if (elementName.Equals(f.Name))
-                        {
-                            string info = f.Info;
-                            Console.WriteLine(info);
-                            MessageBox.Show(string.Format("additional information: {0}\n", info));
-                        }
-                    }
-                    foreach (FloorElement f in floorsP)
-                    {
-                        if (elementName.Equals(f.Name))
-                        {
-                            string info = f.Info;
-                            Console.WriteLine(info);
-                            MessageBox.Show(string.Format("additional information {0}\n", info));
-                        }
-                    }
-                    foreach (FloorElement f in floorsM)
-                    {
-                        if (elementName.Equals(f.Name))
-                        {
-                            string info = f.Info;
-                            Console.WriteLine(info);
-                            MessageBox.Show(string.Format("additional information {0}\n", info));
-                        }
-                    }
 
+                    if (f.Type.Equals("room"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+                        rectangle.Name = f.Name;
+                        // rectangle.MouseDown += openInfo;
+
+                        VisualBrush brush = new VisualBrush();
+                        StackPanel aPanel = new StackPanel();
+                        aPanel.Background = new SolidColorBrush(Colors.CadetBlue);
+
+                        TextBlock roomName = new TextBlock();
+                        roomName.Text = f.Name;
+                        roomName.FontSize = 5;
+                        roomName.Margin = new Thickness(8);
+                        roomName.TextWrapping = TextWrapping.Wrap;
+
+                        aPanel.Children.Add(roomName);
+                        brush.Visual = aPanel;
+                        rectangle.Fill = brush;
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("counter"))
+                    {
+                        Ellipse ellipse = new Ellipse();
+                        ellipse.Width = f.Width;
+                        ellipse.Height = f.Height;
+                        ellipse.Name = f.Type;
+                        ellipse.Stroke = new SolidColorBrush(Colors.Black);
+
+                        ImageBrush myBrush = new ImageBrush();
+                        myBrush.ImageSource = new BitmapImage(new Uri(@"C:\Users\Maja\Desktop\psw\WellDevClinic\WpfApp\Images\info.png"));
+                        ellipse.Fill = myBrush;
+
+                        Canvas.SetLeft(ellipse, f.X);
+                        Canvas.SetTop(ellipse, f.Y);
+
+                        Can2.Children.Add(ellipse);
+                    }
+                    else if (f.Type.Equals("restroom"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Fill = new SolidColorBrush(Colors.DarkSeaGreen);
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("storageRoom"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Fill = new SolidColorBrush(Colors.DarkBlue);
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("elevator"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Fill = new SolidColorBrush(Colors.LightGray);
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("stairs"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Fill = new SolidColorBrush(Colors.Gray);
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("door"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Fill = new SolidColorBrush(Colors.Black);
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("waitingRoom"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+
+                        ImageBrush myBrush = new ImageBrush();
+
+                        myBrush.ImageSource = new BitmapImage(new Uri(@"C:\Users\Maja\Desktop\psw\WellDevClinic\WpfApp\Images\waiting-room.png"));
+                        rectangle.Fill = myBrush;
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("base"))
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Width = f.Width;
+                        rectangle.Height = f.Height;
+                        rectangle.Fill = new SolidColorBrush(Colors.Transparent);
+                        rectangle.Stroke = new SolidColorBrush(Colors.Black);
+
+                        Canvas.SetLeft(rectangle, f.X);
+                        Canvas.SetTop(rectangle, f.Y);
+
+                        Can2.Children.Add(rectangle);
+                    }
+                    else if (f.Type.Equals("elipsa"))                    {                        Ellipse ellipse = new Ellipse();                        ellipse.Width = f.Width;                        ellipse.Height = f.Height;                        ellipse.Fill = new SolidColorBrush(Colors.Yellow);                        ellipse.Name = f.Type;                        Canvas.SetLeft(ellipse, f.X);                        Canvas.SetTop(ellipse, f.Y);                        Can2.Children.Add(ellipse);                    }
                 }
             }
 
         }
+        private List<FloorElement> getFloor(object name)        {            string pathSurgical = @"~\..\..\..\surgicalBranchesFloors.txt";            string pathMedical = @"~\..\..\..\medicalCenter.txt";            string pathPediatrics = @"~\..\..\..\pediatrics.txt";            List<FloorElement> floors = new List<FloorElement>();            switch (ChoosenBuilding)            {                case "Surgical":
+                    floors = ShapeViewModel.ReadFloor(pathSurgical);                    break;                case "MedicalCenter":
+                    floors = ShapeViewModel.ReadFloor(pathMedical);                    break;                case "Pediatrics":
+                    floors = ShapeViewModel.ReadFloor(pathPediatrics);                    break;            }
+
+            return floors;        }
+
     }
 }

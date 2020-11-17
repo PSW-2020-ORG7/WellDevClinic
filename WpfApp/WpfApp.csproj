@@ -60,6 +60,7 @@
     <Compile Include="Model\EnumElements.cs" />
     <Compile Include="Model\FloorElement.cs" />
     <Compile Include="MyICommand.cs" />
+    <Compile Include="ViewModel\AdditionalInformationViewModel.cs" />
     <Compile Include="ViewModel\ChoesenFloorViewModel.cs" />
     <Compile Include="ViewModel\MainBuildingViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
@@ -121,7 +122,7 @@
     <None Include="TextFile1.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="primer.txt" />
+    <Resource Include="externalMap.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="surgicalBranchesFloors.txt" />

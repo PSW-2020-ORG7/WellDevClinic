@@ -14,6 +14,13 @@ namespace WpfApp.Model
         private int x;
         private int y;
         private string name;
+        private string info;
+
+        public string Info
+        {
+            get { return info; }
+            set { info = value; }
+        }
 
 
         public string Type
@@ -64,7 +71,7 @@ namespace WpfApp.Model
 
         }
 
-        public GraphicElement(string t, int w, int h, int xx, int yy, string n="")
+        public GraphicElement(string t, int w, int h, int xx, int yy, string n="", string i = "")
         {
             type = t;
             width = w;
@@ -72,7 +79,7 @@ namespace WpfApp.Model
             x = xx;
             y = yy;
             name = n;
-
+            info = i;
         }
     }
 }

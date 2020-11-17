@@ -23,7 +23,7 @@ namespace WpfApp.ViewModel
 
             foreach (GraphicElement element in elements)
             {
-                if (element.Type.Equals("Fontana"))
+                if (element.Type.Equals("Fountain"))
                 {
                     Ellipse ellipse = new Ellipse();
                     ellipse.Width = element.Width;
@@ -35,7 +35,7 @@ namespace WpfApp.ViewModel
 
                     Can1.Children.Add(ellipse);
                 }
-                else if (element.Type.Equals("Krug"))
+                else if (element.Type.Equals("Circle"))
                 {
                     Ellipse ellipse = new Ellipse();
                     ellipse.Width = element.Width;
@@ -56,107 +56,52 @@ namespace WpfApp.ViewModel
                     rectangle.Width = element.Width;
                     rectangle.Height = element.Height;
 
-                    VisualBrush vbc = new VisualBrush();
-                    // Create the brush's contents.
-                    //
+                    VisualBrush brush = new VisualBrush();
                     StackPanel aPanel = new StackPanel();
                     aPanel.Background = new SolidColorBrush(Colors.CadetBlue);
 
-                    // Create some text.
-                    TextBlock someText = new TextBlock();
-                    someText.Text = element.Name;
-                    someText.FontSize = 7;
-                    someText.Margin = new Thickness(8);
-                    someText.TextWrapping = TextWrapping.Wrap;
-
-                    aPanel.Children.Add(someText);
-                    // aPanel.Children.Add(button);
-                    vbc.Visual = aPanel;
-                    rectangle.Fill = vbc;
-                    if (element.Type.Equals("Zgrada"))
+                    TextBlock objectName = new TextBlock();
+                    objectName.Text = element.Name;
+                    objectName.FontSize = 7;
+                    objectName.Margin = new Thickness(8);
+                    //someText.TextWrapping = TextWrapping.Wrap;
+                    aPanel.Children.Add(objectName);
+                    brush.Visual = aPanel;
+                    rectangle.Fill = brush;
+                    if (element.Type.Equals("Building"))
                     {
-                        // rectangle.Fill = new SolidColorBrush(Colors.CadetBlue);
                         rectangle.Stroke = Brushes.CadetBlue;
-                        rectangle.MouseDown += openInfo;
+                        rectangle.MouseDown += AdditionalInformationViewModel.openInfo;
                     }
-                    else if (element.Type.Equals("Ulica"))
+                    else if (element.Type.Equals("Street"))
                         rectangle.Fill = new SolidColorBrush(Colors.LightGray);
                     else if (element.Type.Equals("Parking"))
                     {
 
-                        ImageBrush myBrush = new ImageBrush();
+                        ImageBrush imageBrush = new ImageBrush();
 
-                        myBrush.ImageSource =
+                        imageBrush.ImageSource =
 
                             new BitmapImage(new Uri(@"C:\Users\Maja\Desktop\psw\WellDevClinic\WpfApp\Images\parking.jpg"));
 
-                        rectangle.Fill = myBrush;
+                        rectangle.Fill = imageBrush;
                     }
-                    else if (element.Type.Equals("Ulaz"))
+                    else if (element.Type.Equals("Entrance"))
                         rectangle.Fill = new SolidColorBrush(Colors.RoyalBlue);
                     else
                         rectangle.Fill = new SolidColorBrush(Colors.Red);
 
                     Canvas.SetLeft(rectangle, element.X);
                     Canvas.SetTop(rectangle, element.Y);
-
-
                     Can1.Children.Add(rectangle);
+                    
 
                 }
             }
 
         }
-        void openInfo(object sender, MouseButtonEventArgs e)
-        {
-            var mouseWasDownOn = e.Source as FrameworkElement;
-            if (mouseWasDownOn != null)
-            {
-                string elementName = mouseWasDownOn.Name;
-                Console.WriteLine(elementName);
-                if (elementName.Equals("Surgical"))
-                {
-                    MessageBox.Show("SURGICAL - MORE INFORMATION\n\n" +
-                           "This building has a ground floor and a first floor.\n" +
-                           "In the ground floor there are ambulance and ER.Patience can come here when they have an unexcepted injury or fractue. " +
-                           "We have an excellent X-ray and many other medical devices in our diagnostic office.\n" +
-                           "On the ground floor there are also info desk and waiting room. \n" +
-                           "On the first floor there are operating rooms and recovering rooms.\n" +
-                           "We also have elevators for every entrance which patients can use.\n" +
-                           "info pult -> contact +0044/014789889\n" +
-
-
-                           "");
-                }
-                else if (elementName.Equals("MedicalCenter"))
-                {
-                    MessageBox.Show("MEDICAL CENTER - MORE INFORMATION\n\n" +
-                    "This building has a ground floor and 3 more floors.\n" +
-                      "On the ground floor there are info desk, cardiologist, dermatology, ORL,orthopedic,urology,physiatry and endocrinology. " +
-                      "On the first floor there are stomatology, gynecology and physiatry. \n" +
-                      "On the second floor there are general practise, cardiologist, dermatology and ORL . \n" +
-                      "On the third floor there are immunologist, infectology and radiology.\n" +
-                      "info pult -> contact +0044/014678777\n" +
-
-                    "");
-                }
-                else if (elementName.Equals("Pediatrics"))
-                {
-
-                    MessageBox.Show("PEDIATRICS - MORE INFORMATION\n\n" +
-                      "This building has a ground floor and a first floor.\n" +
-                      "On the ground floor there are examination rooms, laboratory,feeding area for babys and stuff room. " +
-                      "On the first floor there are pediatrics day care,play area for childreen, pediatric rehabilitation and pediatric neurology \n" +
-                      "Also there is cantine for lunch and information pult. \n" +
-                      "We also have elevators for every entrance which patients can use.\n" +
-                      "info pult -> contact +0044/014678543\n" +
-
-
-                        "");
-                }
-
-            }
+        
 
         }
     }
-}
+
