@@ -10,36 +10,36 @@ namespace WpfApp.ViewModel
 {
     public class ShapeViewModel
     {
-        string pathMedical = @"~\..\..\..\medicalCenter.txt";
+        string pathMedical = "../../../Data/medicalCenter.txt";
 
         public static List<GraphicElement> Read()
         {
             List<GraphicElement> shapes = new List<GraphicElement>();
-           
-            string path = @"~\..\..\..\externalMap.txt";
 
-            
+            string path = @"../../../Data/externalMap.txt";
+
+
             if (!File.Exists(path))
             {
                 Console.WriteLine("Error loading file!");
                 using (StreamWriter sw = File.CreateText(path))
                 { }
             }
-            
+
             using (StreamReader sr = File.OpenText(path))
             {
                 string graphicElement;
                 while ((graphicElement = sr.ReadLine()) != null)
                 {
-                   
+
                     string[] temp1 = graphicElement.Split(',');
-                    GraphicElement shape = new GraphicElement(temp1[0], Convert.ToInt32(temp1[1]), Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), temp1[5],temp1[6]);
+                    GraphicElement shape = new GraphicElement(temp1[0], Convert.ToInt32(temp1[1]), Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), temp1[5], temp1[6]);
                     shapes.Add(shape);
                 }
             }
-          
+
             return shapes;
- 
+
         }
         public static List<FloorElement> ReadFloor(string path)
         {
@@ -61,7 +61,7 @@ namespace WpfApp.ViewModel
                     string[] temp1 = floorElement.Split(',');
                     try
                     {
-                        FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]),temp1[7]);
+                        FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7]);
                         floors.Add(shape);
                     }
                     catch { }
@@ -71,7 +71,7 @@ namespace WpfApp.ViewModel
             return floors;
         }
 
-		
+
         private List<GraphicElement> elements;
         private List<GraphicElement> buildings;
         private List<FloorElement> floors;
@@ -100,7 +100,7 @@ namespace WpfApp.ViewModel
             get { return floors; }
             set { floors = value; }
         }
-       
+
         public ShapeViewModel()
         {
             elements = new List<GraphicElement>();
@@ -117,23 +117,18 @@ namespace WpfApp.ViewModel
                     buildings.Add(element);
                     foreach (FloorElement floor in floors)
                     {
-                        
                         if (maxFloor < floor.Floor)
                             maxFloor = floor.Floor;
-
                     }
-                      
                 }
             }
             for (int i = 0; i <= maxFloor; i++)
             {
                 floorsCount.Add(i);
-                
             }
 
         }
-            
-        }
+    }
 }
 
 
