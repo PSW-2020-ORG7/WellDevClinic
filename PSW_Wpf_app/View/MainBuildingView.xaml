@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="WpfApp.View.MainBuildingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="900" Background="LightGreen" >
+    <Grid>
+        <Canvas x:Name="CanvasBuilding" Margin="10,10,10,-0.4" Width="900" Height="500"></Canvas>
+
+    </Grid>
+</UserControl>
