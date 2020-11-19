@@ -11,18 +11,7 @@ namespace WpfApp.ViewModel
     public class ChoesenFloorViewModel : BindableBase
     {
 
-        #region Infrastructure
-        private BindableBase _currentContentViewModel;
-        public BindableBase CurrentContentViewModel
-        {
-            get { return _currentContentViewModel; }
-            set { SetField(ref _currentContentViewModel, value); }
-        }
-        #endregion
-
-        #region ViewModels
-        private ChoesenFloorViewModel choesenFloorViewModel;
-        #endregion
+        
 
         List<FloorElement> floors = new List<FloorElement>();
 
