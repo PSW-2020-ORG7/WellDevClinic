@@ -20,9 +20,9 @@ namespace Model.Director
             Name = name;
         }
 
-        public RoomType()
+        public RoomType(long id)
         {
-            
+            Id = id;
         }
 
         public long Id { get; set; }
