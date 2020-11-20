@@ -6,11 +6,12 @@ using Model.Users;
 using System;
 using System.Collections.Generic;
 
-namespace Controller
+namespace bolnica.Controller
 {
     public class ExaminationController : IExaminationController
     {
         private readonly IExaminationService _examinationService;
+        public ExaminationController() { }
 
         public ExaminationController(IExaminationService service)
         {
