@@ -149,7 +149,7 @@ namespace PSW_Wpf_doctor
             TelSet.Text = user.Phone;
             String doctorAddress = user.Address.Street + " " + user.Address.Number + "," + " " + user.Address.Town.Name + " " + user.Address.Town.PostalNumber + "," + " " + user.Address.Town.State.Name;
             AdresaSet.Text = doctorAddress;
-            pic.Source = new BitmapImage(user.Image);
+            //pic.Source = new BitmapImage(user.Image);
 
             TestSpec = user.Specialty.Name;
             TestImePrezime = user.FirstName + " " + user.LastName;
@@ -749,8 +749,8 @@ namespace PSW_Wpf_doctor
             if (op.ShowDialog() == true)
             {
                 String fileName = op.FileName;
-                pic.Source = new BitmapImage(new Uri(fileName));
-                user.Image = new Uri(fileName);
+                //pic.Source = new BitmapImage(new Uri(fileName));
+                //user.Image = new Uri(fileName);
                 app.UserController.Edit(user);
             }
         }
