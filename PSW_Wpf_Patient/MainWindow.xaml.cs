@@ -422,8 +422,8 @@ namespace PSW_Wpf_Patient
             DateBirthTextBlock.Text = _patient.DateOfBirth.Date.ToString();
             Email2.Text = _patient.Email;
             PhoneNumber2.Text = _patient.Phone;
-            ProfileImage2.Source = new BitmapImage(_patient.Image);
-            ProfileImage.Source = new BitmapImage(_patient.Image);
+            //ProfileImage2.Source = new BitmapImage(_patient.Image);
+            //ProfileImage.Source = new BitmapImage(_patient.Image);
 
 
             Ime = _patient.FirstName;
@@ -533,8 +533,8 @@ namespace PSW_Wpf_Patient
             if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 String fileName = op.FileName;
-                ProfileImage.Source = new BitmapImage(new Uri(fileName));
-                ProfileImage2.Source = new BitmapImage(new Uri(fileName));
+                //ProfileImage.Source = new BitmapImage(new Uri(fileName));
+                //ProfileImage2.Source = new BitmapImage(new Uri(fileName));
                 _patient.Image = new Uri(fileName);
                 app.UserController.Edit(_patient);
                 SuccessUpdatePhoto.Foreground = Brushes.Green;
