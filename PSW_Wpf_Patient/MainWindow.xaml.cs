@@ -25,6 +25,7 @@ using Model.Doctor;
 using bolnica.Model.Dto;
 using Model.PatientSecretary;
 using bolnica.Service;
+using ControlzEx.Theming;
 
 namespace PSW_Wpf_Patient
 {
@@ -88,18 +89,14 @@ namespace PSW_Wpf_Patient
             Picker2.DisplayDateStart = DateTime.Now.AddDays(1);
             this.DataContext = this;
 
-           /* if (Theme == 1)
+            /*if (Theme == 1)
             {
-                ThemeManager.ChangeAppStyle(this,
-                                   ThemeManager.GetAccent("Teal"),
-                                   ThemeManager.GetAppTheme("BaseDark"));
+                ThemeManager.Current.ChangeTheme(this, "Dark.Green");
                 DarkMode.Value = DarkMode.Maximum;
             }
             else
             {
-                ThemeManager.ChangeAppStyle(this,
-                                   ThemeManager.GetAccent("Blue"),
-                                   ThemeManager.GetAppTheme("BaseLight"));
+                ThemeManager.Current.ChangeTheme(this, "Dark.Gre");
                 DarkMode.Value = DarkMode.Minimum;
             }*/
             NotifyPatient();

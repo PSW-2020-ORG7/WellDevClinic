@@ -1,0 +1,403 @@
+﻿<Window x:Class="PSW_Wpf_doctor.SideBar"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PSW_Wpf_doctor"
+        xmlns:val="clr-namespace:HCIproject.Validation"
+
+        mc:Ignorable="d"
+        Title="Funckionalnosti"  Height="450" Width="850"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Color x:Key="Color1">#FFA2D9CE</Color>
+    </Window.Resources>
+    <StackPanel x:Name="ResizePanel" Background="#D0ECE7" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+        <TabControl x:Name="MyTabControl"  TabStripPlacement="Left"  Margin="20" >
+            <TabItem x:Name="tabPocetna" Header="Početna stranica" FontSize="19" Background="#A2D9CE" >
+                <StackPanel x:Name="pocetnaGrid" Background="#D5F5E3"  Orientation="Vertical" HorizontalAlignment="Stretch">
+                    <StackPanel Background="#D5F5E3"  Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <Image x:Name="pic" HorizontalAlignment="Left" Margin="30,30,80,10" Height="114"  VerticalAlignment="Top" Width="130"/>
+                            <Button Content="Promeni sliku" Width="90" Margin="-60,0,0,0" FontSize="9" Foreground="#2C3E50"  BorderBrush="#FF1FEECD" Height="22" Click="changePhoto" >
+                                <Button.Background>
+                                    <SolidColorBrush Color="{DynamicResource Color1}"/>
+                                </Button.Background>
+                            </Button>
+                        </StackPanel>
+                        <Border BorderBrush="#A2D9CE" BorderThickness="3" Margin="5">
+                            <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="5" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="ImePrzSet"  Grid.Column="0" Grid.Row="0"  FontSize="16" FontWeight="Bold" />
+                                <TextBlock x:Name="SpecSet" Grid.Column="0" Grid.Row="1" FontSize="15" />
+
+                                <Label Grid.Column="0" Grid.Row="3" Content="Datum rođenja" FontWeight="SemiBold" FontSize="12" />
+                                <TextBlock x:Name="DatSet" Margin="5" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" FontSize="12" />
+
+                                <Label Grid.Column="0" Grid.Row="4" Content="Jmbg"  FontWeight="SemiBold"  FontSize="12" />
+                                <TextBlock x:Name="JmbgSet" Margin="5"  Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" FontSize="12" />
+
+                                <Label Grid.Column="0" Grid.Row="5" Content="Email"  FontWeight="SemiBold" FontSize="12" />
+                                <TextBlock x:Name="EmailSet" Margin="5"   Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" FontSize="12" />
+
+                                <Label Grid.Column="0" Grid.Row="6" Content="Telefon"  FontWeight="SemiBold" FontSize="12" />
+                                <TextBlock x:Name="TelSet" Margin="5"  Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" FontSize="12" />
+
+                                <Label Grid.Column="0" Grid.Row="7" Content="Adresa" FontWeight="SemiBold" FontSize="12" />
+                                <TextBlock x:Name="AdresaSet" Margin="5"   Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right" FontSize="12" />
+
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                    <Grid  Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Za današnji datum preostalo termina:"  Grid.Column="0" Grid.Row="0" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top"  />
+                        <TextBox x:Name="brojPregleda" Grid.Column="1" Grid.Row="0"  BorderBrush="#D5F5E3"  FontSize="12" FontWeight="SemiBold" IsReadOnly="True" Focusable="False"/>
+
+                        <Label Content="Radno vreme naredna tri dana:"  Grid.Column="0" Grid.Row="1" FontSize="12" HorizontalAlignment="Left"   VerticalAlignment="Top" />
+                        <TextBox x:Name="smene" BorderBrush="#D5F5E3" AcceptsReturn="True" Grid.Column="1"  Grid.Row="1" FontSize="13" FontWeight="SemiBold" IsReadOnly="True" Focusable="False" />
+                        <TextBox x:Name="smene2" BorderBrush="#D5F5E3" AcceptsReturn="True" Grid.Column="2"  Grid.Row="1" FontSize="13" FontWeight="SemiBold" IsReadOnly="True" Focusable="False" />
+
+                        <Label Content="Broj lekova za validiranje"  Grid.Column="0" Grid.Row="2" FontSize="12" HorizontalAlignment="Left"   VerticalAlignment="Top" />
+                        <TextBox x:Name="lekoviValidacija"  AcceptsReturn="True"   BorderBrush="#D5F5E3"  Grid.Column="1"  Grid.Row="2" FontSize="13" FontWeight="SemiBold" IsReadOnly="True" Focusable="False" />
+                    </Grid>
+                    <Button Content="Odjava" Background="#A2D9CE" Foreground="#2C3E50" FontSize="14" HorizontalAlignment="Right" Margin="10"  Width="102" Click="Button_Click" BorderBrush="#FF1FEECD"  />
+
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Članci o zdravlju" FontSize="19" Background="#A2D9CE">
+                <StackPanel x:Name="clanciGrid" Background="#D5F5E3"  Orientation="Vertical">
+                    <Grid>
+                        <Border BorderBrush="#A2D9CE" BorderThickness="0,0,0,5" />
+
+                        <TextBox x:Name="search_article" Text="Unesite parametar pretrage"  HorizontalAlignment="Left" Margin="5" Background="#EBF5FB" FontSize="16" Foreground="#AAB7B8" Width="127" Height="30" CaretBrush="#FF1FEECD" IsKeyboardFocusedChanged="search_article_IsKeyboardFocusedChanged" KeyDown="search_article_KeyDown" />
+                        <Button Content="Novi članak" Margin="10" HorizontalAlignment="Right" Background="#A2D9CE" Click="Button_Click_7" BorderBrush="#FF1FEECD"/>
+                    </Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="300" Focusable="True" >
+                        <StackPanel x:Name="Articles" Orientation="Vertical" Focusable="True">
+                            <Border  >
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Pregled" FontSize="19" Background="#A2D9CE"  >
+                <StackPanel x:Name="upcomingExam" Background="#D5F5E3"  Orientation="Vertical" Height="300" >
+                    <Grid>
+                        <Border BorderBrush="#A2D9CE" BorderThickness="0,0,0,5" />
+                        <Label Content="Zakazani termini" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="300" >
+                            <Grid x:Name="Grid_Grid" Margin="0,0,0,32"/>
+                        </ScrollViewer>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Kartoni" FontSize="19" Background="#A2D9CE" Height="28" >
+                <StackPanel  x:Name="kartoniGrid" Background="#D5F5E3" SizeChanged="myGrid_SizeChanged">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="300"  >
+                                <Grid x:Name="Grid_Grid1" Margin="0,0,0,32"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </StackPanel>
+
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Hospitalizacije" FontSize="19" Background="#A2D9CE" >
+                <StackPanel  x:Name="hospitalizacijeGrid" Background="#D5F5E3" SizeChanged="myGrid_SizeChanged">
+                    <ScrollViewer x:Name="scroolHospitalization" VerticalScrollBarVisibility="auto" SizeChanged="scroolHospitalization_SizeChanged" >
+                        <StackPanel Name="Hospitalizations" Orientation="Vertical">
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="OperacijeTab" Header="Operacije" FontSize="19" Background="#A2D9CE"  >
+                <StackPanel  x:Name="operacijeGrid" Background="#D5F5E3" SizeChanged="myGrid_SizeChanged">
+                    <ScrollViewer x:Name="scroolOperation" VerticalScrollBarVisibility="auto" SizeChanged="scroolOperation_SizeChanged" >
+                        <StackPanel Name="Operations" Orientation="Vertical">
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Evidencija lekova" FontSize="19"  Background="#A2D9CE">
+                <StackPanel  x:Name="evidencijaGrid" Background="#D5F5E3" Orientation="Vertical" >
+                    <Label x:Name="validacijaLeka" Content="Validacija sastava leka" FontSize="17" FontWeight="Bold"/>
+                    <Border  BorderBrush="#A2D9CE" BorderThickness="5" CornerRadius="8,8,8,8"  Margin="5">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="180">
+                            <StackPanel x:Name="DrugValidationPanel" Orientation="Vertical" >
+                                <Border>
+
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                    <!--       <Border  BorderBrush="#FFA2D9CE" BorderThickness="8" CornerRadius="8,8,8,8"  Margin="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Naziv leka" Grid.Row="0" Grid.Column="0" Margin="10" FontSize="14" FontWeight="UltraLight"/>
+                            <Label Content="Klikom na dugme validirajte sastav leka" Margin="10" HorizontalContentAlignment="Center" Grid.Row="0" Grid.Column="1" FontSize="14" FontWeight="UltraLight" />
+
+                            <Label Content="Aerius" Grid.Row="1" FontSize="17"  Margin="10" Grid.Column="0" FontWeight="Bold"/>
+                            <Button Content="Validiraj" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="1" FontSize="15" Margin="95.2,10,68,10" Grid.Column="1" Background="#A2D9CE" Foreground="#FF63788C"  Click="Button_Click_2" Width="96" BorderBrush="#FF1FEECD"/>
+
+                            <Label Content="Paracetamol" FontSize="17"  Grid.Row="2" Margin="10" Grid.Column="0" FontWeight="Bold" />
+                            <Button Content="Validiraj" HorizontalAlignment="Center" Grid.Row="2"  Margin="95.2,10,68,10" Grid.Column="1" FontSize="15" FontWeight="Bold" Background="#A2D9CE" Foreground="#FF63788C" Click="Button_Click_2" Width="95" BorderBrush="#FF1FEECD"/> 
+                            
+                            <Label Content="Paracetamol" FontSize="17"  Grid.Row="2" Margin="10" Grid.Column="0" FontWeight="Bold" />
+                            <Button Content="Validiraj" HorizontalAlignment="Center" Grid.Row="2"  Margin="95.2,10,68,10" Grid.Column="1" FontSize="15" FontWeight="Bold" Background="#A2D9CE" Foreground="#FF63788C" Click="Button_Click_2" Width="95" BorderBrush="#FF1FEECD"/>
+                        </Grid>
+                    </Border>
+     -->
+                    <Label Content="Alternativni lekovi" FontSize="17" FontWeight="Bold" />
+                    <Border  BorderBrush="#A2D9CE" BorderThickness="5" CornerRadius="8,8,8,8"  Margin="5">
+                        <StackPanel Orientation="Vertical">
+
+                            <Button Content="Dodaj alternativni" Margin="20" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FF63788C" Background="#A2D9CE" Click="Button_Click_3" BorderBrush="#FF1FEECD"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Izmena naloga" FontSize="19" Background="#A2D9CE" >
+                <Grid  x:Name="izmenaGrid" Background="#D5F5E3" SizeChanged="myGrid_SizeChanged" >
+                    <ScrollViewer x:Name="scrool" VerticalScrollBarVisibility="Auto" Focusable="True" SizeChanged="ScrollViewer_SizeChanged" >
+
+                        <StackPanel Background="#D5F5E3" Orientation="Vertical">
+                            <StackPanel  Orientation="Horizontal">
+
+                                <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,0,0">
+                                    <Grid.RowDefinitions >
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Grid.Row="0" Foreground="#2C3E50" Content="Ime i prezime" FontSize="14" />
+                                    <Label Grid.Column="0" Grid.Row="1" Foreground="#2C3E50" Content="Datum rođenja" FontSize="14" />
+                                    <Label Grid.Column="0" Grid.Row="2" Foreground="#2C3E50" Content="Jmbg" FontSize="14" />
+                                    <Label Grid.Column="0" Grid.Row="3" Foreground="#2C3E50" Content="Email" FontSize="14" />
+                                    <Label Grid.Column="0" Grid.Row="4" Foreground="#2C3E50" Content="Telefon" FontSize="14" />
+                                    <Label Grid.Column="0" Grid.Row="5" Foreground="#2C3E50" Content="Adresa" FontSize="14" />
+
+                                    <TextBox x:Name="izImePrzTxt" BorderBrush="Black" Width="360" Grid.Column="1" Grid.Row="0" Margin="5" HorizontalAlignment="Right" FontSize="12" CaretBrush="#FF1FEECD">
+                                        <TextBox.Text>
+                                            <Binding Path="TestImePrezime" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <val:StringValidationRule  ValidationStep="RawProposedValue" />
+
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" FontSize="10" Foreground="Red"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+
+
+                                    <DatePicker Name="LocaleDatePicker" Width="360" Grid.Column="1" Grid.Row="1"   materialDesign:HintAssist.Hint="Unesite datum u formatu dd.mm.gggg" FontSize="10" Margin="4.4,0,5.2,0" VerticalAlignment="Bottom" />
+                                    <TextBox x:Name="izJmbgTxt" BorderBrush="Black" Width="360" Grid.Column="1" Grid.Row="2"  Margin="5" HorizontalAlignment="Right" FontSize="12"  CaretBrush="#FF1FEECD" >
+                                        <TextBox.Text>
+                                            <Binding Path="TestJMBG" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <val:JMBGValidationRule ValidationStep="RawProposedValue"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" FontSize="10"  Foreground="Red"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+
+
+                                    <TextBox x:Name="izEmailTxt" BorderBrush="Black" Width="360" Grid.Column="1" Grid.Row="3"  Margin="5" HorizontalAlignment="Right" FontSize="12" CaretBrush="#FF1FEECD" >
+                                        <TextBox.Text>
+                                            <Binding Path="TestEmail" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <val:EmailValidationRule ValidationStep="RawProposedValue"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" FontSize="10"  Foreground="Red"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+
+                                    <TextBox x:Name="izTelTxt" BorderBrush="Black" Width="360" Grid.Column="1" Grid.Row="4"  Margin="5" HorizontalAlignment="Right" FontSize="12"  CaretBrush="#FF1FEECD" >
+                                        <TextBox.Text>
+                                            <Binding Path="TestPhoneNumber" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <val:TelephoneNumberValidationRule ValidationStep="RawProposedValue"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" FontSize="10"  Foreground="Red"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+                                    <WrapPanel Grid.Row="5" Grid.Column="1">
+                                        <ComboBox  x:Name="StateCombo" Width="120"  materialDesign:HintAssist.Hint="Drzava"  DisplayMemberPath="Name" SelectionChanged="UpdateTownAddress" IsTextSearchEnabled="True" IsEditable="True"/>
+                                        <ComboBox x:Name="TownCombo" Width="120" materialDesign:HintAssist.Hint="Grad" DisplayMemberPath="Name" SelectionChanged="UpdateAddress" IsTextSearchEnabled="True" IsEditable="True"/>
+                                        <ComboBox x:Name="AddressCombo" Width="120" materialDesign:HintAssist.Hint="Ulica" DisplayMemberPath="FullAddress" IsTextSearchEnabled="True" IsEditable="True"/>
+                                    </WrapPanel>
+                                    <!--<DockPanel Margin="3" Grid.Row="5" Grid.Column="1">
+                                        <WrapPanel DockPanel.Dock="Left" HorizontalAlignment="Left" Height="40" VerticalAlignment="Bottom" >
+                                            <ComboBox x:Name="StateCombo" Width="20"  materialDesign:HintAssist.Hint="Drzava" DisplayMemberPath="Name" SelectionChanged="UpdateTownAddress" IsTextSearchEnabled="True"
+                                                                IsEditable="True"/>
+                                            <ComboBox x:Name="TownCombo" Width="150" materialDesign:HintAssist.Hint="Grad" DisplayMemberPath="Name" SelectionChanged="UpdateAddress" IsTextSearchEnabled="True"
+                                                                IsEditable="True"/>
+                                            <ComboBox x:Name="AddressCombo" Width="200" materialDesign:HintAssist.Hint="Ulica" DisplayMemberPath="FullAddress" IsTextSearchEnabled="True" SelectionChanged="AddressCombo_SelectionChanged"
+                                                                IsEditable="True"/>
+                                        </WrapPanel>
+                                    </DockPanel>-->
+
+
+                                </Grid>
+                            </StackPanel>
+                            <Button Content="Potvrdi izmene" HorizontalAlignment="Right" Foreground="#2C3E50" FontSize="16" Margin="10,10,10,10" Click="Button_Click_4" BorderBrush="#FF1FEECD" Height="29" >
+                                <Button.Background>
+                                    <SolidColorBrush Color="{DynamicResource Color1}"/>
+                                </Button.Background>
+                            </Button>
+                            <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Foreground="#2C3E50" Content="Trenutna lozinka" FontSize="14" Margin="10,0,0,0"/>
+                                <Label Grid.Column="0" Grid.Row="1" Foreground="#2C3E50" Content="Nova lozinka" FontSize="14" Margin="10,0,0,0" />
+                                <Label Grid.Column="0" Grid.Row="2" Foreground="#2C3E50" Content="Potvrda lozinke" FontSize="14" Margin="10,0,0,0"/>
+
+                                <PasswordBox x:Name="LozinkaTxt"  BorderBrush="Black" Width="200" Grid.Column="1" Grid.Row="0" Margin="5" HorizontalAlignment="Right" FontSize="12" CaretBrush="#FF1FEECD" />
+                                <PasswordBox x:Name="NovaLozTxt" BorderBrush="Black" Width="200" Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Right" FontSize="12" CaretBrush="#FF1FEECD" IsKeyboardFocusedChanged="LozTxt_IsKeyboardFocusedChanged" />
+                                <PasswordBox x:Name="PotvNovaLozTxt" BorderBrush="Black" Width="200" Grid.Column="1" Grid.Row="2" Margin="5" HorizontalAlignment="Right" FontSize="12" CaretBrush="#FF1FEECD" IsKeyboardFocusedChanged="LozTxt_IsKeyboardFocusedChanged"/>
+
+                                <TextBlock x:Name="obavesti" Text="" FontSize="12" Grid.Column="2" Grid.Row="2" Foreground="#FF18C7C4" ></TextBlock>
+                            </Grid>
+                            <Button Content="Izmeni lozinku" HorizontalAlignment="Right" FontSize="16" Foreground="#2C3E50" Background="#A2D9CE" Margin="10,10,10,10" Click="Button_Click_5" BorderBrush="#FF1FEECD"/>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Utisak o aplikaciji" FontSize="19" Background="#A2D9CE">
+                <StackPanel x:Name="utisakGrid" Orientation="Vertical" Background="#D5F5E3" SizeChanged="myGrid_SizeChanged">
+                    <Label Content="Ostavite vaše mišljenje!" HorizontalAlignment="Center" FontSize="25"  Foreground="#2C3E50"  Margin="20"/>
+                    <TextBox x:Name="misljenje" FontSize="14" Background="#EAFAF1" CaretBrush="#FF1FEECD" AcceptsReturn="True" />
+                    <Button Content="Pošalji" FontSize="17" HorizontalAlignment="Right" Margin="0,20,19.6,20" Background="#A2D9CE" Foreground="#2C3E50" BorderBrush="#FF1FEECD" Click="Button_Click_8" />
+                </StackPanel>
+            </TabItem>
+
+        </TabControl>
+
+    </StackPanel>
+</Window>
