@@ -17,9 +17,9 @@ namespace PSW_Web_app.Controllers
     public class ExaminationController : ControllerBase
     {
         private bolnica.Controller.IExaminationController _examinationController= new bolnica.Controller.ExaminationController();
-       
+        User user;
         [HttpGet]
-        public IActionResult GetFinishedxaminationsByUser(User user)
+        public IActionResult GetFinishedxaminationsByUser()
         {
             _examinationController.GetFinishedxaminationsByUser(user);
             List<ExaminationDto> resultDto = new List<ExaminationDto>();

@@ -1,3 +1,5 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Director;
 using System;
@@ -11,12 +13,23 @@ namespace Repository
     {
         private readonly IRoomTypeRepository _roomTypeRepository;
         private readonly IEquipmentRepository _equipmentRepository;
+        private readonly MyDbContext myDbContext;
 
-        public RoomRepository(ICSVStream<Room> stream, ISequencer<long> sequencer, IRoomTypeRepository roomTypeRepository, IEquipmentRepository equipmentRepository)
-             : base(stream, sequencer)
+        /*public RoomRepository(IRoomTypeRepository roomTypeRepository, IEquipmentRepository equipmentRepository)
         {
             _roomTypeRepository = roomTypeRepository;
             _equipmentRepository = equipmentRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
+
+        public RoomRepository(ICSVStream<Room> stream, ISequencer<long> sequencer, IRoomTypeRepository roomTypeRepository, IEquipmentRepository equipmentRepository)
+     : base(stream, sequencer)
+        {
+            _roomTypeRepository = roomTypeRepository;
+            _equipmentRepository = equipmentRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
         }
 
         public IEnumerable<Room> GetAllEager()
@@ -57,7 +70,7 @@ namespace Repository
 
         public Room GetEager(long id)
         {
-            Room room = base.Get(id);
+            Room room = myDbContext.Room.Find(id);
             room.RoomType = _roomTypeRepository.Get(room.RoomType.GetId());
 
             foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
@@ -70,8 +83,29 @@ namespace Repository
             return room;
         }
 
+        public Room Save(Room entity)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Edit(Room entity)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Delete(Room entity)
+        {
+            throw new NotImplementedException();
+        }
 
+        public IEnumerable<Room> GetAll()
+        {
+            List<Room> result = new List<Room>();
+            myDbContext.Room.ToList().ForEach(room => result.Add(room));
+            return result;
+        }
+
+        public Room Get(long id)
+            => myDbContext.Room.FirstOrDefault(room => room.Id == id);
     }
 }

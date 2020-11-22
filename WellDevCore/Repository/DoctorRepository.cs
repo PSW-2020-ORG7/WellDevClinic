@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using bolnica.Repository;
 using System.Linq;
 using Service;
+using bolnica.Model;
+using bolnica;
 
 namespace Repository
 {
@@ -17,9 +19,23 @@ namespace Repository
         private readonly ITownRepository _townRepository;
         private readonly IStateRepository _stateRepository;
 
+        private readonly MyDbContext myDbContext;
+
+        /*public DoctorRepository(IBusinessDayRepository businessDayRepository, ISpecialityRepository specialityRepository, IDoctorGradeRepository doctorGradeRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository)
+        {
+            _businessDayRepository = businessDayRepository;
+            _specialityRepository = specialityRepository;
+            _doctorGradeRepository = doctorGradeRepository;
+            _addressRepository = addressRepository;
+            _townRepository = townRepository;
+            _stateRepository = stateRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
+
         public DoctorRepository(ICSVStream<Doctor> stream, ISequencer<long> sequencer, IBusinessDayRepository businessDayRepository, ISpecialityRepository speciality,
-            IDoctorGradeRepository doctorGrade, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository)
-            : base(stream, sequencer)
+    IDoctorGradeRepository doctorGrade, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository)
+    : base(stream, sequencer)
         {
             _specialityRepository = speciality;
             _businessDayRepository = businessDayRepository;
@@ -27,6 +43,8 @@ namespace Repository
             _addressRepository = addressRepository;
             _townRepository = townRepository;
             _stateRepository = stateRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
         }
 
         public IEnumerable<Doctor> GetAllEager()
@@ -84,6 +102,31 @@ namespace Repository
             }
             return retVal;
         }
+
+        public Doctor Save(Doctor entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Doctor entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Doctor entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Doctor> GetAll()
+        {
+            List<Doctor> result = new List<Doctor>();
+            myDbContext.Doctor.ToList().ForEach(doctor => result.Add(doctor));
+            return result;
+        }
+
+        public Doctor Get(long id)
+            => myDbContext.Doctor.FirstOrDefault(doctor => doctor.Id == id);
 
     }
 }

@@ -1,3 +1,5 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Director;
 using Model.Doctor;
@@ -15,12 +17,45 @@ namespace Repository
         private readonly IRoomRepository _roomRepository;
         private readonly IPatientRepository _patientRepository;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly MyDbContext myDbContext;
+
+        /*public HospitalizationRepository(IRoomRepository roomRepository, IPatientRepository patientRepository, IDoctorRepository doctorRepository)
+        {
+            _roomRepository = roomRepository;
+            _patientRepository = patientRepository;
+            _doctorRepository = doctorRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
+
         public HospitalizationRepository(ICSVStream<Hospitalization> stream, ISequencer<long> sequencer, IRoomRepository roomRepository, IPatientRepository patientRepository, IDoctorRepository doctorRepository)
-            : base(stream, sequencer)
+    : base(stream, sequencer)
         {
             _patientRepository = patientRepository;
             _roomRepository = roomRepository;
             _doctorRepository = doctorRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }
+
+        public void Delete(Hospitalization entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Hospitalization entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Hospitalization Get(long id)
+            => myDbContext.Hospitalization.FirstOrDefault(hospitalization => hospitalization.Id == id);
+
+        public IEnumerable<Hospitalization> GetAll()
+        {
+            List<Hospitalization> result = new List<Hospitalization>();
+            myDbContext.Hospitalization.ToList().ForEach(hospitalization => result.Add(hospitalization));
+            return result;
         }
 
         public IEnumerable<Hospitalization> GetAllEager()
@@ -56,5 +91,9 @@ namespace Repository
             return retVal;
         }
 
+        public Hospitalization Save(Hospitalization entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

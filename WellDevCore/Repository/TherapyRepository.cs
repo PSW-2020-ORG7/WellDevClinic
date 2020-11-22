@@ -1,4 +1,5 @@
-﻿using Model.PatientSecretary;
+﻿using bolnica.Model;
+using Model.PatientSecretary;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,41 @@ namespace bolnica.Repository
    public class TherapyRepository : CSVRepository<Therapy, long>, ITherapyRepository
     {
         private readonly IDrugRepository _drugRepository;
+        private readonly MyDbContext myDbContext;
+
+        /*public TherapyRepository(IDrugRepository drugRepository)
+        {
+            _drugRepository = drugRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
+
         public TherapyRepository(ICSVStream<Therapy> stream, ISequencer<long> sequencer, IDrugRepository drugRepo)
           : base(stream, sequencer)
         {
             _drugRepository = drugRepo;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }
+
+        public void Delete(Therapy entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Therapy entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Therapy Get(long id)
+            => myDbContext.Therapy.FirstOrDefault(therapy => therapy.Id == id);
+
+        public IEnumerable<Therapy> GetAll()
+        {
+            List<Therapy> result = new List<Therapy>();
+            myDbContext.Therapy.ToList().ForEach(therapy => result.Add(therapy));
+            return result;
         }
 
         public IEnumerable<Therapy> GetAllEager()
@@ -40,5 +72,9 @@ namespace bolnica.Repository
             return therapy;
         }
 
+        public Therapy Save(Therapy entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
