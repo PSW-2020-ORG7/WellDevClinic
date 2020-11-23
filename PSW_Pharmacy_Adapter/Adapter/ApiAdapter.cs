@@ -13,10 +13,10 @@ namespace PSW_Pharmacy_Adapter.Adapter
         {
             var client = new RestSharp.RestClient("http://localhost:4200");
             var request = new RestRequest("/api");
-            var response = client.Get<List<DTO.ApiDTO>>(request);
+            var response = client.Get<List<Model.Api>>(request);
             //Console.WriteLine("Status: " + response.StatusCode.ToString());
-            List<DTO.ApiDTO> result = response.Data;
-            result.ForEach(api => Console.WriteLine(api.Api));
+            List<Model.Api> result = response.Data;
+            result.ForEach(api => Console.WriteLine(api.ApiKey));
         }
     }
 }
