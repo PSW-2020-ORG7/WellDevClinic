@@ -1,4 +1,5 @@
-
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Doctor;
 using System;
@@ -8,11 +9,46 @@ using System.Linq;
 
 namespace Repository
 {
-   public class DoctorGradeRepository : CSVRepository<DoctorGrade,long> ,IDoctorGradeRepository
+   public class DoctorGradeRepository : IDoctorGradeRepository
    {
-        public DoctorGradeRepository(ICSVStream<DoctorGrade> stream, ISequencer<long> sequencer) : base(stream, sequencer)
+        private readonly MyDbContext myDbContext;
+        public DoctorGradeRepository()
         {
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }
 
+        public void Delete(DoctorGrade entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(DoctorGrade entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DoctorGrade Get(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<DoctorGrade> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DoctorGrade Save(DoctorGrade entity)
+        {
+            DoctorGrade result = myDbContext.DoctorGrade.FirstOrDefault(doctorGrade => doctorGrade.Id == entity.Id);
+            if (result == null)
+            {
+                myDbContext.DoctorGrade.Add(entity);
+                myDbContext.SaveChanges();
+                return entity;
+            }
+
+            return null;
         }
     }
 }

@@ -1,3 +1,4 @@
+using bolnica.Model.Dto;
 using Castle.Components.DictionaryAdapter;
 using Repository;
 using System;
@@ -14,13 +15,15 @@ namespace Model.Doctor
         [NotMapped] public Dictionary<String, double> GradesForEachQuestions { get; set; }
         public int NumberOfGrades { get; set; }
 
+        public List<GradeDTO> Grades { get; set; }
+
         public long Id { get; set; }
 
         public double AverageGrade
         {
             get
             {
-                return GradesForEachQuestions.Values.Sum()/ GradesForEachQuestions.Keys.Count;
+                return 5;
             }
             set
             {
@@ -30,6 +33,11 @@ namespace Model.Doctor
 
 
         public DoctorGrade() { }
+
+        public DoctorGrade(List<GradeDTO> grades)
+        {
+            Grades = grades;
+        }
         public DoctorGrade(long id, int numberOfGrades)
         {
             NumberOfGrades = numberOfGrades;

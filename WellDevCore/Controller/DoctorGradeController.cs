@@ -2,6 +2,7 @@ using bolnica.Controller;
 using bolnica.Service;
 using Model.Doctor;
 using Model.Users;
+using Service;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +10,12 @@ namespace Controller
 {
     public class DoctorGradeController : IDoctorGradeController
     {
-        private readonly IDoctorGradeService _doctorGradeService;
+        private readonly IDoctorGradeService _doctorGradeService = new DoctorGradeService();
+
+        public DoctorGradeController()
+        {
+
+        }
 
         public DoctorGradeController(IDoctorGradeService doctorGradeService)
         {

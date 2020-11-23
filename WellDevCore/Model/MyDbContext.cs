@@ -43,6 +43,8 @@ namespace bolnica.Model
 
         public DbSet<ExaminationDTO> ExaminationDTO { get; set; }
 
+        public DbSet<ExaminationDTO> GradeDTO { get; set; }
+
         public DbSet<NotifyDoctorBusinessDay> NotifyDoctorBusinessDay { get; set; }
 
         public DbSet<PatientNotification> PatientNotification { get; set; }

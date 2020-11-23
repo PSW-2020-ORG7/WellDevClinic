@@ -9,8 +9,13 @@ namespace Service
 {
     public class DoctorGradeService : IDoctorGradeService
     {
-   
-        private readonly IDoctorGradeRepository _doctorGradeRepository;
+
+        private readonly IDoctorGradeRepository _doctorGradeRepository = new DoctorGradeRepository();
+
+        public DoctorGradeService()
+        {
+
+        }
 
         public DoctorGradeService(IDoctorGradeRepository doctorGradeRepository)
         {
