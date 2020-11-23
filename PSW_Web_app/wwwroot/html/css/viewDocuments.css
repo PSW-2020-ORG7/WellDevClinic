@@ -8,6 +8,9 @@
 tr {
     text-align: center;
 }
+.firstTd{
+    width:150px
+}
 
 h1 {
     text-align: center;
@@ -62,4 +65,5 @@ input[type=button] {
 
 label {
     color: #009999;
+    width: 100%;
 }

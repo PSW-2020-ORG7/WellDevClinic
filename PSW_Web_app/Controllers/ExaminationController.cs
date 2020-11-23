@@ -17,8 +17,9 @@ namespace PSW_Web_app.Controllers
     public class ExaminationController : ControllerBase
     {
         private bolnica.Controller.IExaminationController _examinationController= new bolnica.Controller.ExaminationController();
-       
-        public IActionResult GetFinishedxaminationsByUser(User user)
+
+        [HttpGet]
+        public List<ExaminationDto> GetFinishedxaminationsByUser(User user)
         {
             _examinationController.GetFinishedxaminationsByUser(user);
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
@@ -28,7 +29,7 @@ namespace PSW_Web_app.Controllers
                 PrescriptionDto prescriptionDto = PrescriptionAdapter.PrescriptionToPrescriptionDto(examination.Prescription);
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination, referralDto, prescriptionDto)); 
             }
-            return Ok(resultDto);
+            return resultDto;
         }
 
     }
