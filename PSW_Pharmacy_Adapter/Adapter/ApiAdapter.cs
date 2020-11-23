@@ -16,7 +16,7 @@ namespace PSW_Pharmacy_Adapter.Adapter
             var response = client.Get<List<DTO.ApiDTO>>(request);
             //Console.WriteLine("Status: " + response.StatusCode.ToString());
             List<DTO.ApiDTO> result = response.Data;
-            result.ForEach(api => Console.WriteLine(api.ToString()));
+            result.ForEach(api => Console.WriteLine(api.Api));
         }
     }
 }

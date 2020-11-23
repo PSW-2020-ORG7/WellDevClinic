@@ -8,14 +8,15 @@ namespace PSW_Pharmacy_Adapter.DTO
 {
     public class ApiDTO
     {
-        public string api { get; set; }
-        public string url { get; set; }
+        public string Api { get; set; }
+        public string Url { get; set; }
 
         public ApiDTO() { }
 
-        public override string ToString()
+        public ApiDTO(string api, string url)
         {
-            return this.api;
+            Api = api;
+            Url = url;
         }
     }
 }
