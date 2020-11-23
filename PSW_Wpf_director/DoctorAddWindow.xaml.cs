@@ -203,7 +203,7 @@ namespace PSW_Wpf_director
                 if (_doctorController.CheckJMBGUnique(JMBG))
                 {
                     var doctor = new Doctor(Ime, Prezime, JMBG, EMAIL, Phone, (DateTime)datum, address, JMBG, JMBG, null, (Speciality)comboSpeciality.SelectedItem, null, null, null);
-                    doctor.Image = new Uri("C:/Users/Tamara Kovacevic/Desktop/hospital_system/code/Resources/Images/Anonimus.Jpeg");
+                    //doctor.Image = new Uri("C:/Users/Tamara Kovacevic/Desktop/hospital_system/code/Resources/Images/Anonimus.Jpeg");
                     _doctorController.Save(doctor);
                 }
                 else
