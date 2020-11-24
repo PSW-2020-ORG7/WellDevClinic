@@ -8,6 +8,7 @@ namespace PSW_Pharmacy_Adapter.Adapter
 {
     public class ApiAdapter
     {
+        public ApiAdapter() { }
 
         private static void SendGetRequestWithRestSharp()
         {

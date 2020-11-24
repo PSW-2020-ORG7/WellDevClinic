@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Repository;
+using PSW_Pharmacy_Adapter.Repository.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -12,6 +14,8 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class PharmacyController : ControllerBase
     {
+        IPharmacyAPIRepository pr = new PharmacyAPIRepository();
+
         [HttpPost]
         [Route("add")]
         public bool AddPharmacy([FromBody]Api api)  //TODO: Proveriti jel valja parametar
@@ -21,17 +25,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [HttpGet]
         [Route("{id?}")]
-        public Api GetPharmacy(string id)
-        {
-            throw new NotImplementedException();
-        }
+        public Api GetPharmacy(string id) =>
+            pr.Get(id);
 
         [HttpGet]
         [Route("all")]
-        public IEnumerable<Api> GetAllPharmacies()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Api> GetAllPharmacies() =>
+            pr.GetAll();
 
         [HttpPut]
         [Route("/delete/{id?}")]
