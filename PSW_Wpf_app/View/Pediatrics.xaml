@@ -23,5 +23,6 @@
                 <DataGridTextColumn Header="Additional Information" Width="*" Binding="{Binding Info}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Save" Command="{ Binding SavePediatricsCommand}" HorizontalAlignment="Left" Margin="203,26,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

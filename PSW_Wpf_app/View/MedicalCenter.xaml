@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="610">
     <Grid>
+        <Button Content="Save" Command="{Binding SaveMedicalCommand}" Margin="261,44,0,0" HorizontalAlignment="Left" Width="97" Height="23" VerticalAlignment="Top" ></Button>
+
         <DataGrid  
             ItemsSource="{Binding FloorElementsM}" 
             HorizontalAlignment="Left"

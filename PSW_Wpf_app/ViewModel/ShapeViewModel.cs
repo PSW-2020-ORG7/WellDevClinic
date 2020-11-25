@@ -72,6 +72,23 @@ namespace PSW_Wpf_app.ViewModel
             return floors;
         }
 
+        public static void WriteFloor(List<FloorElement> elements, string path)
+        {
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("Error loading file!");
+
+            }
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                foreach (FloorElement item in elements)
+                {
+                    sw.WriteLine($"{item.Type},{item.Name},{item.Width},{item.Height},{item.X},{item.Y},{item.Floor},{item.Info}");
+                }
+            }
+        }
+
+
         private List<GraphicElement> elements;
         private List<GraphicElement> buildings;
         private List<FloorElement> floors;

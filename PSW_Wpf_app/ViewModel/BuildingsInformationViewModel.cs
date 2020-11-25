@@ -55,9 +55,33 @@ namespace PSW_Wpf_app.ViewModel
             set { buildings = value; }
         }
 
- 
+        public MyICommand SaveMedicalCommand { get; set; }
+        public MyICommand SaveSurgicalCommand { get; set; }
+        public MyICommand SavePediatricsCommand { get; set; }
+
+        public void OnSaveMedical()
+        {
+            ShapeViewModel.WriteFloor(floorElementsM, pathMedical);
+        }
+
+        public void OnSaveSurgical()
+        {
+            ShapeViewModel.WriteFloor(floorElements, pathSurgical);
+        }
+
+        public void OnSavePediatrics()
+        {
+            ShapeViewModel.WriteFloor(floorElementsP, pathPediatrics);
+        }
+
+
         public BuildingsInformationViewModel()
         {
+
+            SaveMedicalCommand = new MyICommand(OnSaveMedical);
+            SaveSurgicalCommand = new MyICommand(OnSaveSurgical);
+            SavePediatricsCommand = new MyICommand(OnSavePediatrics);
+
             floorElements = new List<FloorElement>();
 
             floorElements = ShapeViewModel.ReadFloor(pathSurgical);
