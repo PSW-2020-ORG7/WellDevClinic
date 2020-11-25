@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 using System.Windows;
 using System.Windows.Input;
 using PSW_Wpf_app.Drawing;
+using System;
 
-namespace WpfApp.ViewModel
+namespace PSW_Wpf_app.ViewModel
 {
     public class ChoesenFloorViewModel : BindableBase
     {

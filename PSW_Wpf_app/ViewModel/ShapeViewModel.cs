@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 
-namespace WpfApp.ViewModel
+namespace PSW_Wpf_app.ViewModel
 {
     public class ShapeViewModel
     {
@@ -63,6 +63,7 @@ namespace WpfApp.ViewModel
                     {
                         FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7]);
                         floors.Add(shape);
+                        
                     }
                     catch { }
                 }
@@ -70,7 +71,6 @@ namespace WpfApp.ViewModel
 
             return floors;
         }
-
 
         private List<GraphicElement> elements;
         private List<GraphicElement> buildings;

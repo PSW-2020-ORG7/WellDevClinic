@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 
 namespace PSW_Wpf_app.DrawBuildingElements
 {
