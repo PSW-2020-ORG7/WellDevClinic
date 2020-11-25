@@ -1,0 +1,23 @@
+﻿<Window x:Class="PSW_Wpf_app.View.BuildingsInformationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSW_Wpf_app.View"
+        xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel"
+
+        mc:Ignorable="d"
+        Title="BuildingsInformationView" Height="500" Width="900">
+    <Window.Resources>
+        <viewmodel:BuildingsInformationViewModel x:Key="vm"></viewmodel:BuildingsInformationViewModel>
+    </Window.Resources>
+    <Grid Background="Azure" DataContext="{Binding Source={StaticResource vm}}" Margin="0,0,2,0">
+        <UserControl Name="user2" Margin="208,0,10,1"></UserControl>
+        <Grid Background="CadetBlue" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="208">
+            <Button  x:Name="btn1" Content="Surgical" Background="Azure"  HorizontalAlignment="Left" Height="63" Margin="10,38,0,0" VerticalAlignment="Top" Width="174" Click="OnSurgical"/>
+            <Button  Background="Azure" Content="Medical Center" HorizontalAlignment="Left" Height="63" Margin="10,155,0,251" VerticalAlignment="Center" Width="174" Click="OnMedicalCenter"/>
+            <Button  Background="Azure" Content="Pediatrics" HorizontalAlignment="Left" Height="63" Margin="10,0,0,133" VerticalAlignment="Bottom" Width="174" Click="OnPediatrics"/>
+        </Grid>
+
+    </Grid>
+</Window>

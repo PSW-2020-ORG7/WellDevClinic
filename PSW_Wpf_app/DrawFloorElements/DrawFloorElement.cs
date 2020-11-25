@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows;

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using PSW_Wpf_app.ViewModel;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,23 +11,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PSW_Wpf_app.Model;
-using PSW_Wpf_app.ViewModel;
 
 namespace PSW_Wpf_app.View
 {
     /// <summary>
-    /// Interaction logic for MainBuildings.xaml
+    /// Interaction logic for Pediatrics.xaml
     /// </summary>
-    public partial class MainBuildingView : UserControl
+    public partial class Pediatrics : UserControl
     {
-
-        public MainBuildingView()
+        public Pediatrics()
         {
             InitializeComponent();
-            DataContext = new MainBuildingsViewModel(CanvasBuilding);
-
-
+            DataContext = new BuildingsInformationViewModel();
         }
     }
 }
