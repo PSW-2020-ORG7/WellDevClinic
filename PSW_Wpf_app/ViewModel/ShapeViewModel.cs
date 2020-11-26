@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 
-namespace WpfApp.ViewModel
+namespace PSW_Wpf_app.ViewModel
 {
     public class ShapeViewModel
     {
@@ -63,12 +63,29 @@ namespace WpfApp.ViewModel
                     {
                         FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7]);
                         floors.Add(shape);
+                        
                     }
                     catch { }
                 }
             }
 
             return floors;
+        }
+
+        public static void WriteFloor(List<FloorElement> elements, string path)
+        {
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("Error loading file!");
+
+            }
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                foreach (FloorElement item in elements)
+                {
+                    sw.WriteLine($"{item.Type},{item.Name},{item.Width},{item.Height},{item.X},{item.Y},{item.Floor},{item.Info}");
+                }
+            }
         }
 
 
