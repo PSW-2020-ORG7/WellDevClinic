@@ -12,7 +12,7 @@
     </Window.Resources>
     <Grid Background="CadetBlue">
         <DataGrid  
-            ItemsSource="{Binding SearchedObjectresults}" 
+            ItemsSource="{Binding SearchedObjectResults}" 
             HorizontalAlignment="Center"
             Height="338" 
             VerticalAlignment="Center" 

@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace PSW_Wpf_app.ViewModel
 {
-    class SearchResultViewModel : BindableBase
+    public class SearchResultViewModel : BindableBase
     {
 
-        private List<FloorElement> searchedObjectresults;
+        private List<FloorElement> searchedObjectResults;
         private List<FloorElement> floorSurgical;
         private List<FloorElement> floorsMedical;
         private List<FloorElement> floorsPediatrics;
@@ -18,15 +19,15 @@ namespace PSW_Wpf_app.ViewModel
         string pathMedical = "../../../Data/medicalCenter.txt";
         string pathPediatrics = "../../../Data/pediatrics.txt";
 
-        public List<FloorElement> SearchedObjectresults
+        public List<FloorElement> SearchedObjectResults
         {
-            get { return searchedObjectresults; }
-            set { searchedObjectresults = value; }
+            get { return searchedObjectResults; }
+            set { searchedObjectResults = value; }
         }
 
         public SearchResultViewModel(string searchedObject)
         {
-            searchedObjectresults = new List<FloorElement>();
+            searchedObjectResults = new List<FloorElement>();
             floorSurgical = ShapeViewModel.ReadFloor(pathSurgical);
             floorsMedical = ShapeViewModel.ReadFloor(pathMedical);
             floorsPediatrics = ShapeViewModel.ReadFloor(pathPediatrics);
@@ -38,8 +39,13 @@ namespace PSW_Wpf_app.ViewModel
             {
                 if (floor.Type.Equals(searchedObject) || (floor.Name.Equals(searchedObject)))
                 {
-                    searchedObjectresults.Add(floor);
+                    searchedObjectResults.Add(floor);
                 }
+            }
+
+            if (searchedObjectResults.Count == 0)
+            {
+                MessageBox.Show("Object doesn't exist!");
             }
         }
     }
