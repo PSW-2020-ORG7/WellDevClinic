@@ -73,6 +73,19 @@ namespace PSW_Wpf_app
             BuildingsInformationView buildingsInformationView = new BuildingsInformationView();
             buildingsInformationView.Show();
         }
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+            if (SearchBuilding.Text == "")
+            {
+                MessageBox.Show("You must enter room for search.");
+            }
+            else
+            {
+                SearchResultView searchResultView = new SearchResultView(SearchBuilding.Text);
+                searchResultView.Show();
+            }
+        }
     }
 
 }

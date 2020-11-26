@@ -15,9 +15,9 @@ namespace PSW_Wpf_app.ViewModel
         public List<GraphicElement> buildings;
         public List<GraphicElement> elements;
 
-        string pathSurgical = @"~\..\..\..\surgicalBranchesFloors.txt";
-        string pathMedical = @"~\..\..\..\medicalCenter.txt";
-        string pathPediatrics = @"~\..\..\..\pediatrics.txt";
+        string pathSurgical = "../../../Data/surgicalBranchesFloors.txt";
+        string pathMedical = "../../../Data/medicalCenter.txt";
+        string pathPediatrics = "../../../Data/pediatrics.txt";
 
         public string Building
         {

@@ -1,0 +1,29 @@
+﻿<Window x:Class="PSW_Wpf_app.View.SearchResultView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSW_Wpf_app.View"
+        xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel" 
+        mc:Ignorable="d"
+        Title="SearchResultView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <viewmodel:SearchResultViewModel x:Key="vm"></viewmodel:SearchResultViewModel>
+    </Window.Resources>
+    <Grid Background="CadetBlue">
+        <DataGrid  
+            ItemsSource="{Binding SearchedObjectresults}" 
+            HorizontalAlignment="Center"
+            Height="338" 
+            VerticalAlignment="Center" 
+            Width="581"
+            AutoGenerateColumns="False"
+			CanUserAddRows="False"
+			SelectionMode="Extended">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Floor" Width="*" Binding="{Binding Floor}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
