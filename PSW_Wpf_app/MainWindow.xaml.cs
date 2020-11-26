@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,6 +74,26 @@ namespace PSW_Wpf_app
             BuildingsInformationView buildingsInformationView = new BuildingsInformationView();
             buildingsInformationView.Show();
         }
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+            if (SearchBuilding.Text == "")
+            {
+                MessageBox.Show("You must enter room for search.");
+            }
+            else
+            {
+                SearchResultView searchResultView = new SearchResultView(SearchBuilding.Text);
+                searchResultView.Show();
+            }
+        }
+
+        private void ValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9a-zA-Z_]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
     }
 
 }
