@@ -10,21 +10,20 @@ using System.Linq;
 
 namespace Repository
 {
-   public class DoctorGradeRepository : CSVRepository<DoctorGrade, long>, IDoctorGradeRepository
+   public class DoctorGradeRepository : IDoctorGradeRepository
    {
         private readonly MyDbContext myDbContext;
 
-        /*public DoctorGradeRepository()
+        public DoctorGradeRepository(MyDbContext context)
+        {
+            myDbContext = context;
+        }
+
+        /*public DoctorGradeRepository(ICSVStream<DoctorGrade> stream, ISequencer<long> sequencer) : base(stream, sequencer)
         {
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
         }*/
-
-        public DoctorGradeRepository(ICSVStream<DoctorGrade> stream, ISequencer<long> sequencer) : base(stream, sequencer)
-        {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
 
         public void Delete(DoctorGrade entity)
         {
@@ -39,7 +38,7 @@ namespace Repository
         public DoctorGrade Get(long id)
             => myDbContext.DoctorGrade.FirstOrDefault(doctorGrade => doctorGrade.Id == id);
 
-        public IEnumerable<DoctorGrade> GetAll()
+        public IEnumerable<DoctorGrade> GetEager()
         {
             List<DoctorGrade> result = new List<DoctorGrade>();
             myDbContext.DoctorGrade.ToList().ForEach(doctorGrade => result.Add(doctorGrade));

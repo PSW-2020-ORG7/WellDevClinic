@@ -19,7 +19,7 @@ namespace bolnica
             /*IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
-                .Build();
+                .Build();s
             // Here we create the DbContextOptionsBuilder manually. */
             var builder = new DbContextOptionsBuilder<MyDbContext>();
 

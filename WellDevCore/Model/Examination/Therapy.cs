@@ -8,8 +8,8 @@ namespace Model.PatientSecretary
    {
         public long Id { get; set; }
         public String Note { get; set; }
-        public Period Period { get; set; }
-        public List<Drug> Drug { get; set; }
+        public virtual Period Period { get; set; }
+        public virtual List<Drug> Drug { get; set; }
 
         public Therapy() { }
 

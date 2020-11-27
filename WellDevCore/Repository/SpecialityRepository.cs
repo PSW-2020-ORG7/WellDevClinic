@@ -9,27 +9,19 @@ using System.Linq;
 
 namespace Repository
 {
-    public class SpecialityRepository : CSVGetterRepository<Speciality,long>, ISpecialityRepository
+    public class SpecialityRepository : ISpecialityRepository
     {
         private readonly MyDbContext myDbContext;
 
-        /*public SpecialityRepository()
+        public SpecialityRepository(MyDbContext context)
         {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
-
-        public SpecialityRepository(ICSVStream<Speciality> stream, ISequencer<long> sequencer)
-       : base(stream, sequencer)
-        {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
+            myDbContext = context;
         }
 
         public Speciality Get(long id)
             => myDbContext.Speciality.FirstOrDefault(speciality => speciality.Id == id);
 
-        public IEnumerable<Speciality> GetAll()
+        public IEnumerable<Speciality> GetEager()
         {
             List<Speciality> result = new List<Speciality>();
             myDbContext.Speciality.ToList().ForEach(speciality => result.Add(speciality));

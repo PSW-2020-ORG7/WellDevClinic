@@ -47,7 +47,6 @@ namespace Service
 
         public BusinessDay GetExactDay(Doctor doctor, DateTime date)
         {
-           
             foreach (BusinessDay day in _businessDayRepository.GetAllEager())
             {
                 if (day.doctor.Id == doctor.Id && day.Shift.EndDate.Date.Equals(date.Date))

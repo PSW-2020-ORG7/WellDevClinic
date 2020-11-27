@@ -9,8 +9,8 @@ namespace Model.Doctor
    public class Referral : IIdentifiable<long>
    {
         public long Id { get; set; }
-        public Period Period { get; set; }
-        public Model.Users.Doctor Doctor { get; set; }
+        public virtual Period Period { get; set; }
+        public virtual Model.Users.Doctor Doctor { get; set; }
         public String Text { get; set; }
 
         public Referral() { }

@@ -8,22 +8,21 @@ using System.Linq;
 
 namespace Repository
 {
-    public class RoomTypeRepository : CSVRepository<RoomType, long>, IRoomTypeRepository
+    public class RoomTypeRepository : IRoomTypeRepository
     {
         private readonly MyDbContext myDbContext;
 
-        /*public RoomTypeRepository()
+        public RoomTypeRepository(MyDbContext context)
         {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
+            myDbContext = context;
+        }
 
-        public RoomTypeRepository(ICSVStream<RoomType> stream, ISequencer<long> sequencer)
+        /*public RoomTypeRepository(ICSVStream<RoomType> stream, ISequencer<long> sequencer)
     : base(stream, sequencer)
         {
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
+        }*/
 
         public void Delete(RoomType entity)
         {
@@ -39,7 +38,7 @@ namespace Repository
             => myDbContext.RoomType.FirstOrDefault(roomType => roomType.Id == id);
 
 
-        public IEnumerable<RoomType> GetAll()
+        public IEnumerable<RoomType> GetEager()
         {
             List<RoomType> result = new List<RoomType>();
             myDbContext.RoomType.ToList().ForEach(roomType => result.Add(roomType));
@@ -48,7 +47,7 @@ namespace Repository
 
         public IEnumerable<RoomType> GetAllEager()
         {
-            return GetAll();
+            return GetEager();
         }
 
         public RoomType GetEager(long id)

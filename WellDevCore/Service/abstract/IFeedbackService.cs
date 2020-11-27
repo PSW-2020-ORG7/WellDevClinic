@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace bolnica.Service
 {
-    interface IFeedbackService
+    public interface IFeedbackService
     {
         Feedback LeaveFeedback(Feedback feedback);
 

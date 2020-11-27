@@ -9,13 +9,22 @@ using System.Linq;
 
 namespace Repository
 {
-    public class RoomRepository : CSVRepository<Room, long>, IRoomRepository, IEagerRepository<Room, long>
+    public class RoomRepository : IRoomRepository, IEagerRepository<Room, long>
     {
         private readonly IRoomTypeRepository _roomTypeRepository;
         private readonly IEquipmentRepository _equipmentRepository;
         private readonly MyDbContext myDbContext;
 
-        /*public RoomRepository(IRoomTypeRepository roomTypeRepository, IEquipmentRepository equipmentRepository)
+        public RoomRepository(IRoomTypeRepository roomTypeRepository, IEquipmentRepository equipmentRepository,MyDbContext context)
+        {
+            _roomTypeRepository = roomTypeRepository;
+            _equipmentRepository = equipmentRepository;
+            myDbContext = context;
+            
+        }
+
+        /*public RoomRepository(ICSVStream<Room> stream, ISequencer<long> sequencer, IRoomTypeRepository roomTypeRepository, IEquipmentRepository equipmentRepository)
+     : base(stream, sequencer)
         {
             _roomTypeRepository = roomTypeRepository;
             _equipmentRepository = equipmentRepository;
@@ -23,20 +32,11 @@ namespace Repository
             this.myDbContext = mccf.CreateDbContext(new string[0]);
         }*/
 
-        public RoomRepository(ICSVStream<Room> stream, ISequencer<long> sequencer, IRoomTypeRepository roomTypeRepository, IEquipmentRepository equipmentRepository)
-     : base(stream, sequencer)
-        {
-            _roomTypeRepository = roomTypeRepository;
-            _equipmentRepository = equipmentRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
-
         public IEnumerable<Room> GetAllEager()
         {
-            IEnumerable<Room> rooms = this.GetAll();
-            IEnumerable<RoomType> roomTypes = _roomTypeRepository.GetAll();
-            IEnumerable<Equipment> equipment = _equipmentRepository.GetAll();
+            IEnumerable<Room> rooms = this.GetEager();
+            IEnumerable<RoomType> roomTypes = _roomTypeRepository.GetEager();
+            IEnumerable<Equipment> equipment = _equipmentRepository.GetEager();
             BindRoomsWithRoomTypes(rooms, roomTypes);
             BindRoomsWithEquipment(rooms, equipment);
 
@@ -98,7 +98,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Room> GetAll()
+        public IEnumerable<Room> GetEager()
         {
             List<Room> result = new List<Room>();
             myDbContext.Room.ToList().ForEach(room => result.Add(room));

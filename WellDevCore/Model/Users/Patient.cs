@@ -8,11 +8,41 @@ namespace Model.Users
 {
    public class Patient : User
     {
-      public PatientFile patientFile { get; set; }
-      public Boolean Guest = false;
-       
+        public virtual PatientFile patientFile { get; set; }
+        public Boolean Guest = false;
+        public String MiddleName { get; set; }
+        public Boolean Validation { get; set; }
+        public String Gender { get; set; }
+        public String Race { get; set; }
+        public String BloodType { get; set; }
+        public String VerificationToken { get; set; }
+
+
         public Patient() { }
-        public Patient(long id,String name, String surname, String jmbg, String email, String phone, DateTime birth, Address address, String username, String password, Uri img)
+
+        public Patient(long id, String name, String surname, String jmbg, String email, String phone, DateTime birth, Address address, String username, String password, String img, Boolean guest, PatientFile patientFile, string middleName, bool validation, string gender, string race, string bloodType, string verificationToken)
+        {
+            this.Id = id;
+            this.FirstName = name;
+            this.LastName = surname;
+            this.Jmbg = jmbg;
+            this.Email = email;
+            this.Phone = phone;
+            this.DateOfBirth = birth;
+            this.Address = address;
+            this.Username = username;
+            this.Password = password;
+            this.Image = img;
+            Guest = guest;
+            MiddleName = middleName;
+            Validation = validation;
+            Gender = gender;
+            Race = race;
+            BloodType = bloodType;
+            VerificationToken = verificationToken;
+        }
+
+        public Patient(long id,String name, String surname, String jmbg, String email, String phone, DateTime birth, Address address, String username, String password, String img)
         {
             this.Id = id;
             this.FirstName = name;
@@ -26,7 +56,7 @@ namespace Model.Users
             this.Password = password;
             this.Image = img;
         }
-        public Patient(long id, String name, String surname, String jmbg, String email, String phone, DateTime birth, Address address, String username, String password, Uri img, PatientFile patientFile, Boolean guest)
+        public Patient(long id, String name, String surname, String jmbg, String email, String phone, DateTime birth, Address address, String username, String password, String img, PatientFile patientFile, Boolean guest)
         {
             this.Id = id;
             this.FirstName = name;
@@ -63,6 +93,7 @@ namespace Model.Users
         {
             Guest = guest;
         }
+
         override
         public long GetId()
         {

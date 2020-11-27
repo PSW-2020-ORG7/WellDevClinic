@@ -5,29 +5,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PSW_Web_app.dtos;
-using PSW_Web_app.Adapters;
+using bolnica.Model.Adapters;
+using bolnica.Model.dtos;
 using bolnica.Controller;
+using bolnica.Model;
+using bolnica.Model.Adapters;
+using bolnica.Model.dtos;
+using bolnica.Service;
 
 namespace PSW_Web_app.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class ExaminationController : ControllerBase
     {
-        private bolnica.Controller.IExaminationController _examinationController= new bolnica.Controller.ExaminationController();
-        User user;
+        private readonly IExaminationService _examinationService;
+
+        public ExaminationController(IExaminationService e) {
+            _examinationService = e;
+        }
         [HttpGet]
         public IActionResult GetFinishedxaminationsByUser()
         {
-            _examinationController.GetFinishedxaminationsByUser(user);
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = (List<Examination>)_examinationController.GetFinishedxaminationsByUser(user);
+            List<Examination> result = (List<Examination>)_examinationService.GetAllPrevious();
             foreach (Examination examination in result) {
-                ReferralDto referralDto = ReferralAdapter.ReferralToReferralDto(examination.Refferal);
-                PrescriptionDto prescriptionDto = PrescriptionAdapter.PrescriptionToPrescriptionDto(examination.Prescription);
-                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination, referralDto, prescriptionDto)); 
+                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));//, referralDto, prescriptionDto)); 
             }
             return Ok(resultDto);
         }

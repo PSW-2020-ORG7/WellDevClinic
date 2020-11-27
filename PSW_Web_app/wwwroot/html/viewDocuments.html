@@ -11,25 +11,25 @@
 <body>
     <h1>Search parameters</h1>
 
-    <form id="form">
+    <form id="formParams">
         <table id="params">
-            <tr><td><label for="date">Date:</label></td><td><input type="date" name="date"></td></tr>
-            <tr><td><label for="doctor">Doctor:</label></td><td><input type="text" name="doctor"></td></tr>
+            <tr><td class="firstTd"><label for="date">Date:</label></td><td><input type="date" name="date"></td></tr>
+            <tr><td class="firstTd"><label for="doctor">Doctor:</label></td><td><input type="text" name="doctor"></td></tr>
             <tr>
-                <td><label>Document type:</label></td>
+                <td class="firstTd"><label>Document type:</label></td>
                 <td>
                     <select name="type">
                         <option value="none"></option>
-                        <option value="Refferal">Refferal</option>
+                        <option value="Referral">Referral</option>
                         <option value="Prescription">Prescription</option>
                     </select>
                 </td>
             </tr>
-            <tr><td><label for="specialist">Specialty doctor:</label></td><td><input type="text" name="specialist"></td></tr>
-            <tr><td><label for="drug">Drug:</label></td><td><input type="text" name="drug"></td></tr>
+            <tr id="Referral" style="display: none;"><td class="firstTd"><label for="specialist">Specialty doctor:</label></td><td><input type="text" name="specialist"></td></tr>
+            <tr id="Prescription" style="display: none;"><td class="firstTd"><label for="drug">Drug:</label></td><td><input type="text" name="drug"></td></tr>
             <tr><td colspan="2"><input type="submit" value="Search"></td></tr>
             <tr><td colspan="2"><input type="button" value="Reset"></td></tr>
-            <tr><td colspan="2"><a href="http://localhost:49153/html/viewDocumentsAdvanced.html">Napredna pretraga</a></td></tr>
+            <tr><td colspan="2"><a href="http://localhost:49153/html/viewDocumentsAdvanced.html">Advanced search</a></td></tr>
         </table>
     </form>
 

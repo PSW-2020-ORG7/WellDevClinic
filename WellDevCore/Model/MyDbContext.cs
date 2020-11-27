@@ -14,8 +14,10 @@ using System.Threading.Tasks;
 
 namespace bolnica.Model
 {
-    public class MyDbContext:DbContext
+    public class MyDbContext : DbContext
     {
+        //public DbSet<T> T { get; set; }
+        public DbSet<ExaminationDbDto> ExaminationDbDtos { get; set; }
         public DbSet<Operation> Operation { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
@@ -50,11 +52,24 @@ namespace bolnica.Model
         public DbSet<Director> Director { get; set; }
         public DbSet<Doctor> Doctor { get; set; }
         public DbSet<Patient> Patient { get; set; }
-        public DbSet<Person> Person { get; set; }
+        //public DbSet<Person> Person { get; set; }
         public DbSet<Secretary> Secretary { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Town> Town { get; set; }
-        public DbSet<User> User { get; set; }
-        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
+        //public DbSet<User> User { get; set; }
+        public DbSet<GradeDTO> gradeDTO { get; set; }
+        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) {}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                    .ToTable("User")
+                    .HasDiscriminator<int>("UserType")
+                    .HasValue<Patient>(1)
+                    .HasValue<Doctor>(2)
+                    .HasValue<Secretary>(3)
+                    .HasValue<Director>(4);
+        }
+
     }
 }

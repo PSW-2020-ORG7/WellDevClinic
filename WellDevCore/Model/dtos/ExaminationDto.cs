@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using bolnica.Model;
 using Model.PatientSecretary;
 
-namespace PSW_Web_app.dtos
+namespace bolnica.Model.dtos
 {
     public class ExaminationDto
     {
-        public ReferralDto referral;
+        //public ReferralDto referral;
+        public long ReferralDtoId;
         public String doctor;
-        public PrescriptionDto prescription;
+        //public PrescriptionDto prescription;
+        public long PrescriptionDtoId;
         public DateTime date;
 
         public ExaminationDto() {}

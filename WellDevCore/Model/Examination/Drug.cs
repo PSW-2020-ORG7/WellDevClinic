@@ -11,8 +11,8 @@ namespace Model.PatientSecretary
         public long Id { get; set; }
         public int Amount { get; set; }
       public Boolean Approved { get; set; }     
-      public List<Ingredient> Ingredients { get; set; }
-      public List<Drug> Alternative { get; set; }
+      public virtual List<Ingredient> Ingredients { get; set; }
+      public virtual List<Drug> Alternative { get; set; }
 
       public Drug() { }
       public Drug (long id, String name, int amount, Boolean approved, List<Ingredient> ingredients, List<Drug> alternative)
@@ -23,6 +23,15 @@ namespace Model.PatientSecretary
             this.Approved = approved;
             this.Ingredients = ingredients;
             this.Alternative = alternative;
+        }
+        //MENJANOOOOOO!!!!!!!!!!!!!!!!!!!!!!
+        public Drug(long id, String name, int amount, Boolean approved, List<Ingredient> ingredients)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Amount = amount;
+            this.Approved = approved;
+            this.Ingredients = ingredients;
         }
 
         public Drug(long id)

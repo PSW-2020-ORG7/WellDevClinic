@@ -10,33 +10,24 @@ using System.Linq;
 
 namespace Repository
 {
-   public class BusinessDayRepository : CSVRepository<BusinessDay, long>, IBusinessDayRepository
+   public class BusinessDayRepository : IBusinessDayRepository
    {
         public IDoctorRepository _doctorRepository;
 
         private readonly IRoomRepository _roomRepository;
         private readonly MyDbContext myDbContext;
 
-        /*public BusinessDayRepository(IDoctorRepository doctorRepository, IRoomRepository roomRepository)
+        public BusinessDayRepository( IRoomRepository roomRepository, MyDbContext context)
         {
-            _doctorRepository = doctorRepository;
+            //_doctorRepository = doctorRepository;
             _roomRepository = roomRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
-
-        public BusinessDayRepository(ICSVStream<BusinessDay> stream, ISequencer<long> sequencer, IRoomRepository room)
-   : base(stream, sequencer)
-        {
-            _roomRepository = room;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
+            myDbContext = context;
         }
 
         public IEnumerable<BusinessDay> GetAllEager()
         {
             List<BusinessDay> businessDays = new List<BusinessDay>();
-            foreach(BusinessDay day in GetAll().ToList())
+            foreach(BusinessDay day in GetEager().ToList())
             {
                 businessDays.Add(GetEager(day.GetId()));
             }
@@ -81,7 +72,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BusinessDay> GetAll()
+        public IEnumerable<BusinessDay> GetEager()
         {
             List<BusinessDay> result = new List<BusinessDay>();
             myDbContext.BusinessDay.ToList().ForEach(businessDay => result.Add(businessDay));

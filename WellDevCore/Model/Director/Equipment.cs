@@ -13,7 +13,7 @@ namespace Model.Director
     }
     public class Equipment : IIdentifiable<long>
     {
-          public EquipmentType Type { get; set; }
+          public virtual EquipmentType Type { get; set; }
           public String Name { get; set; }
           public int Amount { get; set; }
           public long Id { get; set; }

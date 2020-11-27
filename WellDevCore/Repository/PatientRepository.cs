@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Repository
 {
-   public class PatientRepository : CSVRepository<Patient, long>, IPatientRepository, IEagerRepository<Patient,long>
+   public class PatientRepository : IPatientRepository, IEagerRepository<Patient,long>
    {
         private readonly IPatientFileRepository _patientFleRepository;
         private readonly IAddressRepository _addressRepository;
@@ -19,17 +19,16 @@ namespace Repository
         private readonly IStateRepository _stateRepository;
         private readonly MyDbContext myDbContext;
 
-        /*public PatientRepository(IPatientFileRepository patientFleRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository)
+        public PatientRepository(IPatientFileRepository patientFleRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
         {
             _patientFleRepository = patientFleRepository;
             _addressRepository = addressRepository;
             _townRepository = townRepository;
             _stateRepository = stateRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
+            myDbContext = context;
+        }
 
-        public PatientRepository(ICSVStream<Patient> stream, ISequencer<long> sequencer, IPatientFileRepository patientFileRepository, IAddressRepository addressRepository,
+        /*public PatientRepository(ICSVStream<Patient> stream, ISequencer<long> sequencer, IPatientFileRepository patientFileRepository, IAddressRepository addressRepository,
     ITownRepository townRepository, IStateRepository stateRepository)
     : base(stream, sequencer)
         {
@@ -39,7 +38,7 @@ namespace Repository
             _stateRepository = stateRepository;
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
+        }*/
 
         public void Delete(Patient entity)
         {
@@ -54,7 +53,7 @@ namespace Repository
         public Patient Get(long id)
             => myDbContext.Patient.FirstOrDefault(patient => patient.Id == id);
 
-        public IEnumerable<Patient> GetAll()
+        public IEnumerable<Patient> GetEager()
         {
             List<Patient> result = new List<Patient>();
             myDbContext.Patient.ToList().ForEach(patient => result.Add(patient));
@@ -64,7 +63,7 @@ namespace Repository
         public IEnumerable<Patient> GetAllEager()
         {
             List<Patient> patients = new List<Patient>();
-            foreach(Patient patient in GetAll().ToList())
+            foreach(Patient patient in GetEager().ToList())
             {
                 patients.Add(GetEager(patient.GetId()));
             }

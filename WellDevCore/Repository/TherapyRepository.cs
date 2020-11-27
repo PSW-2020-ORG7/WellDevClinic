@@ -8,25 +8,24 @@ using System.Text;
 
 namespace bolnica.Repository
 {
-   public class TherapyRepository : CSVRepository<Therapy, long>, ITherapyRepository
+   public class TherapyRepository : ITherapyRepository
     {
         private readonly IDrugRepository _drugRepository;
         private readonly MyDbContext myDbContext;
 
-        /*public TherapyRepository(IDrugRepository drugRepository)
+        public TherapyRepository(IDrugRepository drugRepository, MyDbContext context)
         {
             _drugRepository = drugRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
+            myDbContext = context;
+        }
 
-        public TherapyRepository(ICSVStream<Therapy> stream, ISequencer<long> sequencer, IDrugRepository drugRepo)
+        /*public TherapyRepository(ICSVStream<Therapy> stream, ISequencer<long> sequencer, IDrugRepository drugRepo)
           : base(stream, sequencer)
         {
             _drugRepository = drugRepo;
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
+        }*/
 
         public void Delete(Therapy entity)
         {
@@ -41,7 +40,7 @@ namespace bolnica.Repository
         public Therapy Get(long id)
             => myDbContext.Therapy.FirstOrDefault(therapy => therapy.Id == id);
 
-        public IEnumerable<Therapy> GetAll()
+        public IEnumerable<Therapy> GetEager()
         {
             List<Therapy> result = new List<Therapy>();
             myDbContext.Therapy.ToList().ForEach(therapy => result.Add(therapy));
@@ -52,7 +51,7 @@ namespace bolnica.Repository
         {
             List<Therapy> therapy = new List<Therapy>();
 
-            foreach (Therapy t in GetAll().ToList())
+            foreach (Therapy t in GetEager().ToList())
             {
                 therapy.Add(GetEager(t.GetId()));    
             }

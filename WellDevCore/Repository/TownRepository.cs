@@ -8,29 +8,28 @@ using bolnica.Model;
 
 namespace bolnica.Repository
 {
-    public class TownRepository : CSVGetterRepository<Town, long>, ITownRepository
+    public class TownRepository : ITownRepository
     {
         private readonly IAddressRepository _addressRepository;
         private readonly MyDbContext myDbContext;
 
-        /*public TownRepository(IAddressRepository addressRepository)
+        public TownRepository(IAddressRepository addressRepository, MyDbContext context)
+        {
+            _addressRepository = addressRepository;
+            myDbContext = context;
+        }
+
+        /*public TownRepository(ICSVStream<Town> stream, ISequencer<long> sequencer, IAddressRepository addressRepository) : base(stream, sequencer)
         {
             _addressRepository = addressRepository;
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
         }*/
 
-        public TownRepository(ICSVStream<Town> stream, ISequencer<long> sequencer, IAddressRepository addressRepository) : base(stream, sequencer)
-        {
-            _addressRepository = addressRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
-
         public Town Get(long id)
             => myDbContext.Town.FirstOrDefault(town => town.Id == id);
 
-        public IEnumerable<Town> GetAll()
+        public IEnumerable<Town> GetEager()
         {
             List<Town> result = new List<Town>();
             myDbContext.Town.ToList().ForEach(town => result.Add(town));
@@ -39,7 +38,7 @@ namespace bolnica.Repository
 
         public IEnumerable<Town> GetAllEager()
         {
-            List<Town> towns = GetAll().ToList();
+            List<Town> towns = GetEager().ToList();
             for (int i = 0; i < towns.Count; i++)
                 towns[i] = GetEager(towns[i].GetId());
             return towns;

@@ -8,26 +8,20 @@ using Model.Users;
 
 namespace bolnica.Repository
 {
-    public class AddressRepository : CSVGetterRepository<Address, long>, IAddressRepository
+    public class AddressRepository : IAddressRepository
     {
         private readonly MyDbContext myDbContext;
 
-        /*public AddressRepository()
+        public AddressRepository(MyDbContext context)
         {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
-
-        public AddressRepository(ICSVStream<Address> stream, ISequencer<long> sequencer) : base(stream, sequencer)
-        {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
+            myDbContext = context;
         }
+
 
         public Address Get(long id)
             => myDbContext.Address.FirstOrDefault(address => address.Id == id);
 
-        public IEnumerable<Address> GetAll()
+        public IEnumerable<Address> GetEager()
         {
             List<Address> result = new List<Address>();
             myDbContext.Address.ToList().ForEach(address => result.Add(address));
@@ -36,7 +30,7 @@ namespace bolnica.Repository
 
         public IEnumerable<Address> GetAllEager()
         {
-            return GetAll();
+            return GetEager();
         }
 
         public Address GetEager(long id)

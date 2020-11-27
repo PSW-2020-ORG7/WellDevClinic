@@ -10,30 +10,22 @@ using System.Text;
 
 namespace Repository
 {
-    public class DiagnosisRepository : CSVGetterRepository<Diagnosis, long>, IDiagnosisRepository
+    public class DiagnosisRepository : IDiagnosisRepository
     {
         private readonly ISymptomRepository _symptomRepository;
         private readonly MyDbContext myDbContext;
 
-        /*public DiagnosisRepository(ISymptomRepository symptomRepository)
+        public DiagnosisRepository(ISymptomRepository symptomRepository, MyDbContext context)
         {
             _symptomRepository = symptomRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
-
-        public DiagnosisRepository(ICSVStream<Diagnosis> stream, ISequencer<long> sequencer, ISymptomRepository symptomRepository)
-  : base(stream, sequencer)
-        {
-            this._symptomRepository = symptomRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
+            myDbContext = context;
         }
 
+     
         public Diagnosis Get(long id)
             => myDbContext.Diagnosis.FirstOrDefault(diagnosis => diagnosis.Id == id);
 
-        public IEnumerable<Diagnosis> GetAll()
+        public IEnumerable<Diagnosis> GetEager()
         {
             List<Diagnosis> result = new List<Diagnosis>();
             myDbContext.Diagnosis.ToList().ForEach(diagnosis => result.Add(diagnosis));

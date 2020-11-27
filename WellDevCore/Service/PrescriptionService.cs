@@ -32,7 +32,7 @@ namespace Service
 
         public IEnumerable<Prescription> GetAll()
         {
-            return _prescriptionRepository.GetAll();
+            return _prescriptionRepository.GetEager();
         }
 
         public Prescription Save(Prescription entity)

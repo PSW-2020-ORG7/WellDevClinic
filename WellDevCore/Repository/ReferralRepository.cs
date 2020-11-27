@@ -11,25 +11,24 @@ using System.Text;
 
 namespace Repository
 {
-    public class ReferralRepository : CSVRepository<Referral, long>, IReferralRepository
+    public class ReferralRepository : IReferralRepository
     {
         private readonly IDoctorRepository _doctorRepository;
         private readonly MyDbContext myDbContext;
 
-        /*public ReferralRepository(IDoctorRepository doctorRepository)
+        public ReferralRepository(IDoctorRepository doctorRepository, MyDbContext context)
         {
             _doctorRepository = doctorRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
+            myDbContext = context;
+        }
 
-        public ReferralRepository(ICSVStream<Model.Doctor.Referral> stream, ISequencer<long> sequencer, IDoctorRepository doctorRepository)
+        /*public ReferralRepository(ICSVStream<Model.Doctor.Referral> stream, ISequencer<long> sequencer, IDoctorRepository doctorRepository)
   : base(stream, sequencer)
         {
             _doctorRepository = doctorRepository;
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
+        }*/
 
         public void Delete(Referral entity)
         {
@@ -44,7 +43,7 @@ namespace Repository
         public Referral Get(long id)
             => myDbContext.Referral.FirstOrDefault(referral => referral.Id == id);
 
-        public IEnumerable<Referral> GetAll()
+        public IEnumerable<Referral> GetEager()
         {
             List<Referral> result = new List<Referral>();
             myDbContext.Referral.ToList().ForEach(referral => result.Add(referral));
@@ -54,7 +53,7 @@ namespace Repository
         public IEnumerable<Referral> GetAllEager()
         {
             List<Referral> referral = new List<Referral>();
-            foreach(Referral r in GetAll().ToList()){
+            foreach(Referral r in GetEager().ToList()){
                 referral.Add(GetEager(r.GetId()));
             }
             return referral;

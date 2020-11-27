@@ -33,7 +33,7 @@ namespace Service
 
         public IEnumerable<Referral> GetAll()
         {
-            return _referralRepository.GetAll();
+            return _referralRepository.GetEager();
         }
 
         public Referral Save(Referral entity)

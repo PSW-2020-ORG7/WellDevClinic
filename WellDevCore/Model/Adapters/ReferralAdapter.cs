@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PSW_Web_app.dtos;
+//using PSW_Web_app.dtos;
 using Model.Doctor;
+using bolnica.Model.dtos;
 
-namespace PSW_Web_app.Adapters
+namespace bolnica.Model.Adapters
 {
     public class ReferralAdapter
     {

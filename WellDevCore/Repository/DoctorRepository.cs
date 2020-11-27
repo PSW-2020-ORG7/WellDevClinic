@@ -10,7 +10,7 @@ using bolnica;
 
 namespace Repository
 {
-    public class DoctorRepository : CSVRepository<Doctor, long>, IDoctorRepository
+    public class DoctorRepository : IDoctorRepository
     {
         private readonly IBusinessDayRepository _businessDayRepository;
         private readonly ISpecialityRepository _specialityRepository;
@@ -21,7 +21,7 @@ namespace Repository
 
         private readonly MyDbContext myDbContext;
 
-        /*public DoctorRepository(IBusinessDayRepository businessDayRepository, ISpecialityRepository specialityRepository, IDoctorGradeRepository doctorGradeRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository)
+        public DoctorRepository(IBusinessDayRepository businessDayRepository, ISpecialityRepository specialityRepository, IDoctorGradeRepository doctorGradeRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
         {
             _businessDayRepository = businessDayRepository;
             _specialityRepository = specialityRepository;
@@ -29,11 +29,11 @@ namespace Repository
             _addressRepository = addressRepository;
             _townRepository = townRepository;
             _stateRepository = stateRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
+            //myDbContext = _myDbContext;
+            myDbContext = context;
+        }
 
-        public DoctorRepository(ICSVStream<Doctor> stream, ISequencer<long> sequencer, IBusinessDayRepository businessDayRepository, ISpecialityRepository speciality,
+        /*public DoctorRepository(ICSVStream<Doctor> stream, ISequencer<long> sequencer, IBusinessDayRepository businessDayRepository, ISpecialityRepository speciality,
     IDoctorGradeRepository doctorGrade, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository)
     : base(stream, sequencer)
         {
@@ -45,12 +45,12 @@ namespace Repository
             _stateRepository = stateRepository;
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
+        }*/
 
         public IEnumerable<Doctor> GetAllEager()
         {
             List<Doctor> doctors = new List<Doctor>();
-            foreach (Doctor doctor in GetAll().ToList())
+            foreach (Doctor doctor in GetEager().ToList())
             {
                 doctors.Add(GetEager(doctor.GetId()));
             }
@@ -60,6 +60,7 @@ namespace Repository
         public Doctor GetEager(long id)
         {
             Doctor doctor = Get(id);
+           
 
             List<BusinessDay> businessDays = new List<BusinessDay>();
             if (doctor.BusinessDay != null)
@@ -118,7 +119,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Doctor> GetAll()
+        public IEnumerable<Doctor> GetEager()
         {
             List<Doctor> result = new List<Doctor>();
             myDbContext.Doctor.ToList().ForEach(doctor => result.Add(doctor));

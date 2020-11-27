@@ -9,22 +9,21 @@ using System.Linq;
 
 namespace Repository
 {
-   public class IngredientRepository : CSVRepository<Ingredient, long>, IIngredientRepository
+   public class IngredientRepository : IIngredientRepository
    {
         private readonly MyDbContext myDbContext;
 
-        /*public IngredientRepository()
+        public IngredientRepository(MyDbContext context)
         {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
+            myDbContext = context;
+        }
 
-        public IngredientRepository(ICSVStream<Ingredient> stream, ISequencer<long> sequencer)
+        /*public IngredientRepository(ICSVStream<Ingredient> stream, ISequencer<long> sequencer)
     : base(stream, sequencer)
         {
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }
+        }*/
 
         public void Delete(Ingredient entity)
         {
@@ -39,7 +38,7 @@ namespace Repository
         public Ingredient Get(long id)
             => myDbContext.Ingredient.FirstOrDefault(ingredient => ingredient.Id == id);
 
-        public IEnumerable<Ingredient> GetAll()
+        public IEnumerable<Ingredient> GetEager()
         {
             List<Ingredient> result = new List<Ingredient>();
             myDbContext.Ingredient.ToList().ForEach(ingredient => result.Add(ingredient));

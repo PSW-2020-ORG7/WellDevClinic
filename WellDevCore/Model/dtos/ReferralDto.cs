@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Model.PatientSecretary;
-namespace PSW_Web_app.dtos
+
+namespace bolnica.Model.dtos
 {
     public class ReferralDto
     {
