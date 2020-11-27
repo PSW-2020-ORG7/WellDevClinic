@@ -31,7 +31,7 @@
             data: jsonApi,
             success: function (data) {
                 if (data) {
-                    alert("Succesfully added to database" + data.ApiKey);
+                    alert("Succesfully added to database");
                 }
             },
         })
