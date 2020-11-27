@@ -10,9 +10,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 
-namespace WpfApp.ViewModel
+namespace PSW_Wpf_app.ViewModel
 {
     class MainBuildingsViewModel : BindableBase
     {

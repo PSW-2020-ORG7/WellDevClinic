@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 
-namespace WpfApp.ViewModel
+namespace PSW_Wpf_app.ViewModel
 {
     public class AdditionalInformationViewModel
     {
