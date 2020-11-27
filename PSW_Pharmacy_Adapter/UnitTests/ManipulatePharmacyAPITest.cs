@@ -8,7 +8,6 @@ using Moq;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Model;
 using Shouldly;
-using PSW_Pharmacy_Adapter.Adapter;
 
 namespace PSW_Pharmacy_Adapter.UnitTests
 {
