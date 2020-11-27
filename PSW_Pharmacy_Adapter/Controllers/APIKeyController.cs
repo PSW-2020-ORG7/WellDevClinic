@@ -47,7 +47,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         public IActionResult GetAllPharmacies() =>
             Ok(KeyRepo.GetAll());
 
-        [HttpPut]
+        [HttpDelete]        // TODO: Ne radi
         [Route("/delete/{id?}")]
         public IActionResult DeletePharmacy(string id)
         {

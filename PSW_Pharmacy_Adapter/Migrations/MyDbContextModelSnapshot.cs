@@ -18,7 +18,7 @@ namespace PSW_Pharmacy_Adapter.Migrations
 
             modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Api", b =>
                 {
-                    b.Property<string>("NameOfHospital")
+                    b.Property<string>("NameOfPharmacy")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("ApiKey")
@@ -27,7 +27,7 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("NameOfHospital");
+                    b.HasKey("NameOfPharmacy");
 
                     b.ToTable("ApiKeys");
                 });

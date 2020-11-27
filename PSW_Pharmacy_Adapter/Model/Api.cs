@@ -9,7 +9,7 @@ namespace PSW_Pharmacy_Adapter.Model
     public class Api
     {
         [Key]
-        public string NameOfHospital { get; set; }
+        public string NameOfPharmacy { get; set; }
         public string ApiKey { get; set; }
         public string Url { get; set; }
 
@@ -17,7 +17,7 @@ namespace PSW_Pharmacy_Adapter.Model
 
         public Api(string name, string api, string url)
         {
-            NameOfHospital = name;
+            NameOfPharmacy = name;
             ApiKey = api;
             Url = url;
         }

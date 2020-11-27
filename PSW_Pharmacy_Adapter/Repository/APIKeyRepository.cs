@@ -19,7 +19,7 @@ namespace PSW_Pharmacy_Adapter.Repository
         }
 
         public Api Get(string id) =>
-            myDbContext.ApiKeys.FirstOrDefault(api => api.NameOfHospital == id);
+            myDbContext.ApiKeys.FirstOrDefault(api => api.NameOfPharmacy == id);
 
         public List<Api> GetAll()
         {
@@ -30,7 +30,7 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public bool Save(Api api)
         {
-            Api a = myDbContext.ApiKeys.SingleOrDefault(a => a.NameOfHospital == api.NameOfHospital);
+            Api a = myDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
             if (a == null)
             {
                 myDbContext.ApiKeys.Add(api);
@@ -42,7 +42,7 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public bool Delete(string id)
         {
-            Api a = myDbContext.ApiKeys.SingleOrDefault(a => a.NameOfHospital == id);
+            Api a = myDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == id);
             if (a != null)
             {
                 myDbContext.ApiKeys.Remove(a);

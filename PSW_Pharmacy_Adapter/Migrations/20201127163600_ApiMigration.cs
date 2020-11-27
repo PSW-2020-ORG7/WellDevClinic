@@ -2,7 +2,7 @@
 
 namespace PSW_Pharmacy_Adapter.Migrations
 {
-    public partial class APIKeysMigration : Migration
+    public partial class ApiMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,13 +10,13 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 name: "ApiKeys",
                 columns: table => new
                 {
-                    NameOfHospital = table.Column<string>(nullable: false),
+                    NameOfPharmacy = table.Column<string>(nullable: false),
                     ApiKey = table.Column<string>(nullable: true),
                     Url = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApiKeys", x => x.NameOfHospital);
+                    table.PrimaryKey("PK_ApiKeys", x => x.NameOfPharmacy);
                 });
         }
 
