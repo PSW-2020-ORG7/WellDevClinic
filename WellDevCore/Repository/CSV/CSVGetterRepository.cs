@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using bolnica.Model;
 using Repository;
 
 namespace bolnica.Repository.CSV
@@ -12,6 +13,9 @@ namespace bolnica.Repository.CSV
     {
         protected ICSVStream<E> _stream;
         protected ISequencer<ID> _sequencer;
+
+        private readonly MyDbContext myDbContext;
+
 
         public CSVGetterRepository(ICSVStream<E> stream, ISequencer<ID> sequencer)
         {
@@ -24,6 +28,9 @@ namespace bolnica.Repository.CSV
         {
             try
             {
+                var nesto = typeof(E);
+                //Type type = GetType(nesto.FullName);
+                //myDbContext.
                 return _stream
                    .ReadAll()
                    .SingleOrDefault(entity => entity.GetId().CompareTo(id) == 0);
@@ -35,7 +42,7 @@ namespace bolnica.Repository.CSV
             }
         }
 
-        public IEnumerable<E> GetAll()
+        public IEnumerable<E> GetEager()
         {
             return _stream.ReadAll();
         }

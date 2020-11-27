@@ -23,7 +23,7 @@ namespace Service
 
         public IEnumerable<Diagnosis> GetAll()
         {
-            return _diagnosisRepository.GetAll();
+            return _diagnosisRepository.GetEager();
         }
 
     }

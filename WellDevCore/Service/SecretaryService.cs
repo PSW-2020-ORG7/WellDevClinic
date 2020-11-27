@@ -33,7 +33,7 @@ namespace Service
 
         public IEnumerable<Secretary> GetAll()
         {
-            return _secretaryRepository.GetAll();
+            return _secretaryRepository.GetEager();
         }
 
         public User GetUserByUsername(string username)

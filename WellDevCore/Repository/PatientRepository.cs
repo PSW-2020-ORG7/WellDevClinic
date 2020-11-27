@@ -1,5 +1,7 @@
 
 
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.PatientSecretary;
 using Model.Users;
@@ -9,26 +11,59 @@ using System.Linq;
 
 namespace Repository
 {
-   public class PatientRepository : CSVRepository<Patient,long> ,IPatientRepository, IEagerRepository<Patient,long>
+   public class PatientRepository : IPatientRepository, IEagerRepository<Patient,long>
    {
         private readonly IPatientFileRepository _patientFleRepository;
         private readonly IAddressRepository _addressRepository;
         private readonly ITownRepository _townRepository;
         private readonly IStateRepository _stateRepository;
-        public PatientRepository(ICSVStream<Patient> stream, ISequencer<long> sequencer, IPatientFileRepository patientFileRepository, IAddressRepository addressRepository,
-            ITownRepository townRepository, IStateRepository stateRepository)
-            : base(stream, sequencer)
+        private readonly MyDbContext myDbContext;
+
+        public PatientRepository(IPatientFileRepository patientFleRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
+        {
+            _patientFleRepository = patientFleRepository;
+            _addressRepository = addressRepository;
+            _townRepository = townRepository;
+            _stateRepository = stateRepository;
+            myDbContext = context;
+        }
+
+        /*public PatientRepository(ICSVStream<Patient> stream, ISequencer<long> sequencer, IPatientFileRepository patientFileRepository, IAddressRepository addressRepository,
+    ITownRepository townRepository, IStateRepository stateRepository)
+    : base(stream, sequencer)
         {
             _patientFleRepository = patientFileRepository;
             _addressRepository = addressRepository;
             _townRepository = townRepository;
             _stateRepository = stateRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
+
+        public void Delete(Patient entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Patient entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Patient Get(long id)
+            => myDbContext.Patient.FirstOrDefault(patient => patient.Id == id);
+
+        public IEnumerable<Patient> GetEager()
+        {
+            List<Patient> result = new List<Patient>();
+            myDbContext.Patient.ToList().ForEach(patient => result.Add(patient));
+            return result;
         }
 
         public IEnumerable<Patient> GetAllEager()
         {
             List<Patient> patients = new List<Patient>();
-            foreach(Patient patient in GetAll().ToList())
+            foreach(Patient patient in GetEager().ToList())
             {
                 patients.Add(GetEager(patient.GetId()));
             }
@@ -73,5 +108,9 @@ namespace Repository
             return null;
         }
 
+        public Patient Save(Patient entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -551,7 +551,7 @@ namespace PSW_Wpf_doctor
                     dock.Children.Add(btn2);
                     dock.Children.Add(btn1);
                     #region DockPanel Content Properties
-                    lbl.Content = exam.User.FirstName + " " + exam.User.LastName;
+                    lbl.Content = exam.Patient.FirstName + " " + exam.Patient.LastName;
                     lbl.Height = 32;
                     lbl.Width = 180;
                     lbl.FontSize = 15;
@@ -606,9 +606,9 @@ namespace PSW_Wpf_doctor
             List<long> helpExam = new List<long>();
             foreach (var exam in app.ExaminationDecorator.GetUpcomingExaminationsByUser(user))
             {
-                if (!helpExam.Contains(exam.User.Id))
+                if (!helpExam.Contains(exam.Patient.Id))
                 {
-                    helpExam.Add(exam.User.Id);
+                    helpExam.Add(exam.Patient.Id);
 
                     StackPanel stack = new StackPanel();
                     DockPanel dock = new DockPanel();
@@ -619,7 +619,7 @@ namespace PSW_Wpf_doctor
                     dock.Children.Add(lbl);
                     dock.Children.Add(btn1);
                     #region DockPanel Content Properties
-                    lbl.Content = exam.User.FirstName + " " + exam.User.LastName;
+                    lbl.Content = exam.Patient.FirstName + " " + exam.Patient.LastName;
                     lbl.Height = 32;
                     lbl.Width = 180;
                     lbl.FontSize = 15;
@@ -633,7 +633,7 @@ namespace PSW_Wpf_doctor
                     btn1.FontSize = 12;
                     btn1.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
                     btn1.SetValue(DockPanel.DockProperty, Dock.Right);
-                    btn1.Tag = exam.User.Id;
+                    btn1.Tag = exam.Patient.Id;
                     btn1.Click += new RoutedEventHandler(ClickOpenPatientFile);
                     btn1.Margin = new Thickness(10, 10, 15, 0);
                     btn1.Background = new SolidColorBrush(Color.FromRgb(162, 217, 206));
@@ -648,9 +648,9 @@ namespace PSW_Wpf_doctor
             }
             foreach (var exam in app.ExaminationDecorator.GetFinishedxaminationsByUser(user))
             {
-                if (!helpExam.Contains(exam.User.Id))
+                if (!helpExam.Contains(exam.Patient.Id))
                 {
-                    helpExam.Add(exam.User.Id);
+                    helpExam.Add(exam.Patient.Id);
                     StackPanel stack = new StackPanel();
                     DockPanel dock = new DockPanel();
                     Label lbl = new Label();
@@ -660,7 +660,7 @@ namespace PSW_Wpf_doctor
                     dock.Children.Add(lbl);
                     dock.Children.Add(btn1);
 
-                    lbl.Content = exam.User.FirstName + " " + exam.User.LastName;
+                    lbl.Content = exam.Patient.FirstName + " " + exam.Patient.LastName;
                     lbl.Height = 32;
                     lbl.Width = 180;
                     lbl.FontSize = 15;
@@ -674,7 +674,7 @@ namespace PSW_Wpf_doctor
                     btn1.FontSize = 12;
                     btn1.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
                     btn1.SetValue(DockPanel.DockProperty, Dock.Right);
-                    btn1.Tag = exam.User.Id;
+                    btn1.Tag = exam.Patient.Id;
                     btn1.Click += new RoutedEventHandler(ClickOpenPatientFile);
                     btn1.Margin = new Thickness(10, 10, 15, 0);
                     btn1.Background = new SolidColorBrush(Color.FromRgb(162, 217, 206));
@@ -699,7 +699,7 @@ namespace PSW_Wpf_doctor
             if (result == MessageBoxResult.Yes)
             {
                 Examination Exam = (Examination)((Button)sender).Tag;
-                var PatientId = Exam.User.Id;
+                var PatientId = Exam.Patient.Id;
                 ExaminationWin examWinn = new ExaminationWin((Doctor)user, (long)PatientId, Exam);
                 this.Visibility = Visibility.Hidden;
                 examWinn.ShowDialog();

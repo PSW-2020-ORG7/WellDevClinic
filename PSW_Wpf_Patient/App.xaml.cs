@@ -1,6 +1,7 @@
 ﻿
 using bolnica.Controller;
 using bolnica.Controller.decorators;
+using bolnica.Model;
 using bolnica.Model.Dto;
 using bolnica.Repository;
 using bolnica.Repository.CSV.Converter;
@@ -22,6 +23,8 @@ namespace PSW_Wpf_Patient
     /// </summary>
     public partial class App : Application
     {
+        private readonly MyDbContext myDbContext;
+
         public static int j = 0;
         private readonly String _patient_File = "../../../../WellDevCore/Resources/Data/patient.csv";
         private readonly String _patientFile_File = "../../../../WellDevCore/Resources/Data/patientFile.csv";
@@ -73,7 +76,7 @@ namespace PSW_Wpf_Patient
 
         App()
         {
-            var addressRepo = new AddressRepository(new CSVStream<Address>(_address_File, new AddressCSVConverter(",")), new LongSequencer());
+            /*var addressRepo = new AddressRepository(new CSVStream<Address>(_address_File, new AddressCSVConverter(",")), new LongSequencer());
             var townRepo = new TownRepository(new CSVStream<Town>(_town_File, new TownCSVConverter(",", "|")), new LongSequencer(), addressRepo);
             var stateRepo = new StateRepository(new CSVStream<State>(_state_File, new StateCSVConverter(",", "|")), new LongSequencer(), townRepo);
             var doctorGradeRepo = new DoctorGradeRepository(new CSVStream<DoctorGrade>(_doctorGrade_File, new DoctorGradeCSVConverter("|", ";", ":")), new LongSequencer());
@@ -105,9 +108,43 @@ namespace PSW_Wpf_Patient
             var secretaryRepo = new SecretaryRepository(new CSVStream<Secretary>(_secretary_File, new SecretaryCSVConverter(",")), new LongSequencer(), addressRepo, townRepo, stateRepo);
             var directorRepo = new DirectorRepository(new CSVStream<Director>(_director_File, new DirectorCSVConverter(",")), new LongSequencer(), addressRepo, townRepo, stateRepo);
             var notificationRepo = new PatientNotificationRepository(new CSVStream<PatientNotification>(_notification_File, new PatientNotificationCSVConverter(",")), new LongSequencer(), patientRepo);
+            */
 
+            IDoctorGradeRepository doctorGradeRepository = new DoctorGradeRepository(myDbContext);
+            ISpecialityRepository specialityRepository = new SpecialityRepository(myDbContext);
+            ISymptomRepository symptomRepository = new SymptomRepository(myDbContext);
+            IDiagnosisRepository diagnosisRepository = new DiagnosisRepository(symptomRepository, myDbContext);
+            IngredientRepository ingredientRepository = new IngredientRepository(myDbContext);
+            DrugRepository drugRepository = new DrugRepository(ingredientRepository, myDbContext);
+            PrescriptionRepository prescriptionRepository = new PrescriptionRepository(drugRepository, myDbContext);
+            TherapyRepository therapyRepository = new TherapyRepository(drugRepository, myDbContext);
+            RoomTypeRepository roomTypeRepository = new RoomTypeRepository(myDbContext);
+            EquipmentRepository equipmentRepository = new EquipmentRepository(myDbContext);
+            RoomRepository roomRepository = new RoomRepository(roomTypeRepository, equipmentRepository, myDbContext);
+            BusinessDayRepository businessDayRepository = new BusinessDayRepository(roomRepository, myDbContext);
+            RenovationRepository renovationRepository = new RenovationRepository(roomRepository, myDbContext);
+            AddressRepository addressRepository = new AddressRepository(myDbContext);
+            TownRepository townRepository = new TownRepository(addressRepository, myDbContext);
+            StateRepository stateRepository = new StateRepository(townRepository, myDbContext);
+            DoctorRepository doctorRepository = new DoctorRepository(businessDayRepository, specialityRepository, doctorGradeRepository, addressRepository, townRepository, stateRepository, myDbContext);
+            ArticleRepository articleRepository = new ArticleRepository(doctorRepository, myDbContext);
+            SecretaryRepository secretaryRepository = new SecretaryRepository(addressRepository, townRepository, stateRepository, myDbContext);
+            DirectorRepository directorRepository = new DirectorRepository(addressRepository, townRepository, stateRepository, myDbContext);
+            businessDayRepository._doctorRepository = doctorRepository;
+            ReferralRepository referralRepository = new ReferralRepository(doctorRepository, myDbContext);
+            PatientFileRepository patientFileRepository = new PatientFileRepository(myDbContext);
+            PatientRepository patientRepository = new PatientRepository(patientFileRepository, addressRepository, townRepository, stateRepository, myDbContext);
+            HospitalizationRepository hospitalizationRepository = new HospitalizationRepository(roomRepository, doctorRepository, myDbContext);
+            OperationRepository operationRepository = new OperationRepository(roomRepository, doctorRepository, myDbContext);
+            IExaminationUpcomingRepository examinationUpcomingRepository = new ExaminationUpcomingRepository(doctorRepository, patientRepository, myDbContext);
+            IExaminationPreviousRepository examinationPreviousRepository = new ExaminationPreviousRepository(doctorRepository, diagnosisRepository, prescriptionRepository, therapyRepository, referralRepository, myDbContext);
+            patientFileRepository._hospitalizationRepository = hospitalizationRepository;
+            patientFileRepository._operationRepository = operationRepository;
+            patientFileRepository._examinationPreviousRepository = examinationPreviousRepository;
+            IFeedbackRepository feedbackRepository = new FeedbackRepository(myDbContext);
+            IPatientNotificationRepository patientNotificationRepository = new PatientNotificationRepository(patientRepository, myDbContext);
 
-            var specialityService = new SpecialityService(specialityRepo);
+            var specialityService = new SpecialityService(specialityRepository);
             var hospitalizationService = new HospitalizationService(hospitalizationRepository);
             var operationService = new OperationService(operationRepository);
             var diagnosisService = new DiagnosisService(diagnosisRepository);
@@ -119,24 +156,24 @@ namespace PSW_Wpf_Patient
             var drugService = new DrugService(drugRepository);
             var ingredientService = new IngredientService(ingredientRepository);
             var doctorService = new DoctorService(doctorRepository);
-            BusinessDayService = new BusinessDayService(businessDayRepo, doctorService);
-            var renovationService = new RenovationService(renovationRepo);
-            var roomService = new RoomService(roomRepo, renovationService, BusinessDayService, hospitalizationService);
-            var roomTypeService = new RoomTypeService(roomTypeRepo, roomService);
-            var equipmentService = new EquipmentService(equipmentRepo, roomService);
-            var doctorGradeService = new DoctorGradeService(doctorGradeRepo);
-            var articleService = new ArticleService(articleRepo);
-            var patientFileService = new PatientFileService(patientFileRepo);
-            var patientService = new PatientService(patientRepo, patientFileService, doctorGradeService);
-            var secretaryService = new SecretaryService(secretaryRepo);
-            var directorService = new DirectorService(directorRepo);
+            BusinessDayService = new BusinessDayService(businessDayRepository, doctorService);
+            var renovationService = new RenovationService(renovationRepository);
+            var roomService = new RoomService(roomRepository, renovationService, BusinessDayService, hospitalizationService);
+            var roomTypeService = new RoomTypeService(roomTypeRepository, roomService);
+            var equipmentService = new EquipmentService(equipmentRepository, roomService);
+            var doctorGradeService = new DoctorGradeService(doctorGradeRepository);
+            var articleService = new ArticleService(articleRepository);
+            var patientFileService = new PatientFileService(patientFileRepository);
+            var patientService = new PatientService(patientRepository, patientFileService, doctorGradeService);
+            var secretaryService = new SecretaryService(secretaryRepository);
+            var directorService = new DirectorService(directorRepository);
             var userService = new UserService(patientService, doctorService, secretaryService, directorService);
-            var addressService = new AddressService(addressRepo);
-            var townService = new TownService(townRepo);
-            var stateService = new StateService(stateRepo);
+            var addressService = new AddressService(addressRepository);
+            var townService = new TownService(townRepository);
+            var stateService = new StateService(stateRepository);
             doctorService._doctorGradeService = doctorGradeService;
             var reportService = new ReportService(examinationService, renovationService, hospitalizationService, operationService);
-            var notificationService = new PatientNotificationService(notificationRepo);
+            var notificationService = new PatientNotificationService(patientNotificationRepository);
 
 
             UserController = new UserController(userService);

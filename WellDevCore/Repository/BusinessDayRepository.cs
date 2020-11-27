@@ -1,4 +1,6 @@
- using bolnica.Repository;
+using bolnica;
+using bolnica.Model;
+using bolnica.Repository;
 using Model.Director;
 using Model.Users;
 using Service;
@@ -8,22 +10,24 @@ using System.Linq;
 
 namespace Repository
 {
-   public class BusinessDayRepository : CSVRepository<BusinessDay,long>, IBusinessDayRepository
+   public class BusinessDayRepository : IBusinessDayRepository
    {
         public IDoctorRepository _doctorRepository;
 
         private readonly IRoomRepository _roomRepository;
-        public BusinessDayRepository(ICSVStream<BusinessDay> stream, ISequencer<long> sequencer, IRoomRepository room)
-           : base(stream, sequencer)
-        {
-            _roomRepository = room;
-        }
+        private readonly MyDbContext myDbContext;
 
+        public BusinessDayRepository( IRoomRepository roomRepository, MyDbContext context)
+        {
+            //_doctorRepository = doctorRepository;
+            _roomRepository = roomRepository;
+            myDbContext = context;
+        }
 
         public IEnumerable<BusinessDay> GetAllEager()
         {
             List<BusinessDay> businessDays = new List<BusinessDay>();
-            foreach(BusinessDay day in GetAll().ToList())
+            foreach(BusinessDay day in GetEager().ToList())
             {
                 businessDays.Add(GetEager(day.GetId()));
             }
@@ -53,6 +57,30 @@ namespace Repository
             return businessDay;
         }
 
+        public BusinessDay Save(BusinessDay entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(BusinessDay entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(BusinessDay entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<BusinessDay> GetEager()
+        {
+            List<BusinessDay> result = new List<BusinessDay>();
+            myDbContext.BusinessDay.ToList().ForEach(businessDay => result.Add(businessDay));
+            return result;
+        }
+
+        public BusinessDay Get(long id)
+            => myDbContext.BusinessDay.FirstOrDefault(businessDay => businessDay.Id == id);
 
     }
 }
