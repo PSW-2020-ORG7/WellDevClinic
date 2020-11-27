@@ -9,15 +9,39 @@ using System.Linq;
 
 namespace Repository
 {
-    public class PatientFileRepository : CSVRepository<PatientFile, long>, IPatientFileRepository
+    public class PatientFileRepository :  IPatientFileRepository
     {
         public IHospitalizationRepository _hospitalizationRepository;
         public IOperationRepository _operationRepository;
         public IExaminationPreviousRepository _examinationPreviousRepository;
 
-        public PatientFileRepository(ICSVStream<PatientFile> stream, ISequencer<long> sequencer)
-               : base(stream, sequencer)
+        public PatientFileRepository()
         {
+        }
+
+        public PatientFileRepository(ICSVStream<PatientFile> stream, ISequencer<long> sequencer)
+         
+        {
+        }
+
+        public void Delete(PatientFile entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(PatientFile entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PatientFile Get(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<PatientFile> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<PatientFile> GetAllEager()
@@ -61,6 +85,11 @@ namespace Repository
             }
             patientFile.Examination = examinationCollection;
             return patientFile;
+        }
+
+        public PatientFile Save(PatientFile entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -26,6 +26,15 @@ namespace Model.Users
             this.Password = password;
             this.Image = img;
         }
+        public Patient(long id, String name, String surname, String jmbg, String email, String phone)
+        {
+            this.Id = id;
+            this.FirstName = name;
+            this.LastName = surname;
+            this.Jmbg = jmbg;
+            this.Email = email;
+            this.Phone = phone;
+        }
         public Patient(long id, String name, String surname, String jmbg, String email, String phone, DateTime birth, Address address, String username, String password, Uri img, PatientFile patientFile, Boolean guest)
         {
             this.Id = id;

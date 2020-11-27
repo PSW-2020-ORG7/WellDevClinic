@@ -27,6 +27,8 @@ namespace Model.PatientSecretary
             Diagnosis = diagnosis;
         }
 
+
+
         public Examination(long id,  Users.Doctor doctor, Period period)
         {
             Id = id;

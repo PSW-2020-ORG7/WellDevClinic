@@ -37,6 +37,10 @@ namespace Service
             _upcomingRepository = upcomingRepository;
             _previousRepository = previousRepository;
         }
+        public ExaminationService( IExaminationPreviousRepository previousRepository)
+        {
+              _previousRepository = previousRepository;
+        }
 
         public void Delete(Examination entity)
         {
