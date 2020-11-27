@@ -26,8 +26,9 @@ namespace Repository
             myDbContext = context;
         }
 
-        public PatientFileRepository() 
+        public PatientFileRepository(MyDbContext myDbContext) 
         {
+            myDbContext = myDbContext;
             //MyContextContextFactory mccf = new MyContextContextFactory();
             //this.myDbContext = mccf.CreateDbContext(new string[0]);
         }

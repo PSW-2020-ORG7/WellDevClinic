@@ -219,7 +219,7 @@ namespace PSW_Wpf_director
                 examination_paragraph.Add(new Chunk("\n"));
                 examination_paragraph.Add("Doktor : " + examination.Doctor.FullName);
                 examination_paragraph.Add(new Chunk("\n"));
-                examination_paragraph.Add("Pacijent : " + examination.User.FullName);
+                examination_paragraph.Add("Pacijent : " + examination.Patient.FullName);
                 examination_paragraph.Add(new Chunk("\n"));
                 examination_paragraph.Add("Period : " + examination.Period.StartDate);
                 examination_paragraph.Add(new Chunk("\n"));
@@ -251,7 +251,7 @@ namespace PSW_Wpf_director
                 examination_previous_paragraph.Add(new Chunk("\n"));
                 examination_previous_paragraph.Add("Doktor : " + examination.Doctor.FullName);
                 examination_previous_paragraph.Add(new Chunk("\n"));
-                examination_previous_paragraph.Add("Pacijent : " + examination.User.FullName);
+                examination_previous_paragraph.Add("Pacijent : " + examination.Patient.FullName);
                 examination_previous_paragraph.Add(new Chunk("\n"));
                 examination_previous_paragraph.Add("Period : " + examination.Period.StartDate);
                 examination_previous_paragraph.Add(new Chunk("\n"));

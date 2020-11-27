@@ -12,10 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp.Model;
-using WpfApp.ViewModel;
+using PSW_Wpf_app.Model;
+using PSW_Wpf_app.ViewModel;
 
-namespace WpfApp.View
+namespace PSW_Wpf_app.View
 {
     /// <summary>
     /// Interaction logic for MainBuildings.xaml

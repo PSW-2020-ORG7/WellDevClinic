@@ -1,0 +1,25 @@
+﻿<Application x:Class="PSW_Wpf_Patient.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PSW_Wpf_Patient"
+             StartupUri="WindowLogIn.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+
+
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="SliderGrade" TargetType="Slider">
+                <Setter Property="IsSnapToTickEnabled" Value="True"/>
+                <Setter Property="IsMoveToPointEnabled" Value="True"/>
+                <Setter Property="TickPlacement" Value="BottomRight"/>
+                <Setter Property="TickFrequency" Value="1"/>
+                <Setter Property="AutoToolTipPlacement" Value="BottomRight"/>
+                <Setter Property="AutoToolTipPrecision" Value="0"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

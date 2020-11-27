@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,11 +16,11 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp.Model;
-using WpfApp.View;
-using WpfApp.ViewModel;
+using PSW_Wpf_app.Model;
+using PSW_Wpf_app.View;
+using PSW_Wpf_app.ViewModel;
 
-namespace WpfApp
+namespace PSW_Wpf_app
 {
 
     public partial class MainWindow : Window
@@ -67,6 +68,32 @@ namespace WpfApp
         {
             this.userControl.Content = new MainBuildingView();
         }
+
+        private void OnMoreInfoClick(object sender, RoutedEventArgs e)
+        {
+            BuildingsInformationView buildingsInformationView = new BuildingsInformationView();
+            buildingsInformationView.Show();
+        }
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+            if (SearchBuilding.Text == "")
+            {
+                MessageBox.Show("You must enter room for search.");
+            }
+            else
+            {
+                SearchResultView searchResultView = new SearchResultView(SearchBuilding.Text);
+                searchResultView.Show();
+            }
+        }
+
+        private void ValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9a-zA-Z_]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
     }
 
 }

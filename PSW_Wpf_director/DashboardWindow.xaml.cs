@@ -374,7 +374,7 @@ namespace PSW_Wpf_director
 
         private void Button_Click_Logout(object sender, RoutedEventArgs e)
         {
-            File.WriteAllText(@"../../../../code/Resources/LoggedIn/config.txt", "false");
+            File.WriteAllText(@"../../../../PSW_Wpf_director/Resources/LoggedIn/config.txt", "false");
 
             MainWindow window = new MainWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -1509,7 +1509,7 @@ namespace PSW_Wpf_director
             {
                 fileName = op.FileName;
                 UserImage.Source = new BitmapImage(new Uri(fileName));
-                director.Image = new Uri(fileName);
+                director.Image = new String(fileName);
                 _directorController.Edit(director);
 
 
