@@ -4,17 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Service;
 
 namespace PSW_Pharmacy_Adapter
 {
     public class Program
     {
+        public static List<Message> Messages = new List<Message>();
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            ActionsAndBenefitsMessages(args).Build().Run();
         }
 
         public static List<Api> Apis = new List<Api>()
@@ -31,5 +36,14 @@ namespace PSW_Pharmacy_Adapter
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        public static IHostBuilder ActionsAndBenefitsMessages(string[] args) =>
+           Host.CreateDefaultBuilder(args)
+               .ConfigureServices((hostContext, services) =>
+               {
+                   services.AddHostedService<TimerService>();
+                   services.AddHostedService<SubscriberService>();
+               });
+
     }
 }
