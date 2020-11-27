@@ -1,3 +1,5 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.PatientSecretary;
 using System;
@@ -6,19 +8,29 @@ using System.Linq;
 
 namespace Repository
 {
-   public class DrugRepository : CSVRepository<Drug,long>, IDrugRepository, IEagerRepository<Drug,long>
+   public class DrugRepository : IDrugRepository, IEagerRepository<Drug,long>
    {
         private readonly IIngredientRepository _ingredientRepository;
-        public DrugRepository(ICSVStream<Drug> stream, ISequencer<long> sequencer, IIngredientRepository ingredientRepository)
-            : base(stream, sequencer)
+        private readonly MyDbContext myDbContext;
+
+        public DrugRepository(IIngredientRepository ingredientRepository, MyDbContext context)
         {
             _ingredientRepository = ingredientRepository;
+            myDbContext = context;
         }
+
+        /*public DrugRepository(ICSVStream<Drug> stream, ISequencer<long> sequencer, IIngredientRepository ingredientRepository)
+    : base(stream, sequencer)
+        {
+            _ingredientRepository = ingredientRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
 
         public IEnumerable<Drug> GetAllEager()
         {
-            IEnumerable<Drug> drugs = this.GetAll();
-            IEnumerable<Ingredient> ingredients = _ingredientRepository.GetAll();
+            IEnumerable<Drug> drugs = this.GetEager();
+            IEnumerable<Ingredient> ingredients = _ingredientRepository.GetEager();
             BindDrugIngredients(drugs, ingredients);
             BindAlternativeDrugs(drugs);
 
@@ -31,7 +43,7 @@ namespace Repository
             {
                 foreach (Drug alternativeDrug in drug.Alternative)
                 {
-                    Drug temp = base.Get(alternativeDrug.Id);
+                    Drug temp = Get(alternativeDrug.Id);
                     alternativeDrug.Name = temp.Name;
                     alternativeDrug.Amount = temp.Amount;
                     alternativeDrug.Approved = temp.Approved;
@@ -56,7 +68,7 @@ namespace Repository
 
         public Drug GetEager(long id)
         {
-            Drug drug = base.Get(id);
+            Drug drug = Get(id);
             foreach (Ingredient ingredient in drug.Ingredients)
             {
                 Ingredient temp = _ingredientRepository.Get(ingredient.Id);
@@ -66,7 +78,7 @@ namespace Repository
 
             foreach (Drug alternativeDrug in drug.Alternative)
             {
-                Drug temp = base.Get(id);
+                Drug temp = Get(id);
                 alternativeDrug.Name = temp.Name;
                 alternativeDrug.Amount = temp.Amount;
                 alternativeDrug.Approved = temp.Approved;
@@ -78,7 +90,7 @@ namespace Repository
         public List<Drug> GetNotApprovedDrugs()
         {
             List<Drug> notApprovedDrugs = new List<Drug>();
-            IEnumerable<Drug> drugs = this.GetAll();
+            IEnumerable<Drug> drugs = this.GetEager();
             foreach (Drug drug in drugs.ToList())
             {
                 if (drug.Approved == false)
@@ -89,5 +101,29 @@ namespace Repository
                 return notApprovedDrugs;
         }
 
+        public Drug Save(Drug entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Drug entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Drug entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Drug> GetEager()
+        {
+            List<Drug> result = new List<Drug>();
+            myDbContext.Drug.ToList().ForEach(drug => result.Add(drug));
+            return result;
+        }
+
+        public Drug Get(long id)
+            => myDbContext.Drug.FirstOrDefault(drug => drug.Id == id);
     }
 }

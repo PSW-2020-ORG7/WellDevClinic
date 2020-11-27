@@ -18,7 +18,7 @@ namespace Model.Director
 
         public void SetId(long id) => Id = id;
 
-        public RoomType RoomType { get; set; }
+        public virtual RoomType RoomType { get; set; }
 
         public int MaxNumberOfPatientsForHospitalization { get; set; }
 

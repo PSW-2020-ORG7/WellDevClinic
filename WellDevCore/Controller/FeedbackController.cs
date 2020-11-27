@@ -10,12 +10,12 @@ namespace bolnica.Controller
 {
     public class FeedbackController : IFeedbackController
     {
-        private readonly IFeedbackService _feedbackService = new FeedbackService();
+        private readonly IFeedbackService _feedbackService;
 
 
-        public FeedbackController()
+        public FeedbackController(IFeedbackService feedbackService)
         {
-            
+            _feedbackService = feedbackService;
         }
 
         public void Delete(Feedback entity)

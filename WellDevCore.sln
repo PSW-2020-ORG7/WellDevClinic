@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Pharmacy_Adapter", "PSW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Wpf_doctor", "PSW_Wpf_doctor\PSW_Wpf_doctor.csproj", "{9A1E0036-34AA-491C-AE4D-66B47D864A83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryTests", "RepositoryTests\RepositoryTests.csproj", "{3B41133C-E9DF-4FD8-A1AF-6AAB54F416C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryTests", "RepositoryTests\RepositoryTests.csproj", "{3B41133C-E9DF-4FD8-A1AF-6AAB54F416C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTests", "ServiceTests\ServiceTests.csproj", "{3D3DA749-EFF4-47D3-8BA5-A145598F6EEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceTests", "ServiceTests\ServiceTests.csproj", "{3D3DA749-EFF4-47D3-8BA5-A145598F6EEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

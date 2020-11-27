@@ -23,6 +23,7 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["Edit"] = new List<String>() { "Secretary" };
             AuthorizedUsers["Get"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetAll"] = new List<String>() { "Doctor", "Patient", "Secretary" };
+            AuthorizedUsers["GetAllPrevious"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetExaminationsByFilter"] = new List<String>() { "Secretary" };
             AuthorizedUsers["GetFinishedxaminationsByUser"] = new List<String>() { "Doctor" };
             AuthorizedUsers["GetUpcomingExaminationsByUser"] = new List<String>() { "Patient", "Doctor", "Director" };
@@ -54,6 +55,14 @@ namespace bolnica.Controller.decorators
         {
             if (AuthorizedUsers["GetAll"].SingleOrDefault(x => x == Role) != null)
                 return ExaminationController.GetAll();
+            else
+                return null;
+        }
+
+        public List<Examination> GetAllPrevious()
+        {
+            if (AuthorizedUsers["GetAllPrevious"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.GetAllPrevious();
             else
                 return null;
         }

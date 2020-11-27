@@ -6,11 +6,12 @@ using Model.Users;
 using System;
 using System.Collections.Generic;
 
-namespace Controller
+namespace bolnica.Controller
 {
     public class ExaminationController : IExaminationController
     {
         private readonly IExaminationService _examinationService;
+        //public ExaminationController() { }
 
         public ExaminationController(IExaminationService service)
         {
@@ -34,6 +35,12 @@ namespace Controller
         {
             return _examinationService.GetAll();
         }
+
+        public List<Examination> GetAllPrevious()
+        {
+            return _examinationService.GetAllPrevious();
+        }
+
         public Examination Save(Examination entity)
         {
             return _examinationService.Save(entity);

@@ -166,7 +166,7 @@ namespace PSW_Wpf_doctor
                 {
                     prescription = null;
                 }
-                Examination saveExamination = new Examination(userPatient, user, examination.Period, diagnosis, ane, terapija, referral, prescription);
+                Examination saveExamination = new Examination(0, patient, user, examination.Period, diagnosis, ane, terapija, referral, prescription);
                 app.ExaminationDecorator.SaveFinishedExamination(saveExamination);
 
                 app.ExaminationDecorator.Delete(examination);
