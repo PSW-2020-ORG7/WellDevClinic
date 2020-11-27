@@ -23,7 +23,7 @@ namespace ServiceTests
             roomTypes.Add(roomTypeOperation);
             roomTypes.Add(roomTypeRecovery);
 
-            roomTypeStubRepository.Setup(r => r.GetAllEager()).Returns(roomTypes);
+            roomTypeStubRepository.Setup(r => r.GetEager()).Returns(roomTypes);
 
             RoomTypeService roomTypeService = new RoomTypeService(roomTypeStubRepository.Object, null);
 
