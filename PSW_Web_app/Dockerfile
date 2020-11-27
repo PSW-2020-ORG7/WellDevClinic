@@ -5,7 +5,7 @@ ENV ASPNETCORE_URLS=http://*:49153
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
-COPY ["PSW_Web_app/PSW_Web_app.csproj", "PSW_Web_app/"]
+COPY . PSW_Web_app/
 RUN dotnet restore "PSW_Web_app/PSW_Web_app.csproj"
 COPY . .
 WORKDIR "/src/PSW_Web_app"
