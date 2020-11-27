@@ -11,10 +11,16 @@ namespace Controller
     {
         private readonly IPatientService _patientService;
 
+        public PatientController()
+        {
+
+        }
+
         public PatientController(IPatientService patientService)
         {
             _patientService = patientService;
         }
+
         public Patient ClaimAccount(Patient patient)
         {
             return _patientService.ClaimAccount(patient);
@@ -54,5 +60,22 @@ namespace Controller
         {
             return _patientService.Save(entity);
         }
+
+        public Patient CheckExistence(String jmbg, String username, String email)
+        {
+            return _patientService.checkExistence(jmbg, username, email);
+        }
+
+        /*
+        public Patient GetPatientByMail(string email)
+        {
+            return _patientService.GetPatientByMail(email);
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            return _patientService.GetPatientByUsername(username);
+        }
+        */
     }
 }

@@ -13,7 +13,7 @@ namespace Model.Users
             this.Id = id;
             Username = username;
             Password = password;
-            Image = image;
+            //Image = image;
             FirstName = firstName;
             LastName = lastName;
             Jmbg = jmbg;

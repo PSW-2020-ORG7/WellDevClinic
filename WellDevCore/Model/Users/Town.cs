@@ -21,7 +21,7 @@ namespace Model.Users
             address = new List<Address>();
         }
 
-        public Town(long id)
+        public Town(long id, string v)
         {
             Id = id;
         }

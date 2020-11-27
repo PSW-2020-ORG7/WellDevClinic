@@ -26,7 +26,7 @@ namespace bolnica.Repository.CSV.Converter
         public string ConvertEntityToCSVFormat(Director entity)
         {
             return String.Join(_delimiter, entity.GetId(), 
-                entity.Username, entity.Password, entity.Image.ToString(),
+                entity.Username, entity.Password, /*entity.Image.ToString(),*/
                 entity.FirstName, entity.LastName, entity.Jmbg, entity.Email, entity.Phone, entity.DateOfBirth,
                 entity.Address.GetId(), entity.Address.GetTown().GetId(), entity.Address.GetTown().GetState().GetId()
                 );

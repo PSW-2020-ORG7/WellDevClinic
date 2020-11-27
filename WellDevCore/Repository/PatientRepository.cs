@@ -1,5 +1,7 @@
 
 
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.PatientSecretary;
 using Model.Users;
@@ -15,6 +17,10 @@ namespace Repository
         private readonly IAddressRepository _addressRepository;
         private readonly ITownRepository _townRepository;
         private readonly IStateRepository _stateRepository;
+
+        private readonly MyDbContext myDbContext;
+
+
         public PatientRepository(ICSVStream<Patient> stream, ISequencer<long> sequencer, IPatientFileRepository patientFileRepository, IAddressRepository addressRepository,
             ITownRepository townRepository, IStateRepository stateRepository)
             : base(stream, sequencer)
@@ -23,6 +29,8 @@ namespace Repository
             _addressRepository = addressRepository;
             _townRepository = townRepository;
             _stateRepository = stateRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
         }
 
         public IEnumerable<Patient> GetAllEager()
@@ -50,14 +58,33 @@ namespace Repository
 
         public Patient GetPatientByJMBG(string jmbg)
         {
-            List<Patient> patients = GetAllEager().ToList();
-            foreach(Patient patient in patients){
-                if (patient.Jmbg.Equals(jmbg))
-                {
-                    return patient;
-                }
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Jmbg.Equals(jmbg));
+            return result;
+        }
+
+        public Patient Save(Patient entity)
+        {
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Jmbg == entity.Jmbg);
+            if (result == null)
+            {
+                myDbContext.Patient.Add(entity);
+                myDbContext.SaveChanges();
+                return entity;
             }
+
             return null;
+        }
+
+        public Patient GetPatientByMail(string email)
+        {
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Email.Equals(email));
+            return result;
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Username.Equals(username));
+            return result;
         }
 
         public User GetUserByUsername(string username)

@@ -19,6 +19,7 @@ namespace bolnica.Repository
 
         public State ConvertCSVFormatToEntity(string entityCSVFormat)
         {
+            /*
             string[] tokens = entityCSVFormat.Split(_delimiter.ToCharArray());
             State state = new State(long.Parse(tokens[0]), tokens[1], tokens[2]);
             List<Town> towns = new List<Town>();
@@ -30,6 +31,8 @@ namespace bolnica.Repository
             }
             state.SetTown(towns);
             return state;
+            */
+            return null;
         }
 
         public string ConvertEntityToCSVFormat(State entity)

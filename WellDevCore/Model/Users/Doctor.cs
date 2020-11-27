@@ -30,7 +30,7 @@ namespace Model.Users
             this.Address = address;
             this.Username = username;
             this.Password = password;
-            this.Image = img;
+            //this.Image = img;
             this.Specialty = spec;
         }
 
@@ -46,7 +46,7 @@ namespace Model.Users
             this.Address = address;
             this.Username = username;
             this.Password = password;
-            this.Image = img;
+            //this.Image = img;
             this.BusinessDay = businessDay;
             this.Specialty = speciality;
             this.DoctorGrade = doctGrade;
@@ -63,7 +63,7 @@ namespace Model.Users
             this.Address = adress;
             this.Username = username;
             this.Password = password;
-            this.Image = img;
+            //this.Image = img;
             this.BusinessDay = businessDay;
             this.Specialty = speciality;
             this.DoctorGrade = doctGrade;

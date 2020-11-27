@@ -16,5 +16,11 @@ namespace bolnica.Service
 
         DoctorGrade GiveGradeToDoctor(Doctor doctor, Dictionary<String, double> gradesForDoctor);
 
+        Patient GetPatientByMail(String email);
+
+        Patient GetPatientByUsername(String username);
+
+        Patient checkExistence(String jmbg, String username, String email);
+
     }
 }
