@@ -1,19 +1,14 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 49153
 ENV ASPNETCORE_URLS=http://*:49153
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY . PSW_Web_app/
-COPY WellDevCore/*.csproj /WellDevCore
+COPY ["PSW_Web_app/PSW_Web_app.csproj", "PSW_Web_app/"]
+COPY ["WellDevCore/WellDevCore.csproj", "WellDevCore/"]
 RUN dotnet restore "PSW_Web_app/PSW_Web_app.csproj"
-RUN dotnet restore "WellDevCore/WellDevCore.csproj"
 COPY . .
-
-WORKDIR "/src/WellDevCore"
-RUN dotnet build "WellDevCore.csproj" -c Release -o /app/build
-
 WORKDIR "/src/PSW_Web_app"
 RUN dotnet build "PSW_Web_app.csproj" -c Release -o /app/build
 
