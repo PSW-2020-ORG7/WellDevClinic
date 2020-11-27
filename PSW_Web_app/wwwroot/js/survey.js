@@ -25,7 +25,7 @@ $(document).ready(function () {
 		doctor3_dto.grade = parseInt(doctor3);
 		doctor3_dto.question = 'doctor3';
 		doctor4_dto.grade = parseInt(doctor_grade);
-		doctor4_dto.question = 'doctor_grade';
+		doctor4_dto.question = 'doctor4';
 		doctor.push(doctor1_dto)
 		doctor.push(doctor2_dto)
 		doctor.push(doctor3_dto)
@@ -42,7 +42,7 @@ $(document).ready(function () {
 		medical3_dto.grade = parseInt(medical3);
 		medical3_dto.question = 'medical3';
 		medical4_dto.grade = parseInt(medical_grade);
-		medical4_dto.question = 'medical_grade';
+		medical4_dto.question = 'medical4';
 		doctor.push(medical1_dto)
 		doctor.push(medical2_dto)
 		doctor.push(medical3_dto)
@@ -59,7 +59,7 @@ $(document).ready(function () {
 		hospital3_dto.grade = parseInt(hospital3);
 		hospital3_dto.question = 'hospital3';
 		hospital4_dto.grade = parseInt(hospital_grade);
-		hospital4_dto.question = 'hospital_grade';
+		hospital4_dto.question = 'hospital4';
 		doctor.push(hospital1_dto)
 		doctor.push(hospital2_dto)
 		doctor.push(hospital3_dto)
