@@ -55,6 +55,37 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
+        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<RoomWrapper> rooms)
+        {
+            choosenBuilding = build;
+            choosenFloor = floor;
+            floors = getFloor(ChoosenBuilding);
+
+            DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
+
+            bool flag = false;
+            foreach (FloorElement f in floors)
+            {
+                flag = false;
+                if (f.Floor.Equals(choosenFloor))
+                {
+                    foreach (RoomWrapper foundRoom in rooms)
+                    {
+                        if (foundRoom.FloorElement.Floor == choosenFloor &&
+                            foundRoom.FloorElement.Name == f.Name)
+                        {
+                            flag = true;
+                        }
+                    }
+
+                    Shape shape = floorDrawer.DrawElement(f, flag);
+                    shape.MouseDown += openInfo;
+                    canvasFloor.Children.Add(shape);
+                }
+            }
+        }
+
+
         private List<FloorElement> getFloor(object name)
         {
             string pathSurgical = "../../../Data/surgicalBranchesFloors.txt";

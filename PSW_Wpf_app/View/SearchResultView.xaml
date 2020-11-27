@@ -12,7 +12,7 @@
     </Window.Resources>
     <Grid Background="CadetBlue">
         <DataGrid  
-            ItemsSource="{Binding SearchedObjectResults}" 
+            ItemsSource="{Binding SearchResults}" 
             HorizontalAlignment="Center"
             Height="338" 
             VerticalAlignment="Center" 
@@ -21,8 +21,9 @@
 			CanUserAddRows="False"
 			SelectionMode="Extended">
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding Name}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Floor" Width="*" Binding="{Binding Floor}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Building" Width="*" Binding="{Binding Building}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding FloorElement.Name}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Floor" Width="*" Binding="{Binding FloorElement.Floor}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -10,7 +10,7 @@ namespace PSW_Wpf_app.ViewModel
     public class SearchResultViewModel : BindableBase
     {
 
-        private List<FloorElement> searchedObjectResults;
+        private List<RoomWrapper> searchResults;
         private List<FloorElement> floorSurgical;
         private List<FloorElement> floorsMedical;
         private List<FloorElement> floorsPediatrics;
@@ -19,15 +19,15 @@ namespace PSW_Wpf_app.ViewModel
         string pathMedical = "../../../Data/medicalCenter.txt";
         string pathPediatrics = "../../../Data/pediatrics.txt";
 
-        public List<FloorElement> SearchedObjectResults
+        public List<RoomWrapper> SearchResults
         {
-            get { return searchedObjectResults; }
-            set { searchedObjectResults = value; }
+            get { return searchResults; }
+            set { searchResults = value; }
         }
 
         public SearchResultViewModel(string searchedObject)
         {
-            searchedObjectResults = new List<FloorElement>();
+            SearchResults = new List<RoomWrapper>();
             floorSurgical = ShapeViewModel.ReadFloor(pathSurgical);
             floorsMedical = ShapeViewModel.ReadFloor(pathMedical);
             floorsPediatrics = ShapeViewModel.ReadFloor(pathPediatrics);
@@ -35,15 +35,31 @@ namespace PSW_Wpf_app.ViewModel
             
             List<FloorElement> allFloors = floorSurgical.Concat(floorsMedical).Concat(floorsPediatrics).ToList();
 
-            foreach (FloorElement floor in allFloors)
+            foreach (FloorElement floor in floorSurgical)
             {
                 if (floor.Type.Equals(searchedObject) || (floor.Name.Equals(searchedObject)))
                 {
-                    searchedObjectResults.Add(floor);
+                    searchResults.Add(new RoomWrapper(floor,"Surgical"));
                 }
             }
 
-            if (searchedObjectResults.Count == 0)
+            foreach (FloorElement floor in floorsMedical)
+            {
+                if (floor.Type.Equals(searchedObject) || (floor.Name.Equals(searchedObject)))
+                {
+                    searchResults.Add(new RoomWrapper(floor, "MedicalCenter"));
+                }
+            }
+
+            foreach (FloorElement floor in floorsPediatrics)
+            {
+                if (floor.Type.Equals(searchedObject) || (floor.Name.Equals(searchedObject)))
+                {
+                    searchResults.Add(new RoomWrapper(floor, "Pediatrics"));
+                }
+            }
+
+            if (searchResults.Count == 0)
             {
                 MessageBox.Show("Object doesn't exist!");
             }
