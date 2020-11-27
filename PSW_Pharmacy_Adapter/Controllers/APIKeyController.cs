@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bolnica.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
@@ -15,14 +15,19 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class APIKeyController : ControllerBase
     {
-        IAPIKeyRepository pr = new APIKeyRepository();
+        IAPIKeyRepository KeyRepo;
+
+        public APIKeyController()
+        {
+            MyContextFactory cf = new MyContextFactory();
+            KeyRepo = new APIKeyRepository(cf.CreateDbContext(new string[0]));
+        }
 
         [HttpPost]
         [Route("add")]
         public IActionResult AddPharmacy(Api api)
         {
-            bool success = pr.Save(api);
-            if (success)
+            if (KeyRepo.Save(api))
                 return Ok();    
             return BadRequest();
         }
@@ -31,7 +36,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("{id?}")]
         public IActionResult GetPharmacy(string id)
         {
-            Api api = pr.Get(id);
+            Api api = KeyRepo.Get(id);
             if (api == null)
                 return NotFound();
             return Ok(api);
@@ -40,18 +45,15 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [HttpGet]
         [Route("all")]
         public IActionResult GetAllPharmacies() =>
-            Ok(pr.GetAll());
+            Ok(KeyRepo.GetAll());
 
         [HttpPut]
         [Route("/delete/{id?}")]
         public IActionResult DeletePharmacy(string id)
         {
-            bool success = pr.Delete(id);
-            if (success)
+            if (KeyRepo.Delete(id))
                 return Ok();
             return NotFound();
         }
-
-
     }
 }

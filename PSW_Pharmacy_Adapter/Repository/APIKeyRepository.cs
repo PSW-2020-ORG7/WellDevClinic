@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bolnica.Model;
+using Microsoft.EntityFrameworkCore;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 
@@ -12,17 +12,29 @@ namespace PSW_Pharmacy_Adapter.Repository
     {
         private readonly MyDbContext myDbContext;
 
-        public Api Get(string id) =>
-            Program.Apis.SingleOrDefault(api => api.NameOfHospital == id);
+        public APIKeyRepository(MyDbContext DbContext)
+        {
+           
+            myDbContext = DbContext;
+        }
 
-        public List<Api> GetAll() => Program.Apis;
+        public Api Get(string id) =>
+            myDbContext.ApiKeys.FirstOrDefault(api => api.NameOfHospital == id);
+
+        public List<Api> GetAll()
+        {
+            List<Api> apis = new List<Api>();
+            myDbContext.ApiKeys.ToList().ForEach(a => apis.Add(a));
+            return apis;
+        }
 
         public bool Save(Api api)
         {
-            Api a = Program.Apis.SingleOrDefault(a => a.NameOfHospital == api.NameOfHospital);
+            Api a = myDbContext.ApiKeys.SingleOrDefault(a => a.NameOfHospital == api.NameOfHospital);
             if (a == null)
             {
-                Program.Apis.Add(api);
+                myDbContext.ApiKeys.Add(api);
+                myDbContext.SaveChanges();
                 return true;
             }
             return false;
@@ -30,10 +42,11 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public bool Delete(string id)
         {
-            Api a = Program.Apis.SingleOrDefault(a => a.NameOfHospital == id);
+            Api a = myDbContext.ApiKeys.SingleOrDefault(a => a.NameOfHospital == id);
             if (a != null)
             {
-                Program.Apis.Remove(a);
+                myDbContext.ApiKeys.Remove(a);
+                myDbContext.SaveChanges();
                 return true;
             }
             return false;
