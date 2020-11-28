@@ -17,7 +17,7 @@ namespace PSW_Pharmacy_Adapter.UnitTests
         public void Get_Selected_Pharmacy()
         {
             //var StubRepository = new Mock<IAPIKeyRepository>();
-            //var pharmacies = CreatePharmacyAPIRepository(); 
+            //var pharmacies = CreatePharmacyAPIRepository();
             //APIKeyController pc = new APIKeyController();
 
             //Api a = pc.GetPharmacy("pharmacy1");
