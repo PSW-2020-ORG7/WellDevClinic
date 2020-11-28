@@ -55,7 +55,7 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
-        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<RoomWrapper> rooms)
+        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms)
         {
             choosenBuilding = build;
             choosenFloor = floor;
@@ -69,10 +69,9 @@ namespace PSW_Wpf_app.ViewModel
                 flag = false;
                 if (f.Floor.Equals(choosenFloor))
                 {
-                    foreach (RoomWrapper foundRoom in rooms)
+                    foreach (FloorElement foundRoom in rooms)
                     {
-                        if (foundRoom.FloorElement.Floor == choosenFloor &&
-                            foundRoom.FloorElement.Name == f.Name)
+                        if (foundRoom.Floor == choosenFloor && foundRoom.Name == f.Name)
                         {
                             flag = true;
                         }

@@ -69,6 +69,8 @@ namespace PSW_Wpf_app.Drawing
         public void CustomizeFoundRoom()
         {
             rectangle.Stroke = new SolidColorBrush(Colors.Red);
+            rectangle.StrokeThickness = 4;
+
         }
 
         private void CustomizeRoom()

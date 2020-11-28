@@ -28,7 +28,7 @@ namespace PSW_Wpf_app.View
             DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor);
         }
 
-        public ChosenFloorView(string build, int floor, List<RoomWrapper> rooms)
+        public ChosenFloorView(string build, int floor, List<FloorElement> rooms)
         {
             InitializeComponent();
             DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor, rooms);

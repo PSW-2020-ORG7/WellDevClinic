@@ -30,9 +30,9 @@ namespace PSW_Wpf_app
         List<GraphicElement> elements = new List<GraphicElement>();
 
 
-        private List<RoomWrapper> foundRooms = new List<RoomWrapper>();
+        private List<FloorElement> foundRooms = new List<FloorElement>();
 
-        public List<RoomWrapper> FoundRooms
+        public List<FloorElement> FoundRooms
         {
             get { return foundRooms; }
             set { foundRooms = value; }
@@ -77,7 +77,7 @@ namespace PSW_Wpf_app
         private void Button_Click_HOME(object sender, RoutedEventArgs e)
         {
             this.userControl.Content = new MainBuildingView();
-            FoundRooms = new List<RoomWrapper>();
+            FoundRooms = new List<FloorElement>();
         }
 
         private void OnMoreInfoClick(object sender, RoutedEventArgs e)
@@ -94,13 +94,13 @@ namespace PSW_Wpf_app
             }
             else
             {
-                FoundRooms = new List<RoomWrapper>();
+                FoundRooms = new List<FloorElement>();
 
                 SearchResultView searchResultView = new SearchResultView(SearchBuilding.Text);
                 searchResultView.Show();
 
                 SearchResultViewModel sw = (SearchResultViewModel)searchResultView.DataContext;
-                FoundRooms = sw.SearchResults;
+                FoundRooms = sw.SearchedObjectResults;
             }
         }
 
