@@ -1,10 +1,7 @@
-﻿using System;
+﻿using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Repository
 {
@@ -18,8 +15,8 @@ namespace PSW_Pharmacy_Adapter.Repository
             myDbContext = DbContext;
         }
 
-        public Api Get(string id) =>
-            myDbContext.ApiKeys.FirstOrDefault(api => api.NameOfPharmacy == id);
+        public Api Get(string id)
+            => myDbContext.ApiKeys.FirstOrDefault(api => api.NameOfPharmacy == id);
 
         public List<Api> GetAll()
         {

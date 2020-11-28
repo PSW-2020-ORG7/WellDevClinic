@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Service;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -15,19 +14,19 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class APIKeyController : ControllerBase
     {
-        IAPIKeyRepository KeyRepo;
+        private readonly APIKeyService KeyService;
 
         public APIKeyController()
         {
             MyContextFactory cf = new MyContextFactory();
-            KeyRepo = new APIKeyRepository(cf.CreateDbContext(new string[0]));
+            KeyService = new APIKeyService(cf.CreateDbContext(new string[0]));
         }
 
         [HttpPost]
         [Route("add")]
         public IActionResult AddPharmacy(Api api)
         {
-            if (KeyRepo.Save(api))
+            if (KeyService.AddPharmacy(api))
                 return Ok();    
             return BadRequest();
         }
@@ -36,7 +35,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("{id?}")]
         public IActionResult GetPharmacy(string id)
         {
-            Api api = KeyRepo.Get(id);
+            Api api = KeyService.GetPharmacy(id);
             if (api == null)
                 return NotFound();
             return Ok(api);
@@ -44,14 +43,14 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [HttpGet]
         [Route("all")]
-        public IActionResult GetAllPharmacies() =>
-            Ok(KeyRepo.GetAll());
+        public IActionResult GetAllPharmacies()
+            => Ok(KeyService.GetAllPharmacies());
 
         [HttpDelete]        // TODO: Ne radi
         [Route("/delete/{id?}")]
         public IActionResult DeletePharmacy(string id)
         {
-            if (KeyRepo.Delete(id))
+            if (KeyService.DeletePharmacy(id))
                 return Ok();
             return NotFound();
         }
