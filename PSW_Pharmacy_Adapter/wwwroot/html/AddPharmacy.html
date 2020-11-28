@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Pharmacy registration</title>
-    <link rel="stylesheet" href="/css/PharmacyRegistrationStyle.css">
+    <link rel="stylesheet" href="/css/PharmacyRegistration.css">
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/js/PharmacyRegistration.js"></script>
 </head>
@@ -11,11 +11,14 @@
     <div class="login-page">
         <div class="form">
             <form class="register-form">
-                <input type="text" placeholder="Name" id="TxtName" />
-                <input type="text" placeholder="Api key" id="TxtApi">
-                <input type="text" placeholder="Url" id="TxtUrl">
+                <label id="invalidName" class="valid">Required field!</label>
+                <input type="text" placeholder="Name" id="txtName" />
+                <label id="invalidApi" class="valid">Required field!</label>
+                <input type="text" placeholder="Api key" id="txtApi">
+                <label id="invalidUrl" class="valid">Required field!</label>
+                <input type="text" placeholder="Url" id="txtUrl">
                 <button id="btnAddPharmacy" type="button">Add pharmacy</button>
-                <a href="http://localhost:4200/hospital">Go to pharmacy site for api key</a>
+                <a href="http://localhost:4200" target="_blank">Visit partner pharmacy site</a>
             </form>
         </div>
     </div>

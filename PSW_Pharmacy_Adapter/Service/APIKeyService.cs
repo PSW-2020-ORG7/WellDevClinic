@@ -16,14 +16,14 @@ namespace PSW_Pharmacy_Adapter.Service
             KeyRepo = new APIKeyRepository(DbContext);
         }
 
-        public bool AddPharmacy(Api api)
-            => KeyRepo.Save(api);
-
         public Api GetPharmacy(string id)
             => KeyRepo.Get(id);
 
         public List<Api> GetAllPharmacies()
             => KeyRepo.GetAll();
+
+        public bool AddPharmacy(Api api)
+            => KeyRepo.Save(api);
 
         public bool DeletePharmacy(string id)
             => KeyRepo.Delete(id);

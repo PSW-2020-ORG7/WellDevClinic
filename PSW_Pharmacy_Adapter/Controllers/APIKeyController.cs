@@ -22,15 +22,6 @@ namespace PSW_Pharmacy_Adapter.Controllers
             KeyService = new APIKeyService(cf.CreateDbContext(new string[0]));
         }
 
-        [HttpPost]
-        [Route("add")]
-        public IActionResult AddPharmacy(Api api)
-        {
-            if (KeyService.AddPharmacy(api))
-                return Ok();    
-            return BadRequest();
-        }
-
         [HttpGet]
         [Route("{id?}")]
         public IActionResult GetPharmacy(string id)
@@ -46,12 +37,21 @@ namespace PSW_Pharmacy_Adapter.Controllers
         public IActionResult GetAllPharmacies()
             => Ok(KeyService.GetAllPharmacies());
 
-        [HttpDelete]        // TODO: Ne radi
-        [Route("/delete/{id?}")]
+        [HttpPost]
+        [Route("add")]
+        public IActionResult AddPharmacy(Api api)
+        {
+            if (KeyService.AddPharmacy(api))
+                return Ok(true);
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        [Route("delete/{id?}")]
         public IActionResult DeletePharmacy(string id)
         {
             if (KeyService.DeletePharmacy(id))
-                return Ok();
+                return Ok(true);
             return NotFound();
         }
     }
