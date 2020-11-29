@@ -20,8 +20,8 @@ namespace PSW_Pharmacy_Adapter.Service
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "apoteka",
-                                    durable: false,
+            channel.QueueDeclare(queue: "pharmacy.queue",
+                                    durable: true,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
@@ -43,7 +43,7 @@ namespace PSW_Pharmacy_Adapter.Service
                 Console.WriteLine(" [x] Received {0}", message);
                 Program.Messages.Add(message);
             };
-            channel.BasicConsume(queue: "apoteka",
+            channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,
                                     consumer: consumer);
             return base.StartAsync(cancellationToken);

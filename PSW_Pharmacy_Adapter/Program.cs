@@ -18,17 +18,9 @@ namespace PSW_Pharmacy_Adapter
 
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build();
             ActionsAndBenefitsMessages(args).Build().Run();
         }
-
-        public static List<Api> Apis = new List<Api>()
-        {
-            new Api("pharmacy1", "api1", "localhost:454545"),
-            new Api("pharmacy2", "api2", "localhost:9090"),
-            new Api("pharmacy3", "api3", "localhost:556699"),
-            new Api("pharmacy4", "api4", "localhost:8778"),
-        };
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -39,10 +31,12 @@ namespace PSW_Pharmacy_Adapter
 
         public static IHostBuilder ActionsAndBenefitsMessages(string[] args) =>
            Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
                .ConfigureServices((hostContext, services) =>
                {
+                   Console.WriteLine("tu je");
                    services.AddHostedService<TimerService>();
-                   services.AddHostedService<SubscriberService>();
+                   services.AddHostedService<RabbitMQService>();
                });
 
     }

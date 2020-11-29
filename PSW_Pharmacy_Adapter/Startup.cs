@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Service;
 
 namespace PSW_Pharmacy_Adapter
 {
