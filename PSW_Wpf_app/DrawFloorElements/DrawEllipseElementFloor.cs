@@ -14,13 +14,16 @@ namespace PSW_Wpf_app.Drawing
     {
         private Ellipse ellipse;
         private FloorElement floorElement;
+        private StackPanel panel;
+        private TextBlock name;
+
         public DrawEllipseElementFloor(FloorElement floorElement)
         {
             this.floorElement = floorElement;
             ellipse = new Ellipse();
         }
 
-        public Shape DrawElement()
+        public Shape DrawEllipseElement(bool flag = false)
         {
             ellipse = new Ellipse();
             ellipse.Width = floorElement.Width;
@@ -33,7 +36,23 @@ namespace PSW_Wpf_app.Drawing
             if (floorElement.Type.Equals("counter"))
                 CustomizeCounter();
 
+            if (flag)
+            {
+                CustomizeFoundRoom();
+            }
+
             return ellipse;
+        }
+
+        public void CustomizeFoundRoom()
+        {
+            ellipse.Stroke = new SolidColorBrush(Colors.Red);
+        }
+
+        private void CustomizeRoom()
+        {
+            panel.Background = new SolidColorBrush(Colors.CadetBlue);
+            ellipse.Name = floorElement.Name;
         }
 
         private void CustomizeCounter()

@@ -28,7 +28,7 @@ namespace PSW_Wpf_app.Drawing
             mapElementsToShape.Add("base", "Rectangle");
             mapElementsToShape.Add("elipsa", "Elipse");
         }
-        public Shape DrawElement(FloorElement floorElement)
+        public Shape DrawElement(FloorElement floorElement, bool flag=false)
         {
             string shapeType;
             if (!mapElementsToShape.TryGetValue(floorElement.Type, out shapeType))
@@ -39,12 +39,12 @@ namespace PSW_Wpf_app.Drawing
             if (shapeType.Equals("Rectangle"))
             {
                 DrawRectangleElementFloor drawRectangleElement = new DrawRectangleElementFloor(floorElement);
-                return drawRectangleElement.DrawRectangle();
+                return drawRectangleElement.DrawRectangleElement(flag);
             }
             else
             {
                 DrawEllipseElementFloor drawEllipseElement = new DrawEllipseElementFloor(floorElement);
-                return drawEllipseElement.DrawElement();
+                return drawEllipseElement.DrawEllipseElement(flag);
             }
         }
 
