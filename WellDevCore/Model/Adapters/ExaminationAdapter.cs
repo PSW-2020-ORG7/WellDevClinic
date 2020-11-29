@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using bolnica.Model.dtos;
 using System.Runtime.CompilerServices;
 using Model.Dto;
-
+/// <summary>
+/// Mapps Examination to ExaminationDto
+/// </summary>
 namespace bolnica.Model.Adapters
 {
     public class ExaminationAdapter
@@ -19,8 +21,7 @@ namespace bolnica.Model.Adapters
             dto.doctor = examination.Doctor.FullName;
             dto.date = examination.Period.StartDate.Date.ToShortDateString();
 
-            foreach (Drug d in examination.Prescription.Drug)
-            {
+            foreach (Drug d in examination.Prescription.Drug) {
                 dto.drug.Add(d.Name);
             }
             dto.specialist = examination.Refferal.Doctor.FullName;
@@ -28,10 +29,6 @@ namespace bolnica.Model.Adapters
             return dto;
         }
 
-        /*public static ExaminationDbDto ExaminationToExaminationDbDto(Examination examination)
-        {
-            ExaminationDbDto dto = new ExaminationDbDto();
-            dto.AnemnesisId = examination.Id;
-        }*/
+       
     }
 }

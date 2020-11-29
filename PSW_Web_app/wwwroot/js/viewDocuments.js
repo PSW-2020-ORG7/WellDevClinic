@@ -1,11 +1,11 @@
-﻿var examinations = [];//komentar
+var examinations = [];
 var copyExaminations = [];
 
 function addPrescription(examination, i) {
 	tr = $('<tr id="tr"></tr>');
 	let row = $('<th scope="row">' + i + '</th>');
-	let doctor = $('<td>' + examination.doctor + '</td>');
-	let date = $('<td>' + examination.date + '</td>');
+	let doctor = $('<td>' + examination.doctor+'</td>');
+	let date = $('<td>' + examination.date+'</td>');
 	let drugList = $('<td>' + examination.drug + '</td>');
 	tr.append(row).append(doctor).append(date).append(drugList);
 	$('#tableP tbody').append(tr);
@@ -45,19 +45,19 @@ function hideAll() {
 }
 
 $(document).ready(function () {
-	validDate();
+	validDate()
 	$.get({
-		url: 'http://localhost:49153/api/patient/1/',
+		url: 'http://localhost:49153/api/patient/1',
 		success: function (user) {
 			$.post({
 				url: 'http://localhost:49153/api/examination/getByUser',
 				data: JSON.stringify(user),
 				contentType: 'application/json',
-				success: function (list) {
+				success: function(list) {
 					deleteTable();
 					i = 1;
 					for (let examination of list) {
-						addPrescription(examination, i);
+						addPrescription(examination,i);
 						addReferral(examination, i);
 						examinations.push(examination);
 						i++;
@@ -97,7 +97,6 @@ $(document).ready(function () {
 			addReferral(e, i);
 			i++;
 		}
-
 	});
 
 	$('form#formParams').submit(function (event) {
@@ -178,9 +177,7 @@ $(document).ready(function () {
 							}
 						},
 					});
-
 					$('#tableR tbody').empty();
-
 					if (!copyExaminations.length) {
 						i = 1;
 						for (let exam of examinations) {

@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using bolnica.Model;
 using Model.PatientSecretary;
-
+/// <summary>
+/// Models Examination for showing on frontend
+/// </summary>
 namespace bolnica.Model.dtos
 {
     public class ExaminationDto
@@ -17,7 +19,7 @@ namespace bolnica.Model.dtos
         public String date { get; set; }
 
         public ExaminationDto() { }
-        public ExaminationDto(string specialist, string textReferral, string doctor, List<string> drug, String date)
+        public ExaminationDto(string specialist , string textReferral, string doctor , List<string> drug , String date )
         {
             this.specialist = specialist;
             this.textReferral = textReferral;

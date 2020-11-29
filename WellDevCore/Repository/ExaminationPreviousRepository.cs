@@ -48,12 +48,11 @@ namespace Repository
         public IEnumerable<Examination> GetAllEager()
         {
             List<Examination> examinations = new List<Examination>();
-            foreach (Examination exam in myDbContext.Examination.ToList())
-            {
-                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now) < 0)
+            foreach (Examination exam in myDbContext.Examination.ToList()) {
+                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now)<0)
                 {
                     examinations.Add(exam);
-                }
+                }            
             }
             return examinations;
         }
@@ -100,7 +99,7 @@ namespace Repository
                 List<Examination> findExamination = new List<Examination>();
                 foreach (Examination examination in examinations)
                 {
-                    if (examination.Doctor.Id == patient.Id)
+                    if (examination.Patient.Id == patient.Id)
                     {
                         findExamination.Add(examination);
                     }

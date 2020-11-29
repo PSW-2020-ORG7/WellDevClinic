@@ -40,6 +40,12 @@ namespace Service
             return _prescriptionRepository.Save(entity);
         }
 
+        /// <summary>
+        /// Checks if prescription contains specified drug
+        /// </summary>
+        /// <param name="drugName">name of specified drug</param>
+        /// <param name="prescription">prescription</param>
+        /// <returns>true or false</returns>
         public Boolean CheckDrug(String drugName, Prescription prescription)
         {
             Boolean check = false;

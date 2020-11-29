@@ -44,7 +44,7 @@ namespace bolnica.Repository.CSV.Converter
         public string ConvertEntityToCSVFormat(Doctor entity)
         {
             StringBuilder sb = new StringBuilder();
-            string generalData = string.Join(_delimiter, entity.Id, entity.FirstName, entity.LastName, entity.Jmbg, entity.Email, entity.Phone, entity.DateOfBirth, entity.Address.GetId(), entity.Address.Town.GetId(), entity.Address.Town.State.GetId(), entity.Username, entity.Password, entity.Image.ToString(),  entity.Specialty.GetId());
+            string generalData = string.Join(_delimiter, entity.Id, entity.FirstName, entity.LastName, entity.Jmbg, entity.Email, entity.Phone, entity.DateOfBirth, entity.Address.GetId(), entity.Address.Town.GetId(), entity.Address.Town.State.GetId(), entity.Username, entity.Password,/* entity.Image.ToString(),*/  entity.Specialty.GetId());
 
             var businessDay_count = entity.BusinessDay == null ? 0 : entity.BusinessDay.Count;
 

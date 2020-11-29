@@ -1,3 +1,4 @@
+using bolnica.Repository;
 using bolnica.Service;
 using Model.Doctor;
 using Model.PatientSecretary;
@@ -7,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Service
+namespace bolnica.Service
 {
     public class PatientService : IPatientService
     {
@@ -15,6 +16,11 @@ namespace Service
         private readonly IPatientRepository _patientRepository;
         private readonly IPatientFileService _patientFileService;
         private readonly IDoctorGradeService _doctorGradeService;
+
+        public PatientService(IPatientRepository patientRepo)
+        {
+            _patientRepository = patientRepo;
+        }
 
         public PatientService(IPatientRepository _patientRepo, IPatientFileService _servicePatientFile, IDoctorGradeService doctorGradeService)
         {
@@ -27,17 +33,29 @@ namespace Service
         {
             _patientRepository = _patientRepo;
             _patientFileService = _servicePatientFile;
+
+
         }
+       
+        
 
         public Patient Save(Patient entity)
         {
-            if (_patientRepository.GetUserByUsername(entity.Username) != null)
+            
+            Patient patient = new Patient();
+            Patient patientId = _patientRepository.GetPatientByJMBG(entity.Jmbg);
+            if (patientId == null)
             {
-                return null;
+                _patientRepository.Save(entity);
+                patient = null;
             }
-            entity.patientFile = _patientFileService.Save(new PatientFile());
-            return _patientRepository.Save(entity);
+            else
+            {
+                patient.Jmbg = patientId.Jmbg;
+                patient = patientId;    
+            }
 
+            return patient;
         }
 
         public void Delete(Patient entity)
@@ -84,6 +102,21 @@ namespace Service
             return _patientRepository.GetPatientByJMBG(jmbg);
         }
 
+        public Patient GetPatientByMail(string email)
+        {
+            return _patientRepository.GetPatientByMail(email);
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            return _patientRepository.GetPatientByMail(username);
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            return _patientRepository.GetPatientToken(token);
+        }
+
         public DoctorGrade GiveGradeToDoctor(Doctor doctor, Dictionary<string, double> gradesForDoctor)
         {
             DoctorGrade doctorGrade = doctor.DoctorGrade;
@@ -100,5 +133,30 @@ namespace Service
             return doctorGrade;
         }
 
+
+        public Patient CheckExistence(string jmbg, string username, string email)
+        {
+            Patient patient = new Patient();
+
+            Patient patientId = _patientRepository.GetPatientByJMBG(jmbg);
+            Patient patientEmail = _patientRepository.GetPatientByMail(email);
+            Patient patientUsername = _patientRepository.GetPatientByUsername(username);
+
+            if (patientId == null && patientEmail == null && patientUsername == null)
+            {
+                patient = null;
+            }
+            else
+            {
+                if (patientId != null)
+                    patient.Jmbg = patientId.Jmbg;
+                else if (patientEmail != null)
+                    patient.Email = patientEmail.Email;
+                else if (patientUsername != null)
+                    patient.Username = patientUsername.Username;
+            }
+
+            return patient;
+        }
     }
 }

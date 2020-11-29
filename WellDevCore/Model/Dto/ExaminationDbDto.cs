@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Model.Dto
 {
-    public class ExaminationDbDto
+    public class ExaminationDbDTO
     {
-        public long Id { get; set; }
+       
         public long UserId { get; set; }
         public long DoctorId { get; set; }
         public long PeriodId { get; set; }
@@ -21,7 +21,7 @@ namespace Model.Dto
         public long RoomOccuoationreportDTOId1 { get; set; }
         public long SecretaryReportDTOId { get; set; }
 
-        public ExaminationDbDto()
+        public ExaminationDbDTO()
         {
         }
 

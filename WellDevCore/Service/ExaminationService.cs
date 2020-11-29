@@ -38,9 +38,10 @@ namespace Service
             _upcomingRepository = upcomingRepository;
             _previousRepository = previousRepository;
         }
-        public ExaminationService(IExaminationPreviousRepository previousRepository)
+        public ExaminationService( IExaminationPreviousRepository previousRepository)
         {
-            _previousRepository = previousRepository;
+              _previousRepository = previousRepository;
+
         }
 
         public void Delete(Examination entity)
@@ -110,20 +111,28 @@ namespace Service
         }
 
         private Boolean CheckDate(DateTime date, Examination examination)
-        {
+        { 
             return examination.Period.StartDate.Date == date.Date;
-
         }
 
         private Boolean CheckDoctor(String name, Examination examination)
         {
             String doctorName = examination.Doctor.FullName.ToLower();
             return doctorName.Contains(name.ToLower());
-
+        
         }
+        /// <summary>
+        /// Searches examinations of specified user by date, doctor, drug and specialist
+        /// </summary>
+        /// <param name="date">date</param>
+        /// <param name="doctorName">name of doctor</param>
+        /// <param name="drugName">name of drug</param>
+        /// <param name="speacialistName">name of specialist</param>
+        /// <param name="user">specified user</param>
+        /// <returns>list of examinations</returns>
 
-        public List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user)
-        {
+        public List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user) 
+        { 
             List<Examination> result = new List<Examination>();
             List<Examination> examinations = GetFinishedxaminationsByUser(user).ToList();
             if (date != "")
@@ -273,7 +282,6 @@ namespace Service
             {
                 foreach (Examination examination in examinations)
                 {
-
                     if (CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
                     {
                         result.Add(examination);
