@@ -13,18 +13,18 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class GreetingsController : ControllerBase
     {
-        private readonly GreetingsService greetS;
+        private readonly GreetingsService _GreetService;
 
-        public GreetingsController(GreetingsService Gs)
+        public GreetingsController(GreetingsService greetService)
         {
-            greetS = Gs;
+            _GreetService = greetService;
         }
 
         [HttpGet]
         [Route("greet/{id?}")]
         public async Task<IActionResult> GreetPharmacyAsync(string id)
         {
-            HttpResponseMessage response = await greetS.GreetPharmacy(id);
+            HttpResponseMessage response = await _GreetService.GreetPharmacy(id);
 
             if (response.StatusCode.Equals(403))
                 return Forbid();

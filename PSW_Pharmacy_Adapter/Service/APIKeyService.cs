@@ -1,5 +1,4 @@
 ﻿using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using System;
 using System.Collections.Generic;
@@ -10,22 +9,23 @@ namespace PSW_Pharmacy_Adapter.Service
 {
     public class APIKeyService
     {
-        private readonly IAPIKeyRepository KeyRepo;
-        public APIKeyService(MyDbContext DbContext)
+        private readonly IAPIKeyRepository _KeyRepo;
+
+        public APIKeyService(IAPIKeyRepository keyRepo)
         {
-            KeyRepo = new APIKeyRepository(DbContext);
+            _KeyRepo = keyRepo;
         }
 
         public Api GetPharmacy(string id)
-            => KeyRepo.Get(id);
+            => _KeyRepo.Get(id);
 
         public List<Api> GetAllPharmacies()
-            => KeyRepo.GetAll();
+            => _KeyRepo.GetAll();
 
         public bool AddPharmacy(Api api)
-            => KeyRepo.Save(api);
+            => _KeyRepo.Save(api);
 
         public bool DeletePharmacy(string id)
-            => KeyRepo.Delete(id);
+            => _KeyRepo.Delete(id);
     }
 }
