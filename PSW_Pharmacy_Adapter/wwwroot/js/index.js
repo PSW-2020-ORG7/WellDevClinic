@@ -13,14 +13,30 @@
 
 function viewApis(apiDb) {
     for (api of apiDb) {
-        content = "<tr><td>";
+        content = '<tr><td>';
         content += api.nameOfPharmacy;
-        content += "</td><td>";
+        content += '</td><td>';
         content += api.apiKey;
-        content += "</td><td>";
+        content += '</td><td>';
         content += api.url;
-        content += "</td></tr>";
-
+        content += '</td><td>';
+        content += '<button class="buttonDelete" id=';
+        content += api.nameOfPharmacy;
+        content += ' onclick="deleteEntry(this)" > &times; </button > ';
+        content += '</td></tr>'
         $("#apiTable").append(content);
     }
+}
+
+function deleteEntry(button) {
+    $.ajax({
+        method: "DELETE",
+        url: "../api/apikey/delete/" + button.id,
+        contentType: "application/json",
+        success: function (data) {
+            if (data) {
+                alert("Successfully deleted");
+            }
+        },
+    });
 }
