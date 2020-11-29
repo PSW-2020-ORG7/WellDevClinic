@@ -1,0 +1,104 @@
+﻿body {
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('/css/hospitalExtereior.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    padding: 3% 3%;
+}
+
+*{
+    margin:0;
+    padding:0;
+}
+
+.wrapper{
+    width:1170px;
+    margin:auto;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(odd) {
+    background-color: #9edfff;
+}
+
+tr:hover {
+    background-color: #0c67cc;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #3fa2d3;
+    color: white;
+    
+}
+
+#apiTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    padding:10px 25px;
+    margin-top:20px;
+    
+}
+
+
+
+.nav-area{
+    float:right;
+    list-style:none;
+    margin-top:30px;
+
+}
+
+.nav-area li{
+    display:inline-block;
+}
+    .nav-area li a {
+        color: #fff;
+        text-decoration: none;
+        padding: 5px 20px;
+        font-family: poppins;
+        font-size: 16px;
+    }
+
+
+        .nav-area li a:hover {
+            background: #87CEFA;
+            color: #333;
+        }
+
+
+.welcome-text{
+    position:absolute;
+    width:600px;
+    height:300px;
+    margin-top: 100px;
+    margin-left:450px;
+    text-align:center;
+}
+
+.welcome-text h1{
+    text-align:center;
+    color: #fff;
+    text-transform:uppercase;
+    font-size:60px;
+}
+.buttonDelete {
+    border: 1px solid #3498db;
+    background: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    margin: 10px;
+}
