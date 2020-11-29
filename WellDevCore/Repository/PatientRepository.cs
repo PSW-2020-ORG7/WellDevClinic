@@ -82,20 +82,24 @@ namespace Repository
 
         public Patient Save(Patient entity)
         {
+            Patient retVal;
             Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Jmbg == entity.Jmbg);
             if (result == null)
             {
                 string filePath = "profilePictures/" + entity.Username + ".jpg";
-                string [] split = entity.Image.Split(';');
-                string []base64 = split[1].Split(',');
+                string[] split = entity.Image.Split(';');
+                string[] base64 = split[1].Split(',');
                 string data = base64[1];
                 File.WriteAllBytes(filePath, Convert.FromBase64String(data));
+                entity.Image = entity.Username;
                 myDbContext.Patient.Add(entity);
                 myDbContext.SaveChanges();
-                return entity;
+                retVal = entity;
             }
+            else
+                retVal = null;
 
-            return null;
+            return retVal;
         }
 
         public Patient GetPatientByMail(string email)

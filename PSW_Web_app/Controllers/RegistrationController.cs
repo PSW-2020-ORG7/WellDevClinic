@@ -30,8 +30,6 @@ namespace PSW_Web_app.Controllers
         [HttpPost]
         public Patient UserRegistration([FromBody] Patient entity)
         {
-
-            //IActionResult actionResult;
             Patient retVal;
 
             Patient patient = _patientService.CheckExistence(entity.Jmbg,entity.Username,entity.Email);
@@ -41,12 +39,10 @@ namespace PSW_Web_app.Controllers
                 entity.VerificationToken = token;
                 _patientService.Save(entity);
                 SendVerification(entity.Email, entity.Jmbg, token);
-                //actionResult = Ok(entity);
                 retVal = entity;
             }
             else
             {
-                //actionResult = BadRequest(patient);
                 retVal = patient;
             }
 
@@ -74,7 +70,7 @@ namespace PSW_Web_app.Controllers
             SmtpServer.Credentials = new System.Net.NetworkCredential("hospitalservicePSW@gmail.com", "hospitalservicePSW1998");
             SmtpServer.EnableSsl = true;
 
-            //SmtpServer.Send(mail);
+            SmtpServer.Send(mail);
 
         }
 

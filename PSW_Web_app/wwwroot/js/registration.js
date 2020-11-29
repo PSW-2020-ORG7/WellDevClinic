@@ -25,10 +25,32 @@ $(document).ready(function () {
         let username = $("#patientUsername"); //document.getElementById('patientUsername');
         let password = $("#patientPassword"); //document.getElementById('patientPassword');
         let passwordConfirm = $("#patientPasswordConfirm"); //document.getElementById('patientPasswordConfirm')
-        //let passwordConfirm = $("#patientPasswordConfirm"); //document.getElementById('patientPasswordConfirm')
         let img = $("#patientImg"); //document.getElementById('patientImg');
-        let gender = $("#patientGender"); //document.getElementById('patientGender');
-        let race = $("#patientRace"); //document.getElementById('patientRace');
+
+
+        var genderVal;
+        var gender = document.getElementsByName("rdbPatientGender");
+        for(i = 0; i < gender.length; i++) { 
+            if(gender[i].checked) 
+             genderVal = gender[i].value;
+        } 
+
+        var raceVal;
+        var race = document.getElementsByName("rdbPatientRace");
+        for( i = 0; i < race.length; i++){
+            if(race[i].checked){
+                raceVal = race[i].value;
+            }
+        }
+
+        var bloodVal;
+        var bloodType = document.getElementsByName("rdbPatientBType");
+        for (i=0; i<bloodType.length; i++){
+            if(bloodType[i].checked){
+                bloodVal = bloodType[i].value;
+            }
+        }
+
 
         document.getElementById("nameInput").style.borderColor = "black";          // ako neko polje nije popunjeno pa se kasnije popuni da ne ostane oznaceno
         document.getElementById("middleNameInput").style.borderColor = "black";
@@ -61,25 +83,11 @@ $(document).ready(function () {
         var password2Bool = true;
         var passwordConfBool = true;
         var imageBool = true;
+        var DateBool = true;
 
-        console.log(name.val());
-        console.log(city.val());
-        console.log(middleName.val())
-        console.log(surname.val())
-        console.log(country.val())
-        console.log(address.val())
-        console.log(jmbg.val())
-        console.log(dateOfBirth.val())
-        console.log(email.val())
-        console.log(emailConfirm.val())
-        console.log(phone.val())
-        console.log(username.val())
-        console.log(password.val())
-        console.log(passwordConfirm.val())
-        console.log(img.val())
+        var date = new Date($('#patientDateOfBirth').val());
+
         console.log(document.getElementById('patientImg').files[0])
-        console.log(gender.val())
-        console.log(race.val())
         var imageToLoad = document.getElementById('patientImg')
         console.log(imageToLoad);
 
@@ -271,7 +279,7 @@ $(document).ready(function () {
             var divPhone = divs[12];
             var divPhoneWarning = document.createElement("div");
             divPhoneWarning.setAttribute("class", "warning");
-            divPhoneWarning.appendChild(document.createTextNode("Enter correct characters"));
+            divPhoneWarning.appendChild(document.createTextNode("Invalid input"));
             divPhone.appendChild(divPhoneWarning);
             phoneBool = false;
         }
@@ -318,6 +326,12 @@ $(document).ready(function () {
 
         if (!dateOfBirth.val() || 0 === dateOfBirth.val().length) {
             document.getElementById("patientDateOfBirth").style.borderColor = "red";
+            var divDate = divs[8];
+            var divDateWarning = document.createElement("div");
+            divDateWarning.setAttribute("class", "warning");
+            divDateWarning.appendChild(document.createTextNode("Enter birthday"));
+            divDate.appendChild(divDateWarning);
+            DateBool = false;
         }
 
         var base64;
@@ -331,73 +345,71 @@ $(document).ready(function () {
 
                 console.log(base64)
 
-                //if (nameBool && middleBool && surnameBool && countryBool && cityBool && addressBool && jmbgBool && dateOfBirthBool && emailBool && email2Bool && emailConfBool && phoneBool && usernameBool && passwordBool && password2Bool && passwordConfBool && imageBool) {
+                if (nameBool && middleBool && surnameBool && countryBool && cityBool && addressBool && jmbgBool && DateBool && emailBool && email2Bool && emailConfBool && phoneBool && usernameBool && passwordBool && password2Bool && passwordConfBool && imageBool) {
 
-                let state = new Object();
-                state.Id = 0; state.Name = country.val();
-                let town = new Object();
-                town.Id = 0; town.Name = city.val(); town.State = state;
-                let address1 = new Object();
-                address1.Id = 0; address1.Street = address.val(); address1.Town = town;
+                    let state = new Object();
+                    state.Id = 0; state.Name = country.val();
+                    let town = new Object();
+                    town.Id = 0; town.Name = city.val(); town.State = state;
+                    let address1 = new Object();
+                    address1.Id = 0; address1.Street = address.val(); address1.Town = town;
 
-                //let address1 = new Object({ Id: 0, Street: address.val(), Number: null, FullAddress: null, Town: town })
-                var start = new Date();
-                var data2 = {
-                    Id: 0, FirstName: name.val(), MiddleName: middleName.val(), LastName: surname.val(), Jmbg: jmbg.val(), Email: email.val(), Phone: phone.val(), DateOfBirth: start
-                    , Username: username.val(), Password: password.val(), Address: address1, Gender: gender.val(), Race: race.val(), validation: false, Image: base64
+                    //let address1 = new Object({ Id: 0, Street: address.val(), Number: null, FullAddress: null, Town: town })
+                    var start = new Date();
+                    var data2 = {
+                         FirstName: name.val(), MiddleName: middleName.val(), LastName: surname.val(), Jmbg: jmbg.val(), Email: email.val(), Phone: phone.val(), DateOfBirth: date
+                        , Username: username.val(), Password: password.val(), Address: address1, Gender: genderVal, Race: raceVal,BloodType: bloodVal, validation: false, Image: base64
+                    }
+                    $.ajax({
+                        url: "http://localhost:49153/api/registration",
+                        type: 'POST',
+                        data: JSON.stringify(data2),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            if ( data.username === username.val() && data.jmbg === jmbg.val() && data.email === email.val()){
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'You have successfully registered!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                            else if (data.username === username.val()) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: 'Patient with same username already exists!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+
+                            else if (data.jmbg === jmbg.val()) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: 'Patient with same id already exists!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                            else if (data.email === email.val()) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: 'Patient with same email already exists!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        }
+                    })
                 }
-                $.ajax({
-                    url: "http://localhost:49153/api/registration",
-                    type: 'POST',
-                    data: JSON.stringify(data2),
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        //alert("You have successfully registered!");
-                        if (data.username === username.val()) {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'error',
-                                title: 'Patient with same username already exists',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-
-                        else if (data.jmbg === jmbg.val()) {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'error',
-                                title: 'Patient with same id already exists',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                        else if (data.email === email.val()) {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'error',
-                                title: 'Patient with same email already exists',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                        else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Your work has been saved',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                    },
-
-
-                })
-                //}
-                //else {
-                //    console.log("Nisu popunjena sva polja");
-                //}
+                else {
+                    console.log("Nisu popunjena sva polja");
+                }
             }
         }
         else {
