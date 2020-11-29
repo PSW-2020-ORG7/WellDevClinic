@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace Repository
 {
+
     public class PatientFileRepository : IPatientFileRepository
     {
         public IHospitalizationRepository _hospitalizationRepository;
@@ -28,36 +29,14 @@ namespace Repository
 
         public PatientFileRepository(MyDbContext myDbContext) 
         {
-            myDbContext = myDbContext;
-            //MyContextContextFactory mccf = new MyContextContextFactory();
-            //this.myDbContext = mccf.CreateDbContext(new string[0]);
+            this.myDbContext = myDbContext;
         }
 
-        /*public PatientFileRepository(ICSVStream<PatientFile> stream, ISequencer<long> sequencer, IHospitalizationRepository hospitalizationRepository, IOperationRepository operationRepository, IExaminationPreviousRepository examinationPreviousRepository)
-       : base(stream, sequencer)
-        {
-            _hospitalizationRepository = hospitalizationRepository;
-            _operationRepository = operationRepository;
-            _examinationPreviousRepository = examinationPreviousRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
 
-        public PatientFileRepository(ICSVStream<PatientFile> stream, ISequencer<long> sequencer)
+        public PatientFileRepository()
         {
-            //MyContextContextFactory mccf = new MyContextContextFactory();
-            //this.myDbContext = mccf.CreateDbContext(new string[0]);
         }
 
-        public IEnumerable<PatientFile> GetAllEager()
-        {
-            List<PatientFile> retVal = new List<PatientFile>();
-            foreach(PatientFile patientFile in GetEager().ToList())
-            {
-                retVal.Add(GetEager(patientFile.GetId()));
-            }
-            return retVal;
-        }
 
         public PatientFile GetEager(long id)
         {
@@ -97,6 +76,8 @@ namespace Repository
             throw new NotImplementedException();
         }
 
+    
+
         public void Edit(PatientFile entity)
         {
             throw new NotImplementedException();
@@ -116,5 +97,10 @@ namespace Repository
 
         public PatientFile Get(long id)
             => myDbContext.PatientFile.FirstOrDefault(patientFile => patientFile.Id == id);
+
+        public IEnumerable<PatientFile> GetAllEager()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

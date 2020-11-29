@@ -18,18 +18,18 @@ namespace Repository
         private readonly IAddressRepository _addressRepository;
         private readonly ITownRepository _townRepository;
         private readonly IStateRepository _stateRepository;
+
         private readonly MyDbContext myDbContext;
 
 
-        public PatientRepository(IPatientFileRepository patientFileRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext myDbContext1)
+        public PatientRepository(IPatientFileRepository patientFileRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
         {
             this._patientFleRepository = patientFileRepository;
             this._addressRepository = addressRepository;
             this._townRepository = townRepository;
             this._stateRepository = stateRepository;
-            this.myDbContext = myDbContext1;
+            this.myDbContext = context;
         }
-
         public void Delete(Patient entity)
         {
             throw new NotImplementedException();
@@ -41,14 +41,19 @@ namespace Repository
         }
 
         public Patient Get(long id)
-            => myDbContext.Patient.FirstOrDefault(patient => patient.Id == id);
-
+            => myDbContext.Patient.FirstOrDefault(patient => patient.Id==id);
         public IEnumerable<Patient> GetEager()
         {
             List<Patient> result = new List<Patient>();
             myDbContext.Patient.ToList().ForEach(patient => result.Add(patient));
             return result;
 
+        }
+
+       
+        public IEnumerable<Patient> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Patient> GetAllEager()

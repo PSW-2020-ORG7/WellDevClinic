@@ -40,6 +40,7 @@ namespace Model.Users
 
         }
 
+
         public Patient(long id,String name, String surname, String jmbg, String email, String phone, DateTime birth, Address address, String username, String password, String img)
         {
             this.Id = id;
@@ -81,7 +82,13 @@ namespace Model.Users
             this.DateOfBirth = birth;
             this.Guest = guest;
         }
-
+        public Patient(long id, String name, String surname)
+        {
+            this.Id = id;
+            this.FirstName = name;
+            this.LastName = surname;
+           
+        }
         public Patient(long id)
         {
             this.Id = id;

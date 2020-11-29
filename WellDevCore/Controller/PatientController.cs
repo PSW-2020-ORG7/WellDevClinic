@@ -5,7 +5,7 @@ using Model.Users;
 using System;
 using System.Collections.Generic;
 
-namespace Controller
+namespace bolnica.Controller
 {
     public class PatientController : IPatientController
     {

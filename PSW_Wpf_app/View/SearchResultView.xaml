@@ -10,20 +10,21 @@
     <Window.Resources>
         <viewmodel:SearchResultViewModel x:Key="vm"></viewmodel:SearchResultViewModel>
     </Window.Resources>
-    <Grid Background="CadetBlue">
-        <DataGrid  
+        <Grid>
+            <DataGrid  
             ItemsSource="{Binding SearchedObjectResults}" 
             HorizontalAlignment="Center"
-            Height="338" 
+            Height="372" 
             VerticalAlignment="Center" 
-            Width="581"
+            Width="580"
             AutoGenerateColumns="False"
 			CanUserAddRows="False"
 			SelectionMode="Extended">
-            <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding Name}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Floor" Width="*" Binding="{Binding Floor}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="True" Header="Building" Width="*" Binding="{Binding BuildingName}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding Name}"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Floor" Width="*" Binding="{Binding Floor}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
 </Window>

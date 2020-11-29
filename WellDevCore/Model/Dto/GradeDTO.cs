@@ -7,7 +7,7 @@ namespace bolnica.Model.Dto
     public class GradeDTO
     {
         public long Id { get; set; }
-        public int Grade { get; set; }
+        public double Grade { get; set; }
         public string Question { get; set; }
 
         public GradeDTO()
@@ -15,7 +15,7 @@ namespace bolnica.Model.Dto
 
         }
 
-        public GradeDTO(int grade, string question)
+        public GradeDTO(double grade, string question)
         {
             Grade = grade;
             Question = question;

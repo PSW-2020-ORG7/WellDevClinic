@@ -4,8 +4,29 @@ table, th, td {
 }
 
 table {
+    border: 1px solid black;
     width: 100%;
     border-collapse: collapse;
+}
+
+.table {
+    width: 20%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.tr {
+    border: none;
+}
+
+.td {
+    border: none;
+    height: 20px;
+}
+
+.input {
+    color: #009999;
+    height: 30px;
 }
 
 th {
@@ -22,11 +43,26 @@ tr {
 h1 {
     text-align: center;
 }
+h2 {
+    text-align: center;
+    color: #009999;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
 button {
     text-align: center;
     background-color: #009999;
     width: 70px;
     height: 30px;
+}
+
+.button {
+    text-align: center;
+    background-color: #009999;
+    width: 150px;
+    height: 50px;
 }
 select {
     color: #009999;
