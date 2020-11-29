@@ -28,6 +28,16 @@ namespace PSW_Wpf_app
         public List<string> names = new List<string>();
 
         List<GraphicElement> elements = new List<GraphicElement>();
+
+
+        private List<FloorElement> foundRooms = new List<FloorElement>();
+
+        public List<FloorElement> FoundRooms
+        {
+            get { return foundRooms; }
+            set { foundRooms = value; }
+        }
+
         public List<string> Names
         {
             get { return names; }
@@ -60,13 +70,14 @@ namespace PSW_Wpf_app
             }
             else
             {
-                this.userControl.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()));
+                this.userControl.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()), FoundRooms);
             }
         }
 
         private void Button_Click_HOME(object sender, RoutedEventArgs e)
         {
             this.userControl.Content = new MainBuildingView();
+            FoundRooms = new List<FloorElement>();
         }
 
         private void OnMoreInfoClick(object sender, RoutedEventArgs e)
@@ -83,8 +94,13 @@ namespace PSW_Wpf_app
             }
             else
             {
+                FoundRooms = new List<FloorElement>();
+
                 SearchResultView searchResultView = new SearchResultView(SearchBuilding.Text);
                 searchResultView.Show();
+
+                SearchResultViewModel sw = (SearchResultViewModel)searchResultView.DataContext;
+                FoundRooms = sw.SearchedObjectResults;
             }
         }
 

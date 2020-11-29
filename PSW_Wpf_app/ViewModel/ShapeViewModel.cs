@@ -61,7 +61,7 @@ namespace PSW_Wpf_app.ViewModel
                     string[] temp1 = floorElement.Split(',');
                     try
                     {
-                        FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7]);
+                        FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7], temp1[8]);
                         floors.Add(shape);
                         
                     }
