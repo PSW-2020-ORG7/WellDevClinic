@@ -9,8 +9,8 @@ using bolnica.Model;
 namespace bolnica.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201127115141_Fifth_migration")]
-    partial class Fifth_migration
+    [Migration("20201128153459_doctor_grade3")]
+    partial class doctor_grade3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,8 +141,8 @@ namespace bolnica.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<double>("AverageGrade")
-                        .HasColumnType("double");
+                    b.Property<string>("Doctor")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("NumberOfGrades")
                         .HasColumnType("int");
@@ -811,6 +811,33 @@ namespace bolnica.Migrations
                     b.ToTable("BusinessDayDTO");
                 });
 
+            modelBuilder.Entity("bolnica.Model.Dto.GradeDTO", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DoctorGradeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DoctorGradeId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Grade")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorGradeId");
+
+                    b.HasIndex("DoctorGradeId1");
+
+                    b.ToTable("gradeDTO");
+                });
+
             modelBuilder.Entity("bolnica.Model.Dto.NotifyDoctorBusinessDay", b =>
                 {
                     b.Property<long>("Id")
@@ -928,6 +955,24 @@ namespace bolnica.Migrations
             modelBuilder.Entity("Model.Users.Patient", b =>
                 {
                     b.HasBaseType("Model.Users.User");
+
+                    b.Property<string>("BloodType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Race")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("Validation")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("VerificationToken")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<long?>("patientFileId")
                         .HasColumnType("bigint");
@@ -1222,6 +1267,17 @@ namespace bolnica.Migrations
                     b.HasOne("Model.PatientSecretary.Period", "Period")
                         .WithMany()
                         .HasForeignKey("PeriodId");
+                });
+
+            modelBuilder.Entity("bolnica.Model.Dto.GradeDTO", b =>
+                {
+                    b.HasOne("Model.Doctor.DoctorGrade", null)
+                        .WithMany("AverageGrade")
+                        .HasForeignKey("DoctorGradeId");
+
+                    b.HasOne("Model.Doctor.DoctorGrade", null)
+                        .WithMany("Grades")
+                        .HasForeignKey("DoctorGradeId1");
                 });
 
             modelBuilder.Entity("bolnica.Model.Dto.NotifyDoctorBusinessDay", b =>

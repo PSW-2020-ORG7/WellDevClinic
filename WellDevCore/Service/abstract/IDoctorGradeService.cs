@@ -1,4 +1,5 @@
-﻿using Model.Doctor;
+﻿using bolnica.Model.Dto;
+using Model.Doctor;
 using Model.Users;
 using Service;
 using System;
@@ -10,6 +11,8 @@ namespace bolnica.Service
 {
     public  interface IDoctorGradeService : IService<DoctorGrade,long>
     {
-       double GetAverageGrade(Doctor doctor);
+        List<GradeDTO> GetAverageGrade(DoctorGrade survey);
+        List<DoctorGrade> GetByDoctor(String doctor);
+        List<GradeDTO> GetAverageGradeDoctor(List<DoctorGrade> surveys);
     }
 }

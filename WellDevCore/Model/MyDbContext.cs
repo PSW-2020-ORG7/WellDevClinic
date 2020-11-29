@@ -56,7 +56,7 @@ namespace bolnica.Model
         public DbSet<Secretary> Secretary { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Town> Town { get; set; }
-        //public DbSet<User> User { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<GradeDTO> gradeDTO { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) {}
 
