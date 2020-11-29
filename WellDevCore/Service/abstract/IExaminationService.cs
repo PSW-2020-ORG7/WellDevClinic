@@ -20,6 +20,8 @@ namespace bolnica.Service
         Room getExaminationRoom(Examination examination);
         List<Examination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period);
         List<Examination> GetPreviousExaminationsByRoomAndPeriod(Room room, Period period);
-
+        List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user);
+        List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2);
+    
     }
 }

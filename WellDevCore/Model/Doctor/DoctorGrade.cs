@@ -15,8 +15,8 @@ namespace Model.Doctor
         [NotMapped] public Dictionary<String, double> GradesForEachQuestions { get; set; }
         public int NumberOfGrades { get; set; }
         public long Id { get; set; }
-        public List<GradeDTO> Grades { get; set; }
-        public List<GradeDTO> AverageGrade { get; set; }
+        public virtual List<GradeDTO> Grades { get; set; }
+        public virtual List<GradeDTO> AverageGrade { get; set; }
 
         public DoctorGrade() { }
 

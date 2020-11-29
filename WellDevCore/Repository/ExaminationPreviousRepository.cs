@@ -46,7 +46,17 @@ namespace Repository
             => myDbContext.Examination.FirstOrDefault(examination => examination.Id == id);
 
         public IEnumerable<Examination> GetAllEager()
-            => myDbContext.Examination.ToList();
+        {
+            List<Examination> examinations = new List<Examination>();
+            foreach (Examination exam in myDbContext.Examination.ToList())
+            {
+                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now) < 0)
+                {
+                    examinations.Add(exam);
+                }
+            }
+            return examinations;
+        }
 
         public Examination GetEager(long id)
         {

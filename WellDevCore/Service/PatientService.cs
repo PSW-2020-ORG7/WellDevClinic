@@ -57,7 +57,7 @@ namespace Service
 
         public Patient Get(long id)
         {
-            return _patientRepository.GetEager(id);
+            return _patientRepository.Get(id);
         }
 
         public Patient ClaimAccount(Patient patient)

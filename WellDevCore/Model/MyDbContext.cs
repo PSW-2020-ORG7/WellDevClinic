@@ -17,7 +17,7 @@ namespace bolnica.Model
     public class MyDbContext : DbContext
     {
         //public DbSet<T> T { get; set; }
-        public DbSet<ExaminationDbDto> ExaminationDbDtos { get; set; }
+        //public DbSet<ExaminationDbDto> ExaminationDbDtos { get; set; }
         public DbSet<Operation> Operation { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
@@ -56,7 +56,7 @@ namespace bolnica.Model
         public DbSet<Secretary> Secretary { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Town> Town { get; set; }
-        //public DbSet<User> User { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<GradeDTO> gradeDTO { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) {}
 

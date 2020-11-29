@@ -39,5 +39,18 @@ namespace Service
         {
             return _prescriptionRepository.Save(entity);
         }
+
+        public Boolean CheckDrug(String drugName, Prescription prescription)
+        {
+            Boolean check = false;
+            foreach (Drug drug in prescription.Drug)
+            {
+                if (drug.Name.ToLower().Contains(drugName.ToLower()))
+                {
+                    check = true;
+                }
+            }
+            return check;
+        }
     }
 }

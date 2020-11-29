@@ -13,9 +13,9 @@ namespace bolnica.Model.Adapters
         public static ReferralDto ReferralToReferralDto(Referral referral)
         {
             ReferralDto dto = new ReferralDto();
-            dto.date = referral.Period.StartDate;
-            dto.specialist = referral.Doctor.FullName;
-            dto.text = referral.Text;
+            dto.Period = referral.Period.StartDate.ToString();
+            dto.Specialist = referral.Doctor.FullName;
+            dto.Text = referral.Text;
             return dto;
         }
     }

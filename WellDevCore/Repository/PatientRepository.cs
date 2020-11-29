@@ -17,6 +17,7 @@ namespace Repository
         private readonly IAddressRepository _addressRepository;
         private readonly ITownRepository _townRepository;
         private readonly IStateRepository _stateRepository;
+
         private readonly MyDbContext myDbContext;
 
         public PatientRepository(IPatientFileRepository patientFleRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
@@ -27,18 +28,6 @@ namespace Repository
             _stateRepository = stateRepository;
             myDbContext = context;
         }
-
-        /*public PatientRepository(ICSVStream<Patient> stream, ISequencer<long> sequencer, IPatientFileRepository patientFileRepository, IAddressRepository addressRepository,
-    ITownRepository townRepository, IStateRepository stateRepository)
-    : base(stream, sequencer)
-        {
-            _patientFleRepository = patientFileRepository;
-            _addressRepository = addressRepository;
-            _townRepository = townRepository;
-            _stateRepository = stateRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
 
         public void Delete(Patient entity)
         {
@@ -52,12 +41,17 @@ namespace Repository
 
         public Patient Get(long id)
             => myDbContext.Patient.FirstOrDefault(patient => patient.Id == id);
-
         public IEnumerable<Patient> GetEager()
         {
             List<Patient> result = new List<Patient>();
             myDbContext.Patient.ToList().ForEach(patient => result.Add(patient));
             return result;
+        }
+
+
+        public IEnumerable<Patient> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Patient> GetAllEager()
