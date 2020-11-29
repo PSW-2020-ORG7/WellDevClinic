@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace bolnica.Migrations
+namespace WellDevCore.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class CompleteDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,7 @@ namespace bolnica.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     NumberOfGrades = table.Column<int>(nullable: false),
-                    AverageGrade = table.Column<double>(nullable: false)
+                    Doctor = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,6 +61,23 @@ namespace bolnica.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feedback",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Patient = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    IsPrivate = table.Column<bool>(nullable: false),
+                    Publish = table.Column<bool>(nullable: false),
+                    IsAnonymous = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedback", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -138,6 +155,34 @@ namespace bolnica.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Symptom", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "gradeDTO",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Grade = table.Column<double>(nullable: false),
+                    Question = table.Column<string>(nullable: true),
+                    DoctorGradeId = table.Column<long>(nullable: true),
+                    DoctorGradeId1 = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_gradeDTO", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_gradeDTO_DoctorGrade_DoctorGradeId",
+                        column: x => x.DoctorGradeId,
+                        principalTable: "DoctorGrade",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_gradeDTO_DoctorGrade_DoctorGradeId1",
+                        column: x => x.DoctorGradeId1,
+                        principalTable: "DoctorGrade",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,7 +271,7 @@ namespace bolnica.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Person",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -238,37 +283,43 @@ namespace bolnica.Migrations
                     Phone = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     AddressId = table.Column<long>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true),
+                    UserType = table.Column<int>(nullable: false),
                     SpecialtyId = table.Column<long>(nullable: true),
                     DoctorGradeId = table.Column<long>(nullable: true),
-                    patientFileId = table.Column<long>(nullable: true)
+                    patientFileId = table.Column<long>(nullable: true),
+                    MiddleName = table.Column<string>(nullable: true),
+                    Validation = table.Column<bool>(nullable: true),
+                    Gender = table.Column<string>(nullable: true),
+                    Race = table.Column<string>(nullable: true),
+                    BloodType = table.Column<string>(nullable: true),
+                    VerificationToken = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Person_DoctorGrade_DoctorGradeId",
+                        name: "FK_User_DoctorGrade_DoctorGradeId",
                         column: x => x.DoctorGradeId,
                         principalTable: "DoctorGrade",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Person_Speciality_SpecialtyId",
+                        name: "FK_User_Speciality_SpecialtyId",
                         column: x => x.SpecialtyId,
                         principalTable: "Speciality",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Person_PatientFile_patientFileId",
+                        name: "FK_User_PatientFile_patientFileId",
                         column: x => x.patientFileId,
                         principalTable: "PatientFile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Person_Address_AddressId",
+                        name: "FK_User_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
                         principalColumn: "Id",
@@ -290,32 +341,9 @@ namespace bolnica.Migrations
                 {
                     table.PrimaryKey("PK_Article", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Article_Person_DoctorId",
+                        name: "FK_Article_User_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Feedback",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    PatientId = table.Column<long>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
-                    IsPrivate = table.Column<bool>(nullable: false),
-                    Publish = table.Column<bool>(nullable: false),
-                    IsAnonymous = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Feedback", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Feedback_Person_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -334,9 +362,9 @@ namespace bolnica.Migrations
                 {
                     table.PrimaryKey("PK_PatientNotification", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PatientNotification_Person_PatientId",
+                        name: "FK_PatientNotification_User_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -361,9 +389,9 @@ namespace bolnica.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DoctorReportDTO_Person_PatientId",
+                        name: "FK_DoctorReportDTO_User_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -374,7 +402,7 @@ namespace bolnica.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<long>(nullable: true),
+                    PatientId = table.Column<long>(nullable: true),
                     DoctorId = table.Column<long>(nullable: true),
                     PeriodId = table.Column<long>(nullable: true),
                     DiagnosisId = table.Column<long>(nullable: true),
@@ -403,9 +431,9 @@ namespace bolnica.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Examination_Person_DoctorId",
+                        name: "FK_Examination_User_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -415,15 +443,15 @@ namespace bolnica.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Examination_SecretaryReportDTO_SecretaryReportDTOId",
-                        column: x => x.SecretaryReportDTOId,
-                        principalTable: "SecretaryReportDTO",
+                        name: "FK_Examination_User_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Examination_Person_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Person",
+                        name: "FK_Examination_SecretaryReportDTO_SecretaryReportDTOId",
+                        column: x => x.SecretaryReportDTOId,
+                        principalTable: "SecretaryReportDTO",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -463,9 +491,9 @@ namespace bolnica.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BusinessDay_Person_doctorId",
+                        name: "FK_BusinessDay_User_doctorId",
                         column: x => x.doctorId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -489,9 +517,9 @@ namespace bolnica.Migrations
                 {
                     table.PrimaryKey("PK_BusinessDayDTO", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BusinessDayDTO_Person_DoctorId",
+                        name: "FK_BusinessDayDTO_User_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -517,15 +545,15 @@ namespace bolnica.Migrations
                 {
                     table.PrimaryKey("PK_ExaminationDTO", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExaminationDTO_Person_DoctorId",
+                        name: "FK_ExaminationDTO_User_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ExaminationDTO_Person_PatientId",
+                        name: "FK_ExaminationDTO_User_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -594,15 +622,16 @@ namespace bolnica.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     PeriodId = table.Column<long>(nullable: true),
-                    DoctorId = table.Column<long>(nullable: true)
+                    DoctorId = table.Column<long>(nullable: true),
+                    Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Referral", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Referral_Person_DoctorId",
+                        name: "FK_Referral_User_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -676,9 +705,9 @@ namespace bolnica.Migrations
                 {
                     table.PrimaryKey("PK_Hospitalization", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Hospitalization_Person_DoctorId",
+                        name: "FK_Hospitalization_User_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -688,9 +717,9 @@ namespace bolnica.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Hospitalization_Person_PatientId",
+                        name: "FK_Hospitalization_User_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -732,9 +761,9 @@ namespace bolnica.Migrations
                 {
                     table.PrimaryKey("PK_Operation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Operation_Person_DoctorId",
+                        name: "FK_Operation_User_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -744,9 +773,9 @@ namespace bolnica.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Operation_Person_PatientId",
+                        name: "FK_Operation_User_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Person",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -958,6 +987,11 @@ namespace bolnica.Migrations
                 column: "PatientFileId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Examination_PatientId",
+                table: "Examination",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Examination_PeriodId",
                 table: "Examination",
                 column: "PeriodId");
@@ -993,11 +1027,6 @@ namespace bolnica.Migrations
                 column: "TherapyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Examination_UserId",
-                table: "Examination",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ExaminationDTO_DoctorId",
                 table: "ExaminationDTO",
                 column: "DoctorId");
@@ -1018,9 +1047,14 @@ namespace bolnica.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Feedback_PatientId",
-                table: "Feedback",
-                column: "PatientId");
+                name: "IX_gradeDTO_DoctorGradeId",
+                table: "gradeDTO",
+                column: "DoctorGradeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_gradeDTO_DoctorGradeId1",
+                table: "gradeDTO",
+                column: "DoctorGradeId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hospitalization_DoctorId",
@@ -1113,26 +1147,6 @@ namespace bolnica.Migrations
                 column: "BusinessDayId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Person_DoctorGradeId",
-                table: "Person",
-                column: "DoctorGradeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Person_SpecialtyId",
-                table: "Person",
-                column: "SpecialtyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Person_patientFileId",
-                table: "Person",
-                column: "patientFileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Person_AddressId",
-                table: "Person",
-                column: "AddressId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Prescription_PeriodId",
                 table: "Prescription",
                 column: "PeriodId");
@@ -1186,6 +1200,26 @@ namespace bolnica.Migrations
                 name: "IX_Town_StateId",
                 table: "Town",
                 column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_DoctorGradeId",
+                table: "User",
+                column: "DoctorGradeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_SpecialtyId",
+                table: "User",
+                column: "SpecialtyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_patientFileId",
+                table: "User",
+                column: "patientFileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_AddressId",
+                table: "User",
+                column: "AddressId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_DoctorReportDTO_Prescription_prescriptionId",
@@ -1259,11 +1293,11 @@ namespace bolnica.Migrations
                 table: "Address");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Person_PatientFile_patientFileId",
-                table: "Person");
+                name: "FK_User_PatientFile_patientFileId",
+                table: "User");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_BusinessDay_Person_doctorId",
+                name: "FK_BusinessDay_User_doctorId",
                 table: "BusinessDay");
 
             migrationBuilder.DropForeignKey(
@@ -1293,6 +1327,9 @@ namespace bolnica.Migrations
 
             migrationBuilder.DropTable(
                 name: "Feedback");
+
+            migrationBuilder.DropTable(
+                name: "gradeDTO");
 
             migrationBuilder.DropTable(
                 name: "Hospitalization");
@@ -1349,7 +1386,7 @@ namespace bolnica.Migrations
                 name: "PatientFile");
 
             migrationBuilder.DropTable(
-                name: "Person");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "DoctorGrade");
