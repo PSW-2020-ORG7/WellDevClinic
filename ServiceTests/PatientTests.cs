@@ -20,11 +20,11 @@ namespace ServiceTests
             var patientStubRepository = new Mock<IPatientRepository>();
             var patient = new Patient(0, "Marko", "Petar", "Markovic", "1111111", "marko.markovic@gmail.com", new DateTime(2001, 1, 1), null, null, "proba", "proba", true, null, "muski", false, "azijat", "A+", "22", null);
 
-            patientStubRepository.Setup(r => r.GetEager(1)).Returns(patient);
+            patientStubRepository.Setup(r => r.Get(0)).Returns(patient);
 
             PatientService patientService = new PatientService(patientStubRepository.Object, null);
 
-            Patient p = patientService.Get(1);
+            Patient p = patientService.Get(0);
             Assert.NotNull(p);
 
         }
