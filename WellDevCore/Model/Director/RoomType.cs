@@ -8,6 +8,8 @@ namespace Model.Director
    {
         public string Name { get; set; }
 
+        public RoomType() { }
+
         public RoomType(string name)
         {
             
@@ -20,9 +22,9 @@ namespace Model.Director
             Name = name;
         }
 
-        public RoomType()
+        public RoomType(long id)
         {
-            
+            Id = id;
         }
 
         public long Id { get; set; }

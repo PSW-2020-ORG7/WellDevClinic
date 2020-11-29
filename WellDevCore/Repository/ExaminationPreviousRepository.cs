@@ -1,55 +1,80 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.PatientSecretary;
 using Model.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using bolnica.Model.Adapters;
+using bolnica.Model.dtos;
+using Model.Dto;
 
 namespace Repository
 {
-    public class ExaminationPreviousRepository : CSVRepository<Examination, long>, IExaminationPreviousRepository
+    public class ExaminationPreviousRepository : IExaminationPreviousRepository
     {
-        private readonly IDoctorRepository doctorRepository;
-        private readonly IPatientRepository patientRepository;
-        private readonly IDiagnosisRepository diagnosisRepository;
-        private readonly IPrescriptionRepository prescriptionRepository;
-        private readonly ITherapyRepository therapyRepository;
-        private readonly IReferralRepository referralRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IDiagnosisRepository _diagnosisRepository;
+        private readonly IPrescriptionRepository _prescriptionRepository;
+        private readonly ITherapyRepository _therapyRepository;
+        private readonly IReferralRepository _referralRepository;
+        private readonly MyDbContext myDbContext;
 
-        public ExaminationPreviousRepository(ICSVStream<Examination> stream, ISequencer<long> sequencer, IDoctorRepository doctorRepository, IPatientRepository patientRepository, IDiagnosisRepository diagnosisRepository, IPrescriptionRepository prescriptionRepository, ITherapyRepository therapyRepository, IReferralRepository referralRepository)
-         : base(stream, sequencer)
+        public ExaminationPreviousRepository(IDoctorRepository doctorRepository,  IDiagnosisRepository diagnosisRepository, IPrescriptionRepository prescriptionRepository, ITherapyRepository therapyRepository, IReferralRepository referralRepository, MyDbContext context)
         {
-            this.doctorRepository = doctorRepository;
-            this.patientRepository = patientRepository;
-            this.diagnosisRepository = diagnosisRepository;
-            this.prescriptionRepository = prescriptionRepository;
-            this.therapyRepository = therapyRepository;
-            this.referralRepository = referralRepository;
+            _doctorRepository = doctorRepository;
+            _diagnosisRepository = diagnosisRepository;
+            _prescriptionRepository = prescriptionRepository;
+            _therapyRepository = therapyRepository;
+            _referralRepository = referralRepository;
+            myDbContext = context;
         }
+
+        public void Delete(Examination entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Examination entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Examination Get(long id)
+            => myDbContext.Examination.FirstOrDefault(examination => examination.Id == id);
 
         public IEnumerable<Examination> GetAllEager()
         {
             List<Examination> examinations = new List<Examination>();
-            foreach (Examination exam in GetAll().ToList())
-            {
-                examinations.Add(GetEager(exam.GetId()));
+            foreach (Examination exam in myDbContext.Examination.ToList()) {
+                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now)<0)
+                {
+                    examinations.Add(exam);
+                }            
             }
             return examinations;
         }
+        
 
         public Examination GetEager(long id)
         {
-            Examination exam = base.Get(id);
-            exam.Doctor = doctorRepository.GetEager(exam.Doctor.GetId());
-            exam.User = patientRepository.Get(exam.User.GetId());
-            exam.Diagnosis = diagnosisRepository.Get(exam.Diagnosis.GetId());
+            Examination exam = Get(id);
+            exam.Doctor = _doctorRepository.GetEager(exam.Doctor.GetId());
+            exam.Diagnosis = _diagnosisRepository.Get(exam.Diagnosis.GetId());
             if (exam.Therapy != null)
-                exam.Therapy = therapyRepository.GetEager(exam.Therapy.GetId());
+                exam.Therapy = _therapyRepository.GetEager(exam.Therapy.GetId());
             if(exam.Refferal!=null)
-                exam.Refferal = referralRepository.GetEager(exam.Refferal.GetId());
+                exam.Refferal = _referralRepository.GetEager(exam.Refferal.GetId());
             if(exam.Prescription!=null)
-                exam.Prescription = prescriptionRepository.GetEager(exam.Prescription.GetId());     
+                exam.Prescription = _prescriptionRepository.GetEager(exam.Prescription.GetId()); 
             return exam;
+        }
+
+        public IEnumerable<Examination> GetEager()
+        {
+            throw new NotImplementedException();
         }
 
         public List<Examination> GetExaminationsByUser(User user)
@@ -75,7 +100,7 @@ namespace Repository
                 List<Examination> findExamination = new List<Examination>();
                 foreach (Examination examination in examinations)
                 {
-                    if (examination.Doctor.Id == patient.Id)
+                    if (examination.Patient.Id == patient.Id)
                     {
                         findExamination.Add(examination);
                     }
@@ -84,5 +109,9 @@ namespace Repository
             }
         }
 
+        public Examination Save(Examination entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

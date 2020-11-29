@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Model.Users;
+using bolnica.Service;
 
 namespace PSW_Web_app.Controllers
 {
@@ -11,12 +12,19 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     {
-        private bolnica.Controller.IPatientController _patientController = new bolnica.Controller.PatientController();
+        private readonly IPatientService _patientService;
+
+        public PatientController(IPatientService patientService) 
+        {
+            _patientService = patientService;
+        }
 
         [HttpGet]
+        [Route("{id?}")]
         public Patient GetPatientById(long id)
         {
-            Patient patient = _patientController.Get(id);
+            Patient patient = _patientService.Get(id);
+            patient.Id = id;
             return patient;
         }
     }

@@ -5,9 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PSW_Web_app.dtos;
-using PSW_Web_app.Adapters;
+using bolnica.Model.Adapters;
+using bolnica.Model.dtos;
 using bolnica.Controller;
+using bolnica.Model;
+using bolnica.Model.Adapters;
+using bolnica.Model.dtos;
+using bolnica.Service;
+using Model.Dto;
+using WellDevCore.Model.Dto;
+using System.Globalization;
 
 namespace PSW_Web_app.Controllers
 {
@@ -16,21 +23,44 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class ExaminationController : ControllerBase
     {
-        private bolnica.Controller.IExaminationController _examinationController= new bolnica.Controller.ExaminationController();
+        private readonly IExaminationService _examinationService;
 
-        [HttpGet]
-        public List<ExaminationDto> GetFinishedxaminationsByUser(User user)
-        {
-            _examinationController.GetFinishedxaminationsByUser(user);
-            List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = (List<Examination>)_examinationController.GetFinishedxaminationsByUser(user);
-            foreach (Examination examination in result) {
-                ReferralDto referralDto = ReferralAdapter.ReferralToReferralDto(examination.Refferal);
-                PrescriptionDto prescriptionDto = PrescriptionAdapter.PrescriptionToPrescriptionDto(examination.Prescription);
-                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination, referralDto, prescriptionDto)); 
-            }
-            return resultDto;
+        public ExaminationController(IExaminationService examinationService) {
+            _examinationService = examinationService;
         }
-
+        /// <summary>
+        ///  calls GetFinishedxaminationsByUser(User user) method from class ExaminationService so  
+        /// it can get examinations of specified user
+        /// </summary>
+        /// <param name="user">specified user</param>
+        /// <returns>status 200 OK response with a list of examinations mapped to ExaminationDto</returns>
+        [HttpPost]
+        [Route("getByUser")]
+        public IActionResult GetFinishedxaminationsByUser([FromBody]Patient user)
+        {
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+            List<Examination> result = (List<Examination>)_examinationService.GetFinishedxaminationsByUser(user);
+            foreach (Examination examination in result) {
+                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination)); 
+            }
+            return Ok(resultDto); 
+        }
+        /// <summary>
+        /// calls SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user)
+        /// method from class ExaminationService so  it get filtered examinations
+        /// <param name="documentsDTO"></param>
+        /// <returns>status 200 OK response with a list of feedback filtered examinations mapped to ExaminationDto</returns>
+        [HttpPost]
+        public IActionResult SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
+        {
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+              
+            List<Examination> result = _examinationService.SearchPreviousExamination(documentsDTO.Date, documentsDTO.Doctor, documentsDTO.Drug, documentsDTO.Specialist, documentsDTO.User);
+            foreach (Examination examination in result)
+            {
+                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
+            }
+            return Ok(resultDto);
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace Model.PatientSecretary
    {
       public String Text { get; set; }
         public long Id { get; set; }
+
         public Anemnesis(String text)
         {
             this.Text = text;

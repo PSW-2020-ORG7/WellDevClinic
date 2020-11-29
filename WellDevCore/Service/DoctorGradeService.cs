@@ -34,7 +34,7 @@ namespace Service
 
         public IEnumerable<DoctorGrade> GetAll()
         {
-            return _doctorGradeRepository.GetAll();
+            return _doctorGradeRepository.GetEager();
         }
 
         public double GetAverageGrade(Doctor doctor)

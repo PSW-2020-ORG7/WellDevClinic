@@ -10,18 +10,18 @@ namespace bolnica.Model.Dto
 {
     public class RoomOccupationReportDTO
     {
-        public Room room { get; set; }
+        public virtual Room room { get; set; }
         public long Id { get; set; }
-        public List<Renovation> renovations { get; set; }
+        public virtual List<Renovation> renovations { get; set; }
 
-        public List<Operation> operations { get; set; }
+        public virtual List<Operation> operations { get; set; }
 
-        public List<Examination> examinations { get; set; }
-        public List<Examination> previousExaminations { get; set; }
+        public virtual List<Examination> examinations { get; set; }
+        public virtual List<Examination> previousExaminations { get; set; }
 
-        public List<Hospitalization> hospitalizations { get; set; }
+        public virtual List<Hospitalization> hospitalizations { get; set; }
 
-        public Period period { get; set; }
+        public virtual Period period { get; set; }
 
         public RoomOccupationReportDTO()
         {

@@ -1,3 +1,5 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Director;
 using System;
@@ -6,23 +8,55 @@ using System.Linq;
 
 namespace Repository
 {
-   public class EquipmentRepository : CSVRepository<Equipment,long>, IEquipmentRepository
+   public class EquipmentRepository : IEquipmentRepository
    {
-        public EquipmentRepository(ICSVStream<Equipment> stream, ISequencer<long> sequencer)
-           : base(stream, sequencer)
-        {
+        private readonly MyDbContext myDbContext;
 
+        public EquipmentRepository(MyDbContext context)
+        {
+            myDbContext = context;
+        }
+
+        /*public EquipmentRepository(ICSVStream<Equipment> stream, ISequencer<long> sequencer)
+   : base(stream, sequencer)
+        {
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
+
+        public void Delete(Equipment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Equipment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Equipment Get(long id)
+            => myDbContext.Equipment.FirstOrDefault(equipment => equipment.Id == id);
+
+        public IEnumerable<Equipment> GetEager()
+        {
+            List<Equipment> result = new List<Equipment>();
+            myDbContext.Equipment.ToList().ForEach(equipment => result.Add(equipment));
+            return result;
         }
 
         public IEnumerable<Equipment> getConsumableEquipment()
         {
-            return (IEnumerable<Equipment>) base.GetAll().Where(equipment => equipment.Type == EquipmentType.Consumable);
+            return (IEnumerable<Equipment>) GetEager().Where(equipment => equipment.Type == EquipmentType.Consumable);
         }
 
         public IEnumerable<Equipment> getInconsumableEquipment()
         {
-            return (IEnumerable<Equipment>) base.GetAll().Where(equipment => equipment.Type == EquipmentType.Inconsumable);
+            return (IEnumerable<Equipment>) GetEager().Where(equipment => equipment.Type == EquipmentType.Inconsumable);
         }
 
+        public Equipment Save(Equipment entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

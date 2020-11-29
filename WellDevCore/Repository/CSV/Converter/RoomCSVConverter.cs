@@ -35,12 +35,12 @@ namespace bolnica.Repository
             }
 
             return new Room(
-                /*long.Parse(tokens[0]),
+                long.Parse(tokens[0]),
                 tokens[1],
                 new RoomType(long.Parse(tokens[2])),
                 helping,
                 int.Parse(tokens[4]),
-                int.Parse(tokens[5])*/
+                int.Parse(tokens[5])
                 ); 
 
         }

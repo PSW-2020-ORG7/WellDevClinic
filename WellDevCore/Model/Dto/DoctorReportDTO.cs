@@ -13,9 +13,9 @@ namespace Model.Dto
             Patient = patient;
         }
         public DoctorReportDTO() { }
-        public Prescription prescription { get; set; }
-        public Anemnesis Anemnesis { get; set; }
-        public Patient Patient { get; set; }
+        public virtual Prescription prescription { get; set; }
+        public virtual Anemnesis Anemnesis { get; set; }
+        public virtual Patient Patient { get; set; }
         public long Id { get; set; }
 
 

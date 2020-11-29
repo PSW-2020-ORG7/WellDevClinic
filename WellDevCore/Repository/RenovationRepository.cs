@@ -1,3 +1,5 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Director;
 using System;
@@ -6,19 +8,20 @@ using System.Linq;
 
 namespace Repository
 {
-   public class RenovationRepository : CSVRepository<Renovation,long>, IRenovationRepository
+   public class RenovationRepository :  IRenovationRepository
    {
         public IRoomRepository _roomRepository;
+        private readonly MyDbContext myDbContext;
 
-        public RenovationRepository(ICSVStream<Renovation> stream, ISequencer<long> sequencer,IRoomRepository roomRepository)
-        : base(stream, sequencer)
+        public RenovationRepository(IRoomRepository roomRepository, MyDbContext context)
         {
             _roomRepository = roomRepository;
+            myDbContext = context;
         }
 
         public IEnumerable<Renovation> GetAllEager()
         {
-            IEnumerable<Renovation> renovations = base.GetAll();
+            IEnumerable<Renovation> renovations = GetEager();
             IEnumerable<Room> rooms = _roomRepository.GetAllEager();
             BindRenovationWithRoom(renovations, rooms);
 
@@ -33,11 +36,36 @@ namespace Repository
 
         public Renovation GetEager(long id)
         {
-            Renovation renovation = base.Get(id);
+            Renovation renovation = Get(id);
             renovation.Room = _roomRepository.GetEager(renovation.Room.GetId());
 
             return renovation;
             
+        }
+
+        public Renovation Save(Renovation entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Renovation entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Renovation entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Renovation> GetEager()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Renovation Get(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

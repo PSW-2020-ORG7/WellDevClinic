@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bolnica.Model.Users;
+using bolnica.Service;
 
 namespace PSW_Web_app.Controllers
 {
@@ -12,22 +13,26 @@ namespace PSW_Web_app.Controllers
     public class FeedbackController : ControllerBase
     {
 
-        private bolnica.Controller.IFeedbackController _feedbackController = new bolnica.Controller.FeedbackController();
+        private readonly IFeedbackService _feedbackService;
+
+        public FeedbackController(IFeedbackService feedbackService) {
+            _feedbackService = feedbackService;
+        }
 
         /// <summary>
-        ///calls GetAll() method from class FeedbackController 
+        ///calls GetAll() method from class FeedbackService
         ///so it can get all feedback from database
         /// </summary>
         /// <returns>status 200 OK response with a list of feedback</returns>
         [HttpGet]
         public IActionResult GetAllFeedback()
         {
-            List<Feedback> result = (List<Feedback>)_feedbackController.GetAll();
+            List<Feedback> result = (List<Feedback>)_feedbackService.GetAllFeedback();
             return Ok(result);
         }
 
         /// <summary>
-        /// calls Get(long id) method from class FeedbackController so  
+        /// calls Get(long id) method from class FeedbackService so  
         /// it can get a feedback by given id from database
         /// </summary>
         /// <param name="id">id of wanted feedback</param>
@@ -37,7 +42,7 @@ namespace PSW_Web_app.Controllers
         public IActionResult GetFeedback(long id)
         {
             IActionResult actionResult;
-            Feedback feedback = _feedbackController.Get(id);
+            Feedback feedback = _feedbackService.GetFeedback(id);
             if (feedback == null)
             {
                 actionResult = NotFound();
@@ -50,7 +55,7 @@ namespace PSW_Web_app.Controllers
         }
 
         /// <summary>
-        /// calls Save(Feedback feedback) method from class FeedbackController so  
+        /// calls Save(Feedback feedback) method from class FeedbackService so  
         ///it can save a new feedback to database
         /// </summary>
         /// <param name="feedback">new feedback of Object type Feedback</param>
@@ -59,17 +64,7 @@ namespace PSW_Web_app.Controllers
         public IActionResult LeaveFeedback([FromBody] Feedback feedback)
         {
             IActionResult actionResult;
-            if(((List<Feedback>)_feedbackController.GetAll()).Count == 0)
-            {
-                feedback.Id = 0;
-            }
-            else
-            {
-                Feedback lastFeedback = ((List<Feedback>)_feedbackController.GetAll())[((List<Feedback>)_feedbackController.GetAll()).Count - 1];
-                long id = lastFeedback.Id;
-                feedback.Id = id + 1;
-            }
-            Feedback result = _feedbackController.Save(feedback);
+            Feedback result = _feedbackService.LeaveFeedback(feedback);
             if(result == null || feedback.Content.Length == 0)
             {
                 actionResult = BadRequest();
@@ -81,16 +76,16 @@ namespace PSW_Web_app.Controllers
             return actionResult;
         }
 
-       
-       /// <summary>
-       /// calls Edit(Feedback feedback) method from class FeedbackController so  
-       ///it can update specified feedback in database
-       /// </summary>
-       /// <param name="feedback">sprecified feedback of Object type Feedback</param>
+
+        /// <summary>
+        /// calls Edit(Feedback feedback) method from class FeedbackService so  
+        ///it can update specified feedback in database
+        /// </summary>
+        /// <param name="feedback">sprecified feedback of Object type Feedback</param>
         [HttpPut]
         public void PublishFeedback(Feedback feedback)
         {
-            _feedbackController.Edit(feedback);
+            _feedbackService.PublishFeedback(feedback);
         }
 
     }

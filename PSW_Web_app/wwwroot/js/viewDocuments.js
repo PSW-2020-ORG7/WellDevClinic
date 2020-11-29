@@ -1,52 +1,34 @@
-﻿function addPrescription(examination) {
-	let tr = $('<tr id="tr"></tr>');
-	let td = $('<td></td>');
-	let form = $('<form id="form" class="form-horizontal"></form>');
+﻿var examinations = [];
+var copyExaminations = [];
 
-	let doctor=examination.doctor;
-	let date = examination.date;
-	let drug="";
-	for(let d of examination.prescription.drug){
-		drug.concat(d).concat(";");
-	}
-
-	let doctorDiv = $('<div class="form-group row"><div class="col-sm-12"><input id="doctor" readonly class="form-control-plaintext" value="'+ doctor +'"></div></div>');
-	let dateDiv = $('<div class="form-group row"><div class="col-sm-12"><input id="date" readonly class="form-control-plaintext" value="'+ date +'"></div></div>');
-	let drugDiv = $('<div class="form-group row"><div class="col-sm-12"><input id="drug" readonly class="form-control-plaintext" value="'+ drug +'"></div></div>');
-
-	form.append(doctorDiv).append(dateDiv).append(drugDiv);
-	td.append(form);
-	tr.append(td);
-	$('#table tbody').append(tr);
+function addPrescription(examination, i) {
+	tr = $('<tr id="tr"></tr>');
+	let row = $('<th scope="row">' + i + '</th>');
+	let doctor = $('<td>' + examination.doctor+'</td>');
+	let date = $('<td>' + examination.date+'</td>');
+	let drugList = $('<td>' + examination.drug + '</td>');
+	tr.append(row).append(doctor).append(date).append(drugList);
+	$('#tableP tbody').append(tr);
 }
-function addReferral(examination) {
-	let tr = $('<tr id="tr"></tr>');
-	let td = $('<td></td>');
-	let form = $('<form id="form" class="form-horizontal"></form>');
-
-	let doctor=examination.doctor;
-	let date = examination.date;
-	let specialist=examination.referral.specialist;
-	let text = examination.referral.text;
-
-	let doctorDiv = $('<div class="form-group row"><div class="col-sm-12"><input id="doctor" readonly class="form-control-plaintext" value="'+ doctor +'"></div></div>');
-	let dateDiv = $('<div class="form-group row"><div class="col-sm-12"><input id="date" readonly class="form-control-plaintext" value="'+ date +'"></div></div>');
-	let specialistDiv = $('<div class="form-group row"><div class="col-sm-12"><input id="specialist" readonly class="form-control-plaintext" value="'+ specialist +'"></div></div>');
-	let textDiv = $('<div class="form-group row"><div class="col-sm-12"><input id="text" readonly class="form-control-plaintext" value="'+ text +'"></div></div>');
-
-	form.append(doctorDiv).append(dateDiv).append(specialistDiv).append(textDiv);
-	td.append(form);
-	tr.append(td);
-	$('#table tbody').append(tr);
+function addReferral(examination, i) {
+	tr = $('<tr id="tr"></tr>');
+	let row = $('<th scope="row">' + i + '</th>');
+	let doctor = $('<td>' + examination.doctor + '</td>');
+	let date = $('<td>' + examination.date + '</td>');
+	let specialist = $('<td>' + examination.specialist + '</td>');
+	tr.append(row).append(doctor).append(date).append(specialist);
+	$('#tableR tbody').append(tr);
 }
+
 function deleteTable() {
-	$('#table tbody').empty();
+	$('#tableP tbody').empty();
+	$('#tableR tbody').empty();
 }
 
-
-var examinations=[];
-
-
+function validDate() {
+	var today = new Date().toISOString().split('T')[0];
+	document.getElementsByName("date")[0].setAttribute('max', today);
+}
 function showRow(id) {
 	var row = document.getElementById(id);
 	row.style.display = '';
@@ -63,7 +45,28 @@ function hideAll() {
 }
 
 $(document).ready(function () {
-	
+	validDate()
+	$.get({
+		url: 'http://localhost:49153/api/patient/1',
+		success: function (user) {
+			$.post({
+				url: 'http://localhost:49153/api/examination/getByUser',
+				data: JSON.stringify(user),
+				contentType: 'application/json',
+				success: function(list) {
+					deleteTable();
+					i = 1;
+					for (let examination of list) {
+						addPrescription(examination,i);
+						addReferral(examination, i);
+						examinations.push(examination);
+						i++;
+					}
+				},
+			});
+		}
+	});
+
 	$('select[name="type"]').change(function () {
 		var value = $(this).val();
 		if (value == "Referral") {
@@ -86,203 +89,115 @@ $(document).ready(function () {
 	$('input[type="button"]').click(function (event) {
 		hideAll();
 		document.forms["formParams"].reset();
+		deleteTable();
+		copyExaminations.pop();
+		i = 1;
+		for (let e of examinations) {
+			addPrescription(e, i);
+			addReferral(e, i);
+			i++;
+		}
+		
 	});
-
-	let type = $('select[name="type"]').val();
-	let date = $('input[name="date"]').val();
-	let doctor = $('input[name="doctor"]').val();
-	let specialist = $('input[name="specialist"]').val();
-	let drug = $('input[name="drug"]').val();
 
 	$('form#formParams').submit(function (event) {
-		deleteTable();
-		if(type == "none"){
-			if(date==""){
-				if(doctor==""){
-					for(let examination of examinations){
-						addPrescription(examination);
-						addReferral(examination);
-					}
-				}
-				else{
-					for(let examination of examinations){
-						if(examination.doctor.toLowerCase().includes(doctor.toLowerCase())){
-							addPrescription(examination);
-							addReferral(examination);
-						}
-					}
-				}
-			}
-			else{
-				if(doctor==""){
-					for(let examination of examinations){
-						if(examination.date.getTime() === date.getTime()){
-							addPrescription(examination);
-							addReferral(examination);
-						}
-					}
-				}
-				else{
-					for(let examination of examinations){
-						if(examination.doctor.toLowerCase().includes(doctor.toLowerCase()) && examination.date.getTime() === date.getTime()){
-							addPrescription(examination);
-							addReferral(examination);
-						}
-					}
-				}
-			}
-		}
-		if(type=="Referral"){
-			if(date==""){
-				if(doctor==""){
-					if(specialist==""){
-						for(let examination of examinations){
-							addReferral(examination);
-						}
-					}
-					else{
-						for(let examination of examinations){
-							if(examination.referral.specialist.toLowerCase().includes(specialist.toLowerCase())){
-								addReferral(examination);
+		event.preventDefault();
+
+		let type = $('select[name="type"]').val();
+		let date = $('input[name="date"]').val();
+		let doctor = $('input[name="doctor"]').val();
+		let specialist = $('input[name="specialist"]').val();
+		let drug = $('input[name="drug"]').val();
+		$.get({
+			url: 'http://localhost:49153/api/patient/1',
+			success: function (user) {
+				if (type == "none") {
+					copyExaminations.pop();
+					$.post({
+						url: 'http://localhost:49153/api/examination',
+						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, user: user }),
+						contentType: 'application/json',
+						success: function (list) {
+							deleteTable();
+							i = 1;
+							for (let exam of list) {
+								addPrescription(exam, i);
+								addReferral(exam, i);
+								copyExaminations.push(exam);
+								i++;
 							}
-						}
-					}
+						},
+					});
 				}
-				else{
-					if(specialist==""){
-						for(let examination of examinations){
-							if(examination.doctor.toLowerCase().includes(doctor.toLowerCase())){
-								addReferral(examination);
-							}
+
+				if (type == "Referral") {
+
+					$('#tableP tbody').empty();
+					
+					if (!copyExaminations.length) {
+						i = 1;
+						for (let exam of examinations) {
+							addPrescription(exam, i);
+							i++;
 						}
 					}
-					else{
-						for(let examination of examinations){
-							if(examination.doctor.toLowerCase().includes(doctor.toLowerCase()) && examination.referral.specialist.toLowerCase().includes(specialist.toLowerCase())){
-								addReferral(examination);
-							}
+					else {
+						i = 1;
+						for (let exam of copyExaminations) {
+							addPrescription(exam, i);
+							i++;
 						}
 					}
+
+					$.post({
+						url: 'http://localhost:49153/api/examination',
+						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, user: user }),
+						contentType: 'application/json',
+						success: function (list) {
+							$('#tableR tbody').empty();
+							i = 1;
+							for (let exam of list) {
+								addReferral(exam, i);
+								i++;
+							}
+						},
+					});
 				}
-			}
-			else{
-				if(doctor==""){
-					if(specialist==""){
-						for(let examination of examinations){
-							if(examination.date.getTime() === date.getTime()){
-								addReferral(examination);
+
+				if (type == "Prescription") {
+					$.post({
+						url: 'http://localhost:49153/api/examination',
+						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, user: user }),
+						contentType: 'application/json',
+						success: function (list) {
+							$('#tableP tbody').empty();
+							i = 1;
+							for (let exam of list) {
+								addPrescription(exam, i);
+								i++;
 							}
-						}
-					}
-					else{
-						for(let examination of examinations){
-							if(examination.date.getTime() === date.getTime() && examination.referral.specialist.toLowerCase().includes(specialist.toLowerCase())){
-								addReferral(examination);
-							}
-						}
-					}
-				}
-				else{
-					if(specialist==""){
-						for(let examination of examinations){
-							if(examination.date.getTime() === date.getTime() && examination.doctor.toLowerCase().includes(doctor.toLowerCase())){
-								addReferral(examination);
-							}
-						}
-					}
-					else{
-						for(let examination of examinations){
-							if(examination.date.getTime() === date.getTime() && examination.doctor.toLowerCase().includes(doctor.toLowerCase()) &&  examination.referral.specialist.toLowerCase().includes(specialist.toLowerCase())){
-								addReferral(examination);
-							}
-						}
-					}
-				}
+						},
+					});
 				
-			}
-		}
-		if(type=="Prescription"){
-			//pretrazi samo po date i doctor i drug
-			if(date==""){
-				if(doctor==""){
-					if(drug==""){
-						for(let examination of examinations){
-							addPrescription(examination);
+					$('#tableR tbody').empty();
+					
+					if (!copyExaminations.length) {
+						i = 1;
+						for (let exam of examinations) {
+							addReferral(exam, i);
+							i++;
 						}
 					}
-					else{
-						for(let examination of examinations){
-							for(let d of examination.prescription.drug){
-								if(d.toLowerCase()==drug.toLowerCase()){
-									addPrescription(examination);
-								}
-							}
-						}
-					}
-				}
-				else{
-					if(drug==""){
-						for(let examination of examinations){
-							if(examination.doctor.toLowerCase().includes(doctor.toLowerCase())){
-								addPrescription(examination);
-							}
-						}
-					}
-					else{
-						for(let examination of examinations){
-							for(let d of examination.prescription.drug){
-								if(d.toLowerCase()==drug.toLowerCase() && examination.doctor.toLowerCase().includes(doctor.toLowerCase())){
-									addPrescription(examination);
-								}
-							}
+					else {
+						i = 1;
+						for (let exam of copyExaminations) {
+							addReferral(exam, i);
+							i++;
 						}
 					}
 				}
 			}
-			else{
-				if(doctor==""){
-					if(drug==""){
-						for(let examination of examinations){
-							if(examination.date.getTime() === date.getTime()){
-								addPrescription(examination);
-							}
-						}
-					}
-					else{
-						for(let examination of examinations){
-							for(let d of examination.prescription.drug){
-								if(d.toLowerCase()==drug.toLowerCase() && examination.date.getTime() === date.getTime()){
-									addPrescription(examination);
-								}
-							}
-						}
-					}
-				}
-				else{
-					if(drug==""){
-						for(let examination of examinations){
-							if(examination.date.getTime() === date.getTime() && examination.doctor.toLowerCase().includes(doctor.toLowerCase())){
-								addPrescription(examination);
-							}
-						}
-					}
-					else{
-						for(let examination of examinations){
-							for(let d of examination.prescription.drug){
-								if(d.toLowerCase()==drug.toLowerCase() && examination.date.getTime() === date.getTime() && examination.doctor.toLowerCase().includes(doctor.toLowerCase())){
-									addPrescription(examination);
-								}
-							}
-						}	
-					}
-				}
-			}
-		
-		}
+		});
 	});
-
-
-
-	
 
 });

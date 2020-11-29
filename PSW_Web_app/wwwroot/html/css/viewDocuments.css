@@ -8,16 +8,18 @@
 tr {
     text-align: center;
 }
+
 .firstTd{
     width:150px
 }
 
-h1 {
+
+h1,h2 {
     text-align: center;
     color: #009999;
 }
 
-table#table {
+table#table, table#tableP, table#tableR {
     width: 50%;
     border-collapse: collapse;
     margin-left: auto;
@@ -66,4 +68,5 @@ input[type=button] {
 label {
     color: #009999;
     width: 100%;
+
 }

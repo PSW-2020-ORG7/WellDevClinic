@@ -11,10 +11,10 @@ namespace Model.Dto
     public class ExaminationDTO
     {
         public long Id { get; set; }
-        public Model.Users.Doctor Doctor { get; set; }
-        public Model.Users.Patient Patient { get; set; }
-        public Model.Director.Room Room { get; set; }
-        public Model.PatientSecretary.Period Period { get; set; }
+        public virtual Model.Users.Doctor Doctor { get; set; }
+        public virtual Model.Users.Patient Patient { get; set; }
+        public virtual Model.Director.Room Room { get; set; }
+        public virtual Model.PatientSecretary.Period Period { get; set; }
 
         public ExaminationDTO() { }
 

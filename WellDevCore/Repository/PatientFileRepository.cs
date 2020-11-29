@@ -1,3 +1,5 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Doctor;
 using Model.PatientSecretary;
@@ -9,50 +11,32 @@ using System.Linq;
 
 namespace Repository
 {
-    public class PatientFileRepository :  IPatientFileRepository
+
+    public class PatientFileRepository : IPatientFileRepository
     {
         public IHospitalizationRepository _hospitalizationRepository;
         public IOperationRepository _operationRepository;
         public IExaminationPreviousRepository _examinationPreviousRepository;
+        private readonly MyDbContext myDbContext;
+
+        public PatientFileRepository(IHospitalizationRepository hospitalizationRepository, IOperationRepository operationRepository, IExaminationPreviousRepository examinationPreviousRepository, MyDbContext context)
+        {
+            _hospitalizationRepository = hospitalizationRepository;
+            _operationRepository = operationRepository;
+            _examinationPreviousRepository = examinationPreviousRepository;
+            myDbContext = context;
+        }
+
+        public PatientFileRepository(MyDbContext myDbContext) 
+        {
+            this.myDbContext = myDbContext;
+        }
+
 
         public PatientFileRepository()
         {
         }
 
-        public PatientFileRepository(ICSVStream<PatientFile> stream, ISequencer<long> sequencer)
-         
-        {
-        }
-
-        public void Delete(PatientFile entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(PatientFile entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public PatientFile Get(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<PatientFile> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<PatientFile> GetAllEager()
-        {
-            List<PatientFile> retVal = new List<PatientFile>();
-            foreach(PatientFile patientFile in GetAll().ToList())
-            {
-                retVal.Add(GetEager(patientFile.GetId()));
-            }
-            return retVal;
-        }
 
         public PatientFile GetEager(long id)
         {
@@ -88,6 +72,33 @@ namespace Repository
         }
 
         public PatientFile Save(PatientFile entity)
+        {
+            throw new NotImplementedException();
+        }
+
+    
+
+        public void Edit(PatientFile entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(PatientFile entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<PatientFile> GetEager()
+        {
+            List<PatientFile> result = new List<PatientFile>();
+            myDbContext.PatientFile.ToList().ForEach(patientFile => result.Add(patientFile));
+            return result;
+        }
+
+        public PatientFile Get(long id)
+            => myDbContext.PatientFile.FirstOrDefault(patientFile => patientFile.Id == id);
+
+        public IEnumerable<PatientFile> GetAllEager()
         {
             throw new NotImplementedException();
         }

@@ -1,0 +1,104 @@
+﻿<Window x:Class="PSW_Wpf_doctor.ExaminationWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PSW_Wpf_doctor"
+        xmlns:val="clr-namespace:HCIproject.Validation"
+        mc:Ignorable="d"
+        Title="Pregled" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <StackPanel Background="#D0ECE7" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <WrapPanel Height="45" Margin="0,0,-0.4,0" Background="#D5F5E3" >
+            <Label Content="Pregled kartona" FontSize="16" Margin="10" Height="34"></Label>
+            <Button Content="Pregledaj" Margin="5"  FontSize="16" Background="#A2D9CE" BorderBrush="#FF1FEECD" Click="Button_Click_7"  />
+        </WrapPanel>
+        <StackPanel>
+            <ScrollViewer x:Name="examScrool" SizeChanged="examScrool_SizeChanged">
+                <Border  BorderBrush="#A2D9CE" BorderThickness="4" CornerRadius="8,8,8,8"  Margin="5">
+                    <Grid  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="145"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Anamneza" Grid.Row="0" Grid.Column="0" FontSize="16" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        <TextBox x:Name="anamnezaTxt" Grid.Row="0" Text="{Binding Path=Anamneza}"  Grid.Column="1" Grid.ColumnSpan="4" AcceptsReturn="True" CaretBrush="#FF1FEECD" />
+
+                        <Label Content="Simptomi" Grid.Row="1" Grid.Column="0" FontWeight="SemiBold" FontSize="16" VerticalAlignment="Center" />
+
+                        <ListBox x:Name="simptomiCombo" DisplayMemberPath="Name"  Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="4"  Margin="5" SelectionMode="Multiple" />
+
+
+                        <Label Content="Dijagnoza" Grid.Row="2" Grid.Column="0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        <TextBox x:Name="dijagnozaTxt" Grid.Row="2" Text="{Binding Path=Dijagnoza}"  Grid.Column="1" Grid.ColumnSpan="4" AcceptsReturn="True" CaretBrush="#FF1FEECD" />
+
+
+                        <Label Content="Recept" Grid.Row="4" Grid.Column="0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        <Grid Width="124" Grid.Column="1" Grid.Row="4" >
+                            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10,10,10,0" Background="#A2D9CE" Height="30" materialDesign:ButtonAssist.CornerRadius="25" ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Click="Button_Click_2" VerticalAlignment="Top" >
+                                <TextBlock  Text="Dodaj" />
+                            </Button>
+                        </Grid>
+
+                        <Label Content="Uput" Grid.Row="4" Grid.Column="3" FontSize="16" FontWeight="SemiBold" Margin="10" VerticalAlignment="Center"/>
+                        <Grid Width="124" Grid.Column="4" Grid.Row="4" >
+                            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10,10,10,9.6" Background="#A2D9CE" Height="Auto" materialDesign:ButtonAssist.CornerRadius="25" ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Click="Button_Click_3" >
+                                <TextBlock  Text="Dodaj" />
+                            </Button>
+                        </Grid>
+
+                        <Label Content="Bolničko lečenje" Grid.Row="5" Grid.Column="0" FontWeight="SemiBold" FontSize="16" VerticalAlignment="Center" />
+                        <Label Content="Hospitalizacija" Grid.Row="5" Grid.Column="1" FontWeight="SemiBold" FontSize="16" Margin="10" VerticalAlignment="Center" />
+                        <Grid Width="124" Grid.Column="2" Grid.Row="5" >
+                            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10,10,10,9.6" Background="#A2D9CE" Height="Auto" materialDesign:ButtonAssist.CornerRadius="25" ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Click="Button_Click_4" >
+                                <TextBlock  Text="Dodaj" />
+                            </Button>
+                        </Grid>
+                        <Label x:Name="labelOperacija"  Visibility="Visible" Content="Operacija" Grid.Row="5" Grid.Column="3" FontSize="16" FontWeight="SemiBold" Margin="10" VerticalAlignment="Center" />
+                        <Grid Width="124" Grid.Column="4" Grid.Row="5" >
+                            <Button x:Name="buttonOperacija" Visibility="Visible" Margin="10,10,10,9.6" Background="#A2D9CE" Height="Auto" materialDesign:ButtonAssist.CornerRadius="25" ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Click="Button_Click_6" >
+                                <TextBlock  Text="Dodaj" />
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+                                        <Setter Property="IsEnabled" Value="True" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=user.Speciality.Name}" Value="Opsta praksa">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                        <Label Content="Kontrola" Grid.Row="6" Grid.Column="0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
+                        <Grid Width="124" Grid.Column="1" Grid.Row="6" >
+                            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10,10,10,9.6" Background="#A2D9CE" Height="Auto" materialDesign:ButtonAssist.CornerRadius="25" ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Click="Button_Click_5" >
+                                <TextBlock  Text="Zakaži" Height="24" />
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            </ScrollViewer>
+        </StackPanel>
+        <WrapPanel FlowDirection="RightToLeft" Background="#D5F5E3" >
+            <Button Content="Potvrdi" FontSize="18" Height="30" Width="100"  Margin="10,10,10,20" Background="#A2D9CE" Click="Button_Click_1" BorderBrush="#FF1FEECD" ></Button>
+        </WrapPanel>
+    </StackPanel>
+</Window>
+
