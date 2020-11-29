@@ -1,4 +1,5 @@
 using Model.Director;
+using Model.PatientSecretary;
 using Moq;
 using Repository;
 using Service;
@@ -32,7 +33,5 @@ namespace ServiceTests
             returnedRoomTypes.ShouldBeEquivalentTo(roomTypes);
 
         }
-
-       
     }
 }

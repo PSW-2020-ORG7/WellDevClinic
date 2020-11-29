@@ -16,8 +16,6 @@ namespace bolnica.Model
 {
     public class MyDbContext : DbContext
     {
-        //public DbSet<T> T { get; set; }
-        //public DbSet<ExaminationDbDTO> ExaminationDbDtos { get; set; }
         public DbSet<Operation> Operation { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Equipment> Equipment { get; set; }

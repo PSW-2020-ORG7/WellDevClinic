@@ -25,9 +25,24 @@ namespace PSW_Web_app.Controllers
     {
         private readonly IExaminationService _examinationService;
 
-        public ExaminationController(IExaminationService examinationService) {
+        public ExaminationController(IExaminationService examinationService)
+        {
             _examinationService = examinationService;
         }
+
+        [HttpPost]
+        [Route("getAll")]
+        public IActionResult GetFinishedxaminations()
+        {
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+            List<Examination> result = (List<Examination>)_examinationService.GetAllPrevious();
+            foreach (Examination examination in result)
+            {
+                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
+            }
+            return Ok(resultDto);
+        }
+
         /// <summary>
         ///  calls GetFinishedxaminationsByUser(User user) method from class ExaminationService so  
         /// it can get examinations of specified user
@@ -54,11 +69,25 @@ namespace PSW_Web_app.Controllers
         public IActionResult SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
-              
             List<Examination> result = _examinationService.SearchPreviousExamination(documentsDTO.Date, documentsDTO.Doctor, documentsDTO.Drug, documentsDTO.Specialist, documentsDTO.User);
             foreach (Examination examination in result)
             {
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
+            }
+            return Ok(resultDto);
+        }
+
+        [HttpPost]
+        [Route("search")]
+        public IActionResult SearchExamination([FromBody] DocumentsDTO2 documentsDTO2)
+        {
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+
+            List<Examination> result = _examinationService.SearchPreviousExaminations(documentsDTO2.Date, documentsDTO2.Doctor, documentsDTO2.Drug, documentsDTO2.Specialist, documentsDTO2.Radio1, documentsDTO2.Radio2);
+            foreach (Examination examination in result)
+            {
+                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
+
             }
             return Ok(resultDto);
         }
