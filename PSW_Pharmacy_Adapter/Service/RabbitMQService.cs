@@ -1,27 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Converter;
+using PSW_Pharmacy_Adapter.Model;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class SubscriberService : BackgroundService
+    public class RabbitMQService : BackgroundService
     {
         IConnection connection;
         IModel channel;
@@ -43,10 +33,10 @@ namespace PSW_Pharmacy_Adapter.Service
                 var jsonMessage = Encoding.UTF8.GetString(body);
                 Message message;
                 try
-                {   
+                {   // try deserialize with default datetime format
                     message = JsonConvert.DeserializeObject<Message>(jsonMessage);
                 }
-                catch (Exception)     
+                catch (Exception)     // datetime format not default, deserialize with Java format (milliseconds since 1970/01/01)
                 {
                     message = JsonConvert.DeserializeObject<Message>(jsonMessage, new MyDateTimeConverter());
                 }
