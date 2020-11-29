@@ -23,7 +23,7 @@ namespace bolnica.Service
 
         public IEnumerable<Address> GetAll()
         {
-            return _addressRepository.GetAll();
+            return _addressRepository.GetEager();
         }
     }
 }

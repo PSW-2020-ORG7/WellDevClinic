@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="PSW_Wpf_app.View.MedicalCenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PSW_Wpf_app.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="610">
+    <Grid>
+        <Button Content="Save" Command="{Binding SaveMedicalCommand}" Margin="261,44,0,0" HorizontalAlignment="Left" Width="97" Height="23" VerticalAlignment="Top" ></Button>
+
+        <DataGrid  
+            ItemsSource="{Binding FloorElementsM}" 
+            HorizontalAlignment="Left"
+            Height="381" 
+            Margin="19,67,0,0" 
+            VerticalAlignment="Top" 
+            Width="581"
+            AutoGenerateColumns="False"
+			CanUserAddRows="False"
+			SelectionMode="Extended">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Floor" Width="*" Binding="{Binding Floor}"/>
+                <DataGridTextColumn Header="Additional Information" Width="*" Binding="{Binding Info}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>

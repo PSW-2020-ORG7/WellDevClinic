@@ -7,37 +7,28 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-
+/// <summary>
+/// Class that models a survey with questions and grades.
+/// </summary>
 namespace Model.Doctor
 {
    public class DoctorGrade : IIdentifiable<long>
     {
         [NotMapped] public Dictionary<String, double> GradesForEachQuestions { get; set; }
         public int NumberOfGrades { get; set; }
-
-        public List<GradeDTO> Grades { get; set; }
-
         public long Id { get; set; }
-
-        public double AverageGrade
-        {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-
-            }
-        }
-
+        public virtual List<GradeDTO> Grades { get; set; }
+        public virtual List<GradeDTO> AverageGrade { get; set; }
+        public string Doctor { get; set; }
 
         public DoctorGrade() { }
 
-        public DoctorGrade(List<GradeDTO> grades)
+        public DoctorGrade(List<GradeDTO> grades, String doctor)
         {
             Grades = grades;
+            Doctor = doctor;
         }
+
         public DoctorGrade(long id, int numberOfGrades)
         {
             NumberOfGrades = numberOfGrades;

@@ -33,7 +33,7 @@ namespace Service
 
         public IEnumerable<Therapy> GetAll()
         {
-            return _therapyRepository.GetAll();
+            return _therapyRepository.GetEager();
         }
 
         public Therapy Save(Therapy entity)

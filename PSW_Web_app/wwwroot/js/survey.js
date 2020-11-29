@@ -65,9 +65,11 @@ $(document).ready(function () {
 		doctor.push(hospital3_dto)
 		doctor.push(hospital4_dto)
 
+		let doctor_name = "Marjana Zalar"
+
 		$.post({
 			url: "http://localhost:49153/api/survey",
-			data: JSON.stringify({grades:doctor}),
+			data: JSON.stringify({grades:doctor, doctor:doctor_name}),
 			success: function () {
 				alert("You have completed the survey");
 			},

@@ -10,12 +10,12 @@ namespace Model.Users
 {
    public class BusinessDay : IIdentifiable<long>
     {
-      public Period Shift { get; set; }
+      public virtual Period Shift { get; set; }
 
         public long Id { get; set; }
-        public List<Period> ScheduledPeriods { get; set; }
-      public Doctor doctor { get; set; }
-      public Room room { get; set; }
+        public virtual List<Period> ScheduledPeriods { get; set; }
+      public virtual Doctor doctor { get; set; }
+      public virtual Room room { get; set; }
 
         public BusinessDay(Period shift, Doctor doctor, Room room, List<Period> periods)
         {

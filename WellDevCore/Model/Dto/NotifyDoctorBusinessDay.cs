@@ -10,8 +10,8 @@ namespace bolnica.Model.Dto
 {
     public class NotifyDoctorBusinessDay
     {
-        public Period shift { get; set; }
-        public Room room { get; set; }
+        public virtual Period shift { get; set; }
+        public virtual Room room { get; set; }
         public long Id { get; set; }
 
         public NotifyDoctorBusinessDay(Period shift, Room room)

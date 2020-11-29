@@ -1,4 +1,5 @@
 using bolnica.Controller;
+using bolnica.Model.Dto;
 using bolnica.Service;
 using Model.Doctor;
 using Model.Users;
@@ -10,12 +11,7 @@ namespace Controller
 {
     public class DoctorGradeController : IDoctorGradeController
     {
-        private readonly IDoctorGradeService _doctorGradeService = new DoctorGradeService();
-
-        public DoctorGradeController()
-        {
-
-        }
+        private readonly IDoctorGradeService _doctorGradeService;
 
         public DoctorGradeController(IDoctorGradeService doctorGradeService)
         {
@@ -43,9 +39,9 @@ namespace Controller
             return _doctorGradeService.GetAll();
         }
 
-        public double GetAverageGrade(Doctor doctor)
+        public List<GradeDTO> GetAverageGrade(DoctorGrade survey)
         {
-           return _doctorGradeService.GetAverageGrade(doctor);
+           return _doctorGradeService.GetAverageGrade(survey);
 
         }
 

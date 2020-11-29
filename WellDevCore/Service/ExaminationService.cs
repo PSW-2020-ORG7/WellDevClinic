@@ -99,9 +99,9 @@ namespace Service
             return _upcomingRepository.GetAllEager();
         }
 
-        public IEnumerable<Examination> GetAllPrevious()
+        public List<Examination> GetAllPrevious()
         {
-            return _previousRepository.GetAllEager();
+            return (List<Examination>)_previousRepository.GetAllEager();
         }
 
         public List<Examination> GetExaminationsByFilter(ExaminationDTO examinationDTO, Boolean upcomingOnly)
@@ -120,7 +120,7 @@ namespace Service
                     continue;
                 }
 
-                if (examinationDTO.Patient != null && examinations[i].User.FullName != examinationDTO.Patient.FullName)
+                if (examinationDTO.Patient != null && examinations[i].Patient.FullName != examinationDTO.Patient.FullName)
                 {
                     examinations.RemoveAt(i);
                     i--;

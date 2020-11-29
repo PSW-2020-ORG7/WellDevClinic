@@ -1509,7 +1509,7 @@ namespace PSW_Wpf_director
             {
                 fileName = op.FileName;
                 UserImage.Source = new BitmapImage(new Uri(fileName));
-                director.Image = new Uri(fileName);
+                director.Image = new String(fileName);
                 _directorController.Edit(director);
 
 

@@ -39,7 +39,7 @@ namespace Service
 
         public IEnumerable<Ingredient> GetAll()
         {
-            return _ingrerdientRepository.GetAll();
+            return _ingrerdientRepository.GetEager();
         }
     }
 }

@@ -1,3 +1,5 @@
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Director;
 using Model.Doctor;
@@ -10,23 +12,55 @@ using System.Linq;
 
 namespace Repository
 {
-   public class HospitalizationRepository : CSVRepository<Hospitalization, long>, IHospitalizationRepository
+   public class HospitalizationRepository : IHospitalizationRepository
     {
         private readonly IRoomRepository _roomRepository;
-        private readonly IPatientRepository _patientRepository;
+        //private readonly IPatientRepository _patientRepository;
         private readonly IDoctorRepository _doctorRepository;
-        public HospitalizationRepository(ICSVStream<Hospitalization> stream, ISequencer<long> sequencer, IRoomRepository roomRepository, IPatientRepository patientRepository, IDoctorRepository doctorRepository)
-            : base(stream, sequencer)
+        private readonly MyDbContext myDbContext;
+
+        public HospitalizationRepository(IRoomRepository roomRepository, IDoctorRepository doctorRepository, MyDbContext context)
+        {
+            _roomRepository = roomRepository;
+           // _patientRepository = patientRepository;
+            _doctorRepository = doctorRepository;
+            myDbContext = context;
+        }
+
+        /*public HospitalizationRepository(ICSVStream<Hospitalization> stream, ISequencer<long> sequencer, IRoomRepository roomRepository, IPatientRepository patientRepository, IDoctorRepository doctorRepository)
+    : base(stream, sequencer)
         {
             _patientRepository = patientRepository;
             _roomRepository = roomRepository;
             _doctorRepository = doctorRepository;
+            MyContextContextFactory mccf = new MyContextContextFactory();
+            this.myDbContext = mccf.CreateDbContext(new string[0]);
+        }*/
+
+        public void Delete(Hospitalization entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Hospitalization entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Hospitalization Get(long id)
+            => myDbContext.Hospitalization.FirstOrDefault(hospitalization => hospitalization.Id == id);
+
+        public IEnumerable<Hospitalization> GetEager()
+        {
+            List<Hospitalization> result = new List<Hospitalization>();
+            myDbContext.Hospitalization.ToList().ForEach(hospitalization => result.Add(hospitalization));
+            return result;
         }
 
         public IEnumerable<Hospitalization> GetAllEager()
         {
             List<Hospitalization> hospitalizations = new List<Hospitalization>();
-            foreach(Hospitalization hospitalization in GetAll().ToList())
+            foreach(Hospitalization hospitalization in GetEager().ToList())
             {
                 hospitalizations.Add(GetEager(hospitalization.GetId()));
             }
@@ -37,7 +71,7 @@ namespace Repository
         {
             Hospitalization hospitalization = Get(id);
             hospitalization.Room=_roomRepository.GetEager(hospitalization.Room.GetId());
-            hospitalization.Patient = _patientRepository.Get(hospitalization.Patient.GetId());
+           // hospitalization.Patient = _patientRepository.Get(hospitalization.Patient.GetId());
             hospitalization.Doctor = _doctorRepository.GetEager(hospitalization.Doctor.GetId());
             return hospitalization;
         }
@@ -56,5 +90,9 @@ namespace Repository
             return retVal;
         }
 
+        public Hospitalization Save(Hospitalization entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

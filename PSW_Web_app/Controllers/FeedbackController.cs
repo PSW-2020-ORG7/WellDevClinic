@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bolnica.Model.Users;
+using bolnica.Service;
 
 namespace PSW_Web_app.Controllers
 {
@@ -12,7 +13,11 @@ namespace PSW_Web_app.Controllers
     public class FeedbackController : ControllerBase
     {
 
-        private bolnica.Controller.IFeedbackController _feedbackController = new bolnica.Controller.FeedbackController();
+        private readonly IFeedbackService _feedbackService;
+
+        public FeedbackController(IFeedbackService feedbackService) {
+            _feedbackService = feedbackService;
+        }
 
         /// <summary>
         ///calls GetAll() method from class FeedbackController 
@@ -22,7 +27,7 @@ namespace PSW_Web_app.Controllers
         [HttpGet]
         public IActionResult GetAllFeedback()
         {
-            List<Feedback> result = (List<Feedback>)_feedbackController.GetAll();
+            List<Feedback> result = (List<Feedback>)_feedbackService.GetAllFeedback();
             return Ok(result);
         }
 
@@ -37,7 +42,7 @@ namespace PSW_Web_app.Controllers
         public IActionResult GetFeedback(long id)
         {
             IActionResult actionResult;
-            Feedback feedback = _feedbackController.Get(id);
+            Feedback feedback = _feedbackService.GetFeedback(id);
             if (feedback == null)
             {
                 actionResult = NotFound();
@@ -59,17 +64,7 @@ namespace PSW_Web_app.Controllers
         public IActionResult LeaveFeedback([FromBody] Feedback feedback)
         {
             IActionResult actionResult;
-            if(((List<Feedback>)_feedbackController.GetAll()).Count == 0)
-            {
-                feedback.Id = 0;
-            }
-            else
-            {
-                Feedback lastFeedback = ((List<Feedback>)_feedbackController.GetAll())[((List<Feedback>)_feedbackController.GetAll()).Count - 1];
-                long id = lastFeedback.Id;
-                feedback.Id = id + 1;
-            }
-            Feedback result = _feedbackController.Save(feedback);
+            Feedback result = _feedbackService.LeaveFeedback(feedback);
             if(result == null || feedback.Content.Length == 0)
             {
                 actionResult = BadRequest();
@@ -90,7 +85,7 @@ namespace PSW_Web_app.Controllers
         [HttpPut]
         public void PublishFeedback(Feedback feedback)
         {
-            _feedbackController.Edit(feedback);
+            _feedbackService.PublishFeedback(feedback);
         }
 
     }

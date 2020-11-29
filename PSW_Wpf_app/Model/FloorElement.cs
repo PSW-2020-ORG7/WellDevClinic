@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp.Model
+namespace PSW_Wpf_app.Model
 {
     public class FloorElement
     {

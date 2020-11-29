@@ -7,7 +7,7 @@ namespace Model.Doctor
     {
         public long Id { get; set; }
         public DateTime DatePublished { get; set; }
-        public Model.Users.Doctor Doctor { get; set; }
+        public virtual Model.Users.Doctor Doctor { get; set; }
         public String Topic { get; set; }
         public String Text { get; set; }
 

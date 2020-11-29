@@ -10,16 +10,16 @@ namespace bolnica.Service
 {
     public class FeedbackService : IFeedbackService
     {
-        private readonly IFeedbackRepository _feedbackRepository = new FeedbackRepository();
+        private readonly IFeedbackRepository _feedbackRepository;
 
-        public FeedbackService()
+        public FeedbackService(IFeedbackRepository feedbackRepository)
         {
-            
+            _feedbackRepository = feedbackRepository;
         }
 
         public List<Feedback> GetAllFeedback()
         {
-            return (List<Feedback>)_feedbackRepository.GetAll();
+            return (List<Feedback>)_feedbackRepository.GetEager();
         }
 
         public Feedback GetFeedback(long id)

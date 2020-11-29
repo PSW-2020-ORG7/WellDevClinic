@@ -23,7 +23,7 @@ namespace Model.Users
         }
 
 
-        public Address Address { get; set; } 
+        public virtual Address Address { get; set; } 
 
         public abstract long GetId();
 

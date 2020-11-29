@@ -535,7 +535,7 @@ namespace PSW_Wpf_Patient
                 String fileName = op.FileName;
                 //ProfileImage.Source = new BitmapImage(new Uri(fileName));
                 //ProfileImage2.Source = new BitmapImage(new Uri(fileName));
-                _patient.Image = new Uri(fileName);
+                _patient.Image = new String(fileName);
                 app.UserController.Edit(_patient);
                 SuccessUpdatePhoto.Foreground = Brushes.Green;
 
@@ -1230,7 +1230,7 @@ namespace PSW_Wpf_Patient
             Doctor dr = (Doctor)selectedItem;
             if (dr != null)
             {
-                ButtonGrade.Content = app.DoctorGradeDecorator.GetAverageGrade(dr).ToString();
+                ButtonGrade.Content = app.DoctorGradeDecorator.GetAverageGrade(null).ToString();
             }
         }
     }

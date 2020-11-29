@@ -2,6 +2,8 @@ using bolnica;
 using bolnica.Model;
 using bolnica.Repository;
 using Model.Doctor;
+using PSW_Web_app.Adapters;
+using PSW_Web_app.DTO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,11 +14,13 @@ namespace Repository
    public class DoctorGradeRepository : IDoctorGradeRepository
    {
         private readonly MyDbContext myDbContext;
-        public DoctorGradeRepository()
+
+
+        public DoctorGradeRepository(MyDbContext context)
         {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
+            myDbContext = context;
         }
+
 
         public void Delete(DoctorGrade entity)
         {
@@ -29,17 +33,17 @@ namespace Repository
         }
 
         public DoctorGrade Get(long id)
-        {
-            throw new NotImplementedException();
-        }
+            => myDbContext.DoctorGrade.FirstOrDefault(doctorGrade => doctorGrade.Id == id);
 
-        public IEnumerable<DoctorGrade> GetAll()
+        public IEnumerable<DoctorGrade> GetEager()
         {
-            throw new NotImplementedException();
+            List<DoctorGrade> result = new List<DoctorGrade>();
+            myDbContext.DoctorGrade.ToList().ForEach(doctorGrade => result.Add(doctorGrade));
+            return result;
         }
 
         public DoctorGrade Save(DoctorGrade entity)
-        {
+        { 
             DoctorGrade result = myDbContext.DoctorGrade.FirstOrDefault(doctorGrade => doctorGrade.Id == entity.Id);
             if (result == null)
             {
@@ -50,5 +54,6 @@ namespace Repository
 
             return null;
         }
+
     }
 }

@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>View feedback admin</title>
+    <title>View survey admin</title>
     <link rel="stylesheet" href="css/table.css">
     <script src="http://localhost:49153/js/jquery-3.3.1.min.js"></script>
+    <script src="http://localhost:49153/js/viewSurvey.js"></script>
 </head>
 <body>
     <h1>Survey results</h1>
@@ -14,15 +15,15 @@
 
     <h2>Doctor</h2>
     <br />
-    <table id="table">
+    <table id="table_doctor">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Doctor</th>
-                <th>Question 1</th>
-                <th>Question 2</th>
-                <th>Question 3</th>
-                <th>Question 4</th>
+                <th>Confidence in doctor</th>
+                <th>Friendliness/courtesy</th>
+                <th>Thoroughness</th>
+                <th>Overall grade</th>
                 <th>Average grade</th>
             </tr>
         </thead>
@@ -32,16 +33,20 @@
     <br />
     <br />
 
+    <div align="center">
+        <button id="button_doctor" class="button">Survey by doctor</button>
+    </div>
+    <br />
     <h2>Medical staff</h2>
     <br />
-    <table id="table">
+    <table id="table_medical">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Question 1</th>
-                <th>Question 2</th>
-                <th>Question 3</th>
-                <th>Question 4</th>
+                <th>Confidence in the medical</th>
+                <th>Friendliness/courtesy</th>
+                <th>Efficiency</th>
+                <th>Overall grade</th>
                 <th>Average grade</th>
             </tr>
         </thead>
@@ -53,19 +58,26 @@
 
     <h2>Hospital</h2>
     <br />
-    <table id="table">
+    <table id="table_hospital">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Question 1</th>
-                <th>Question 2</th>
-                <th>Question 3</th>
-                <th>Question 4</th>
+                <th>Cleaness</th>
+                <th>Atmosphere</th>
+                <th>Equipment</th>
+                <th>Overall grade</th>
                 <th>Average grade</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
+
+    <br />
+
+    <div align="center">
+        <button id="quit" class="button">Go back</button>
+    </div>
+
 </body>
 </html>
