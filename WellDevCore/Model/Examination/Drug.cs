@@ -24,7 +24,7 @@ namespace Model.PatientSecretary
             this.Ingredients = ingredients;
             this.Alternative = alternative;
         }
-        //MENJANOOOOOO!!!!!!!!!!!!!!!!!!!!!!
+        
         public Drug(long id, String name, int amount, Boolean approved, List<Ingredient> ingredients)
         {
             this.Id = id;
@@ -37,6 +37,12 @@ namespace Model.PatientSecretary
         public Drug(long id)
         {
             Id = id;
+        }
+
+        public Drug(long id, String name)
+        {
+            Id = id;
+            Name = name;
         }
 
         public Drug(string name, int amount, bool approved, List<Ingredient> ingredients, List<Drug> alternative)

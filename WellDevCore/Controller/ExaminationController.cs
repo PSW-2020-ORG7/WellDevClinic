@@ -11,7 +11,6 @@ namespace bolnica.Controller
     public class ExaminationController : IExaminationController
     {
         private readonly IExaminationService _examinationService;
-        //public ExaminationController() { }
 
         public ExaminationController(IExaminationService service)
         {

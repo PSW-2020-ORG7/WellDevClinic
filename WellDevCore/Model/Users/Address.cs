@@ -20,7 +20,7 @@ namespace Model.Users
             FullAddress = GetFullAddress();
         } 
 
-        public Address(long id)
+        public Address(long id, string v, Town town)
         {
             Id = id; 
         }

@@ -7,6 +7,7 @@ using Model.PatientSecretary;
 using Model.Users;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Repository
@@ -17,29 +18,18 @@ namespace Repository
         private readonly IAddressRepository _addressRepository;
         private readonly ITownRepository _townRepository;
         private readonly IStateRepository _stateRepository;
+
         private readonly MyDbContext myDbContext;
 
-        public PatientRepository(IPatientFileRepository patientFleRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
+
+        public PatientRepository(IPatientFileRepository patientFileRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
         {
-            _patientFleRepository = patientFleRepository;
-            _addressRepository = addressRepository;
-            _townRepository = townRepository;
-            _stateRepository = stateRepository;
-            myDbContext = context;
+            this._patientFleRepository = patientFileRepository;
+            this._addressRepository = addressRepository;
+            this._townRepository = townRepository;
+            this._stateRepository = stateRepository;
+            this.myDbContext = context;
         }
-
-        /*public PatientRepository(ICSVStream<Patient> stream, ISequencer<long> sequencer, IPatientFileRepository patientFileRepository, IAddressRepository addressRepository,
-    ITownRepository townRepository, IStateRepository stateRepository)
-    : base(stream, sequencer)
-        {
-            _patientFleRepository = patientFileRepository;
-            _addressRepository = addressRepository;
-            _townRepository = townRepository;
-            _stateRepository = stateRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
-
         public void Delete(Patient entity)
         {
             throw new NotImplementedException();
@@ -51,13 +41,19 @@ namespace Repository
         }
 
         public Patient Get(long id)
-            => myDbContext.Patient.FirstOrDefault(patient => patient.Id == id);
-
+            => myDbContext.Patient.FirstOrDefault(patient => patient.Id==id);
         public IEnumerable<Patient> GetEager()
         {
             List<Patient> result = new List<Patient>();
             myDbContext.Patient.ToList().ForEach(patient => result.Add(patient));
             return result;
+
+        }
+
+       
+        public IEnumerable<Patient> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Patient> GetAllEager()
@@ -85,14 +81,48 @@ namespace Repository
 
         public Patient GetPatientByJMBG(string jmbg)
         {
-            List<Patient> patients = GetAllEager().ToList();
-            foreach(Patient patient in patients){
-                if (patient.Jmbg.Equals(jmbg))
-                {
-                    return patient;
-                }
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Jmbg.Equals(jmbg));
+            return result;
+        }
+
+        public Patient Save(Patient entity)
+        {
+            Patient retVal;
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Jmbg == entity.Jmbg);
+            if (result == null)
+            {
+                string filePath = "profilePictures/" + entity.Username + ".jpg";
+                string[] split = entity.Image.Split(';');
+                string[] base64 = split[1].Split(',');
+                string data = base64[1];
+                File.WriteAllBytes(filePath, Convert.FromBase64String(data));
+                entity.Image = entity.Username;
+                myDbContext.Patient.Add(entity);
+                myDbContext.SaveChanges();
+                retVal = entity;
             }
-            return null;
+            else
+                retVal = null;
+
+            return retVal;
+        }
+
+        public Patient GetPatientByMail(string email)
+        {
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Email.Equals(email));
+            return result;
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.Username.Equals(username));
+            return result;
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            Patient result = myDbContext.Patient.FirstOrDefault(patient => patient.VerificationToken.Equals(token));
+            return result;
         }
 
         public User GetUserByUsername(string username)
@@ -108,9 +138,6 @@ namespace Repository
             return null;
         }
 
-        public Patient Save(Patient entity)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

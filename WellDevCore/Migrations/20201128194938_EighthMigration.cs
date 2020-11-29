@@ -2,7 +2,7 @@
 
 namespace bolnica.Migrations
 {
-    public partial class Fifth_migration : Migration
+    public partial class EighthMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

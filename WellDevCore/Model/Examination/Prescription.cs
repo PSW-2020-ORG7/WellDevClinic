@@ -28,7 +28,7 @@ namespace Model.PatientSecretary
             Period = period;
             Drug = drug;
         }
-
+        
         public Prescription(long id)
         {
             Id = id;

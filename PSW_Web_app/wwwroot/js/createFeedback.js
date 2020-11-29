@@ -7,6 +7,7 @@ $(document).ready(function () {
         let comment = $("#comment");
         let anonymous = document.getElementById('anonymous');
         let private = document.getElementById('private');
+        let patient = "Jack Smith";
 
         if (jQuery.trim(comment.val()) != '') {
             let anonymousBool = false;
@@ -21,7 +22,7 @@ $(document).ready(function () {
 
             $.post({
                 url: "http://localhost:49153/api/feedback",
-                data: JSON.stringify({ content: comment.val(), isAnonymous: anonymousBool, isPrivate: privateBool }),
+                data: JSON.stringify({ content: comment.val(), isAnonymous: anonymousBool, isPrivate: privateBool, patient: patient}),
                 success: function () {
                     alert("Uspesno ste poslali komentar")
                 },

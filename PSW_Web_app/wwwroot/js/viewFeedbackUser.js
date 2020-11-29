@@ -9,12 +9,11 @@
 		patient = "Anonymous";
 	}
 	else {
-		patient = "Jack Smith";
+		patient = feedback.patient;
 	}
 
 	let user = $('<div class="form-group row"><div class="col-sm-12"><input id="patient" readonly class="form-control-plaintext" value="'+ patient +'"></div></div>');
 	let content = $('<div  class="form-group row"><div class="col-sm-12"><textarea id="content" readonly   >'+feedback.content+'</textarea></div></div>');
-	
 
 	form.append(user).append(content);
 	td.append(form);
