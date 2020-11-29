@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bolnica.Model;
 
-namespace bolnica.Migrations
+namespace WellDevCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201128021940_SeventhMigration")]
-    partial class SeventhMigration
+    [Migration("20201129194442_CompleteDatabase")]
+    partial class CompleteDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,6 +140,9 @@ namespace bolnica.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Doctor")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("NumberOfGrades")
                         .HasColumnType("int");
@@ -773,8 +776,8 @@ namespace bolnica.Migrations
                     b.Property<long?>("DoctorGradeId1")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
+                    b.Property<double>("Grade")
+                        .HasColumnType("double");
 
                     b.Property<string>("Question")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
