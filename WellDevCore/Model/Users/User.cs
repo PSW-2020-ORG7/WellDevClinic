@@ -11,8 +11,6 @@ namespace Model.Users
         public String Image { get; set; }
         public long Id {get; set;}
 
-        
-
         public override long GetId()
         {
             throw new NotImplementedException();

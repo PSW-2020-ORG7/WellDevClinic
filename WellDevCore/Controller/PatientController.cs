@@ -11,11 +11,16 @@ namespace bolnica.Controller
     {
         private readonly IPatientService _patientService;
 
+        public PatientController()
+        {
+
+        }
+
         public PatientController(IPatientService patientService)
         {
             _patientService = patientService;
         }
-        public PatientController(){ }
+
         public Patient ClaimAccount(Patient patient)
         {
             return _patientService.ClaimAccount(patient);
@@ -55,5 +60,22 @@ namespace bolnica.Controller
         {
             return _patientService.Save(entity);
         }
+
+        public Patient CheckExistence(String jmbg, String username, String email)
+        {
+            return null;
+        }
+
+        /*
+        public Patient GetPatientByMail(string email)
+        {
+            return _patientService.GetPatientByMail(email);
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            return _patientService.GetPatientByUsername(username);
+        }
+        */
     }
 }

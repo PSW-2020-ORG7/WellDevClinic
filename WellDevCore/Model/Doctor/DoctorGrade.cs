@@ -22,7 +22,6 @@ namespace Model.Doctor
 
         public string Doctor { get; set; }
 
-
         public DoctorGrade() { }
 
         public DoctorGrade(List<GradeDTO> grades, String doctor)
