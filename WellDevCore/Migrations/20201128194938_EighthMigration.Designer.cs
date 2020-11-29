@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bolnica.Model;
 
 namespace bolnica.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201128194938_EighthMigration")]
+    partial class EighthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,9 +140,6 @@ namespace bolnica.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Doctor")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("NumberOfGrades")
                         .HasColumnType("int");
@@ -774,8 +773,8 @@ namespace bolnica.Migrations
                     b.Property<long?>("DoctorGradeId1")
                         .HasColumnType("bigint");
 
-                    b.Property<double>("Grade")
-                        .HasColumnType("double");
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
 
                     b.Property<string>("Question")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

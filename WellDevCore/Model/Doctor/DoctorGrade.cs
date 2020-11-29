@@ -19,7 +19,9 @@ namespace Model.Doctor
         public long Id { get; set; }
         public virtual List<GradeDTO> Grades { get; set; }
         public virtual List<GradeDTO> AverageGrade { get; set; }
+
         public string Doctor { get; set; }
+
 
         public DoctorGrade() { }
 

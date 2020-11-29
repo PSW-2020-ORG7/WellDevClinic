@@ -11,5 +11,6 @@ namespace bolnica.Service
 {
     public interface IReferralService : IService<Referral,long>
     {
+        Boolean CheckSpecialist(String specialistName, Referral referral);
     }
 }

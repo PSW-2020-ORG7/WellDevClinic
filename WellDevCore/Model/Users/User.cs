@@ -4,12 +4,14 @@ using System.Drawing;
 
 namespace Model.Users
 {
-   public abstract class User : Person
+    public abstract class User : Person
     {
         public String Username { get; set; }
         public String Password { get; set; }
         public String Image { get; set; }
-        public long Id;
+        public long Id {get; set;}
+
+        
 
         public override long GetId()
         {

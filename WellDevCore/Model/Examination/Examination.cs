@@ -27,6 +27,8 @@ namespace Model.PatientSecretary
             Diagnosis = diagnosis;
         }
 
+
+
         public Examination(long id,  Users.Doctor doctor, Period period)
         {
             Id = id;
@@ -41,6 +43,14 @@ namespace Model.PatientSecretary
             Period = period;
         }
 
+        public Examination(long id, Patient patient, Users.Doctor doctor, Period period)
+        {
+            Id = id;
+            Patient = patient;
+            Doctor = doctor;
+            Period = period;
+           ;
+        }
 
         public Examination(long id, Patient user,Users.Doctor doctor, Period period, Diagnosis diagnosis, Anemnesis anemnesis, Therapy therapy, Referral refferal, Prescription prescription)
         {

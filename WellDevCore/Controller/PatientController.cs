@@ -5,7 +5,7 @@ using Model.Users;
 using System;
 using System.Collections.Generic;
 
-namespace Controller
+namespace bolnica.Controller
 {
     public class PatientController : IPatientController
     {
@@ -15,6 +15,7 @@ namespace Controller
         {
             _patientService = patientService;
         }
+        public PatientController(){ }
         public Patient ClaimAccount(Patient patient)
         {
             return _patientService.ClaimAccount(patient);
