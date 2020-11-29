@@ -1,0 +1,26 @@
+﻿<Window x:Class="PSW_Wpf_director.TutorialVideoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSW_Wpf_director"
+        mc:Ignorable="d"
+        Title="Tutorijal">
+    <Grid>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <MediaElement Source="C:\Users\david\Desktop\cc\hospital_system\upravnikKT2\tutorijal - david drvar.mp4" LoadedBehavior="Manual" Name="mePlayer" />
+            <StackPanel Grid.Row="1">
+                <Label Name="lblStatus" Content="Not playing..." HorizontalContentAlignment="Center" Margin="5" />
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>
+                    <Button Name="btnPause" Margin="5,0" Click="btnPause_Click">Pause</Button>
+                    <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
+                </WrapPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -108,6 +108,11 @@ namespace bolnica.Service
             return _patientRepository.GetPatientByMail(username);
         }
 
+        public Patient GetPatientToken(string token)
+        {
+            return _patientRepository.GetPatientToken(token);
+        }
+
         public DoctorGrade GiveGradeToDoctor(Doctor doctor, Dictionary<string, double> gradesForDoctor)
         {
             DoctorGrade doctorGrade = doctor.DoctorGrade;
@@ -125,7 +130,7 @@ namespace bolnica.Service
         }
 
 
-        public Patient checkExistence(string jmbg, string username, string email)
+        public Patient CheckExistence(string jmbg, string username, string email)
         {
             Patient patient = new Patient();
 

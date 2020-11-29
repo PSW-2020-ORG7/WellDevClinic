@@ -1,3 +1,4 @@
+
 #star_registration_label{
     color: red;
     display:inline;
@@ -62,3 +63,10 @@
 .input_with_info{
     width: 768px;
 }
+
+.warning{
+    margin-left: 50px;
+    font-style: italic;
+    color: red;
+}
+

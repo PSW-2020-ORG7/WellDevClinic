@@ -1,0 +1,80 @@
+﻿<Window x:Class="PSW_Wpf_director.ShiftWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSW_Wpf_director"
+        mc:Ignorable="d"
+        FontSize="18"
+        Title="Dodavanje smene" Height="456.917" Width="688.998" PreviewKeyDown="Window_PreviewKeyDown" Loaded="Window_Loaded" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="26" />
+            <RowDefinition Height="Auto" MinHeight="26" />
+            <RowDefinition Height="Auto" MinHeight="26" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="339" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+
+        <Label Grid.Column="0" Grid.Row="1" Margin="0,12,0,8">Izaberite prostoriju</Label>
+        <Label x:Name="labelStartDate" Grid.Column="0" Grid.Row="2" Margin="0,10">Izaberite datum početka radnog vremena</Label>
+        <Label x:Name="labelEndDate" Grid.Column="0" Grid.Row="3" Margin="0,10" RenderTransformOrigin="0.488,1.273" >Izaberite datum kraja radnog vremena</Label>
+        <Label Grid.Column="0" Grid.Row="4" Margin="0,0,0,10" VerticalAlignment="Bottom" Height="32">vreme početka</Label>
+        <Label Grid.Column="0" Grid.Row="5" Margin="0,0,0,10" VerticalAlignment="Bottom" Height="32">vreme kraja</Label>
+
+
+
+        <ComboBox x:Name="comboRoom" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,10" Width="139" materialDesign:HintAssist.Hint="Pretraži" IsEditable="True" Height="36" IsTextSearchEnabled="True">
+
+        </ComboBox>
+
+        <DatePicker x:Name="startDatePicker" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,10,10" Width="139" Height="33" Focusable="False"></DatePicker>
+        <DatePicker x:Name="endDatePicker" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Margin="0,10,10,10" Width="139" Height="33" Focusable="False"></DatePicker>
+        <materialDesign:TimePicker x:Name="startTimePicker" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Margin="0,0,10,10" Width="139" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                   materialDesign:HintAssist.Hint="" Height="45"></materialDesign:TimePicker>
+        <materialDesign:TimePicker x:Name="endTimePicker" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" Margin="0,0,10,10" Width="139" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                   materialDesign:HintAssist.Hint="" Height="45"></materialDesign:TimePicker>
+
+
+        <WrapPanel  Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" Width="210">
+            <Button x:Name="OKBtn" Height="28" Width="100" Click="Button_Click_Ok">Potvrdi
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+
+                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=comboRoom}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=SelectedDate, ElementName=startDatePicker}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=SelectedDate, ElementName=endDatePicker}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=SelectedTime, ElementName=endTimePicker}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=SelectedTime, ElementName=endTimePicker}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Height="28" Width="100" Click="Button_Click_Cancel" Margin="10,0,0,0">Odustani</Button>
+        </WrapPanel>
+
+
+    </Grid>
+</Window>

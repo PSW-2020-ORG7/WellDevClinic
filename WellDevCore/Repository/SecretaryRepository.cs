@@ -1,5 +1,7 @@
 
 
+using bolnica;
+using bolnica.Model;
 using bolnica.Repository;
 using Model.Users;
 using System;
@@ -8,24 +10,46 @@ using System.Linq;
 
 namespace Repository
 {
-   public class SecretaryRepository : CSVRepository<Secretary, long>, ISecretaryRepository, IEagerRepository<Secretary, long>
+   public class SecretaryRepository : ISecretaryRepository, IEagerRepository<Secretary, long>
    {
         private readonly IAddressRepository _addressRepository;
         private readonly ITownRepository _townRepository;
         private readonly IStateRepository _stateRepository;
+        private readonly MyDbContext myDbContext;
 
-        public SecretaryRepository(ICSVStream<Secretary> stream, ISequencer<long> sequencer, IAddressRepository addressRepository,
-            ITownRepository townRepository, IStateRepository stateRepository) : base(stream, sequencer)
+        public SecretaryRepository(IAddressRepository addressRepository,
+            ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
         {
             _addressRepository = addressRepository;
             _townRepository = townRepository;
             _stateRepository = stateRepository;
+            myDbContext = context;
+           
+        }
 
+        public void Delete(Secretary entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Secretary entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Secretary Get(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Secretary> GetEager()
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Secretary> GetAllEager()
         {
-            List<Secretary> secretaries = GetAll().ToList();
+            List<Secretary> secretaries = GetEager().ToList();
             for(int i = 0; i < secretaries.Count; i++)
             {
                 secretaries[i] = GetEager(secretaries[i].GetId());
@@ -51,6 +75,11 @@ namespace Repository
                     return entity;
             }
             return null;
+        }
+
+        public Secretary Save(Secretary entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

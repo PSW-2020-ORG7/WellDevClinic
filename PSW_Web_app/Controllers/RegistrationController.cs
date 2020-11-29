@@ -10,38 +10,53 @@ using Model.Users;
 
 namespace PSW_Web_app.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        private bolnica.Controller.IPatientController _patientController = new Controller.PatientController();
+        private readonly bolnica.Service.IPatientService _patientService;
         
-
-        [HttpPost]
-        [Route("new")]
-        public IActionResult UserRegistration([FromBody] Patient entity)
+        public RegistrationController(bolnica.Service.IPatientService s)
         {
-            
-            IActionResult actionResult;
-            
-            Patient patient = _patientController.CheckExistence(entity.Jmbg,entity.Username,entity.Email);
+            _patientService = s;
+        }
+
+
+        /// <summary>
+        ///calls Save(Patient) method from class RegistrationService 
+        ///so it can register and save new user in database
+        /// </summary>
+        /// <returns>status 200 OK response with a registered user</returns>
+        [HttpPost]
+        public Patient UserRegistration([FromBody] Patient entity)
+        {
+
+            //IActionResult actionResult;
+            Patient retVal;
+
+            Patient patient = _patientService.CheckExistence(entity.Jmbg,entity.Username,entity.Email);
             if (patient == null)
             {
                 String token = GenerateToken();
                 entity.VerificationToken = token;
+                _patientService.Save(entity);
                 SendVerification(entity.Email, entity.Jmbg, token);
-                actionResult = Ok(entity);
+                //actionResult = Ok(entity);
+                retVal = entity;
             }
             else
             {
-                actionResult = BadRequest(patient);
+                //actionResult = BadRequest(patient);
+                retVal = patient;
             }
 
-            return actionResult;
+            return retVal;
         }
 
 
-
+        /// <summary>
+        /// sends email with autentification token so that user can verify his account
+        /// </summary>
         public void SendVerification(String email, String jmbg, String authToken)
         {
 
@@ -59,19 +74,28 @@ namespace PSW_Web_app.Controllers
             SmtpServer.Credentials = new System.Net.NetworkCredential("hospitalservicePSW@gmail.com", "hospitalservicePSW1998");
             SmtpServer.EnableSsl = true;
 
-            SmtpServer.Send(mail);
+            //SmtpServer.Send(mail);
 
         }
 
+        /// <summary>
+        /// generate random token 
+        /// </summary>
+        /// <returns> autentification token to method SendVerification</returns>
         public String GenerateToken()
         {
             var allChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var random = new Random();
             var resultToken = new string(
-               Enumerable.Repeat(allChar, 8)
+               Enumerable.Repeat(allChar, 12)
                .Select(token => token[random.Next(token.Length)]).ToArray());
 
             string authToken = resultToken.ToString();
+            Patient patient = _patientService.GetPatientToken(authToken);
+            if(patient != null)
+            {
+                authToken = GenerateToken();
+            }
             return authToken;
         }
     }

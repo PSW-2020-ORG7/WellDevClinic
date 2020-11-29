@@ -63,7 +63,7 @@ namespace Controller
 
         public Patient CheckExistence(String jmbg, String username, String email)
         {
-            return _patientService.checkExistence(jmbg, username, email);
+            return null;
         }
 
         /*

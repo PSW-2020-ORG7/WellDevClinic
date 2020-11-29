@@ -8,7 +8,7 @@ namespace Model.Users
     public class Director : User
     {
         public Director(long id,
-            String username, String password, Uri image,
+            String username, String password, String image,
             String firstName, String lastName, String jmbg, String email, String phone, DateTime dateOfBirth, Address address)
         {
             this.Id = id;

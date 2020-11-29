@@ -8,8 +8,7 @@ namespace Model.Users
         public long Id { get; set; }
         public String Name { get; set; }
         public String PostalNumber { get; set; }
-        public State State { get; set; }
-
+        public virtual State State { get; set; }
         private List<Address> address;
       
         public Town(long id, string name, string postalNumber, State state)

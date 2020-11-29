@@ -14,5 +14,7 @@ namespace bolnica.Repository
       Patient GetPatientByMail(String email);
 
       Patient GetPatientByUsername(String username);
+
+      Patient GetPatientToken(string token);
     }
 }

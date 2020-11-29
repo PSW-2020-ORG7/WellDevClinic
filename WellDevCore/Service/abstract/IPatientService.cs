@@ -20,7 +20,8 @@ namespace bolnica.Service
 
         Patient GetPatientByUsername(String username);
 
-        Patient checkExistence(String jmbg, String username, String email);
+        Patient CheckExistence(string jmbg, string username, string email);
 
+        Patient GetPatientToken(string token);
     }
 }

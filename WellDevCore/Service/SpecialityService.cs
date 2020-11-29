@@ -23,7 +23,7 @@ namespace Service
 
         public IEnumerable<Speciality> GetAll()
         {
-            return _specialityRepository.GetAll();
+            return _specialityRepository.GetEager();
         }
 
     }

@@ -6,14 +6,13 @@ using System.Linq;
 
 namespace bolnica.Repository
 {
-    class FeedbackRepository:IFeedbackRepository
+    public class FeedbackRepository:IFeedbackRepository
     {
         private readonly MyDbContext myDbContext; 
 
-        public FeedbackRepository()
+        public FeedbackRepository( MyDbContext context)
         {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
+            myDbContext = context;
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace bolnica.Repository
         /// get all feedback from database
         /// </summary>
         /// <returns>IEnumerable<Feedback> with all feedback from database</returns>
-        public IEnumerable<Feedback> GetAll()
+        public IEnumerable<Feedback> GetEager()
         {
             List<Feedback> result = new List<Feedback>();
             myDbContext.Feedback.ToList().ForEach(feedback => result.Add(feedback));

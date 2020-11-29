@@ -36,7 +36,7 @@ namespace Service
 
        public IEnumerable<Equipment> GetAll()
         {
-            return _repository.GetAll();
+            return _repository.GetEager();
         }
 
         public Equipment Get(long id)
