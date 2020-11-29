@@ -21,7 +21,6 @@ namespace Repository
 
         private readonly MyDbContext myDbContext;
 
-
         public PatientRepository(IPatientFileRepository patientFileRepository, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository, MyDbContext context)
         {
             this._patientFleRepository = patientFileRepository;

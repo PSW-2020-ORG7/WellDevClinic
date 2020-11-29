@@ -41,6 +41,7 @@ namespace Service
         public ExaminationService( IExaminationPreviousRepository previousRepository)
         {
               _previousRepository = previousRepository;
+
         }
 
         public void Delete(Examination entity)
@@ -112,7 +113,6 @@ namespace Service
         private Boolean CheckDate(DateTime date, Examination examination)
         { 
             return examination.Period.StartDate.Date == date.Date;
-
         }
 
         private Boolean CheckDoctor(String name, Examination examination)
@@ -141,13 +141,144 @@ namespace Service
                 foreach (Examination examination in examinations)
                 {
                     if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                    { 
-
+                    {
                         result.Add(examination);
                     }
                 }
             }
-            else 
+            else
+            {
+                foreach (Examination examination in examinations)
+                {
+                    if (CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                    {
+                        result.Add(examination);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2)
+        {
+
+            List<Examination> result = new List<Examination>();
+            List<Examination> examinations = GetAllPrevious().ToList();
+            if (date != "")
+            {
+                DateTime dateTime = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                foreach (Examination examination in examinations)
+                {
+                    var provera = true;
+                    if (drugName != "")
+                    {
+                        provera = _prescriptionService.CheckDrug(drugName, examination.Prescription);
+                    }
+                    else
+                    {
+                        provera = _referralService.CheckSpecialist(speacialistName, examination.Refferal);
+                    }
+
+                    if (Radio1 && Radio2)
+                    {
+                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && provera)
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (!Radio1 && Radio2)
+                    {
+                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) && provera)
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (Radio1 && !Radio2)
+                    {
+                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) || provera)
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (!Radio1 && !Radio2)
+                    {
+                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) || provera)
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    /*if (!Radio1 && Radio2 && Radio3) 
+                    {
+                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (Radio1 && Radio2 && Radio3)
+                    {
+                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (Radio1 && !Radio2 && Radio3)
+                    {
+                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (Radio1 && Radio2 && !Radio3)
+                    {
+                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (!Radio1 && !Radio2 && Radio3)
+                    {
+                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (!Radio1 && Radio2 && !Radio3)
+                    {
+                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (Radio1 && !Radio2 && !Radio3)
+                    {
+                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }
+                    if (!Radio1 && !Radio2 && !Radio3)
+                    {
+                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                        {
+                            result.Add(examination);
+                        }
+                        break;
+                    }*/
+
+                }
+            }
+            else
             {
                 foreach (Examination examination in examinations)
                 {

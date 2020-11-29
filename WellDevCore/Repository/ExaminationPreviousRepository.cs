@@ -56,7 +56,6 @@ namespace Repository
             }
             return examinations;
         }
-        
 
         public Examination GetEager(long id)
         {

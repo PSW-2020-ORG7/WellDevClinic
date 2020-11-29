@@ -1,4 +1,4 @@
-﻿var examinations = [];
+var examinations = [];
 var copyExaminations = [];
 
 function addPrescription(examination, i) {
@@ -97,7 +97,6 @@ $(document).ready(function () {
 			addReferral(e, i);
 			i++;
 		}
-		
 	});
 
 	$('form#formParams').submit(function (event) {
@@ -133,7 +132,7 @@ $(document).ready(function () {
 				if (type == "Referral") {
 
 					$('#tableP tbody').empty();
-					
+
 					if (!copyExaminations.length) {
 						i = 1;
 						for (let exam of examinations) {
@@ -178,9 +177,7 @@ $(document).ready(function () {
 							}
 						},
 					});
-				
 					$('#tableR tbody').empty();
-					
 					if (!copyExaminations.length) {
 						i = 1;
 						for (let exam of examinations) {
