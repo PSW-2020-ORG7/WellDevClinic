@@ -35,7 +35,7 @@ namespace PSW_Pharmacy_Adapter
                .ConfigureServices((hostContext, services) =>
                {
                    Console.WriteLine("tu je");
-                   services.AddHostedService<TimerService>();
+ //                  services.AddHostedService<TimerService>();
                    services.AddHostedService<RabbitMQService>();
                });
 

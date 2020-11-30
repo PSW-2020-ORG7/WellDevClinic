@@ -21,7 +21,7 @@ namespace PSW_Pharmacy_Adapter.Service
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: "pharmacy.queue",
-                                    durable: true,
+                                    durable: false,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
@@ -31,17 +31,9 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                Message message;
-                try
-                {   // try deserialize with default datetime format
-                    message = JsonConvert.DeserializeObject<Message>(jsonMessage);
-                }
-                catch (Exception)     // datetime format not default, deserialize with Java format (milliseconds since 1970/01/01)
-                {
-                    message = JsonConvert.DeserializeObject<Message>(jsonMessage, new MyDateTimeConverter());
-                }
-                Console.WriteLine(" [x] Received {0}", message);
-                Program.Messages.Add(message);
+                ActionAndBenefit actionBenefit;
+                actionBenefit = JsonConvert.DeserializeObject<ActionAndBenefit>(jsonMessage.ToString());
+                Console.WriteLine(" [x] Received {0}", actionBenefit.PharmacyName);
             };
             channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,

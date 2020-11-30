@@ -16,6 +16,8 @@ namespace PSW_Pharmacy_Adapter.Service
         System.Timers.Timer collectTimer = new System.Timers.Timer();       // periodicly collects new messages from list and writes them to file
         System.Timers.Timer generatorTimer = new System.Timers.Timer();     // periodicly generates new messages and adds them to list
 
+       
+
         public override Task StartAsync(CancellationToken cancellationToken)
         {
             WriteToFile("Service is started at " + DateTime.Now);
