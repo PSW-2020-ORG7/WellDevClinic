@@ -18,6 +18,7 @@ namespace PSW_Pharmacy_Adapter.Service
         IConnection connection;
         IModel channel;
         //TODO: Dependency injection
+
         private IActionAndBenefitRepository _actionRepository;
         public override Task StartAsync(CancellationToken cancellationToken)
         {
