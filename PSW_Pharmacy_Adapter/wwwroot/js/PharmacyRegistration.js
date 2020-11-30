@@ -47,6 +47,7 @@
             success: function (data) {
                 if (data) {
                     alert("Succesfully added to database");
+                    window.location.assign(window.location.origin += "/html/index.html")
                 }
             },
         })

@@ -15,9 +15,10 @@ namespace PSW_Pharmacy_Adapter.Controllers
     {
         private readonly APIKeyService _KeyService;
 
-        public APIKeyController(APIKeyService keyService)
+        public APIKeyController()
         {
-            _KeyService = keyService;
+            MyContextFactory cf = new MyContextFactory();
+            _KeyService = new APIKeyService(cf.CreateDbContext(new string[0]));
         }
 
         [HttpGet]

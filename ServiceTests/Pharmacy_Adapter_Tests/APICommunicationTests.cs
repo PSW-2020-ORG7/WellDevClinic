@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Moq.Protected;
 using System.Threading;
+using PSW_Pharmacy_Adapter;
 
 namespace ServiceTests.Pharmacy_Adapter_Tests
 {
@@ -20,8 +21,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public async void Send_Greetings_MessageAsync()
         {
-            var ApiRepo = new Mock<IAPIKeyRepository>();
-            ApiRepo.Setup(a => a.GetAll()).Returns(CreatePharmacyAPIRepository());
+            MyContextFactory cf = new MyContextFactory();
 
             var handlerMock = new Mock<HttpMessageHandler>();
             var responsemsg = new HttpResponseMessage
@@ -35,7 +35,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
                         ItExpr.IsAny<CancellationToken>())
                         .ReturnsAsync(responsemsg);
 
-            GreetingsService greetingsService = new GreetingsService(ApiRepo.Object, new HttpClient(handlerMock.Object));
+            GreetingsService greetingsService = new GreetingsService(cf.CreateDbContext(new string[0]), new HttpClient(handlerMock.Object));
             // TODO: Mockovati klijenta (Neuspesno mock-ovanje na handlerMock)
             //var recivedStatus = await greetingsService.GreetPharmacy("ph1");
 

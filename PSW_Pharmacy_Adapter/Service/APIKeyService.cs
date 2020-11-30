@@ -1,4 +1,5 @@
 ﻿using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace PSW_Pharmacy_Adapter.Service
     {
         private readonly IAPIKeyRepository _KeyRepo;
 
-        public APIKeyService(IAPIKeyRepository keyRepo)
+        public APIKeyService(MyDbContext dbContext)
         {
-            _KeyRepo = keyRepo;
+            _KeyRepo = new APIKeyRepository(dbContext);
         }
 
         public Api GetPharmacy(string id)

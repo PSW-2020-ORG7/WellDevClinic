@@ -14,9 +14,9 @@ namespace PSW_Pharmacy_Adapter.Service
         private readonly IAPIKeyRepository _ApiKeyRepo;
         private readonly HttpClient _Client;
 
-        public GreetingsService(IAPIKeyRepository apiKeyRepo, HttpClient client)
+        public GreetingsService(MyDbContext dbContext, HttpClient client)
         {
-            _ApiKeyRepo = apiKeyRepo;
+            _ApiKeyRepo = new APIKeyRepository(dbContext);
             _Client = client;
         }
 

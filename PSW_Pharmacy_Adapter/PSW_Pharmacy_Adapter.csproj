@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Service\abstract\**" />
+    <Content Remove="Service\abstract\**" />
+    <EmbeddedResource Remove="Service\abstract\**" />
+    <None Remove="Service\abstract\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.9" />
@@ -25,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Service\abstract\" />
     <Folder Include="UnitTests\" />
   </ItemGroup>
 
