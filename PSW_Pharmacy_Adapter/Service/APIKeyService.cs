@@ -10,22 +10,23 @@ namespace PSW_Pharmacy_Adapter.Service
 {
     public class APIKeyService
     {
-        private readonly IAPIKeyRepository KeyRepo;
-        public APIKeyService(MyDbContext DbContext)
+        private readonly IAPIKeyRepository _KeyRepo;
+
+        public APIKeyService(MyDbContext dbContext)
         {
-            KeyRepo = new APIKeyRepository(DbContext);
+            _KeyRepo = new APIKeyRepository(dbContext);
         }
 
         public Api GetPharmacy(string id)
-            => KeyRepo.Get(id);
+            => _KeyRepo.Get(id);
 
-        public List<Api> GetAllPharmacies()
-            => KeyRepo.GetAll();
+        public IEnumerable<Api> GetAllPharmacies()
+            => _KeyRepo.GetAll();
 
-        public bool AddPharmacy(Api api)
-            => KeyRepo.Save(api);
+        public Api AddPharmacy(Api api)
+            => _KeyRepo.Save(api);
 
         public bool DeletePharmacy(string id)
-            => KeyRepo.Delete(id);
+            => _KeyRepo.Delete(id);
     }
 }

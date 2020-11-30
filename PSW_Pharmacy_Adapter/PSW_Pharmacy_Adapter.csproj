@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Service\abstract\**" />
+    <Content Remove="Service\abstract\**" />
+    <EmbeddedResource Remove="Service\abstract\**" />
+    <None Remove="Service\abstract\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.9" />
@@ -13,8 +20,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.0" />
-    <PackageReference Include="Moq" Version="4.15.2" />
+    <PackageReference Include="Moq" Version="4.15.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
@@ -24,9 +30,11 @@
     <PackageReference Include="Shouldly" Version="4.0.1" />
     <PackageReference Include="SSH.NET" Version="2016.1.0" />
     <PackageReference Include="WinSCP" Version="5.17.6" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.assert" Version="2.4.1" />
-    <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UnitTests\" />
   </ItemGroup>
 
 

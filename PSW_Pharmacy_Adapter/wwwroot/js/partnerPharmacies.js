@@ -22,7 +22,7 @@ function viewApis(apiDb) {
         content += '</td><td>';
         content += '<button class="buttonDelete" id=';
         content += api.nameOfPharmacy;
-        content += ' onclick="deleteEntry(this)" > &times; </button > ';
+        content += ' onclick="deleteEntry(this)" class="buttonDelete"> &times; </button > ';
         content += '</td></tr>'
         $("#apiTable").append(content);
     }
@@ -36,6 +36,7 @@ function deleteEntry(button) {
         success: function (data) {
             if (data) {
                 alert("Successfully deleted");
+                window.location.reload();
             }
         },
     });
