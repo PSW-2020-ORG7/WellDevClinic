@@ -39,8 +39,9 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("add")]
         public IActionResult AddPharmacy(Api api)
         {
-            if (_KeyService.AddPharmacy(api))
-                return Ok(true);
+            Api a = _KeyService.AddPharmacy(api);
+            if (a != null)
+                return Ok(a);
             return BadRequest();
         }
 

@@ -19,10 +19,10 @@ namespace PSW_Pharmacy_Adapter.Service
         public Api GetPharmacy(string id)
             => _KeyRepo.Get(id);
 
-        public List<Api> GetAllPharmacies()
+        public IEnumerable<Api> GetAllPharmacies()
             => _KeyRepo.GetAll();
 
-        public bool AddPharmacy(Api api)
+        public Api AddPharmacy(Api api)
             => _KeyRepo.Save(api);
 
         public bool DeletePharmacy(string id)

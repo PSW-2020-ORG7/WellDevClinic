@@ -26,10 +26,10 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
             IAPIKeyRepository repo = new APIKeyRepository(cf.CreateDbContext(new string[0]));
             APIKeyService service = new APIKeyService(repo);
 
-            bool added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
+            Api added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
             service.DeletePharmacy(TEST_NAME);  //rollback
 
-            added.ShouldBeTrue();
+            added.ShouldNotBeNull();
         }
 
         [Fact]
@@ -40,10 +40,10 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
             APIKeyService service = new APIKeyService(repo);
             service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
 
-            bool added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
+            Api added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
             service.DeletePharmacy(TEST_NAME);  //rollback
 
-            added.ShouldBeFalse();
+            added.ShouldBeNull();
         }
     }
 }

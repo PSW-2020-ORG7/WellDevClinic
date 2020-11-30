@@ -17,24 +17,14 @@ namespace PSW_Pharmacy_Adapter.Repository
         public Api Get(string id)
             => _MyDbContext.ApiKeys.FirstOrDefault(api => api.NameOfPharmacy == id);
 
-        public List<Api> GetAll()
+        public IEnumerable<Api> GetAll()
         {
             List<Api> apis = new List<Api>();
             _MyDbContext.ApiKeys.ToList().ForEach(a => apis.Add(a));
             return apis;
         }
 
-        public bool Save(Api api)
-        {
-            Api a = _MyDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
-            if (a == null)
-            {
-                _MyDbContext.ApiKeys.Add(api);
-                _MyDbContext.SaveChanges();
-                return true;
-            }
-            return false;
-        }
+        public bool Exists(string id) => Get(id) == null ? false : true;
 
         public bool Delete(string id)
         {
@@ -46,6 +36,18 @@ namespace PSW_Pharmacy_Adapter.Repository
                 return true;
             }
             return false;
+        }
+
+        public Api Save(Api api)
+        {
+            Api a = _MyDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
+            if (a == null)
+            {
+                _MyDbContext.ApiKeys.Add(api);
+                _MyDbContext.SaveChanges();
+                return api;
+            }
+            return null;
         }
     }
 }
