@@ -18,6 +18,7 @@ namespace PSW_Pharmacy_Adapter.Service
         IConnection connection;
         IModel channel;
         //TODO: Dependency injection
+
         private IActionAndBenefitRepository _actionRepository;
         public override Task StartAsync(CancellationToken cancellationToken)
         {
@@ -27,7 +28,7 @@ namespace PSW_Pharmacy_Adapter.Service
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: "pharmacy.queue",
-                                    durable: false,
+                                    durable: true,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
