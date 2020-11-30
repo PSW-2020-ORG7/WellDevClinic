@@ -25,7 +25,7 @@ namespace PSW_Wpf_app.Drawing
             name = new TextBlock();
             this.floorElement = floorElement;
         }
-        public Shape DrawRectangle()
+        public Shape DrawRectangleElement(bool flag = false)
         {
             name.Text = floorElement.Name;
             name.FontSize = 5;
@@ -58,7 +58,19 @@ namespace PSW_Wpf_app.Drawing
             else if (floorElement.Type.Equals("base"))
                 CustomizeBase();
 
+
+            if (flag)
+            {
+                CustomizeFoundRoom();
+            }
             return rectangle;
+        }
+
+        public void CustomizeFoundRoom()
+        {
+            rectangle.Stroke = new SolidColorBrush(Colors.Red);
+            rectangle.StrokeThickness = 4;
+
         }
 
         private void CustomizeRoom()

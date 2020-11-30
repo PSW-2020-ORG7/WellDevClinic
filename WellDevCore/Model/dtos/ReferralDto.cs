@@ -8,9 +8,9 @@ namespace bolnica.Model.dtos
 {
     public class ReferralDto
     {
-        public String specialist;
-        public DateTime date;
-        public String text;
+        public String Specialist;
+        public String Period;
+        public String Text;
 
         public ReferralDto() { }
     }

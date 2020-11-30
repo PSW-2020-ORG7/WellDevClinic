@@ -13,10 +13,13 @@ namespace bolnica.Model.Adapters
         public static PrescriptionDto PrescriptionToPrescriptionDto(Prescription prescription)
         {
             PrescriptionDto dto = new PrescriptionDto();
-            dto.period = prescription.Period;
+            dto.Period = prescription.Period.StartDate.ToShortDateString();
+            dto.Id = prescription.Id;
+            string str = "";
             foreach (Drug drug in prescription.Drug) {
-                dto.drug.Add(drug.Name);
+                str += (drug.Name + ",");
             }
+            dto.Drugs = str;
             return dto;
         }
     }

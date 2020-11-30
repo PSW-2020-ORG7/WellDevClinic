@@ -18,6 +18,7 @@ namespace bolnica.Repository
         }
         public Town ConvertCSVFormatToEntity(string entityCSVFormat)
         {
+            /*
             string[] tokens = entityCSVFormat.Split(_delimiter.ToCharArray());
             Town town = new Town(long.Parse(tokens[0]), tokens[1], tokens[2], new State(long.Parse(tokens[3])));
             List<Address> adr = new List<Address>(); 
@@ -28,7 +29,8 @@ namespace bolnica.Repository
                     adr.Add(new Address(long.Parse(id)));
             }
             town.SetAddress(adr);
-            return town;
+            return town; */
+            return null;
         }
 
         public string ConvertEntityToCSVFormat(Town entity)

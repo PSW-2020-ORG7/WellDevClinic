@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
@@ -13,13 +12,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Wpf_Patient", "PSW_Wpf_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Wpf_director", "PSW_Wpf_director\PSW_Wpf_director.csproj", "{22CD339C-4BFD-4045-A282-590000FD2189}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Pharmacy_Adapter", "PSW_Pharmacy_Adapter\PSW_Pharmacy_Adapter.csproj", "{72267372-71A9-44F2-BE0F-724315807065}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Wpf_doctor", "PSW_Wpf_doctor\PSW_Wpf_doctor.csproj", "{9A1E0036-34AA-491C-AE4D-66B47D864A83}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryTests", "RepositoryTests\RepositoryTests.csproj", "{3B41133C-E9DF-4FD8-A1AF-6AAB54F416C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceTests", "ServiceTests\ServiceTests.csproj", "{3D3DA749-EFF4-47D3-8BA5-A145598F6EEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Pharmacy_Adapter", "PSW_Pharmacy_Adapter\PSW_Pharmacy_Adapter.csproj", "{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,14 +68,6 @@ Global
 		{22CD339C-4BFD-4045-A282-590000FD2189}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22CD339C-4BFD-4045-A282-590000FD2189}.Release|x86.ActiveCfg = Release|Any CPU
 		{22CD339C-4BFD-4045-A282-590000FD2189}.Release|x86.Build.0 = Release|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Debug|x86.Build.0 = Debug|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Release|x86.ActiveCfg = Release|Any CPU
-		{72267372-71A9-44F2-BE0F-724315807065}.Release|x86.Build.0 = Release|Any CPU
 		{9A1E0036-34AA-491C-AE4D-66B47D864A83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A1E0036-34AA-491C-AE4D-66B47D864A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A1E0036-34AA-491C-AE4D-66B47D864A83}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -101,6 +92,14 @@ Global
 		{3D3DA749-EFF4-47D3-8BA5-A145598F6EEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D3DA749-EFF4-47D3-8BA5-A145598F6EEA}.Release|x86.ActiveCfg = Release|Any CPU
 		{3D3DA749-EFF4-47D3-8BA5-A145598F6EEA}.Release|x86.Build.0 = Release|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Debug|x86.Build.0 = Debug|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Release|x86.ActiveCfg = Release|Any CPU
+		{595DB4D3-3EA3-496D-9361-E16B4C6A8CE0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

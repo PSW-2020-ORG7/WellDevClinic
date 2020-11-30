@@ -24,7 +24,6 @@ namespace PSW_Wpf_app.ViewModel
             get { return searchedObjectResults; }
             set { searchedObjectResults = value; }
         }
-
         public SearchResultViewModel(string searchedObject)
         {
             searchedObjectResults = new List<FloorElement>();
@@ -47,6 +46,7 @@ namespace PSW_Wpf_app.ViewModel
             {
                 MessageBox.Show("Object doesn't exist!");
             }
+
         }
     }
 }

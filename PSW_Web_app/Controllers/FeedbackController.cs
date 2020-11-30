@@ -20,7 +20,7 @@ namespace PSW_Web_app.Controllers
         }
 
         /// <summary>
-        ///calls GetAll() method from class FeedbackController 
+        ///calls GetAll() method from class FeedbackService
         ///so it can get all feedback from database
         /// </summary>
         /// <returns>status 200 OK response with a list of feedback</returns>
@@ -32,7 +32,7 @@ namespace PSW_Web_app.Controllers
         }
 
         /// <summary>
-        /// calls Get(long id) method from class FeedbackController so  
+        /// calls Get(long id) method from class FeedbackService so  
         /// it can get a feedback by given id from database
         /// </summary>
         /// <param name="id">id of wanted feedback</param>
@@ -55,7 +55,7 @@ namespace PSW_Web_app.Controllers
         }
 
         /// <summary>
-        /// calls Save(Feedback feedback) method from class FeedbackController so  
+        /// calls Save(Feedback feedback) method from class FeedbackService so  
         ///it can save a new feedback to database
         /// </summary>
         /// <param name="feedback">new feedback of Object type Feedback</param>
@@ -76,12 +76,12 @@ namespace PSW_Web_app.Controllers
             return actionResult;
         }
 
-       
-       /// <summary>
-       /// calls Edit(Feedback feedback) method from class FeedbackController so  
-       ///it can update specified feedback in database
-       /// </summary>
-       /// <param name="feedback">sprecified feedback of Object type Feedback</param>
+
+        /// <summary>
+        /// calls Edit(Feedback feedback) method from class FeedbackService so  
+        ///it can update specified feedback in database
+        /// </summary>
+        /// <param name="feedback">sprecified feedback of Object type Feedback</param>
         [HttpPut]
         public void PublishFeedback(Feedback feedback)
         {

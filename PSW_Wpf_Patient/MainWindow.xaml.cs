@@ -1230,7 +1230,7 @@ namespace PSW_Wpf_Patient
             Doctor dr = (Doctor)selectedItem;
             if (dr != null)
             {
-                ButtonGrade.Content = app.DoctorGradeDecorator.GetAverageGrade(dr).ToString();
+                ButtonGrade.Content = app.DoctorGradeDecorator.GetAverageGrade(null).ToString();
             }
         }
     }

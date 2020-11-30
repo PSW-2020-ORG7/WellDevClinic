@@ -18,13 +18,13 @@
       }
     },
     "PSW_Pharmacy_Adapter": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-      
+        "commandName": "Project",
+        "launchBrowser": true,
+        "launchUrl": "http://localhost:64724/html/index.html",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+
     }
   }
 }
