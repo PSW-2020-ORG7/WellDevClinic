@@ -20,7 +20,7 @@ namespace PSW_Pharmacy_Adapter
 
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build();
             //ActionsAndBenefitsMessages(args).Build().Run();
             UploadFileToSftpServer();
             
@@ -29,13 +29,13 @@ namespace PSW_Pharmacy_Adapter
         
         public static void UploadFileToSftpServer()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16 ", "tester", "password")))
+            using (SftpClient client = new SftpClient("192.168.0.16" ,22, "user", "password"))
             {
                 client.Connect();
                 string sourceFile = @"C:\Users\Nastasja\Desktop\psw projekat\WellDevClinic\PSW_Pharmacy_Adapter\wwwroot\html\index.html";
                 using (Stream stream= File.OpenRead(sourceFile))
                 {
-                    client.UploadFile(stream, @"C:\Users\Nastasja\Desktop\ISA\ISA\pharmacy\Files\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                    client.UploadFile(stream, Path.GetFileName(sourceFile));
                 }
                 client.Disconnect();
             }
