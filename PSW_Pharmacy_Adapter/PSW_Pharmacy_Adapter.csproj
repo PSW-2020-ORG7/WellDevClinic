@@ -20,6 +20,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.0" />
 
     <PackageReference Include="Moq" Version="4.15.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
@@ -34,7 +35,7 @@
     <PackageReference Include="WinSCP" Version="5.17.6" />
 
     <PackageReference Include="xunit" Version="2.4.0" />
-
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="UnitTests\" />
