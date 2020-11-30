@@ -25,10 +25,10 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.Property<string>("EndDate")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("MessageFromPublisher")
+                    b.Property<string>("MessageAboutAction")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("NamePublisher")
+                    b.Property<string>("PharmacyName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("StartDate")

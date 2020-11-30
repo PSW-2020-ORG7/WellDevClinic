@@ -20,7 +20,7 @@ namespace PSW_Pharmacy_Adapter
 
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build();
+            CreateHostBuilder(args).Build().Run();
             //ActionsAndBenefitsMessages(args).Build().Run();
             //SftpService.UploadFileToSftpServer();          
         }
@@ -38,7 +38,7 @@ namespace PSW_Pharmacy_Adapter
                .ConfigureServices((hostContext, services) =>
                {
                    Console.WriteLine("tu je");
-                   services.AddHostedService<TimerService>();
+ //                  services.AddHostedService<TimerService>();
                    services.AddHostedService<RabbitMQService>();
                });
 

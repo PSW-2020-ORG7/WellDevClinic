@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using PSW_Pharmacy_Adapter.Converter;
 using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Repository;
+using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -15,13 +17,17 @@ namespace PSW_Pharmacy_Adapter.Service
     {
         IConnection connection;
         IModel channel;
+        //TODO: Dependency injection
+        private IActionAndBenefitRepository _actionRepository;
         public override Task StartAsync(CancellationToken cancellationToken)
         {
+            MyContextFactory cf = new MyContextFactory();
+            _actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: "pharmacy.queue",
-                                    durable: true,
+                                    durable: false,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
@@ -31,21 +37,15 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                Message message;
-                try
-                {   // try deserialize with default datetime format
-                    message = JsonConvert.DeserializeObject<Message>(jsonMessage);
-                }
-                catch (Exception)     // datetime format not default, deserialize with Java format (milliseconds since 1970/01/01)
-                {
-                    message = JsonConvert.DeserializeObject<Message>(jsonMessage, new MyDateTimeConverter());
-                }
-                Console.WriteLine(" [x] Received {0}", message);
-                Program.Messages.Add(message);
+                ActionAndBenefit actionBenefit;
+                actionBenefit = JsonConvert.DeserializeObject<ActionAndBenefit>(jsonMessage.ToString());
+                Console.WriteLine(" [x] Received {0}", actionBenefit.PharmacyName);
+                _actionRepository.Save(actionBenefit);
             };
             channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,
                                     consumer: consumer);
+            
             return base.StartAsync(cancellationToken);
         }
 

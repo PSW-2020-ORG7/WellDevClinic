@@ -13,8 +13,8 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NamePublisher = table.Column<string>(nullable: true),
-                    MessageFromPublisher = table.Column<string>(nullable: true),
+                    PharmacyName = table.Column<string>(nullable: true),
+                    MessageAboutAction = table.Column<string>(nullable: true),
                     StartDate = table.Column<string>(nullable: true),
                     EndDate = table.Column<string>(nullable: true)
                 },
@@ -22,12 +22,28 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 {
                     table.PrimaryKey("PK_ActionsAndBenefits", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ApiKeys",
+                columns: table => new
+                {
+                    NameOfPharmacy = table.Column<string>(nullable: false),
+                    ApiKey = table.Column<string>(nullable: true),
+                    Url = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApiKeys", x => x.NameOfPharmacy);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ActionsAndBenefits");
+
+            migrationBuilder.DropTable(
+                name: "ApiKeys");
         }
     }
 }

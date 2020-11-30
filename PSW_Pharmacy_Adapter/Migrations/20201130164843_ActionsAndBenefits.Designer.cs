@@ -8,7 +8,7 @@ using PSW_Pharmacy_Adapter.Model;
 namespace PSW_Pharmacy_Adapter.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201129202809_ActionsAndBenefits")]
+    [Migration("20201130164843_ActionsAndBenefits")]
     partial class ActionsAndBenefits
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,10 +27,10 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.Property<string>("EndDate")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("MessageFromPublisher")
+                    b.Property<string>("MessageAboutAction")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("NamePublisher")
+                    b.Property<string>("PharmacyName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("StartDate")
