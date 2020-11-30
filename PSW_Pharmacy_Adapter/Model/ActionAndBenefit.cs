@@ -14,13 +14,13 @@ namespace PSW_Pharmacy_Adapter.Model
         public long? Id { get; set; }
         public string PharmacyName { get; set; }
         public string MessageAboutAction { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public long StartDate { get; set; }
+        public long EndDate { get; set; }
 
         public ActionAndBenefit() { }
 
 
-        public ActionAndBenefit(long id, string pharmacyName, string messageAbouAction, string startDate, string endDate) {
+        public ActionAndBenefit(long id, string pharmacyName, string messageAbouAction, long startDate, long endDate) {
             Id = id;
             PharmacyName = pharmacyName;
             MessageAboutAction = messageAbouAction;
