@@ -22,23 +22,7 @@ namespace PSW_Pharmacy_Adapter
         {
             CreateHostBuilder(args).Build();
             //ActionsAndBenefitsMessages(args).Build().Run();
-            UploadFileToSftpServer();
-            
-        }
-
-        
-        public static void UploadFileToSftpServer()
-        {
-            using (SftpClient client = new SftpClient("192.168.0.16" ,22, "user", "password"))
-            {
-                client.Connect();
-                string sourceFile = @"C:\Users\Nastasja\Desktop\psw projekat\WellDevClinic\PSW_Pharmacy_Adapter\wwwroot\html\index.html";
-                using (Stream stream= File.OpenRead(sourceFile))
-                {
-                    client.UploadFile(stream, Path.GetFileName(sourceFile));
-                }
-                client.Disconnect();
-            }
+            //SftpService.UploadFileToSftpServer();          
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
