@@ -6,9 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="Service\abstract\**" />
+    <Compile Remove="UnitTests\**" />
     <Content Remove="Service\abstract\**" />
+    <Content Remove="UnitTests\**" />
     <EmbeddedResource Remove="Service\abstract\**" />
+    <EmbeddedResource Remove="UnitTests\**" />
     <None Remove="Service\abstract\**" />
+    <None Remove="UnitTests\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,11 +39,6 @@
     <PackageReference Include="WinSCP" Version="5.17.6" />
 
     <PackageReference Include="xunit" Version="2.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UnitTests\" />
-
   </ItemGroup>
 
 

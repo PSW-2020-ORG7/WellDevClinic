@@ -11,14 +11,14 @@ namespace PSW_Pharmacy_Adapter.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class APIKeyController : ControllerBase
+    public class ApiKeyController : ControllerBase
     {
-        private readonly APIKeyService _KeyService;
+        private readonly ApiKeyService _KeyService;
 
-        public APIKeyController()
+        public ApiKeyController()
         {
             MyContextFactory cf = new MyContextFactory();
-            _KeyService = new APIKeyService(cf.CreateDbContext(new string[0]));
+            _KeyService = new ApiKeyService(cf.CreateDbContext(new string[0]));
         }
 
         [HttpGet]
