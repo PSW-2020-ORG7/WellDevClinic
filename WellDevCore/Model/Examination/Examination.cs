@@ -18,6 +18,8 @@ namespace Model.PatientSecretary
         public virtual Anemnesis Anemnesis { get; set; }
         public virtual Therapy Therapy { get; set; }
         public virtual Referral Refferal { get; set; }
+        public Boolean Canceled { get; set; }
+        public DateTime CanceledDate { get; set; }
 
         public Examination(long id, Patient user, Users.Doctor doctor, Period period, Diagnosis diagnosis) : this(id)
         {
