@@ -12,8 +12,6 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class SftpController : ControllerBase
     {
-        public const string TEST_PATH = @"C:\Users\Nastasja\Desktop\psw projekat\WellDevClinic\PSW_Pharmacy_Adapter\wwwroot\html\AddPharmacy.html";
-
         private readonly SftpService _sftpService;
 
         public SftpController() 
@@ -23,7 +21,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [Route("sendReport")]
         public bool UploadFileToSftpServer(String path) =>
-            _sftpService.UploadFileToSftpServer(TEST_PATH);
+            _sftpService.UploadFileToSftpServer(path);
 
     }
 }
