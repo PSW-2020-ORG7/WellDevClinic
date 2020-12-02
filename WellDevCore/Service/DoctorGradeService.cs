@@ -65,9 +65,9 @@ namespace Service
                     hospital += grade.Grade;
             }
 
-            staff = staff / 4;
-            doctor = doctor / 4;
-            hospital = hospital / 4;
+            staff = Math.Round(staff / 4,2);
+            doctor = Math.Round(doctor / 4,2);
+            hospital = Math.Round(hospital / 4,2);
             result.Add(new GradeDTO(staff, "medical"));
             result.Add(new GradeDTO(doctor, "doctor"));
             result.Add(new GradeDTO(hospital, "hospital"));
@@ -101,10 +101,10 @@ namespace Service
 
             }
             double sum = (question1 + question2 + question3 + question4) / (surveys.Count * 4);
-            question1 = question1 / surveys.Count;
-            question2 = question2 / surveys.Count;
-            question3 = question3 / surveys.Count;
-            question4 = question4 / surveys.Count;
+            question1 = Math.Round(question1 / surveys.Count,2);
+            question2 = Math.Round(question2 / surveys.Count, 2);
+            question3 = Math.Round(question3 / surveys.Count, 2);
+            question4 = Math.Round(question4 / surveys.Count, 2);
             result.Add(new GradeDTO(question1, "question1"));
             result.Add(new GradeDTO(question2, "question2"));
             result.Add(new GradeDTO(question3, "question3"));
