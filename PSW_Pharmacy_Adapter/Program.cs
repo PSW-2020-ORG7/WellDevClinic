@@ -20,9 +20,10 @@ namespace PSW_Pharmacy_Adapter
 
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //CreateHostBuilder(args).Build().Run();
             //ActionsAndBenefitsMessages(args).Build().Run();
-            //SftpService.UploadFileToSftpServer();          
+            SftpService sftpService = new SftpService(new SftpClient("192.168.0.16", 22, "user", "password"));
+            sftpService.UploadFileToSftpServer(@"C:\Users\Nastasja\Desktop\psw projekat\WellDevClinic\PSW_Pharmacy_Adapter\wwwroot\index.html");          
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
