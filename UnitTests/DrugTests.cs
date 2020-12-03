@@ -7,10 +7,11 @@ using Repository;
 using System.Collections.Generic;
 using Service;
 
-namespace XUnitTestProject1
+namespace UnitTests
 {
-    public class UnitTest1
+    public class DrugTests
     {
+        /*
         [Fact]
         public void Find_drugs()
         {
@@ -30,5 +31,6 @@ namespace XUnitTestProject1
             Drug d = service.Save(drug2);
             Assert.NotNull(d);
         }
+        */
     }
 }
