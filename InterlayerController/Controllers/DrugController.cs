@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using bolnica.Controller;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.PatientSecretary;
 using System;
@@ -12,7 +13,12 @@ namespace InterlayerController.Controllers
     [ApiController]
     public class DrugController : ControllerBase
     {
-        private bolnica.Controller.IDrugController _drugController = new bolnica.Controller.DrugController();
+        private IDrugController _drugController;
+
+        public DrugController(IDrugController drugController)
+        {
+            _drugController = drugController;
+        }
 
         /// <summary>
         ///calls GetAll() method from class Drugontroller 
