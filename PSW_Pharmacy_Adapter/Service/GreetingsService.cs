@@ -11,12 +11,12 @@ namespace PSW_Pharmacy_Adapter.Service
 {
     public class GreetingsService
     {
-        private readonly IAPIKeyRepository _ApiKeyRepo;
+        private readonly IApiKeyRepository _ApiKeyRepo;
         private readonly HttpClient _Client;
 
         public GreetingsService(MyDbContext dbContext, HttpClient client)
         {
-            _ApiKeyRepo = new APIKeyRepository(dbContext);
+            _ApiKeyRepo = new ApiKeyRepository(dbContext);
             _Client = client;
         }
 

@@ -9,7 +9,7 @@ using PSW_Pharmacy_Adapter.Model;
 namespace PSW_Pharmacy_Adapter.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201130202524_ActionsAndBenefits")]
+    [Migration("20201201001006_ActionsAndBenefits")]
     partial class ActionsAndBenefits
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

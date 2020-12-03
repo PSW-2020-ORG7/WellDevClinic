@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Repository.Iabstract
 {
-    interface IActionAndBenefitRepository
+    interface IActionAndBenefitRepository : IRepository<ActionAndBenefit, long>
     {
-        public ActionAndBenefit Get(long id);
-        public List<ActionAndBenefit> GetAll();
-        public bool Save(ActionAndBenefit action);
-        public bool Delete(long id);
     }
 }
