@@ -28,7 +28,7 @@ namespace PSW_Pharmacy_Adapter.Service
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: "pharmacy.queue",
-                                    durable: true,
+                                    durable: false,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);

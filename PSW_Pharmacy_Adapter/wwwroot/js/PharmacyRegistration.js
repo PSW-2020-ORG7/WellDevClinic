@@ -47,12 +47,14 @@
             success: function (data) {
                 if (data) {
                     alert("Succesfully added to database");
-                    window.location.assign(window.location.origin += "/html/partnerPharmacies.html");
+                    window.location.assign(window.location.origin += "/partnerPharmacies.html");
                 }
             },
             error: function (e) {
-                $("#txtName").css("border-width", "1");
-                alert("Pharmacy with name " + name + " already exists!");
+                if (name & api & url) {
+                    $("#txtName").css("border-width", "1");
+                    alert("Pharmacy with name " + name + " already exists!");
+                }      
             }
         })
     })

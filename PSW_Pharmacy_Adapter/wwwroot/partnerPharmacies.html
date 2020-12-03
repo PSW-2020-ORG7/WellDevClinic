@@ -3,29 +3,32 @@
 <head>
     <meta charset="utf-8" />
     <title>Partner pharmacies</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/table.css" />
     <script type="text/javascript" src="/js/partnerPharmacies.js"></script>
 </head>
 <body>
     <div class="topnav">
         <label>Clinic Hello!</label>
-        <a href="/html/index.html">Home</a>
-        <a class="active" href="/html/partnerPharmacies.html">Partner Pharmacies</a>
-        <a href="#">Actions & Benefits</a>
+        <a href="index.html">Home</a>
+        <a href="partnerPharmacies.html" class="active">Partner Pharmacies</a>
+        <a href="viewActionsAndBenefits.html">Actions & Benefits</a>
         <a href="#">Medication consumption report</a>
     </div>
 
     <div class="welcome-text">
         <h1>Partner pharmacies</h1>
-        <table id="apiTable">
+        <div class="loader"></div>
+        <table id="apiTable" style="display:none">
             <tr><th>Pharmacy name</th><th>API key</th><th>Url</th><th></th></tr>
         </table>
     </div>
     <div>
         <div class="wrapper">
             <ul class="nav-area">
-                <li><a href="addPharmacy.html">Add new pharmacy</a></li>
+                <li><a href="pharmacyRegistration.html">Add new pharmacy</a></li>
             </ul>
         </div>
     </div>

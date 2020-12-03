@@ -6,7 +6,7 @@ using PSW_Pharmacy_Adapter.Model;
 
 namespace PSW_Pharmacy_Adapter.Repository.Iabstract
 {
-    public interface IAPIKeyRepository : IRepository<Api, string>
+    public interface IApiKeyRepository : IRepository<Api, string>
     {
     }
 }
