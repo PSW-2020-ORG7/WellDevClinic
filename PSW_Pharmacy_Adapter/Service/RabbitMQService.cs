@@ -8,22 +8,27 @@ using PSW_Pharmacy_Adapter.Converter;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class RabbitMQService : BackgroundService
+    public class RabbitMQService : BackgroundService, IRabbitMQService
     {
         IConnection connection;
         IModel channel;
         //TODO: Dependency injection
+        private readonly IActionAndBenefitRepository _ActionRepository;
+        public RabbitMQService(IActionAndBenefitRepository actionsRepo)
+        {
+            _ActionRepository = actionsRepo;
+        }
 
-        private IActionAndBenefitRepository _actionRepository;
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            MyContextFactory cf = new MyContextFactory();
-            _actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
+           // MyContextFactory cf = new MyContextFactory();
+           // _ActionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
@@ -41,7 +46,7 @@ namespace PSW_Pharmacy_Adapter.Service
                 ActionAndBenefit actionBenefit;
                 actionBenefit = JsonConvert.DeserializeObject<ActionAndBenefit>(jsonMessage.ToString());
                 Console.WriteLine(" [x] Received {0}", actionBenefit.PharmacyName);
-                _actionRepository.Save(actionBenefit);
+                _ActionRepository.Save(actionBenefit);
             };
             channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,
