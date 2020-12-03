@@ -17,12 +17,12 @@ namespace Repository
             myDbContext = context;
         }
 
-        /*public EquipmentRepository(ICSVStream<Equipment> stream, ISequencer<long> sequencer)
-   : base(stream, sequencer)
+        public IEnumerable<Equipment> GetAll()
         {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
+            List<Equipment> result = new List<Equipment>();
+            myDbContext.Equipment.ToList().ForEach(equipment => result.Add(equipment));
+            return result;
+        }
 
         public void Delete(Equipment entity)
         {
