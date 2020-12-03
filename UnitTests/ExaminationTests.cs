@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace ServiceTests
+namespace UnitTests
 {
     public class ExaminationTests
     {   [Fact]

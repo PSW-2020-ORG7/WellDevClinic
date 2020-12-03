@@ -9,7 +9,7 @@ using Service;
 using bolnica.Model.Dto;
 using Shouldly;
 
-namespace PSW_Web_app_Tests
+namespace UnitTests
 {
     public class SurveyTests
     {
