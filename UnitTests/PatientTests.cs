@@ -9,7 +9,7 @@ using bolnica.Service;
 using Moq;
 using System;
 
-namespace ServiceTests
+namespace UnitTests
 {
     public class PatientTests
     {

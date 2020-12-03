@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace ServiceTests
+namespace UnitTests
 {
     public class RoomTypeTest
     {
