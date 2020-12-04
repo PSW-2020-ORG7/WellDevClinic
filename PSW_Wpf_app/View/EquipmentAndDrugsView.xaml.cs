@@ -27,5 +27,9 @@ namespace PSW_Wpf_app.View
             this.userEqipmentAndDrugs.Content = new EquipmentView();
         }
 
+        private void OnDrug(object sender, RoutedEventArgs e)
+        {
+            this.userEqipmentAndDrugs.Content = new DrugsView();
+        }
     }
 }

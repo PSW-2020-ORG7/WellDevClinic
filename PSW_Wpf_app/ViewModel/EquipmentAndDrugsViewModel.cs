@@ -9,6 +9,7 @@ namespace PSW_Wpf_app.ViewModel
     public class EquipmentAndDrugsViewModel : BindableBase
     {
         BindingList<Equipment> equipments = new BindingList<Equipment>();
+        BindingList<Drug> drugs;
 
         public BindingList<Equipment> Equipments
         {
@@ -23,7 +24,22 @@ namespace PSW_Wpf_app.ViewModel
             }
 
         }
-        
+
+        public BindingList<Drug> Drugs
+        {
+            get
+            {
+
+                return drugs;
+            }
+            set
+            {
+                drugs = value;
+                OnPropertyChanged("Drugs");
+            }
+
+        }
+
         public EquipmentAndDrugsViewModel()
         {
             Load();
@@ -31,6 +47,7 @@ namespace PSW_Wpf_app.ViewModel
         private async void Load()
         {
             Equipments = new BindingList<Equipment>(await WpfClient.GetAllEquipment());
+            Drugs = new BindingList<Drug>(await WpfClient.GetAllDrug());
         }
     }
 }

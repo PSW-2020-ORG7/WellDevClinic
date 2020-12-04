@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSW_Wpf_app.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace PSW_Wpf_app.View
         public DrugsView()
         {
             InitializeComponent();
+            DataContext = new EquipmentAndDrugsViewModel();
         }
     }
 }

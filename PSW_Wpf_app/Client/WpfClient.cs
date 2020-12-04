@@ -15,6 +15,20 @@ namespace PSW_Wpf_app.Client
         public string Name { get; set; }
         public int Amount { get; set; }
     }
+    public class Ingredient
+    {
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+    }
+    public class Drug
+    {
+        public String Name { get; set; }
+        public long Id { get; set; }
+        public int Amount { get; set; }
+        public bool Approved { get; set; }
+        public virtual List<Ingredient> Ingredients { get; set; }
+        public virtual List<Drug> Alternative { get; set; }
+    }
 
     static class WpfClient
     {
@@ -31,6 +45,15 @@ namespace PSW_Wpf_app.Client
             return equipments;
         }
 
+        public static async Task<List<Drug>> GetAllDrug()
+        {
+            HttpResponseMessage response = await client.GetAsync("https://localhost:44375/api/drug")
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Drug> drugs = JsonConvert.DeserializeObject<List<Drug>>(responseBody);
+
+            return drugs;
+        }
 
     }
 }

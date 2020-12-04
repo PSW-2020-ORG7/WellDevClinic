@@ -14,6 +14,7 @@
         <UserControl Name="userEqipmentAndDrugs" Margin="208,0,10,1"></UserControl>
         <Grid Background="CadetBlue" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="208">
             <Button  x:Name="btn1" Content="Equipment"   HorizontalAlignment="Left" Height="63" Margin="10,27,0,0" VerticalAlignment="Top" Width="174" Click="OnEquipment"/>
-            </Grid>
+            <Button  Content="Drug" HorizontalAlignment="Left" Height="63" Margin="10,121,0,0" VerticalAlignment="Top" Width="174" Click="OnDrug"/>
+        </Grid>
     </Grid>
 </Window>
