@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Model.Users;
 using bolnica.Service;
+using WellDevCore.Model.Adapters;
+using WellDevCore.Model.dtos;
 
 namespace PSW_Web_app.Controllers
 {
@@ -27,5 +29,14 @@ namespace PSW_Web_app.Controllers
             patient.Id = id;
             return patient;
         }
+
+        [HttpGet]
+        [Route("patientFile/{id?}")]
+        public PatientDto GetPatientByIdDto(long id)
+        {
+            Patient patient = _patientService.Get(id);
+            return PatientAdapter.PatientToPatientDto(patient);
+        }
+
     }
 }

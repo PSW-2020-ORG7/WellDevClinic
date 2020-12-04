@@ -16,6 +16,8 @@ using bolnica.Repository;
 using bolnica.Controller;
 using Service;
 using bolnica.Service;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace PSW_Web_app
 {
@@ -116,6 +118,12 @@ namespace PSW_Web_app
                 endpoints.MapControllers();
             });
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(env.ContentRootPath, "profilePictures")),
+                RequestPath = "/StaticFiles"
+            });
         }
     }
 }
