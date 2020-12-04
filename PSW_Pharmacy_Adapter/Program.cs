@@ -20,8 +20,9 @@ namespace PSW_Pharmacy_Adapter
 
         public static void Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
-            ActionsAndBenefitsMessages(args).Build().Run();   
+            var consumer = new Task(() => CreateHostBuilderForRabbitMQ(args).Build().Run());
+            consumer.Start();
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -31,15 +32,14 @@ namespace PSW_Pharmacy_Adapter
                     webBuilder.UseStartup<Startup>();
                 });
 
-        public static IHostBuilder ActionsAndBenefitsMessages(string[] args) =>
-           Host.CreateDefaultBuilder(args)
-                .UseWindowsService()
-               .ConfigureServices((hostContext, services) =>
-               {
-                   Console.WriteLine("tu je");
- //                  services.AddHostedService<TimerService>();
-                   services.AddHostedService<RabbitMQService>();
-               });
+        public static IHostBuilder CreateHostBuilderForRabbitMQ(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                 .UseWindowsService()
+                .ConfigureServices((hostContext, services) =>
+                {
+                    Console.WriteLine("tu je");
+                    services.AddHostedService<RabbitMQService>();
+                });
 
     }
 }
