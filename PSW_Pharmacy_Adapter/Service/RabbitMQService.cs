@@ -18,17 +18,17 @@ namespace PSW_Pharmacy_Adapter.Service
     {
         IConnection connection;
         IModel channel;
-        //TODO: Dependency injection
-        private readonly IActionAndBenefitRepository _ActionRepository;
-        public RabbitMQService(IActionAndBenefitRepository actionsRepo)
+
+        private IActionAndBenefitRepository _ActionRepository;
+        /*public RabbitMQService(IActionAndBenefitRepository actionsRepo)
         {
             _ActionRepository = actionsRepo;
-        }
+        }*/
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-           // MyContextFactory cf = new MyContextFactory();
-           // _ActionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
+            MyContextFactory cf = new MyContextFactory();
+            _ActionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
@@ -55,6 +55,7 @@ namespace PSW_Pharmacy_Adapter.Service
             return base.StartAsync(cancellationToken);
         }
 
+
         public override Task StopAsync(CancellationToken cancellationToken)
         {
             channel.Close();
@@ -66,5 +67,6 @@ namespace PSW_Pharmacy_Adapter.Service
         {
             return Task.CompletedTask;
         }
+
     }
 }
