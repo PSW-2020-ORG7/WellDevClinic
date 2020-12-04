@@ -13,12 +13,14 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class ActionsAndBenefitsController : ControllerBase
     {
-        private readonly ActionsAndBenefitsService _ActionService;
+        //private readonly ActionsAndBenefitsService _ActionService;
+        private readonly IActionsAndBenefitsService _ActionService;
         
-        public ActionsAndBenefitsController()
+        public ActionsAndBenefitsController(IActionsAndBenefitsService serice)
         {
-            MyContextFactory cf = new MyContextFactory();
-            _ActionService = new ActionsAndBenefitsService(cf.CreateDbContext(new string[0]));
+            //MyContextFactory cf = new MyContextFactory();
+            //_ActionService = new ActionsAndBenefitsService(cf.CreateDbContext(new string[0]));
+            _ActionService = serice;
         }
 
         [HttpGet]

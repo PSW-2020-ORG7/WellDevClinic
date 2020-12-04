@@ -24,7 +24,8 @@ namespace PSW_Pharmacy_Adapter.Repository
             return apis;
         }
 
-        public bool Exists(string id) => Get(id) != null;
+        public bool Exists(string id)
+            => Get(id) != null;
 
         public bool Delete(string id)
         {

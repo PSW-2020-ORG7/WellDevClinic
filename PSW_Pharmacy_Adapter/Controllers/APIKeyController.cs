@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Service;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -13,12 +13,11 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class ApiKeyController : ControllerBase
     {
-        private readonly ApiKeyService _KeyService;
+        private readonly IApiKeyService _KeyService;
 
-        public ApiKeyController()
+        public ApiKeyController(IApiKeyService apiKeyService)
         {
-            MyContextFactory cf = new MyContextFactory();
-            _KeyService = new ApiKeyService(cf.CreateDbContext(new string[0]));
+            _KeyService = apiKeyService;
         }
 
         [HttpGet]
