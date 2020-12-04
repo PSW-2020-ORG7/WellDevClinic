@@ -28,6 +28,7 @@ div.card {
     width: 100%;
 }
 
+/*
 .buttonDelete {
     border: 0px solid #3498db;
     background: #d60b0b;
@@ -36,6 +37,7 @@ div.card {
     width: 100%;
     margin: 10px;
 }
+*/
 
     .buttonDelete:hover {
         font-weight: bold;

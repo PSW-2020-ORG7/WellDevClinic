@@ -42,9 +42,12 @@ function viewActionsAndBenefits(data) {
 		content += todaydate.addDays(act.endDate).toDateString();
 		content += '</td></tr>';
 		content += '</table>';
-		content += '<button class="buttonDelete" id=';
+		content += '<button class="btn btn-danger" class="buttonDelete" data-toggle="modal" data-target="#exampleModalCenter1" id=';
 		content += act.id;
-		content += ' onclick="deleteEntry(this)" class="buttonDeleteCard"> Remove Benefit </button > ';
+		content += ' onclick="deleteAction(this)" class="buttonDeleteCard"> Reject </button > ';
+		content += '<button id=';
+		content += act.id;
+		content += ' onclick="useAction(this)" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"> Use it now </button > ';
 		content += '</div></div></div>';
 		content += '</div>';
 
@@ -52,18 +55,23 @@ function viewActionsAndBenefits(data) {
 	}
 }
 
-function deleteEntry(button) {
-	$.ajax({
-		method: "DELETE",
-		url: "../api/actionsandbenefits/delete/" + button.id,
-		contentType: "application/json",
-		success: function (data) {
-			if (data) {
-				alert("Successfully deleted");
-				window.location.reload();
-			}
-		},
+function deleteAction(button) {
+	$("#deleteAction").show();
+	$("button#btnYes1").click(function () {
+		$.ajax({
+			method: "DELETE",
+			url: "../api/actionsandbenefits/delete/" + button.id,
+			contentType: "application/json",
+			success: function (data) {
+				if (data) {
+					alert("Successfully deleted");
+					window.location.reload();
+				}
+			},
+		});
 	});
+	
+	
 }
 
 Date.prototype.addDays = function (days) {
@@ -72,3 +80,12 @@ Date.prototype.addDays = function (days) {
 	return date;
 }
 
+function useAction(data) {
+	$("#useAction").show();
+
+	//$("#btnYes").click(function () {
+		//ajax pozvati da obrise akciju iz baze
+		//i da stavi lek/ove u bazu
+		//obrisati iz isa baze
+	//});
+}
