@@ -14,7 +14,11 @@ table {
     border: none;
     border-collapse: collapse;
 }
-
+caption {
+    text-align: center;
+    color: #009999;
+    font-size: 30px;
+}
 .tr {
     border: none;
 }

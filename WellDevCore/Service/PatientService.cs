@@ -16,17 +16,19 @@ namespace bolnica.Service
         private readonly IPatientRepository _patientRepository;
         private readonly IPatientFileService _patientFileService;
         private readonly IDoctorGradeService _doctorGradeService;
+        private readonly IExaminationService _examinationService;
 
         public PatientService(IPatientRepository patientRepo)
         {
             _patientRepository = patientRepo;
         }
 
-        public PatientService(IPatientRepository _patientRepo, IPatientFileService _servicePatientFile, IDoctorGradeService doctorGradeService)
+        public PatientService(IPatientRepository _patientRepo, IPatientFileService _servicePatientFile, IDoctorGradeService doctorGradeService, IExaminationService examinationService)
         {
             _doctorGradeService = doctorGradeService;
             _patientRepository = _patientRepo;
             _patientFileService = _servicePatientFile;
+            _examinationService = examinationService;
         }
 
         public PatientService(IPatientRepository _patientRepo, IPatientFileService _servicePatientFile)
@@ -157,6 +159,97 @@ namespace bolnica.Service
             }
 
             return patient;
+        }
+
+        public List<DateTime> SortDates(List<DateTime> dates)
+        {
+            DateTime pom;
+            for(int i=0; i<dates.Count; i++)
+            {
+                for(int j = i+1; j<dates.Count; j++)
+                {
+                    if(DateTime.Compare(dates[i], dates[j])>0)
+                    {
+                        pom = dates[i];
+                        dates[i] = dates[j];
+                        dates[j] = pom;
+                    }
+                }
+            }
+            return dates;
+        }
+
+        public bool CheckIfBlocked(List<DateTime> dates)
+        {
+            dates = SortDates(dates);
+            bool result = false;
+            int check;
+            int j;
+            for(int i = 0; i<dates.Count; i++)
+            {
+                check = 1;
+                for(j = i + 1; j < dates.Count; j++)
+                {
+                    if ((dates[j].Date - dates[i].Date).TotalDays <= 30)
+                        check += 1;
+                    else
+                        break;
+                }
+                    
+                if(check >= 3)
+                {
+                    result = true;
+                    break;
+                }
+                    
+            }
+
+            return result;
+        }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            List<Patient> result = new List<Patient>();
+            List<Patient> patients = GetUnblockedPatients();
+
+            foreach(Patient patient in patients)
+            {
+                if(!patient.Blocked)
+                {
+                    List<DateTime> dates = _examinationService.GetCancelationDatesByPatient(patient.Id);
+                    if (CheckIfBlocked(dates))
+                        result.Add(patient);
+                }
+
+            }
+
+            return result;
+        }
+
+        public List<Patient> GetBlockedPatients()
+        {
+            List<Patient> result = new List<Patient>();
+            List<Patient> patients = (List<Patient>)GetAll();
+            foreach (Patient patient in patients)
+            {
+                if (patient.Blocked)
+                    result.Add(patient);
+            }
+
+            return result;
+        }
+
+        public List<Patient> GetUnblockedPatients()
+        {
+            List<Patient> result = new List<Patient>();
+            List<Patient> patients = (List<Patient>)GetAll();
+            foreach (Patient patient in patients)
+            {
+                if (!patient.Blocked)
+                    result.Add(patient);
+            }
+
+            return result;
         }
     }
 }

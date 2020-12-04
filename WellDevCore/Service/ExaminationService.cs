@@ -344,5 +344,17 @@ namespace Service
             return room;
         }
 
+        public List<DateTime> GetCancelationDatesByPatient(long id)
+        {
+            List<DateTime> result = new List<DateTime>();
+            List<Examination> exams = (List<Examination>)_upcomingRepository.GetAllEager();
+            exams.AddRange((List<Examination>)_previousRepository.GetAllEager());
+            foreach(Examination exam in exams)
+            {
+                if (exam.Patient.Id == id && exam.Canceled)
+                    result.Add(exam.CanceledDate);
+            }
+            return result;
+        }
     }
 }
