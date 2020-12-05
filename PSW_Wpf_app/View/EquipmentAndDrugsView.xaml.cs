@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PSW_Wpf_app.ViewModel;
 
 namespace PSW_Wpf_app.View
 {
@@ -17,6 +18,7 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class EquipmentAndDrugsView : Window
     {
+        bool isDrug = false;
         public EquipmentAndDrugsView()
         {
             InitializeComponent();
@@ -30,6 +32,18 @@ namespace PSW_Wpf_app.View
         private void OnDrug(object sender, RoutedEventArgs e)
         {
             this.userEqipmentAndDrugs.Content = new DrugsView();
+        }
+
+        private void OnSearch(object sender, RoutedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(searchText.Text))
+            {
+                EquipmentAndDrugsViewModel.SearchCommand.Execute($"{isDrug}_{searchText.Text}");
+            }
+            else
+            {
+                MessageBox.Show("You must enter equipment or drug for search.");
+            }
         }
     }
 }
