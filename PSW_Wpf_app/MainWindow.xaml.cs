@@ -110,6 +110,12 @@ namespace PSW_Wpf_app
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        private void Button_Equipment_Drugs(object sender, RoutedEventArgs e)
+        {
+            EquipmentAndDrugsView equipmentDrugsView = new EquipmentAndDrugsView();
+            equipmentDrugsView.Show();
+        }
+
     }
 
 }
