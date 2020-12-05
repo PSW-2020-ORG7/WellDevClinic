@@ -26,11 +26,13 @@ namespace PSW_Wpf_app.View
 
         private void OnEquipment(object sender, RoutedEventArgs e)
         {
+            isDrug = false;
             this.userEqipmentAndDrugs.Content = new EquipmentView();
         }
 
         private void OnDrug(object sender, RoutedEventArgs e)
         {
+            isDrug = true;
             this.userEqipmentAndDrugs.Content = new DrugsView();
         }
 

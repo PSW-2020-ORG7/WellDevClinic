@@ -41,13 +41,13 @@ namespace PSW_Wpf_app.ViewModel
 
         }
 
-        private void OnSearch(object param)
+        private async void OnSearch(object param)
         {
             bool isDrug = bool.Parse(((string)param).Split('_')[0]);
             string search = ((string)param).Split('_')[1];
             if (!isDrug)
             {
-                List<Equipment> temp = new List<Equipment>(equipments);
+                List<Equipment> temp = new List<Equipment>(await WpfClient.GetAllEquipment());
                 Equipments = new BindingList<Equipment>();
                 foreach (Equipment item in temp)
                 {
@@ -61,7 +61,7 @@ namespace PSW_Wpf_app.ViewModel
             }
             else
             {
-                List<Drug> temp = new List<Drug>(drugs);
+                List<Drug> temp = new List<Drug>(await WpfClient.GetAllDrug());
                 Drugs = new BindingList<Drug>();
                 foreach (Drug item in temp)
                 {
@@ -76,11 +76,16 @@ namespace PSW_Wpf_app.ViewModel
         public EquipmentAndDrugsViewModel()
         {
             SearchCommand = new MyICommand<object>(OnSearch);
-            Load();
+            LoadEquipments();
+            LoadDrugs();
         }
-        private async void Load()
+        private async void LoadEquipments()
         {
             Equipments = new BindingList<Equipment>(await WpfClient.GetAllEquipment());
+        }
+
+        private async void LoadDrugs()
+        {
             Drugs = new BindingList<Drug>(await WpfClient.GetAllDrug());
         }
     }
