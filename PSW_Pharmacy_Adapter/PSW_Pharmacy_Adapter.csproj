@@ -36,5 +36,9 @@
     <PackageReference Include="WinSCP" Version="5.17.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InterlayerController\InterlayerController.csproj" />
+  </ItemGroup>
+
 
 </Project>
