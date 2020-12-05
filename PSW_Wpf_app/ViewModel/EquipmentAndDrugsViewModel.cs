@@ -10,6 +10,7 @@ namespace PSW_Wpf_app.ViewModel
     {
         BindingList<Equipment> equipments = new BindingList<Equipment>();
         BindingList<Drug> drugs;
+        public static MyICommand<object> SearchCommand { get; set; }
 
         public BindingList<Equipment> Equipments
         {
@@ -40,13 +41,51 @@ namespace PSW_Wpf_app.ViewModel
 
         }
 
+        private async void OnSearch(object param)
+        {
+            bool isDrug = bool.Parse(((string)param).Split('_')[0]);
+            string search = ((string)param).Split('_')[1];
+            if (!isDrug)
+            {
+                List<Equipment> temp = new List<Equipment>(await WpfClient.GetAllEquipment());
+                Equipments = new BindingList<Equipment>();
+                foreach (Equipment item in temp)
+                {
+                    if (item.Name == search)
+                    {
+                        Equipments.Add(item);
+                        return;
+                    }
+                }
+
+            }
+            else
+            {
+                List<Drug> temp = new List<Drug>(await WpfClient.GetAllDrug());
+                Drugs = new BindingList<Drug>();
+                foreach (Drug item in temp)
+                {
+                    if (item.Name == search)
+                    {
+                        Drugs.Add(item);
+                        return;
+                    }
+                }
+            }
+        }
         public EquipmentAndDrugsViewModel()
         {
-            Load();
+            SearchCommand = new MyICommand<object>(OnSearch);
+            LoadEquipments();
+            LoadDrugs();
         }
-        private async void Load()
+        private async void LoadEquipments()
         {
             Equipments = new BindingList<Equipment>(await WpfClient.GetAllEquipment());
+        }
+
+        private async void LoadDrugs()
+        {
             Drugs = new BindingList<Drug>(await WpfClient.GetAllDrug());
         }
     }
