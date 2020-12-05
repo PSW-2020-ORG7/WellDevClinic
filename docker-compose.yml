@@ -1,0 +1,44 @@
+services:
+
+  servers:
+    build: .
+    image: daviddrvar/welldevclinic:275
+    container_name: welldevclinic
+    restart: on-failure
+    networks:
+      - demo
+    ports:
+      - 49153:49153
+    environment:
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: newmydb
+    volumes:
+      - welldev-sql:/app/sql
+    depends_on: 
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    networks:
+      - demo
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: newmydb
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - welldev-sql:/docker-entrypoint-initdb.d/
+
+volumes:
+  mysql-data:
+  welldev-sql:
+
+networks:
+  demo:
+    name: demo
+    driver: bridge
