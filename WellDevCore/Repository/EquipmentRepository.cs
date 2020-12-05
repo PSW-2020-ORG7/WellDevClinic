@@ -17,13 +17,7 @@ namespace Repository
             myDbContext = context;
         }
 
-        public IEnumerable<Equipment> GetAll()
-        {
-            List<Equipment> result = new List<Equipment>();
-            myDbContext.Equipment.ToList().ForEach(equipment => result.Add(equipment));
-            return result;
-        }
-
+        
         public void Delete(Equipment entity)
         {
             throw new NotImplementedException();
