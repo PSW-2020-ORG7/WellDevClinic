@@ -16,8 +16,8 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         public const int TEST_ID1 = 5555;
         public const string TEST_PHARMACY = "Benu";
         public const string TEST_MESSAGE = "Ponuda koju ne mozete propustiti!";
-        public const long TEST_START = 1604262583000;
-        public const long TEST_END = 1609360183000;
+        public DateTime TEST_START = DateTime.Now;
+        public DateTime TEST_END = DateTime.Now.AddDays(5);
 
         [Fact]
         public void Add_Message()

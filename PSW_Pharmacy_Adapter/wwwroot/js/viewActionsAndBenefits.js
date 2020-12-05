@@ -14,14 +14,6 @@
 
 
 function viewActionsAndBenefits(data) {
-	var today = new Date();
-	var dd = String(today.getDate()).padStart(2, '0');
-	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-	var yyyy = today.getFullYear();
-
-	today = mm + '/' + dd + '/' + yyyy;
-	var todaydate = new Date(today);
-	
 	for (act of data) {
 		content = '<div class="card" id="';
 		content += act.id;
@@ -36,10 +28,10 @@ function viewActionsAndBenefits(data) {
 		content += act.pharmacyName;
 		content += '</td></tr>';
 		content += '<tr><td>Start date:</td><td>';
-		content += todaydate.addDays(act.startDate).toDateString();
+		content += act.startDate;
 		content += '</td></tr>';
 		content += '<tr><td>End date:</td><td>';
-		content += todaydate.addDays(act.endDate).toDateString();
+		content += act.endDate;
 		content += '</td></tr>';
 		content += '</table>';
 		content += '<button class="btn btn-danger" class="buttonDelete" data-toggle="modal" data-target="#exampleModalCenter1" id=';
@@ -72,12 +64,6 @@ function deleteAction(button) {
 	});
 	
 	
-}
-
-Date.prototype.addDays = function (days) {
-	var date = new Date(this.valueOf());
-	date.setDate(date.getDate() + days);
-	return date;
 }
 
 function useAction(data) {

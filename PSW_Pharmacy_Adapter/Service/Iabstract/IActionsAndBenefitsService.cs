@@ -13,5 +13,6 @@ namespace PSW_Pharmacy_Adapter.Service
         public IEnumerable<ActionAndBenefit> GetAll();
 
         public bool DeleteBenefit(long id);
+        public void DeleteExpiredAction();
     }
 }
