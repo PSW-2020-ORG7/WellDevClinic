@@ -1,19 +1,26 @@
-﻿$(document).ready(function () {
+﻿var actions;
+
+$(document).ready(function () {
 	$.ajax({
 		method: "GET",
 		url: "../api/actionsandbenefits/all",
 		contentType: "application/json",
 		success: function (data) {
-			viewActionsAndBenefits(data);
+			actions = data;
+			viewActionsAndBenefits(actions);
 			$(".loader").css("display", "none");
 			$("#viewAction").css("display", "block");
 		}
 	});
 
+	$(".btnFilter").click(function () {
+		$("#divFilterTable").slideToggle();
+	})
 })
 
 
 function viewActionsAndBenefits(data) {
+	$("#viewAction").empty();
 	for (act of data) {
 		content = '<div class="card" id="';
 		content += act.id;
@@ -28,13 +35,13 @@ function viewActionsAndBenefits(data) {
 		content += act.pharmacyName;
 		content += '</td></tr>';
 		content += '<tr><td>Start date:</td><td>';
-		content += act.startDate;
+		content += ISOtoShort(new Date(act.startDate));
 		content += '</td></tr>';
 		content += '<tr><td>End date:</td><td>';
-		content += act.endDate;
+		content += ISOtoShort(new Date(act.endDate));
 		content += '</td></tr>';
 		content += '</table>';
-		content += '<button class="btn btn-danger" class="buttonDelete" data-toggle="modal" data-target="#exampleModalCenter1" id=';
+		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter1" id=';
 		content += act.id;
 		content += ' onclick="deleteAction(this)" class="buttonDeleteCard"> Reject </button > ';
 		content += '<button id=';
@@ -45,6 +52,62 @@ function viewActionsAndBenefits(data) {
 
 		$("#viewAction").append(content);
 	}
+}
+
+function getSortData() {
+	let sort = $("#sort").val();
+	let order = $("#order").val();
+	sortCards(sort, order);
+	viewActionsAndBenefits(actions);
+}
+
+// Dates are in format : yyyy-MM-dd so we can compare them as strings
+function sortCards(sort, order) {
+	if (order == "asc") {
+		for (i = 0; i < (actions.length - 1); i++) {
+			let minIdx = i;
+			for (j = i + 1; j < actions.length; j++) {
+				if (sort == "phName") {
+					if (actions[minIdx].pharmacyName.toLowerCase() > actions[j].pharmacyName.toLowerCase())
+						minIdx = j;
+				} else if (sort == "start") {
+					if (actions[minIdx].startDate > actions[j].startDate)
+						minIdx = j;
+				} else if (sort == "expire") {
+					if (actions[minIdx].endDate > actions[j].endDate)
+						minIdx = j;
+				} else if (sort == "list") {
+					if (actions[minIdx].id > actions[j].id)
+						minIdx = j;
+                }
+			}
+			let temp = actions[i];
+			actions[i] = actions[minIdx];
+			actions[minIdx] = temp;
+		}
+	} else if (order == "desc") {
+		for (i = 0; i < (actions.length - 1); i++) {
+			let maxIdx = i;
+			for (j = i + 1; j < actions.length; j++) {
+				if (sort == "phName") {
+					if (actions[maxIdx].pharmacyName.toLowerCase() < actions[j].pharmacyName.toLowerCase())
+						maxIdx = j;
+				} else if (sort == "start") {
+					if (actions[maxIdx].startDate < actions[j].startDate)
+						maxIdx = j;
+				} else if (sort == "expire") {
+					if (actions[maxIdx].endDate < actions[j].endDate)
+						maxIdx = j;
+				} else if (sort == "list") {
+					if (actions[maxIdx].id < actions[j].id)
+						maxIdx = j;
+				}
+			}
+			let temp = actions[i];
+			actions[i] = actions[maxIdx];
+			actions[maxIdx] = temp;
+		}
+    }
 }
 
 function deleteAction(button) {
@@ -74,4 +137,17 @@ function useAction(data) {
 		//i da stavi lek/ove u bazu
 		//obrisati iz isa baze
 	//});
+}
+
+function ISOtoShort(date) {
+	day = date.getDate();
+	month = (date.getMonth() + 1);
+	year = date.getFullYear();
+
+	if (day < 10)
+		day = '0' + day;
+	if (month < 10)
+		month = '0' + month;
+
+	return String(day + '-' + month + '-' + year);
 }

@@ -2,7 +2,7 @@
     background-repeat: repeat-y;
     background-size: 100%;
 }
-
+/* Card format */
 div.card {
     margin: 10px;
     padding: 5px;
@@ -15,35 +15,50 @@ div.card {
     div.card:hover {
         cursor: pointer;
     }
-
+/* Card containter*/
 #viewAction {
     padding-left: 5%;
     padding-right: 5%;
     margin: 5px;
 }
-
+/* Delete button */
 .buttonDeleteCard {
     background-color: red;
     color: white;
     width: 100%;
 }
 
-/*
-.buttonDelete {
-    border: 0px solid #3498db;
-    background: #d60b0b;
-    color: white;
-    padding: 5px 20px;
-    width: 100%;
-    margin: 10px;
-}
-*/
-
-    .buttonDelete:hover {
+    .buttonDeleteCard:hover {
         font-weight: bold;
         border: 3px solid #d60b0b;
         margin: 7px;
         transition: ease 0.3s;
     }
+/* Filter bar */
+.filter {
+    background: #7f7c7c;
+    margin-bottom: 10px;
+    width: auto;
+}
+    .filter span{
+        font-size: 20px;
+    }
 
+.btnFilter {
+    border: 0px;
+    font-size: 30px;
+    margin-right: 40px;
+    text-align:right;
+    background: transparent;
+}
+    .btnFilter:hover{
+        color: white;
+    }
 
+#divFilterTable {
+    display: none;
+}
+
+    #divFilterTable td{
+        padding: 5px;
+    }

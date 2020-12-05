@@ -20,7 +20,33 @@
         <a href="viewActionsAndBenefits.html" class="active">Actions & Benefits</a>
         <a href="#">Medication consumption report</a>
     </div>
-    <br><br>
+    <br>
+    <div class="filter">
+        <button class="btnFilter">☰ Filters</button>
+        <span>Sort by:</span>
+        <select id="sort" onchange="getSortData()">
+            <option value="list">List Order</option>
+            <option value="phName">Name</option>
+            <option value="start">Starting date</option>
+            <option value="expire">Expiry date</option>
+        </select>
+        <span>Order:</span>
+        <select id="order" onchange="getSortData()">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+
+        <div id="divFilterTable">
+            <form>
+                <table>
+                    <tr><td>From date:</td><td>To date:</td></tr>
+                    <tr><td><input type="date" /></td><td><input type="date" /></td></tr>
+
+                </table>
+            </form>
+        </div>
+    </div>
+
     <div class="loader"></div>
     <div id="viewAction" style="padding-left:5%; padding-right:5%; display:none">
     </div>
