@@ -25,7 +25,7 @@ namespace InterlayerController.Controllers
         /// </summary>
         /// <returns>status 200 OK response with a list of equipment</returns>
         [HttpGet]
-
+        
         public IEnumerable<Equipment> GetAllEquipment()
         {
             List<Equipment> result = (List<Equipment>)_equipmentController.GetAll();
