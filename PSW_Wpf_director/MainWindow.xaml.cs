@@ -1,5 +1,6 @@
 ﻿using bolnica.Controller;
 using Model.Users;
+using PSW_Wpf_director.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +38,7 @@ namespace PSW_Wpf_director
             userController = app.UserController;
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private async void button_Click(object sender, RoutedEventArgs e)
         {
             if (TxtBoxKorisnickoIme.Text.Equals("") || lozinka.Password.Equals(""))
             {
@@ -46,7 +47,7 @@ namespace PSW_Wpf_director
             }
             try
             {
-                Director director = (Director)userController.Login(TxtBoxKorisnickoIme.Text, lozinka.Password);
+                Director director = await WpfDirectorClient.GetUser(TxtBoxKorisnickoIme.Text, lozinka.Password);
                 bool selected = (bool)stayLoggedIn.IsChecked;
                 if (selected)
                 {

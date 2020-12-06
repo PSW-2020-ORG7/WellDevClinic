@@ -171,7 +171,7 @@ namespace PSW_Wpf_director
 
 
             var app = Application.Current as App;
-            _roomController = app.authorityRoom;
+           /* _roomController = app.authorityRoom;
             _equipmentController = app.authorityEquipment;
             _renovationController = app.authorityRenovation;
             _drugController = app.authorityDrug;
@@ -183,7 +183,7 @@ namespace PSW_Wpf_director
 
             if (director == null)
                 director = _directorController.Get(1);
-            else
+            else*/
                 this.director = director;
 
             FirstName = director.FirstName;
