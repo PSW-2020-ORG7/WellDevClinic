@@ -28,25 +28,29 @@ namespace PSW_Web_app
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
+        }
 
+        private static int calculatePort()
+        {
+            var port = System.Environment.GetEnvironmentVariable("PORT");
+            if (port == null)
+                return 49153;
+            else
+                return Int32.Parse(System.Environment.GetEnvironmentVariable("PORT"));
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                        serverOptions.ListenAnyIP(calculatePort());
+                    })
+                    .UseStartup<Startup>();
 
-        // heroku port variable
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-    WebHost.CreateDefaultBuilder(args)
-        .UseStartup<Startup>()
-        .UseKestrel(options =>
-        {
-            options.ListenAnyIP(Int32.Parse(System.Environment.GetEnvironmentVariable("PORT")));
-        });
+                });
     }
 }
 
