@@ -163,7 +163,7 @@ namespace PSW_Wpf_director
             }
         }
 
-        public DashboardWindow()
+        public DashboardWindow(Director director)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -171,7 +171,7 @@ namespace PSW_Wpf_director
 
 
             var app = Application.Current as App;
-            _roomController = app.authorityRoom;
+           /* _roomController = app.authorityRoom;
             _equipmentController = app.authorityEquipment;
             _renovationController = app.authorityRenovation;
             _drugController = app.authorityDrug;
@@ -183,7 +183,7 @@ namespace PSW_Wpf_director
 
             if (director == null)
                 director = _directorController.Get(1);
-            else
+            else*/
                 this.director = director;
 
             FirstName = director.FirstName;
@@ -537,14 +537,14 @@ namespace PSW_Wpf_director
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            articles = _articleController.GetAll().ToList();
+            /*articles = _articleController.GetAll().ToList();
             setArticles();
 
             doctorCount.Content = "" + _doctorController.GetAll().ToList().Count.ToString();
 
-            List<Doctor> sada = _doctorController.GetAll().ToList();
+            List<Doctor> sada = _doctorController.GetAll().ToList();*/
             var app = Application.Current as App;
-            AddressController addressController = app.AddressController;
+            /*AddressController addressController = app.AddressController;
             List<Address> adrese = addressController.GetAll().ToList();
 
             foreach (Doctor doctor in sada)
@@ -617,7 +617,7 @@ namespace PSW_Wpf_director
             shortcuts.Add(new ShortcutData("CTRL + S", "aktiviranje pretrage leve tabele sastojaka"));
             shortcuts.Add(new ShortcutData("ALT + F4", "zatvaranje aplikacije"));
 
-            DataGridShortcuts.ItemsSource = shortcuts;
+            DataGridShortcuts.ItemsSource = shortcuts;*/
 
 
 
@@ -1285,7 +1285,7 @@ namespace PSW_Wpf_director
 
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {
-            doctorCount.Content = "" + _doctorController.GetAll().ToList().Count.ToString();
+           //doctorCount.Content = "" + _doctorController.GetAll().ToList().Count.ToString();
         }
 
         private void TabItem_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -1567,6 +1567,15 @@ namespace PSW_Wpf_director
 
         private void txtFirstNameEdit_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+        }
+
+        
+        private void Button_Map(object sender, RoutedEventArgs e)
+        {
+            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow();
+
+            main = new PSW_Wpf_app.MainWindow();
+            main.Show();
         }
     }
 }
