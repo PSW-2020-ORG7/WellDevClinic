@@ -24,7 +24,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             MyContextFactory cf = new MyContextFactory();
             actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
-            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END);
+            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, ActionStatus.pending);
             //Console.WriteLine(" [x] Received {0}", ab.PharmacyName);
 
             actionRepository.Save(ab);
@@ -39,7 +39,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             MyContextFactory cf = new MyContextFactory();
             actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
-            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID1, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END);
+            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID1, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, ActionStatus.pending);
 
             ab = actionRepository.Get(TEST_ID1);
             ab.ShouldBeNull();
