@@ -22,12 +22,13 @@ $(document).ready(function () {
 function viewActionsAndBenefits(data) {
 	$("#viewAction").empty();
 	for (act of data) {
-		content = '<div class="card" id="';
-		content += act.id;
-		content += '">';
+		content = '<div class="card" id="' + act.id + '">';
 		content += '<p class="card-text">';
 		content += act.messageAboutAction;
-		content += '</p >';
+		content += '<span class="fa fa-star star';
+		if (act.status == 2)
+			content += " checked";
+		content += '" onClick="toggleFav(' + act.id + ')"></span></p>';
 		content += '<div class="card-body">';
 		content += '<div class="data">';
 		content += '<table style="margin:10px">';
@@ -49,6 +50,7 @@ function viewActionsAndBenefits(data) {
 		content += ' onclick="useAction(this)" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"> Use it now </button > ';
 		content += '</div></div></div>';
 		content += '</div>';
+
 
 		$("#viewAction").append(content);
 	}
@@ -127,6 +129,31 @@ function deleteAction(button) {
 	});
 	
 	
+}
+
+function toggleFav(id) {
+	let newStatus;
+	for (act of actions)
+		if (act.id == id) {
+			toggleAct = act;
+
+			if (act.status != 2)
+				newStatus = 2;
+			else
+				newStatus = 1;
+
+			act.status = newStatus;
+			break;
+		}
+
+	$.ajax({
+		method: "PUT",
+		url: "../api/actionsandbenefits/status/" + id + "/" + newStatus,
+		contentType: "application/json",
+		success: function (data) {
+			viewActionsAndBenefits(actions);
+		}
+	});
 }
 
 function useAction(data) {

@@ -21,19 +21,20 @@ div.card {
     padding-right: 5%;
     margin: 5px;
 }
-/* Delete button */
-.buttonDeleteCard {
-    background-color: red;
-    color: white;
-    width: 100%;
+
+/* Favourite mark */
+.star {
+    float:right;
+    padding-top: 0px;
+}
+    .star:hover {
+        border: 1px solid blue;
+    }
+    
+.checked{
+    color: orange;
 }
 
-    .buttonDeleteCard:hover {
-        font-weight: bold;
-        border: 3px solid #d60b0b;
-        margin: 7px;
-        transition: ease 0.3s;
-    }
 /* Filter bar */
 .filter {
     background: #7f7c7c;

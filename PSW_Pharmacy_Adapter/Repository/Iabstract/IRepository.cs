@@ -12,5 +12,6 @@ namespace PSW_Pharmacy_Adapter.Repository.Iabstract
         bool Exists(ID id);
         bool Delete(ID id);
         E Save(E Entity);
+        E Update(E entity);
     }
 }

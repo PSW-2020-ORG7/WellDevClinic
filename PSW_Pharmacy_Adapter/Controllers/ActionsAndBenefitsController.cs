@@ -46,6 +46,16 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [HttpPut]
+        [Route("status/{id?}/{stat?}")]
+        public IActionResult UpdateStatus(long id, int stat)
+        {
+            ActionAndBenefit action = _ActionService.UpdateStatus(id, stat);
+            if (action != null)
+                return Ok(action);
+            return BadRequest();
+        }
+
+        [HttpPut]
         [Route("deleteExpired")]
         public IActionResult DeleteExpired()
         {
