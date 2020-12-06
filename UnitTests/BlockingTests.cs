@@ -51,7 +51,7 @@ namespace UnitTests
             List<Patient> patients = new List<Patient>();
             patients.Add(new Patient(1, "Marjana", "Zalar"));
             patients.Add(new Patient(2, "Andjela", "Petrovic"));
-            stubRepository.Setup(m => m.GetAllEager()).Returns(patients);
+            stubRepository.Setup(m => m.GetEager()).Returns(patients);
             return stubRepository.Object;
         }
 
