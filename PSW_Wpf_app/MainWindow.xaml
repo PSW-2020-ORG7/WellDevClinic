@@ -17,12 +17,13 @@
             <Grid Background="CadetBlue" HorizontalAlignment="Left" Height="370" Margin="10,55,0,0" VerticalAlignment="Top" Width="198">
                 <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" TextWrapping="Wrap" Text="Choose building:" FontSize="16" VerticalAlignment="Top" Width="150"/>
                 <ComboBox HorizontalAlignment="Left" Height="24" Margin="10,42,0,0" VerticalAlignment="Top" Width="181" ItemsSource="{Binding Path=Buildings}" Name="buildC"  DisplayMemberPath="Name"/>
-                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,88,0,0" TextWrapping="Wrap" Text="Choose the floor:" FontSize="16" VerticalAlignment="Top" Width="150"/>
-                <ComboBox HorizontalAlignment="Left" Height="24" Margin="10,117,0,0" VerticalAlignment="Top" Width="181"  ItemsSource="{Binding Path=FloorsCount}" Name="floorC"/>
-                <Button Content="Apply" HorizontalAlignment="Center" Height="42" Margin="10,172,7,0" VerticalAlignment="Top" Width="181" FontSize="28" FontFamily="Segoe UI Semibold" Click="Button_Click"/>
-                <TextBox Name="SearchBuilding" HorizontalAlignment="Left" Height="24" Margin="10,262,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" PreviewTextInput="ValidationTextBox"/>
-                <Button  FontFamily="Segoe UI Semibold" Content="Search" HorizontalAlignment="Left" Height="23" Margin="10,299,0,0" VerticalAlignment="Top" Width="181" Click="Search"/>
-                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,238,0,0" TextWrapping="Wrap" Text="Enter room name or type:" FontSize="16" VerticalAlignment="Top" Width="188"/>
+                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,76,0,0" TextWrapping="Wrap" Text="Choose the floor:" FontSize="16" VerticalAlignment="Top" Width="150"/>
+                <ComboBox HorizontalAlignment="Left" Height="24" Margin="10,105,0,0" VerticalAlignment="Top" Width="181"  ItemsSource="{Binding Path=FloorsCount}" Name="floorC"/>
+                <Button Content="Apply" HorizontalAlignment="Center" Height="42" Margin="0,152,0,0" VerticalAlignment="Top" Width="180" FontSize="28" FontFamily="Segoe UI Semibold" Click="Button_Click"/>
+                <TextBox Name="SearchBuilding" HorizontalAlignment="Left" Height="24" Margin="10,246,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" PreviewTextInput="ValidationTextBox"/>
+                <Button  FontFamily="Segoe UI Semibold" Content="Search" HorizontalAlignment="Left" Height="23" Margin="10,280,0,0" VerticalAlignment="Top" Width="181" Click="Search"/>
+                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,217,0,0" TextWrapping="Wrap" Text="Enter room name or type:" FontSize="16" VerticalAlignment="Top" Width="188"/>
+                <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Left" Height="38" Margin="10,322,0,0" VerticalAlignment="Top" Width="181" Click="Button_Equipment_Drugs"/>
             </Grid>
             <Button Content="HOME" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,16,0,0" VerticalAlignment="Top" Width="51" Click="Button_Click_HOME">
 

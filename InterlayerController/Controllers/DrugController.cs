@@ -29,7 +29,14 @@ namespace InterlayerController.Controllers
         public IEnumerable<Drug> GetAllDrug()
         {
             List<Drug> result = (List<Drug>)_drugController.GetAll();
-
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (result[i].Alternative != null)
+                    for (int j = 0; j < result[i].Alternative.Count; j++)
+                    {
+                        result[i].Alternative[j].Alternative = null;
+                    }
+            }
             return result;
         }
     }
