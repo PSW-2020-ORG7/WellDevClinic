@@ -6,6 +6,8 @@
         success: function (apiDb) {
             if (apiDb) {
                 viewApis(apiDb)
+                $(".loader").css("display", "none");
+                $("#apiTable").css("display", "table");
             }
         },
     });

@@ -49,7 +49,7 @@ $(document).ready(function () {
 	//$.get({
 		//url: 'http://localhost:49153/api/patient/1',
 		//success: function (user) {
-			$.post({
+			$.get({
 				url: 'http://localhost:49153/api/examination/getAll',
 				//data: JSON.stringify(user),
 				contentType: 'application/json',

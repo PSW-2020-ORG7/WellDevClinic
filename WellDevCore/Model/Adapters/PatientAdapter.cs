@@ -6,15 +6,16 @@ using WellDevCore.Model.dtos;
 
 namespace WellDevCore.Model.Adapters
 {
-    class PatientAdapter
+    public class PatientAdapter
     {
 
-        public static PatientDTO DoctorGradeToDoctorGradeDTO(Patient patient)
+        public static PatientDTO PatientToPatientDTO(Patient patient)
         {
             PatientDTO result = new PatientDTO();
             result.Id = patient.Id;
             result.FullName = patient.FullName;
             result.Username = patient.Username;
+            result.Blocked = patient.Blocked;
             return result;
         }
     }

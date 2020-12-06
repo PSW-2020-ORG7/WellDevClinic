@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class APIKeyService
+    public class ApiKeyService
     {
-        private readonly IAPIKeyRepository _KeyRepo;
+        private readonly IApiKeyRepository _KeyRepo;
 
-        public APIKeyService(MyDbContext dbContext)
+        public ApiKeyService(MyDbContext dbContext)
         {
-            _KeyRepo = new APIKeyRepository(dbContext);
+            _KeyRepo = new ApiKeyRepository(dbContext);
         }
 
         public Api GetPharmacy(string id)

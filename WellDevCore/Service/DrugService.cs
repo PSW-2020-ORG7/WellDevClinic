@@ -5,7 +5,7 @@ using Repository;
 using System;
 using System.Collections.Generic;
 
-namespace Service
+namespace bolnica.Service
 {
    public class DrugService : IDrugService
    {

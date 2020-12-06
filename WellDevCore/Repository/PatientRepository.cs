@@ -36,9 +36,6 @@ namespace Repository
 
         public void Edit(Patient entity)
         {
-            Patient result = myDbContext.Patient.SingleOrDefault(patient => patient.Id == entity.Id);
-            myDbContext.Patient.Remove(result);
-            myDbContext.Patient.Add(entity);
             myDbContext.SaveChanges();
         }
 

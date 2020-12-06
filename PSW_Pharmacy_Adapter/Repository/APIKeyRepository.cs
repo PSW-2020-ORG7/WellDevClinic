@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace PSW_Pharmacy_Adapter.Repository
 {
-    public class APIKeyRepository : IAPIKeyRepository
+    public class ApiKeyRepository : IApiKeyRepository
     {
         private readonly MyDbContext _MyDbContext;
 
-        public APIKeyRepository(MyDbContext DbContext)
+        public ApiKeyRepository(MyDbContext DbContext)
         {
             _MyDbContext = DbContext;
         }
@@ -24,7 +24,7 @@ namespace PSW_Pharmacy_Adapter.Repository
             return apis;
         }
 
-        public bool Exists(string id) => Get(id) == null ? false : true;
+        public bool Exists(string id) => Get(id) != null;
 
         public bool Delete(string id)
         {

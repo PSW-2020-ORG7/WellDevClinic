@@ -72,7 +72,7 @@ namespace bolnica.Service
 
         public IEnumerable<Patient> GetAll()
         {
-            return _patientRepository.GetAllEager();
+            return _patientRepository.GetEager();
         }
 
         public Patient Get(long id)

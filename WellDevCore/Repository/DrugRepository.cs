@@ -16,6 +16,7 @@ namespace Repository
         public DrugRepository(IIngredientRepository ingredientRepository, MyDbContext context)
         {
             _ingredientRepository = ingredientRepository;
+
             myDbContext = context;
         }
 
@@ -26,7 +27,7 @@ namespace Repository
             MyContextContextFactory mccf = new MyContextContextFactory();
             this.myDbContext = mccf.CreateDbContext(new string[0]);
         }*/
-
+        
         public IEnumerable<Drug> GetAllEager()
         {
             IEnumerable<Drug> drugs = this.GetEager();
