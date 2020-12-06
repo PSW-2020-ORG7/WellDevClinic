@@ -3,17 +3,16 @@ function addPatient(patient) {
 	let tr = $('<tr></tr>');
 	let tdId = $('<td>' + patient.id + '</td>');
 	let tdName = $('<td>' + patient.fullName + '</td>');
-	let tdDate = $('<td>' + patient.dateOfBirth + '</td>');
-	let tdAdress = $('<td>' + patient.adress.getFullAdress() + '</td>');
+	let tdUsername = $('<td>' + patient.username + '</td>');
 	let tdBlock = $('<td></td>');
 	if (patient.blocked) {
 		let button = $('<button> Block user </button>');
 		button.attr('class', 'block');
 		tdBlock.append(button);
-		tr.append(tdId).append(tdName).append(tdDate).append(tdAdress).append(tdBlock);
+		tr.append(tdId).append(tdName).append(tdUsername).append(tdBlock);
 		$('#table_for_blocking tbody').append(tr);
     }
-	tr.append(tdId).append(tdName).append(tdDate).append(tdAdress);
+	tr.append(tdId).append(tdName).append(tdUsername);
 	$('#table_blocked tbody').append(tr);
 }
 
