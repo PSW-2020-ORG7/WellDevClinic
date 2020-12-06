@@ -65,7 +65,7 @@ namespace PSW_Wpf_director
                     File.WriteAllText(path, "false");
                 }
 
-                DashboardWindow dashBoard = new DashboardWindow();
+                DashboardWindow dashBoard = new DashboardWindow(director);
                 dashBoard.director = director;
                 dashBoard.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 dashBoard.Show();
