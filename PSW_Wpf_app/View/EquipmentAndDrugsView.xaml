@@ -1,0 +1,23 @@
+﻿<Window x:Class="PSW_Wpf_app.View.EquipmentAndDrugsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSW_Wpf_app.View"
+        xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel"
+        mc:Ignorable="d"
+       Title="EquipmentAndDrugsView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <viewmodel:EquipmentAndDrugsViewModel x:Key="vm"></viewmodel:EquipmentAndDrugsViewModel>
+    </Window.Resources>
+    <Grid Background="Azure" DataContext="{Binding Source={StaticResource vm}}" Margin="0,0,2,0">
+        <UserControl Name="userEqipmentAndDrugs" Margin="208,0,10,1"></UserControl>
+        <Grid Background="CadetBlue" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="208">
+            <Button  x:Name="btn1" Content="Equipment"   HorizontalAlignment="Left" Height="63" Margin="10,27,0,0" VerticalAlignment="Top" Width="174" Click="OnEquipment"/>
+            <Button  Content="Drug" HorizontalAlignment="Left" Height="63" Margin="10,121,0,0" VerticalAlignment="Top" Width="174" Click="OnDrug"/>
+            <TextBox Name="searchText"  HorizontalAlignment="Left" Height="28" Margin="10,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="174"/>
+            <Button  Content="Search" HorizontalAlignment="Left" Height="33" Margin="10,277,0,0" VerticalAlignment="Top" Width="174" Click="OnSearch"/>
+            <TextBlock HorizontalAlignment="Left" Height="22" Margin="10,207,0,0" Text="Enter equipmnet or drug for search:" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
+        </Grid>
+    </Grid>
+</Window>

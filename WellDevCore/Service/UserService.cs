@@ -5,7 +5,7 @@ using Repository;
 using System;
 using System.Collections.Generic;
 
-namespace Service
+namespace bolnica.Service
 {
     public class UserService : IUserService
     {
@@ -80,8 +80,8 @@ namespace Service
             else if ((user = _directorService.GetUserByUsername(username)) != null)
                 return user;
             else if ((user = _doctorService.GetUserByUsername(username)) != null)
-               return user;
-
+                return user;
+            
             return user;
         }
 

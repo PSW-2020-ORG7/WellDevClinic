@@ -5,14 +5,15 @@ using System;
 using System.Collections.Generic;
 using bolnica.Model.Dto;
 using bolnica.Controller;
+using bolnica.Service;
 
 namespace Controller
 {
    public class NotificationController : INotificationController
    {
-        private readonly NotificationService _notificationService;
+        private readonly INotificationService _notificationService;
 
-        public NotificationController(NotificationService service)
+        public NotificationController(INotificationService service)
         {
             this._notificationService = service;
         }
