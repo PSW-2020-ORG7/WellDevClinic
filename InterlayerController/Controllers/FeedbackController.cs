@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using bolnica.Controller;
 using bolnica.Model.Users;
 using bolnica.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,11 @@ namespace InterlayerController.Controllers
     public class FeedbackController : ControllerBase
     {
 
-        private readonly IFeedbackService _feedbackService;
+        private readonly IFeedbackController _feedbackController;
 
-        public FeedbackController(IFeedbackService feedbackService)
+        public FeedbackController(IFeedbackController feedbackController)
         {
-            _feedbackService = feedbackService;
+            _feedbackController = feedbackController;
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace InterlayerController.Controllers
         [HttpGet]
         public List<Feedback> GetAllFeedback()
         {
-            return _feedbackService.GetAllFeedback();
+            return (List<Feedback>)_feedbackController.GetAll();
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace InterlayerController.Controllers
         [Route("{id?}")]
         public Feedback GetFeedback(long id)
         {
-            return _feedbackService.GetFeedback(id);
+            return _feedbackController.Get(id);
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace InterlayerController.Controllers
         [HttpPost]
         public Feedback LeaveFeedback([FromBody] Feedback feedback)
         {
-            return _feedbackService.LeaveFeedback(feedback);
+            return _feedbackController.Save(feedback);
         }
 
 
@@ -65,7 +66,7 @@ namespace InterlayerController.Controllers
         [HttpPut]
         public void PublishFeedback(Feedback feedback)
         {
-            _feedbackService.PublishFeedback(feedback);
+            _feedbackController.Edit(feedback);
         }
 
     }

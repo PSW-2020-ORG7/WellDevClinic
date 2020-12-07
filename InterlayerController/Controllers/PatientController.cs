@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using bolnica.Controller;
 using bolnica.Service;
 using Microsoft.AspNetCore.Mvc;
 using Model.Users;
@@ -14,18 +15,18 @@ namespace InterlayerController.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     {
-        private readonly IPatientService _patientService;
+        private readonly IPatientController _patientController;
 
-        public PatientController(IPatientService patientService)
+        public PatientController(IPatientController patientController)
         {
-            _patientService = patientService;
+            _patientController = patientController;
         }
 
         [HttpGet]
         [Route("{id?}")]
         public Patient GetPatientById(long id)
         {
-            Patient patient = _patientService.Get(id);
+            Patient patient = _patientController.Get(id);
             patient.Id = id;
             return patient;
         }
@@ -34,7 +35,7 @@ namespace InterlayerController.Controllers
         [Route("patients_for_blocking")]
         public List<PatientDTO> GetPatientsForBlocking()
         {
-            List<Patient> patients = _patientService.GetPatientsForBlocking();
+            List<Patient> patients = _patientController.GetPatientsForBlocking();
             List<PatientDTO> result = new List<PatientDTO>();
             foreach (Patient patient in patients)
             {
@@ -47,7 +48,7 @@ namespace InterlayerController.Controllers
         [Route("blocked_patients")]
         public List<PatientDTO> GetBlockedPatients()
         {
-            List<Patient> patients = _patientService.GetBlockedPatients();
+            List<Patient> patients = _patientController.GetBlockedPatients();
             List<PatientDTO> result = new List<PatientDTO>();
             foreach (Patient patient in patients)
             {
@@ -60,9 +61,9 @@ namespace InterlayerController.Controllers
         [Route("{id?}")]
         public void BlockPatient(long id)
         {
-            Patient patient = _patientService.Get(id);
+            Patient patient = _patientController.Get(id);
             patient.Blocked = true;
-            _patientService.Edit(patient);
+            _patientController.Edit(patient);
         }
 
     }

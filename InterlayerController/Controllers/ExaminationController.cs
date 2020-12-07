@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using bolnica.Controller;
 using bolnica.Model.Adapters;
 using bolnica.Model.dtos;
 using bolnica.Service;
@@ -16,11 +17,11 @@ namespace InterlayerController.Controllers
     [ApiController]
     public class ExaminationController : ControllerBase
     {
-        private readonly IExaminationService _examinationService;
+        private readonly IExaminationController _examinationController;
 
-        public ExaminationController(IExaminationService examinationService)
+        public ExaminationController(IExaminationController examinationController)
         {
-            _examinationService = examinationService;
+            _examinationController = examinationController;
         }
 
         [HttpGet]
@@ -28,7 +29,7 @@ namespace InterlayerController.Controllers
         public IActionResult GetFinishedxaminations()
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = (List<Examination>)_examinationService.GetAllPrevious();
+            List<Examination> result = (List<Examination>)_examinationController.GetAllPrevious();
             foreach (Examination examination in result)
             {
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
@@ -47,7 +48,7 @@ namespace InterlayerController.Controllers
         public IActionResult GetFinishedxaminationsByUser([FromBody] Patient user)
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = (List<Examination>)_examinationService.GetFinishedxaminationsByUser(user);
+            List<Examination> result = (List<Examination>)_examinationController.GetFinishedxaminationsByUser(user);
             foreach (Examination examination in result)
             {
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
@@ -63,7 +64,7 @@ namespace InterlayerController.Controllers
         public IActionResult SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = _examinationService.SearchPreviousExamination(documentsDTO.Date, documentsDTO.Doctor, documentsDTO.Drug, documentsDTO.Specialist, documentsDTO.User);
+            List<Examination> result = _examinationController.SearchPreviousExamination(documentsDTO.Date, documentsDTO.Doctor, documentsDTO.Drug, documentsDTO.Specialist, documentsDTO.User);
             foreach (Examination examination in result)
             {
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
@@ -77,7 +78,7 @@ namespace InterlayerController.Controllers
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
 
-            List<Examination> result = _examinationService.SearchPreviousExaminations(documentsDTO2.Date, documentsDTO2.Doctor, documentsDTO2.Drug, documentsDTO2.Specialist, documentsDTO2.Radio1, documentsDTO2.Radio2);
+            List<Examination> result = _examinationController.SearchPreviousExaminations(documentsDTO2.Date, documentsDTO2.Doctor, documentsDTO2.Drug, documentsDTO2.Specialist, documentsDTO2.Radio1, documentsDTO2.Radio2);
             foreach (Examination examination in result)
             {
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));

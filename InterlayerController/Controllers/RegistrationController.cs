@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using bolnica.Controller;
 using Microsoft.AspNetCore.Mvc;
 using Model.Users;
 
@@ -12,11 +13,11 @@ namespace InterlayerController.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        private readonly bolnica.Service.IPatientService _patientService;
+        private readonly IPatientController _patientController;
 
-        public RegistrationController(bolnica.Service.IPatientService s)
+        public RegistrationController(IPatientController patientController)
         {
-            _patientService = s;
+            _patientController = patientController;
         }
 
 
@@ -30,12 +31,12 @@ namespace InterlayerController.Controllers
         {
             Patient retVal;
 
-            Patient patient = _patientService.CheckExistence(entity.Jmbg, entity.Username, entity.Email);
+            Patient patient = _patientController.CheckExistence(entity.Jmbg, entity.Username, entity.Email);
             if (patient == null)
             {
                 String token = GenerateToken();
                 entity.VerificationToken = token;
-                _patientService.Save(entity);
+                _patientController.Save(entity);
                 SendVerification(entity.Email, entity.Jmbg, token);
                 retVal = entity;
             }
@@ -85,7 +86,7 @@ namespace InterlayerController.Controllers
                .Select(token => token[random.Next(token.Length)]).ToArray());
 
             string authToken = resultToken.ToString();
-            Patient patient = _patientService.GetPatientToken(authToken);
+            Patient patient = _patientController.GetPatientToken(authToken);
             if (patient != null)
             {
                 authToken = GenerateToken();

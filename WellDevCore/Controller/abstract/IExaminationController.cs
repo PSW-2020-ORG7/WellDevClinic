@@ -16,5 +16,7 @@ namespace bolnica.Controller
         List<Examination> GetFinishedxaminationsByUser(User user);
         List<Examination> GetExaminationsByFilter(ExaminationDTO examinationDTO, Boolean upcomingOnly);
         List<Examination> GetAllPrevious();
+        List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user);
+        List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2);
     }
 }
