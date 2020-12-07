@@ -10,15 +10,15 @@ namespace Service
    public class DoctorService : IDoctorService
    {
         public IDoctorGradeService _doctorGradeService { get; set; }
-        public IBusinessDayService _businessDayService;
+        //public IBusinessDayService _businessDayService;
         public IArticleService _articleService;
         private readonly IDoctorRepository _doctorRepository;
 
-        public DoctorService(IDoctorRepository doctorRepository, IDoctorGradeService doctorGradeService, IBusinessDayService businessDayService, IArticleService articleService)
+        public DoctorService(IDoctorRepository doctorRepository, IDoctorGradeService doctorGradeService,  IArticleService articleService)
         {
             _doctorRepository = doctorRepository;
             _doctorGradeService = doctorGradeService;
-            _businessDayService = businessDayService;
+           // _businessDayService = businessDayService;
             _articleService = articleService;
         }
 
@@ -29,16 +29,16 @@ namespace Service
 
         public void Delete(Doctor entity)
         {
-            DeleteDoctorsBusinessDays(entity);
+            //DeleteDoctorsBusinessDays(entity);
             _articleService.DeleteArticlesByDoctor(entity);
             _doctorRepository.Delete(entity);
         }
 
-        private void DeleteDoctorsBusinessDays(Doctor entity)
+        /*private void DeleteDoctorsBusinessDays(Doctor entity)
         {
             foreach (BusinessDay businessDay in entity.BusinessDay)
                 _businessDayService.Delete(businessDay);
-        }
+        }*/
 
         public void Edit(Doctor entity)
         {

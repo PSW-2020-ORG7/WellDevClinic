@@ -8,6 +8,8 @@ namespace Model.Director
    {
         public string Name { get; set; }
 
+        public RoomType() { }
+
         public RoomType(string name)
         {
             

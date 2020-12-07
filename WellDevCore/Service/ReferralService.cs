@@ -33,12 +33,18 @@ namespace Service
 
         public IEnumerable<Referral> GetAll()
         {
-            return _referralRepository.GetAll();
+            return _referralRepository.GetEager();
         }
 
         public Referral Save(Referral entity)
         {
             return _referralRepository.Save(entity);
+        }
+
+        public Boolean CheckSpecialist(String specialistName, Referral referral)
+        {
+            String specialist = referral.Doctor.FullName;
+            return specialist.ToLower().Contains(specialistName.ToLower());
         }
     }
 }

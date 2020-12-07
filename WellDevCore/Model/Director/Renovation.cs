@@ -9,11 +9,11 @@ namespace Model.Director
    public class Renovation : IIdentifiable<long>
    {
         public string  Description { get; set; }
-        public RenovationStatus Status { get; set; }
+        public virtual RenovationStatus Status { get; set; }
       
-        public Period Period { get; set; }
+        public virtual Period Period { get; set; }
 
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
         
         public long Id { get; set; }
 

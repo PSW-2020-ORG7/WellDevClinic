@@ -4,7 +4,7 @@ using Repository;
 using System;
 using System.Collections.Generic;
 
-namespace Service
+namespace bolnica.Service
 {
    public class EquipmentService : IEquipmentService
    {
@@ -36,7 +36,7 @@ namespace Service
 
        public IEnumerable<Equipment> GetAll()
         {
-            return _repository.GetAll();
+            return _repository.GetEager();
         }
 
         public Equipment Get(long id)

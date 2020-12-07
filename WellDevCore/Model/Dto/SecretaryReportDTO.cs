@@ -7,8 +7,8 @@ namespace Model.Dto
 {
    public class SecretaryReportDTO
    {
-      public List<Operation> Operations { get; set; }
-      public List<Examination> Examinations { get; set; }
+      public virtual List<Operation> Operations { get; set; }
+      public virtual List<Examination> Examinations { get; set; }
         public long Id { get; set; }
 
         public SecretaryReportDTO()

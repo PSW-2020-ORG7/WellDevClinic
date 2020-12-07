@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using bolnica.Model.Dto;
 using Model.Doctor;
 using Model.Users;
 
@@ -53,12 +54,28 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
-        public double GetAverageGrade(Doctor doctor)
+        public List<GradeDTO> GetAverageGrade(DoctorGrade doctor)
         {
             if (AuthorizedUsers["GetAverageGrade"].SingleOrDefault(x => x == Role) != null)
                 return DoctorGradeController.GetAverageGrade(doctor);
             else
-                return 0;
+                return null;
+        }
+
+        public List<GradeDTO> GetAverageGradeDoctor(List<DoctorGrade> surveys)
+        {
+            if (AuthorizedUsers["GetAverageGradeDoctor"].SingleOrDefault(x => x == Role) != null)
+                return DoctorGradeController.GetAverageGradeDoctor(surveys);
+            else
+                return null;
+        }
+
+        public List<DoctorGrade> GetByDoctor(string doctor)
+        {
+            if (AuthorizedUsers["GetByDoctor"].SingleOrDefault(x => x == Role) != null)
+                return DoctorGradeController.GetByDoctor(doctor);
+            else
+                return null;
         }
 
         public DoctorGrade Save(DoctorGrade entity)

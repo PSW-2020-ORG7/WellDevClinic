@@ -8,10 +8,10 @@ namespace Model.PatientSecretary
 {
    public class PatientFile : IIdentifiable<long>
     {
-      public List<Hospitalization> Hospitalization { get; set; }
-      public List<Operation> Operation { get; set; }
-      public List<Examination> Examination { get; set; }
-      public List<Allergy> Allergy { get; set; }
+      public virtual List<Hospitalization> Hospitalization { get; set; }
+      public virtual List<Operation> Operation { get; set; }
+      public virtual List<Examination> Examination { get; set; }
+      public virtual List<Allergy> Allergy { get; set; }
 
         public long Id { get; set; }
 

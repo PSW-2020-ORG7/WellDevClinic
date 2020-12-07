@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using WpfApp.Model;
+using PSW_Wpf_app.Model;
 using System.Windows;
 using System.Windows.Input;
 using PSW_Wpf_app.Drawing;
+using System;
 
-namespace WpfApp.ViewModel
+namespace PSW_Wpf_app.ViewModel
 {
     public class ChoesenFloorViewModel : BindableBase
     {
@@ -53,6 +54,36 @@ namespace WpfApp.ViewModel
                 }
             }
         }
+
+        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms)
+        {
+            choosenBuilding = build;
+            choosenFloor = floor;
+            floors = getFloor(ChoosenBuilding);
+
+            DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
+
+            bool flag = false;
+            foreach (FloorElement f in floors)
+            {
+                flag = false;
+                if (f.Floor.Equals(choosenFloor))
+                {
+                    foreach (FloorElement foundRoom in rooms)
+                    {
+                        if (foundRoom.Floor == choosenFloor && foundRoom.Name == f.Name)
+                        {
+                            flag = true;
+                        }
+                    }
+
+                    Shape shape = floorDrawer.DrawElement(f, flag);
+                    shape.MouseDown += openInfo;
+                    canvasFloor.Children.Add(shape);
+                }
+            }
+        }
+
 
         private List<FloorElement> getFloor(object name)
         {

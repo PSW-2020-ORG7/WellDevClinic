@@ -23,6 +23,7 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["Edit"] = new List<String>() { "Secretary" };
             AuthorizedUsers["Get"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetAll"] = new List<String>() { "Doctor", "Patient", "Secretary" };
+            AuthorizedUsers["GetAllPrevious"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetExaminationsByFilter"] = new List<String>() { "Secretary" };
             AuthorizedUsers["GetFinishedxaminationsByUser"] = new List<String>() { "Doctor" };
             AuthorizedUsers["GetUpcomingExaminationsByUser"] = new List<String>() { "Patient", "Doctor", "Director" };
@@ -54,6 +55,14 @@ namespace bolnica.Controller.decorators
         {
             if (AuthorizedUsers["GetAll"].SingleOrDefault(x => x == Role) != null)
                 return ExaminationController.GetAll();
+            else
+                return null;
+        }
+
+        public List<Examination> GetAllPrevious()
+        {
+            if (AuthorizedUsers["GetAllPrevious"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.GetAllPrevious();
             else
                 return null;
         }
@@ -94,6 +103,22 @@ namespace bolnica.Controller.decorators
         {
             if (AuthorizedUsers["SaveFinishedExamination"].SingleOrDefault(x => x == Role) != null)
                 return ExaminationController.SaveFinishedExamination(examination);
+            else
+                return null;
+        }
+
+        public List<Examination> SearchPreviousExamination(string date, string doctorName, string drugName, string speacialistName, User user)
+        {
+            if (AuthorizedUsers["SearchPreviousExamination"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.SearchPreviousExamination(date,doctorName,drugName,speacialistName,user);
+            else
+                return null;
+        }
+
+        public List<Examination> SearchPreviousExaminations(string date, string doctorName, string drugName, string speacialistName, bool Radio1, bool Radio2)
+        {
+            if (AuthorizedUsers["SearchPreviousExaminations"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.SearchPreviousExaminations(date, doctorName, drugName, speacialistName,Radio1,Radio2);
             else
                 return null;
         }

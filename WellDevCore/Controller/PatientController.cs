@@ -5,16 +5,22 @@ using Model.Users;
 using System;
 using System.Collections.Generic;
 
-namespace Controller
+namespace bolnica.Controller
 {
     public class PatientController : IPatientController
     {
         private readonly IPatientService _patientService;
 
+        public PatientController()
+        {
+
+        }
+
         public PatientController(IPatientService patientService)
         {
             _patientService = patientService;
         }
+
         public Patient ClaimAccount(Patient patient)
         {
             return _patientService.ClaimAccount(patient);
@@ -54,5 +60,37 @@ namespace Controller
         {
             return _patientService.Save(entity);
         }
+
+        public Patient CheckExistence(String jmbg, String username, String email)
+        {
+            return _patientService.CheckExistence(jmbg, username, email);
+        }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            return _patientService.GetPatientsForBlocking();
+        }
+
+        public List<Patient> GetBlockedPatients()
+        {
+            return _patientService.GetBlockedPatients();
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            return _patientService.GetPatientToken(token);
+        }
+
+        /*
+        public Patient GetPatientByMail(string email)
+        {
+            return _patientService.GetPatientByMail(email);
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            return _patientService.GetPatientByUsername(username);
+        }
+        */
     }
 }

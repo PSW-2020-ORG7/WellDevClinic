@@ -10,12 +10,12 @@ namespace Model.Doctor
 {
    public class Operation : IIdentifiable<long>
     {
-        public Model.Users.Doctor Doctor { get; set; }
+        public virtual Model.Users.Doctor Doctor { get; set; }
         public String Description { get; set; }
-        public Period Period { get; set; }
-        public Room Room { get; set; }
+        public virtual Period Period { get; set; }
+        public virtual Room Room { get; set; }
         public long Id { get; set; }
-        public User Patient { get; set; }
+        public virtual User Patient { get; set; }
 
         public Operation( long id, User patient, Users.Doctor doctor, string description, Period period, Room room)
         {

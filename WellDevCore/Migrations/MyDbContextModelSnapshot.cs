@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bolnica.Model;
 
-namespace bolnica.Migrations
+namespace WellDevCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
     partial class MyDbContextModelSnapshot : ModelSnapshot
@@ -139,8 +139,8 @@ namespace bolnica.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<double>("AverageGrade")
-                        .HasColumnType("double");
+                    b.Property<string>("Doctor")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("NumberOfGrades")
                         .HasColumnType("int");
@@ -251,6 +251,9 @@ namespace bolnica.Migrations
 
                     b.Property<long?>("PeriodId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -434,6 +437,12 @@ namespace bolnica.Migrations
                     b.Property<long?>("AnemnesisId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("Canceled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("CanceledDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<long?>("DiagnosisId")
                         .HasColumnType("bigint");
 
@@ -441,6 +450,9 @@ namespace bolnica.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PatientFileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PatientId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PeriodId")
@@ -464,9 +476,6 @@ namespace bolnica.Migrations
                     b.Property<long?>("TherapyId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AnemnesisId");
@@ -476,6 +485,8 @@ namespace bolnica.Migrations
                     b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientFileId");
+
+                    b.HasIndex("PatientId");
 
                     b.HasIndex("PeriodId");
 
@@ -490,8 +501,6 @@ namespace bolnica.Migrations
                     b.HasIndex("SecretaryReportDTOId");
 
                     b.HasIndex("TherapyId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Examination");
                 });
@@ -651,46 +660,6 @@ namespace bolnica.Migrations
                     b.ToTable("BusinessDay");
                 });
 
-            modelBuilder.Entity("Model.Users.Person", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("AddressId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Jmbg")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("Person");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
-                });
-
             modelBuilder.Entity("Model.Users.State", b =>
                 {
                     b.Property<long>("Id")
@@ -730,6 +699,54 @@ namespace bolnica.Migrations
                     b.ToTable("Town");
                 });
 
+            modelBuilder.Entity("Model.Users.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("AddressId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Jmbg")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("User");
+
+                    b.HasDiscriminator<int>("UserType");
+                });
+
             modelBuilder.Entity("bolnica.Model.Dto.BusinessDayDTO", b =>
                 {
                     b.Property<long>("Id")
@@ -749,6 +766,33 @@ namespace bolnica.Migrations
                     b.HasIndex("PeriodId");
 
                     b.ToTable("BusinessDayDTO");
+                });
+
+            modelBuilder.Entity("bolnica.Model.Dto.GradeDTO", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DoctorGradeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DoctorGradeId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Grade")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorGradeId");
+
+                    b.HasIndex("DoctorGradeId1");
+
+                    b.ToTable("gradeDTO");
                 });
 
             modelBuilder.Entity("bolnica.Model.Dto.NotifyDoctorBusinessDay", b =>
@@ -841,27 +885,11 @@ namespace bolnica.Migrations
                     b.ToTable("Feedback");
                 });
 
-            modelBuilder.Entity("Model.Users.User", b =>
-                {
-                    b.HasBaseType("Model.Users.Person");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasDiscriminator().HasValue("User");
-                });
-
             modelBuilder.Entity("Model.Users.Director", b =>
                 {
                     b.HasBaseType("Model.Users.User");
 
-                    b.HasDiscriminator().HasValue("Director");
+                    b.HasDiscriminator().HasValue(4);
                 });
 
             modelBuilder.Entity("Model.Users.Doctor", b =>
@@ -878,26 +906,50 @@ namespace bolnica.Migrations
 
                     b.HasIndex("SpecialtyId");
 
-                    b.HasDiscriminator().HasValue("Doctor");
+                    b.HasDiscriminator().HasValue(2);
                 });
 
             modelBuilder.Entity("Model.Users.Patient", b =>
                 {
                     b.HasBaseType("Model.Users.User");
 
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("BloodType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<long>("DoctorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Race")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("Validation")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("VerificationToken")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<long?>("patientFileId")
                         .HasColumnType("bigint");
 
                     b.HasIndex("patientFileId");
 
-                    b.HasDiscriminator().HasValue("Patient");
+                    b.HasDiscriminator().HasValue(1);
                 });
 
             modelBuilder.Entity("Model.Users.Secretary", b =>
                 {
                     b.HasBaseType("Model.Users.User");
 
-                    b.HasDiscriminator().HasValue("Secretary");
+                    b.HasDiscriminator().HasValue(3);
                 });
 
             modelBuilder.Entity("Model.Director.Renovation", b =>
@@ -1072,6 +1124,10 @@ namespace bolnica.Migrations
                         .WithMany("Examination")
                         .HasForeignKey("PatientFileId");
 
+                    b.HasOne("Model.Users.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
                     b.HasOne("Model.PatientSecretary.Period", "Period")
                         .WithMany()
                         .HasForeignKey("PeriodId");
@@ -1099,10 +1155,6 @@ namespace bolnica.Migrations
                     b.HasOne("Model.PatientSecretary.Therapy", "Therapy")
                         .WithMany()
                         .HasForeignKey("TherapyId");
-
-                    b.HasOne("Model.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Model.PatientSecretary.Ingredient", b =>
@@ -1155,18 +1207,18 @@ namespace bolnica.Migrations
                         .HasForeignKey("roomId");
                 });
 
-            modelBuilder.Entity("Model.Users.Person", b =>
-                {
-                    b.HasOne("Model.Users.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
-                });
-
             modelBuilder.Entity("Model.Users.Town", b =>
                 {
                     b.HasOne("Model.Users.State", "State")
                         .WithMany()
                         .HasForeignKey("StateId");
+                });
+
+            modelBuilder.Entity("Model.Users.User", b =>
+                {
+                    b.HasOne("Model.Users.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
                 });
 
             modelBuilder.Entity("bolnica.Model.Dto.BusinessDayDTO", b =>
@@ -1178,6 +1230,17 @@ namespace bolnica.Migrations
                     b.HasOne("Model.PatientSecretary.Period", "Period")
                         .WithMany()
                         .HasForeignKey("PeriodId");
+                });
+
+            modelBuilder.Entity("bolnica.Model.Dto.GradeDTO", b =>
+                {
+                    b.HasOne("Model.Doctor.DoctorGrade", null)
+                        .WithMany("AverageGrade")
+                        .HasForeignKey("DoctorGradeId");
+
+                    b.HasOne("Model.Doctor.DoctorGrade", null)
+                        .WithMany("Grades")
+                        .HasForeignKey("DoctorGradeId1");
                 });
 
             modelBuilder.Entity("bolnica.Model.Dto.NotifyDoctorBusinessDay", b =>

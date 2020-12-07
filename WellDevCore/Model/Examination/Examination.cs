@@ -10,22 +10,26 @@ namespace Model.PatientSecretary
    public class Examination : IIdentifiable<long>
    {
         public long Id { get; set; }
-        public User User { get; set; }
-        public Model.Users.Doctor Doctor { get; set; }
-        public Period Period { get; set; }
-        public Diagnosis Diagnosis { get; set; }
-        public Prescription Prescription { get; set; }
-        public Anemnesis Anemnesis { get; set; }
-        public Therapy Therapy { get; set; }
-        public Referral Refferal { get; set; }
+        public virtual Patient Patient { get; set; }
+        public virtual Model.Users.Doctor Doctor { get; set; }
+        public virtual Period Period { get; set; }
+        public virtual Diagnosis Diagnosis { get; set; }
+        public virtual Prescription Prescription { get; set; }
+        public virtual Anemnesis Anemnesis { get; set; }
+        public virtual Therapy Therapy { get; set; }
+        public virtual Referral Refferal { get; set; }
+        public Boolean Canceled { get; set; }
+        public DateTime CanceledDate { get; set; }
 
-        public Examination(long id, User user, Users.Doctor doctor, Period period, Diagnosis diagnosis) : this(id)
+        public Examination(long id, Patient user, Users.Doctor doctor, Period period, Diagnosis diagnosis) : this(id)
         {
-            User = user;
+            Patient = user;
             Doctor = doctor;
             Period = period;
             Diagnosis = diagnosis;
         }
+
+
 
         public Examination(long id,  Users.Doctor doctor, Period period)
         {
@@ -34,18 +38,26 @@ namespace Model.PatientSecretary
             Period = period;
         }
 
-        public Examination(User patient, Users.Doctor doctor, Period period)
+        public Examination(Patient patient, Users.Doctor doctor, Period period)
         {
-            User = patient;
+            Patient = patient;
             Doctor = doctor;
             Period = period;
         }
 
-
-        public Examination(long id, User user,Users.Doctor doctor, Period period, Diagnosis diagnosis, Anemnesis anemnesis, Therapy therapy, Referral refferal, Prescription prescription)
+        public Examination(long id, Patient patient, Users.Doctor doctor, Period period)
         {
             Id = id;
-            User = user;
+            Patient = patient;
+            Doctor = doctor;
+            Period = period;
+           ;
+        }
+
+        public Examination(long id, Patient user,Users.Doctor doctor, Period period, Diagnosis diagnosis, Anemnesis anemnesis, Therapy therapy, Referral refferal, Prescription prescription)
+        {
+            Id = id;
+            Patient = user;
             Doctor = doctor;
             Period = period;
             Diagnosis = diagnosis;
@@ -55,9 +67,9 @@ namespace Model.PatientSecretary
             Refferal = refferal;
         } 
         
-        public Examination(User user, Users.Doctor doctor, Period period, Diagnosis diagnosis, Anemnesis anemnesis, Therapy therapy, Referral refferal, Prescription prescription)
+        public Examination(Patient user, Users.Doctor doctor, Period period, Diagnosis diagnosis, Anemnesis anemnesis, Therapy therapy, Referral refferal, Prescription prescription)
         {
-            User = user;
+            Patient = user;
             Doctor = doctor;
             Period = period;
             Diagnosis = diagnosis;
@@ -70,6 +82,14 @@ namespace Model.PatientSecretary
         public Examination(long id)
         {
             Id = id;
+        }
+
+        public Examination(long id, Patient patient, bool canceled, DateTime date)
+        {
+            Id = id;
+            Patient = patient;
+            Canceled = canceled;
+            CanceledDate = date;
         }
 
         public Examination() { }

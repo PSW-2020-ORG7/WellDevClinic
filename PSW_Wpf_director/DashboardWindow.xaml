@@ -23,6 +23,7 @@
 
                                         </Image>
                                         <Button x:Name="changePicBtn" MaxWidth="150" Margin="0,10,0,0" Click="changePicBtn_Click">Izmeni sliku</Button>
+                                        <Button Content="Map" Height="28" Width="151" Click="Button_Map"/>
                                     </StackPanel>
                                     <GroupBox DockPanel.Dock="Top" x:Name="groupBoxNalog" Header="Vaši podaci" Margin="100,10,10,0" materialDesign:ShadowAssist.ShadowDepth="Depth1" materialDesign:ColorZoneAssist.Mode="Light">
                                         <StackPanel Orientation="Vertical">

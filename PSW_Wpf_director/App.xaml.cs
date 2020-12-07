@@ -1,5 +1,6 @@
 ﻿using bolnica.Controller;
 using bolnica.Controller.decorators;
+using bolnica.Model;
 using bolnica.Repository;
 using bolnica.Repository.CSV.Converter;
 using bolnica.Service;
@@ -25,6 +26,8 @@ namespace PSW_Wpf_director
     /// </summary>
     public partial class App : Application
     {
+        private readonly MyDbContext myDbContext;
+
         private const String CSV_DELIMITER = ",";
         private const String CSV_DELIMITER2 = "|";
         private const String CSV_DICTIONARY_DELIMITER = ";";
@@ -136,82 +139,70 @@ namespace PSW_Wpf_director
             IReportController ReportController;
 
 
-            DoctorGradeRepository doctorGradeRepository = new DoctorGradeRepository(new CSVStream<DoctorGrade>(DOCTOR_GRADE_FILE, new DoctorGradeCSVConverter(CSV_DELIMITER2, CSV_DICTIONARY_DELIMITER, CSV_ARRAY_DELIMITER)), new LongSequencer());
-            SpecialityRepository specialityRepository = new SpecialityRepository(new CSVStream<Speciality>(SPECIALITY_FILE, new SpecialityCSVConverter(CSV_DELIMITER)), new LongSequencer());
-            SymptomRepository symptomRepository = new SymptomRepository(new CSVStream<Symptom>(SYMPTOM_FILE, new SymptomCSVConverter(CSV_DELIMITER)), new LongSequencer());
-            DiagnosisRepository diagnosisRepository = new DiagnosisRepository(new CSVStream<Diagnosis>(DIAGNOSIS_FILE, new DiagnosisCSVConverter(CSV_DELIMITER)), new LongSequencer(), symptomRepository);
-            IngredientRepository ingredientRepository = new IngredientRepository(new CSVStream<Ingredient>(INGREDIENT_FILE, new IngredientsCSVConverter(CSV_DELIMITER)), new LongSequencer());
-            DrugRepository drugRepository = new DrugRepository(new CSVStream<Drug>(DRUG_FILE, new DrugCSVConverter(CSV_DELIMITER)), new LongSequencer(), ingredientRepository);
-            PrescriptionRepository prescriptionRepository = new PrescriptionRepository(new CSVStream<Prescription>(PRESCRIPTION_FILE, new PrescriptionCSVConverter(CSV_DELIMITER, CSV_ARRAY_DELIMITER)), new LongSequencer(), drugRepository);
-            TherapyRepository therapyRepository = new TherapyRepository(new CSVStream<Therapy>(THERAPY_FILE, new TherapyCSVConverter("|", ":")), new LongSequencer(), drugRepository);
-            RoomTypeRepository roomTypeRepository = new RoomTypeRepository(new CSVStream<RoomType>(ROOMTYPE_FILE, new RoomTypeCSVConverter(CSV_DELIMITER)), new LongSequencer());
-            EquipmentRepository equipmentRepository = new EquipmentRepository(new CSVStream<Equipment>(EQUIPMENT_FILE, new EquipmentCSVConverter(CSV_DELIMITER)), new LongSequencer());
-            RoomRepository roomRepository = new RoomRepository(new CSVStream<Room>(ROOM_FILE, new RoomCSVConverter(CSV_DELIMITER)), new LongSequencer(), roomTypeRepository, equipmentRepository);
-            BusinessDayRepository businessDayRepository = new BusinessDayRepository(new CSVStream<BusinessDay>(BUSSINESDAY_FILE, new BusinessDayCSVConverter(CSV_DELIMITER)), new LongSequencer(), roomRepository);
-            RenovationRepository renovationRepository = new RenovationRepository(new CSVStream<Renovation>(RENOVATION_FILE, new RenovationCSVConverter(CSV_DELIMITER2)), new LongSequencer(), roomRepository);
-            AddressRepository addressRepository = new AddressRepository(new CSVStream<Address>(ADDRESS_FILE, new AddressCSVConverter(CSV_DELIMITER)), new LongSequencer());
-            TownRepository townRepository = new TownRepository(new CSVStream<Town>(TOWN_FILE, new TownCSVConverter(CSV_DELIMITER, CSV_DELIMITER2)), new LongSequencer(), addressRepository);
-            StateRepository stateRepository = new StateRepository(new CSVStream<State>(STATE_FILE, new StateCSVConverter(CSV_DELIMITER, CSV_ARRAY_DELIMITER)), new LongSequencer(), townRepository);
-            DoctorRepository doctorRepository = new DoctorRepository(new CSVStream<Doctor>(DOCTOR_FILE, new DoctorCSVConverter(CSV_DELIMITER)), new LongSequencer(), businessDayRepository, specialityRepository, doctorGradeRepository, addressRepository, townRepository, stateRepository);
-            ArticleRepository articleRepository = new ArticleRepository(new CSVStream<Article>(ARTICLE_FILE, new ArticleCSVConverter(CSV_DELIMITER2)), new LongSequencer(), doctorRepository);
-
+            IDoctorGradeRepository doctorGradeRepository = new DoctorGradeRepository(myDbContext);
+            ISpecialityRepository specialityRepository = new SpecialityRepository(myDbContext);
+            ISymptomRepository symptomRepository = new SymptomRepository(myDbContext);
+            IDiagnosisRepository diagnosisRepository = new DiagnosisRepository(symptomRepository, myDbContext);
+            IngredientRepository ingredientRepository = new IngredientRepository(myDbContext);
+            DrugRepository drugRepository = new DrugRepository(ingredientRepository, myDbContext);
+            PrescriptionRepository prescriptionRepository = new PrescriptionRepository(drugRepository, myDbContext);
+            TherapyRepository therapyRepository = new TherapyRepository(drugRepository, myDbContext);
+            RoomTypeRepository roomTypeRepository = new RoomTypeRepository(myDbContext);
+            EquipmentRepository equipmentRepository = new EquipmentRepository(myDbContext);
+            RoomRepository roomRepository = new RoomRepository(roomTypeRepository, equipmentRepository, myDbContext);
+            BusinessDayRepository businessDayRepository = new BusinessDayRepository(roomRepository, myDbContext);
+            RenovationRepository renovationRepository = new RenovationRepository(roomRepository, myDbContext);
+            AddressRepository addressRepository = new AddressRepository(myDbContext);
+            TownRepository townRepository = new TownRepository(addressRepository, myDbContext);
+            StateRepository stateRepository = new StateRepository(townRepository, myDbContext);
+            DoctorRepository doctorRepository = new DoctorRepository(businessDayRepository, specialityRepository, doctorGradeRepository, addressRepository, townRepository, stateRepository, myDbContext);
+            ArticleRepository articleRepository = new ArticleRepository(doctorRepository, myDbContext);
+            SecretaryRepository secretaryRepository = new SecretaryRepository(addressRepository, townRepository, stateRepository, myDbContext);
+            DirectorRepository directorRepository = new DirectorRepository(addressRepository, townRepository, stateRepository, myDbContext);
             businessDayRepository._doctorRepository = doctorRepository;
-
-            ReferralRepository referralRepository = new ReferralRepository(new CSVStream<Referral>(REFERRAL_FILE, new ReferralCSVConverter(CSV_DELIMITER)), new LongSequencer(), doctorRepository);
-            PatientFileRepository patientFileRepository = new PatientFileRepository(new CSVStream<PatientFile>(PATIENTFILE_FILE, new PatientFileCSVConverter(CSV_DELIMITER, CSV_DELIMITER2)), new LongSequencer());
-            PatientRepository patientRepository = new PatientRepository(new CSVStream<Patient>(PATIENT_FILE, new PatientCSVConverter(CSV_DELIMITER)), new LongSequencer(), patientFileRepository, addressRepository, townRepository, stateRepository);
-            HospitalizationRepository hospitalizationRepository = new HospitalizationRepository(new CSVStream<Hospitalization>(HOSPITALIZATION_FILE, new HospitalizationCSVConverter(CSV_DELIMITER)), new LongSequencer(), roomRepository, patientRepository, doctorRepository);
-            OperationRepository operationRepository = new OperationRepository(new CSVStream<Operation>(OPERATION_FILE, new OperationCSVConverter(CSV_DELIMITER)), new LongSequencer(), roomRepository, doctorRepository, patientRepository);
-            ExaminationUpcomingRepository examinationUpcomingRepository = new ExaminationUpcomingRepository(new CSVStream<Examination>(EXAM_UPCOMING_FILE, new UpcomingExaminationCSVConverter(CSV_DELIMITER)), new LongSequencer(), doctorRepository, patientRepository);
-            ExaminationPreviousRepository examinationPreviousRepository = new ExaminationPreviousRepository(new CSVStream<Examination>(EXAM_PREVIOUS_FILE, new PreviousExaminationCSVConverter("|")), new LongSequencer(), doctorRepository, patientRepository, diagnosisRepository, prescriptionRepository, therapyRepository, referralRepository);
+            ReferralRepository referralRepository = new ReferralRepository(doctorRepository, myDbContext);
+            PatientFileRepository patientFileRepository = new PatientFileRepository(myDbContext);
+            PatientRepository patientRepository = new PatientRepository(patientFileRepository, addressRepository, townRepository, stateRepository, myDbContext);
+            HospitalizationRepository hospitalizationRepository = new HospitalizationRepository(roomRepository, doctorRepository, myDbContext);
+            OperationRepository operationRepository = new OperationRepository(roomRepository, doctorRepository, myDbContext);
+            IExaminationUpcomingRepository examinationUpcomingRepository = new ExaminationUpcomingRepository(doctorRepository, patientRepository, myDbContext);
+            IExaminationPreviousRepository examinationPreviousRepository = new ExaminationPreviousRepository(doctorRepository, diagnosisRepository, prescriptionRepository, therapyRepository, referralRepository, myDbContext);
             patientFileRepository._hospitalizationRepository = hospitalizationRepository;
             patientFileRepository._operationRepository = operationRepository;
             patientFileRepository._examinationPreviousRepository = examinationPreviousRepository;
-            AddressService addressService = new AddressService(addressRepository);
-            StateService stateService = new StateService(stateRepository);
-            TownService townService = new TownService(townRepository);
+            IFeedbackRepository feedbackRepository = new FeedbackRepository(myDbContext);
+            IPatientNotificationRepository patientNotificationRepository = new PatientNotificationRepository(patientRepository, myDbContext);
 
-            var directorRepository = new DirectorRepository(new CSVStream<Director>(DIRECTOR_FILE, new DirectorCSVConverter(CSV_DELIMITER)), new LongSequencer(), addressRepository, townRepository, stateRepository);
-            var directorService = new DirectorService(directorRepository);
-
-
-            var secretaryRepository = new SecretaryRepository(new CSVStream<Secretary>(SECRETARY_FILE, new SecretaryCSVConverter(CSV_DELIMITER)), new LongSequencer(), addressRepository, townRepository, stateRepository);
-            var secretaryService = new SecretaryService(secretaryRepository);
-
-
-            DoctorService doctorService = new DoctorService(doctorRepository);
-            DoctorGradeService doctorGradeService = new DoctorGradeService(doctorGradeRepository);
-            SpecialityService specialityService = new SpecialityService(specialityRepository);
-            HospitalizationService hospitalizationService = new HospitalizationService(hospitalizationRepository);
-            OperationService operationService = new OperationService(operationRepository);
-            DiagnosisService diagnosisService = new DiagnosisService(diagnosisRepository);
-            PrescriptionService prescriptionService = new PrescriptionService(prescriptionRepository);
-            ReferralService referralService = new ReferralService(referralRepository);
-            SymptomService symptomService = new SymptomService(symptomRepository);
-            TherapyService therapyService = new TherapyService(therapyRepository);
-            ArticleService articleService = new ArticleService(articleRepository);
-
-            ExaminationService examinationService = new ExaminationService(examinationUpcomingRepository, examinationPreviousRepository, diagnosisService, prescriptionService, referralService, symptomService, therapyService);
-            //examinationService._diagnosisService = diagnosisService;
-            //examinationService._prescriptionService = prescriptionService;
-            //examinationService._referralService = referralService;
-            //examinationService._symptomService = symptomService;
-            //examinationService._therapyService = therapyService;
-            DrugService drugService = new DrugService(drugRepository);
-            IngredientService ingredientService = new IngredientService(ingredientRepository);
-            PatientFileService patientFileService = new PatientFileService(patientFileRepository);
-            PatientService patientService = new PatientService(patientRepository, patientFileService, doctorGradeService);
-            doctorService._articleService = articleService;
-            doctorService._doctorGradeService = doctorGradeService;
+            var specialityService = new SpecialityService(specialityRepository);
+            var hospitalizationService = new HospitalizationService(hospitalizationRepository);
+            var operationService = new OperationService(operationRepository);
+            var diagnosisService = new DiagnosisService(diagnosisRepository);
+            var prescriptionService = new PrescriptionService(prescriptionRepository);
+            var referralService = new ReferralService(referralRepository);
+            var symptomService = new SymptomService(symptomRepository);
+            var therapyService = new TherapyService(therapyRepository);
+            var examinationService = new ExaminationService(examinationUpcomingRepository, examinationPreviousRepository, diagnosisService, prescriptionService, referralService, symptomService, therapyService);
+            var drugService = new DrugService(drugRepository);
+            var ingredientService = new IngredientService(ingredientRepository);
+            var doctorService = new DoctorService(doctorRepository);
             BusinessDayService businessDayService = new BusinessDayService(businessDayRepository, doctorService);
-            businessDayService.examinationService = examinationService;
-            doctorService._businessDayService = businessDayService;
-            RenovationService renovationService = new RenovationService(renovationRepository);
-            RoomService roomService = new RoomService(roomRepository, renovationService, businessDayService, hospitalizationService);
-            RoomTypeService roomTypeService = new RoomTypeService(roomTypeRepository, roomService);
-            EquipmentService equipmentService = new EquipmentService(equipmentRepository, roomService);
-            UserService userService = new UserService(patientService, doctorService, secretaryService, directorService);
-
+            var renovationService = new RenovationService(renovationRepository);
+            var roomService = new RoomService(roomRepository, renovationService, businessDayService, hospitalizationService);
+            var roomTypeService = new RoomTypeService(roomTypeRepository, roomService);
+            var equipmentService = new EquipmentService(equipmentRepository, roomService);
+            var doctorGradeService = new DoctorGradeService(doctorGradeRepository);
+            var articleService = new ArticleService(articleRepository);
+            var patientFileService = new PatientFileService(patientFileRepository);
+            var patientService = new PatientService(patientRepository, patientFileService, doctorGradeService,examinationService);
+            var secretaryService = new SecretaryService(secretaryRepository);
+            var directorService = new DirectorService(directorRepository);
+            var userService = new UserService(patientService, doctorService, secretaryService, directorService);
+            var addressService = new AddressService(addressRepository);
+            var townService = new TownService(townRepository);
+            var stateService = new StateService(stateRepository);
+            doctorService._doctorGradeService = doctorGradeService;
+            var reportService = new ReportService(examinationService, renovationService, hospitalizationService, operationService);
+            var patientnotificationService = new PatientNotificationService(patientNotificationRepository);
 
             UserController = new UserController(userService);
             ArticleController = new ArticleController(articleService);
@@ -241,7 +232,7 @@ namespace PSW_Wpf_director
             TherapyController = new TherapyController(therapyService);
 
 
-            ReportService reportService = new ReportService(examinationService, renovationService, hospitalizationService, operationService);
+            //ReportService reportService = new ReportService(examinationService, renovationService, hospitalizationService, operationService);
             ReportController = new ReportController(reportService);
 
 

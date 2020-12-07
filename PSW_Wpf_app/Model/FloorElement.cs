@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp.Model
+namespace PSW_Wpf_app.Model
 {
     public class FloorElement
     {
@@ -18,6 +18,14 @@ namespace WpfApp.Model
         private string name;
         private int floor;
         private string info;
+        private string buildingName;
+
+        public string BuildingName
+        {
+            get { return buildingName; }
+            set { buildingName = value; }
+        }
+
 
         public string Info
         {
@@ -90,6 +98,19 @@ namespace WpfApp.Model
             x = xx;
             y = yy;
             floor = f;
+            info = i;
+        }
+
+        public FloorElement(string t, string n, int w, int h, int xx, int yy, int f, string b, string i = "")
+        {
+            type = t;
+            name = n;
+            width = w;
+            height = h;
+            x = xx;
+            y = yy;
+            floor = f;
+            buildingName = b;
             info = i;
         }
 

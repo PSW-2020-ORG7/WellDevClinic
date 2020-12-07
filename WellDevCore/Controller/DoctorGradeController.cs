@@ -1,7 +1,9 @@
 using bolnica.Controller;
+using bolnica.Model.Dto;
 using bolnica.Service;
 using Model.Doctor;
 using Model.Users;
+using Service;
 using System;
 using System.Collections.Generic;
 
@@ -37,10 +39,20 @@ namespace Controller
             return _doctorGradeService.GetAll();
         }
 
-        public double GetAverageGrade(Doctor doctor)
+        public List<GradeDTO> GetAverageGrade(DoctorGrade survey)
         {
-           return _doctorGradeService.GetAverageGrade(doctor);
+           return _doctorGradeService.GetAverageGrade(survey);
 
+        }
+
+        public List<GradeDTO> GetAverageGradeDoctor(List<DoctorGrade> surveys)
+        {
+            return _doctorGradeService.GetAverageGradeDoctor(surveys);
+        }
+
+        public List<DoctorGrade> GetByDoctor(string doctor)
+        {
+            return _doctorGradeService.GetByDoctor(doctor);
         }
 
         public DoctorGrade Save(DoctorGrade entity)

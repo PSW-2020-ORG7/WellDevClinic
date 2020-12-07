@@ -12,9 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp.ViewModel;
+using PSW_Wpf_app.Model;
+using PSW_Wpf_app.ViewModel;
 
-namespace WpfApp.View
+namespace PSW_Wpf_app.View
 {
     /// <summary>
     /// Interaction logic for ChosenFloorView.xaml
@@ -25,6 +26,12 @@ namespace WpfApp.View
         {
             InitializeComponent();
             DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor);
+        }
+
+        public ChosenFloorView(string build, int floor, List<FloorElement> rooms)
+        {
+            InitializeComponent();
+            DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor, rooms);
         }
     }
 }

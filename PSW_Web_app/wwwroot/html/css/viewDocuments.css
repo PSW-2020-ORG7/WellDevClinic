@@ -1,0 +1,72 @@
+﻿th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #009999;
+}
+
+tr {
+    text-align: center;
+}
+
+.firstTd{
+    width:150px
+}
+
+
+h1,h2 {
+    text-align: center;
+    color: #009999;
+}
+
+table#table, table#tableP, table#tableR {
+    width: 50%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table#params {
+    width: 50%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div {
+    text-align: center;
+    vertical-align: middle;
+    padding: 3px;
+}
+
+textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #009999;
+    border-radius: 10px;
+}
+
+input {
+    width: 100%;
+    color: #009999;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+select {
+    width: 100%;
+}
+
+input[type=submit] {
+    width: 30%;
+}
+
+input[type=button] {
+    width: 30%;
+}
+
+label {
+    color: #009999;
+    width: 100%;
+
+}

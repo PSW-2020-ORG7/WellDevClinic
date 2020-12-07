@@ -1,4 +1,5 @@
-﻿using Controller;
+﻿using bolnica.Model.Dto;
+using Controller;
 using Model.Doctor;
 using Model.Users;
 using System;
@@ -10,7 +11,9 @@ namespace bolnica.Controller
 { 
     public  interface IDoctorGradeController : IController<DoctorGrade,long>
     {
-        double GetAverageGrade(Doctor doctor);
+        List<GradeDTO> GetAverageGrade(DoctorGrade survey);
+        List<DoctorGrade> GetByDoctor(String doctor);
+        List<GradeDTO> GetAverageGradeDoctor(List<DoctorGrade> surveys);
 
     }
 }

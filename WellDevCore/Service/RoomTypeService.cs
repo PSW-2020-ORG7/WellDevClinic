@@ -44,7 +44,7 @@ namespace Service
 
         public IEnumerable<RoomType> GetAll()
         {
-            return _repository.GetAll();
+            return _repository.GetEager();
         }
 
         public RoomType Save(RoomType entity)

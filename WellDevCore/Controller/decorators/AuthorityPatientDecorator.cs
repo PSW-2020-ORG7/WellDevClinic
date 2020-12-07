@@ -26,6 +26,8 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["GetPatientByJMBG"] = new List<string>() {"Patient", "Secretary"};
             AuthorizedUsers["GiveGradeToDoctor"] = new List<string>() {"Patient"};
             AuthorizedUsers["Save"] = new List<string>() {"Patient", "Secretary"};
+            AuthorizedUsers["GetPatientByMail"] = new List<string>() { "Patient" };
+            AuthorizedUsers["GetPatientByUsername"] = new List<string>() { "Patient" };
         }
 
         public Patient ClaimAccount(Patient patient)
@@ -60,13 +62,35 @@ namespace bolnica.Controller.decorators
                 return PatientController.GetAll();
             return null;
         }
-
+        
         public Patient GetPatientByJMBG(string jmbg)
         {
             if (AuthorizedUsers["GetPatientByJMBG"].SingleOrDefault(any => any.Equals(Role)) != null)
                 return PatientController.GetPatientByJMBG(jmbg);
             return null;
         }
+
+        public Patient CheckExistence(String jmbg, String username, String email)
+        {
+            if (AuthorizedUsers["CheckExistence"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.CheckExistence(jmbg,username,email);
+            return null;
+        }
+
+        /*
+        public Patient GetPatientByMail(string email)
+        {
+            if (AuthorizedUsers["GetAll"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetPatientByMail(email);
+            return null;
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            if (AuthorizedUsers["GetAll"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetPatientByUsername(username);
+            return null;
+        } */
 
         public DoctorGrade GiveGradeToDoctor(Doctor doctor, Dictionary<string, double> gradesForDoctor)
         {
@@ -79,6 +103,27 @@ namespace bolnica.Controller.decorators
         {
             if (AuthorizedUsers["Save"].SingleOrDefault(any => any.Equals(Role)) != null)
                 return PatientController.Save(entity);
+            return null;
+        }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            if (AuthorizedUsers["GetPatientsForBlocking"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetPatientsForBlocking();
+            return null;
+        }
+
+        public List<Patient> GetBlockedPatients()
+        {
+            if (AuthorizedUsers["GetBlockedPatients"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetBlockedPatients();
+            return null;
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            if (AuthorizedUsers["GetPatientToken"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetPatientToken(token);
             return null;
         }
     }

@@ -9,7 +9,7 @@ namespace Model.Users
         public String Street { get; set; }
         public int Number { get; set; }
         public String FullAddress { get; set; }
-        public Town Town { get; set; }
+        public virtual Town Town { get; set; }
 
         public Address(long id, string street, int number, Town town)
         {
@@ -20,7 +20,7 @@ namespace Model.Users
             FullAddress = GetFullAddress();
         } 
 
-        public Address(long id)
+        public Address(long id, string v, Town town)
         {
             Id = id; 
         }

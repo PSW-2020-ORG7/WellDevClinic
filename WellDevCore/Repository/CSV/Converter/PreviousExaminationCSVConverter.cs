@@ -22,7 +22,7 @@ namespace bolnica.Repository.CSV.Converter
         {
 
                 string[] tokens = entityCSVFormat.Split(_delimiter.ToCharArray());
-            Examination examination = new Examination(long.Parse(tokens[0]), (User)new Patient(long.Parse(tokens[1])),
+            Examination examination = new Examination(long.Parse(tokens[0]), (Patient)new Patient(long.Parse(tokens[1])),
                                                         new Doctor(long.Parse(tokens[2])), new Period(DateTime.Parse(tokens[3])),
                                                         new Diagnosis(long.Parse(tokens[4])));
             if (!tokens[5].Equals("empty"))
@@ -48,7 +48,7 @@ namespace bolnica.Repository.CSV.Converter
         public string ConvertEntityToCSVFormat(Examination entity)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            String format = String.Join(_delimiter, entity.Id, entity.User.GetId(), entity.Doctor.GetId(), entity.Period.StartDate,
+            String format = String.Join(_delimiter, entity.Id, entity.Patient.GetId(), entity.Doctor.GetId(), entity.Period.StartDate,
                                 entity.Diagnosis.GetId()); 
             stringBuilder.Append(format);
             stringBuilder.Append(_delimiter);

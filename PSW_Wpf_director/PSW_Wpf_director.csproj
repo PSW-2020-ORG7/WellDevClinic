@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PSW_Wpf_app\PSW_Wpf_app.csproj" />
     <ProjectReference Include="..\WellDevCore\WellDevCore.csproj" />
   </ItemGroup>
 

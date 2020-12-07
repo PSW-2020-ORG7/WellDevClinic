@@ -1,3 +1,4 @@
+using bolnica.Repository;
 using bolnica.Service;
 using Model.Doctor;
 using Model.PatientSecretary;
@@ -7,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Service
+namespace bolnica.Service
 {
     public class PatientService : IPatientService
     {
@@ -15,29 +16,48 @@ namespace Service
         private readonly IPatientRepository _patientRepository;
         private readonly IPatientFileService _patientFileService;
         private readonly IDoctorGradeService _doctorGradeService;
+        private readonly IExaminationService _examinationService;
 
-        public PatientService(IPatientRepository _patientRepo, IPatientFileService _servicePatientFile, IDoctorGradeService doctorGradeService)
+        public PatientService(IPatientRepository patientRepo)
+        {
+            _patientRepository = patientRepo;
+        }
+
+        public PatientService(IPatientRepository _patientRepo, IPatientFileService _servicePatientFile, IDoctorGradeService doctorGradeService, IExaminationService examinationService)
         {
             _doctorGradeService = doctorGradeService;
             _patientRepository = _patientRepo;
             _patientFileService = _servicePatientFile;
+            _examinationService = examinationService;
         }
 
         public PatientService(IPatientRepository _patientRepo, IPatientFileService _servicePatientFile)
         {
             _patientRepository = _patientRepo;
             _patientFileService = _servicePatientFile;
+
+
         }
+       
+        
 
         public Patient Save(Patient entity)
         {
-            if (_patientRepository.GetUserByUsername(entity.Username) != null)
+            
+            Patient patient = new Patient();
+            Patient patientId = _patientRepository.GetPatientByJMBG(entity.Jmbg);
+            if (patientId == null)
             {
-                return null;
+                _patientRepository.Save(entity);
+                patient = null;
             }
-            entity.patientFile = _patientFileService.Save(new PatientFile());
-            return _patientRepository.Save(entity);
+            else
+            {
+                patient.Jmbg = patientId.Jmbg;
+                patient = patientId;    
+            }
 
+            return patient;
         }
 
         public void Delete(Patient entity)
@@ -52,12 +72,12 @@ namespace Service
 
         public IEnumerable<Patient> GetAll()
         {
-            return _patientRepository.GetAllEager();
+            return _patientRepository.GetEager();
         }
 
         public Patient Get(long id)
         {
-            return _patientRepository.GetEager(id);
+            return _patientRepository.Get(id);
         }
 
         public Patient ClaimAccount(Patient patient)
@@ -84,6 +104,21 @@ namespace Service
             return _patientRepository.GetPatientByJMBG(jmbg);
         }
 
+        public Patient GetPatientByMail(string email)
+        {
+            return _patientRepository.GetPatientByMail(email);
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            return _patientRepository.GetPatientByMail(username);
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            return _patientRepository.GetPatientToken(token);
+        }
+
         public DoctorGrade GiveGradeToDoctor(Doctor doctor, Dictionary<string, double> gradesForDoctor)
         {
             DoctorGrade doctorGrade = doctor.DoctorGrade;
@@ -100,5 +135,121 @@ namespace Service
             return doctorGrade;
         }
 
+
+        public Patient CheckExistence(string jmbg, string username, string email)
+        {
+            Patient patient = new Patient();
+
+            Patient patientId = _patientRepository.GetPatientByJMBG(jmbg);
+            Patient patientEmail = _patientRepository.GetPatientByMail(email);
+            Patient patientUsername = _patientRepository.GetPatientByUsername(username);
+
+            if (patientId == null && patientEmail == null && patientUsername == null)
+            {
+                patient = null;
+            }
+            else
+            {
+                if (patientId != null)
+                    patient.Jmbg = patientId.Jmbg;
+                else if (patientEmail != null)
+                    patient.Email = patientEmail.Email;
+                else if (patientUsername != null)
+                    patient.Username = patientUsername.Username;
+            }
+
+            return patient;
+        }
+
+        public List<DateTime> SortDates(List<DateTime> dates)
+        {
+            DateTime pom;
+            for(int i=0; i<dates.Count; i++)
+            {
+                for(int j = i+1; j<dates.Count; j++)
+                {
+                    if(DateTime.Compare(dates[i], dates[j])>0)
+                    {
+                        pom = dates[i];
+                        dates[i] = dates[j];
+                        dates[j] = pom;
+                    }
+                }
+            }
+            return dates;
+        }
+
+        public bool CheckIfBlocked(List<DateTime> dates)
+        {
+            dates = SortDates(dates);
+            bool result = false;
+            int check;
+            int j;
+            for(int i = 0; i<dates.Count; i++)
+            {
+                check = 1;
+                for(j = i + 1; j < dates.Count; j++)
+                {
+                    if ((dates[j].Date - dates[i].Date).TotalDays <= 30)
+                        check += 1;
+                    else
+                        break;
+                }
+                    
+                if(check >= 3)
+                {
+                    result = true;
+                    break;
+                }
+                    
+            }
+
+            return result;
+        }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            List<Patient> result = new List<Patient>();
+            List<Patient> patients = GetUnblockedPatients();
+
+            foreach(Patient patient in patients)
+            {
+                if(!patient.Blocked)
+                {
+                    List<DateTime> dates = _examinationService.GetCancelationDatesByPatient(patient.Id);
+                    if (CheckIfBlocked(dates))
+                        result.Add(patient);
+                }
+
+            }
+
+            return result;
+        }
+
+        public List<Patient> GetBlockedPatients()
+        {
+            List<Patient> result = new List<Patient>();
+            List<Patient> patients = (List<Patient>)GetAll();
+            foreach (Patient patient in patients)
+            {
+                if (patient.Blocked)
+                    result.Add(patient);
+            }
+
+            return result;
+        }
+
+        public List<Patient> GetUnblockedPatients()
+        {
+            List<Patient> result = new List<Patient>();
+            List<Patient> patients = (List<Patient>)GetAll();
+            foreach (Patient patient in patients)
+            {
+                if (!patient.Blocked)
+                    result.Add(patient);
+            }
+
+            return result;
+        }
     }
 }

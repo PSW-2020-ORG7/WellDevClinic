@@ -1,0 +1,65 @@
+﻿body {
+    background-repeat: repeat-y;
+    background-size: 100%;
+}
+/* Card format */
+div.card {
+    margin: 10px;
+    padding: 5px;
+    display: inline-block;
+    background: #f2f2f2;
+    width: 300px;
+    transition: width 0.5s;
+}
+
+    div.card:hover {
+        cursor: pointer;
+    }
+/* Card containter*/
+#viewAction {
+    padding-left: 5%;
+    padding-right: 5%;
+    margin: 5px;
+}
+
+/* Favourite mark */
+.star {
+    float:right;
+    padding-top: 0px;
+}
+    .star:hover {
+        border: 1px solid blue;
+    }
+    
+.checked{
+    color: orange;
+}
+
+/* Filter bar */
+.filter {
+    background: #7f7c7c;
+    margin-bottom: 10px;
+    width: auto;
+}
+    .filter span{
+        font-size: 20px;
+    }
+
+.btnFilter {
+    border: 0px;
+    font-size: 30px;
+    margin-right: 40px;
+    text-align:right;
+    background: transparent;
+}
+    .btnFilter:hover{
+        color: white;
+    }
+
+#divFilterTable {
+    display: none;
+}
+
+    #divFilterTable td{
+        padding: 5px;
+    }

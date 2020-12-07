@@ -10,10 +10,28 @@ namespace bolnica.Controller
 {
    public interface IPatientController : IController<Patient, long>
     {
+        
         Patient GetPatientByJMBG(String jmbg);
 
         Patient ClaimAccount(Patient patient);
 
         DoctorGrade GiveGradeToDoctor(Doctor doctor, Dictionary<String, double> gradesForDoctor);
+
+        Patient CheckExistence(String jmbg, String username, String email);
+
+        List<Patient> GetPatientsForBlocking();
+
+        List<Patient> GetBlockedPatients();
+
+        Patient GetPatientToken(string token);
+
+        /*
+        Patient GetPatientByMail(String email);
+
+        Patient GetPatientByUsername(String username);
+        */
+
+
+
     }
 }

@@ -10,7 +10,7 @@ namespace bolnica.Model.Dto
     public class PatientNotification : IIdentifiable<long>
     {
         public long Id { get; set; }
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
         public Boolean Read { get; set; }
         public String Message { get; set; }
 

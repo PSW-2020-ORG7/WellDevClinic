@@ -34,7 +34,7 @@ namespace Service
 
         public IEnumerable<Symptom> GetAll()
         {
-            return _symptomRepository.GetAll();
+            return _symptomRepository.GetEager();
         }
 
         public Symptom Save(Symptom entity)
