@@ -5,9 +5,16 @@
     <title>Clinic Hello!</title>
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/index.css" />
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
+    <script>
+        $.ajax({
+            method: "PUT",
+            url: "../api/actionsandbenefits/deleteExpired",
+        });
+    </script>
     <div class="topnav">
         <label>Clinic Hello!</label>
         <a href="index.html" class="active">Home</a>
@@ -15,12 +22,9 @@
         <a href="viewActionsAndBenefits.html">Actions & Benefits</a>
         <a href="#">Medication consumption report</a>
     </div>
-    <div>
-        <div class="welcome-text">
-            <h1>Welcome back!</h1>
-        </div>
+
+    <div class="welcome-text">
+        <h1>Welcome back!</h1>
     </div>
-
-
 </body>
 </html>
