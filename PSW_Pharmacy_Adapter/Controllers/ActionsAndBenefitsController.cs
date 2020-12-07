@@ -13,12 +13,12 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class ActionsAndBenefitsController : ControllerBase
     {
-        private readonly ActionsAndBenefitsService _ActionService;
+        private readonly IActionsAndBenefitsService _ActionService;
         
-        public ActionsAndBenefitsController()
+        public ActionsAndBenefitsController(IActionsAndBenefitsService service)
         {
-            MyContextFactory cf = new MyContextFactory();
-            _ActionService = new ActionsAndBenefitsService(cf.CreateDbContext(new string[0]));
+            
+            _ActionService = service;
         }
 
         [HttpGet]
@@ -44,5 +44,24 @@ namespace PSW_Pharmacy_Adapter.Controllers
                 return Ok(true);
             return BadRequest();
         }
+
+        [HttpPut]
+        [Route("status/{id?}/{stat?}")]
+        public IActionResult UpdateStatus(long id, int stat)
+        {
+            ActionAndBenefit action = _ActionService.UpdateStatus(id, stat);
+            if (action != null)
+                return Ok(action);
+            return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("deleteExpired")]
+        public IActionResult DeleteExpired()
+        {
+            _ActionService.DeleteExpiredAction();
+            return Ok();
+        }
+
     }
 }

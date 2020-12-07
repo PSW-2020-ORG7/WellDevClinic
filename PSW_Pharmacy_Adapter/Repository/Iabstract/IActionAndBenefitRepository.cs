@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Repository.Iabstract
 {
-    interface IActionAndBenefitRepository : IRepository<ActionAndBenefit, long>
+    public interface IActionAndBenefitRepository : IRepository<ActionAndBenefit, long>
     {
     }
 }
