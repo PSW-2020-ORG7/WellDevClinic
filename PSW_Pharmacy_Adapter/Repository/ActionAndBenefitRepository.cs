@@ -51,5 +51,17 @@ namespace PSW_Pharmacy_Adapter.Repository
             }
             return null;
         }
+
+        public ActionAndBenefit Update(ActionAndBenefit action)
+        {
+            ActionAndBenefit a = myDbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == action.Id);
+            if (a != null)
+            {
+                myDbContext.ActionsAndBenefits.Update(action);
+                myDbContext.SaveChanges();
+                return action;
+            }
+            return null;
+        }
     }
 }

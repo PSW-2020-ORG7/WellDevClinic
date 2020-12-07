@@ -25,12 +25,12 @@ namespace PSW_Pharmacy_Adapter.Model
                 );
 
             modelBuilder.Entity<ActionAndBenefit>().HasData(
-                new ActionAndBenefit(1, "PH1", "Andol on sale! 50% off!!", 10, 15),
-                new ActionAndBenefit(2, "PH1", "Cheap bromazepam on huge quantities!!", 1, 30),
-                new ActionAndBenefit(3, "PH3", "Aspirin C for free!!", 8, 13),
-                new ActionAndBenefit(4, "PH3", "Amazing deal!! Brufen was 5$, now 15$", 10, 45),
-                new ActionAndBenefit(5, "PH2", "Cant miss!! Vitamin C just for 99$", 18, 50),
-                new ActionAndBenefit(6, "PH1", "Cheap sedatives!", 10, 15)
+                new ActionAndBenefit(1, "PH1", "Andol on sale! 50% off!!", DateTime.Now.AddDays(-10), DateTime.Now.AddDays(15), ActionStatus.accepted),
+                new ActionAndBenefit(2, "PH1", "Cheap bromazepam on huge quantities!!", DateTime.Now.AddDays(5), DateTime.Now.AddDays(30), ActionStatus.pending),
+                new ActionAndBenefit(3, "PH3", "Aspirin C for free!!", DateTime.Now.AddDays(1), DateTime.Now.AddDays(7), ActionStatus.pending),
+                new ActionAndBenefit(4, "PH3", "Amazing deal!! Brufen was 5$, now 15$", DateTime.Now.AddDays(2), DateTime.Now.AddDays(22), ActionStatus.favourite),
+                new ActionAndBenefit(5, "PH2", "Cant miss!! Vitamin C just for 99$", DateTime.Now, DateTime.Now.AddDays(15), ActionStatus.favourite),
+                new ActionAndBenefit(6, "PH1", "Cheap sedatives!", DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1), ActionStatus.accepted)
                );
 
            

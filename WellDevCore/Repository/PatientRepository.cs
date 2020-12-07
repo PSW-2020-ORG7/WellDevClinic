@@ -36,7 +36,7 @@ namespace Repository
 
         public void Edit(Patient entity)
         {
-            throw new NotImplementedException();
+            myDbContext.SaveChanges();
         }
 
         public Patient Get(long id)

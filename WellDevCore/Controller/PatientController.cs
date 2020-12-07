@@ -63,7 +63,22 @@ namespace bolnica.Controller
 
         public Patient CheckExistence(String jmbg, String username, String email)
         {
-            return null;
+            return _patientService.CheckExistence(jmbg, username, email);
+        }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            return _patientService.GetPatientsForBlocking();
+        }
+
+        public List<Patient> GetBlockedPatients()
+        {
+            return _patientService.GetBlockedPatients();
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            return _patientService.GetPatientToken(token);
         }
 
         /*

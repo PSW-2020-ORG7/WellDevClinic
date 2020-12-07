@@ -913,6 +913,9 @@ namespace WellDevCore.Migrations
                 {
                     b.HasBaseType("Model.Users.User");
 
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("BloodType")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 

@@ -45,9 +45,12 @@ namespace bolnica.Repository
         public IEnumerable<Examination> GetAllEager()
         {
             List<Examination> examinations = new List<Examination>();
-            foreach(Examination exam in GetEager().ToList())
+            foreach (Examination exam in myDbContext.Examination.ToList())
             {
-                examinations.Add(GetEager(exam.GetId()));
+                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now) > 0)
+                {
+                    examinations.Add(exam);
+                }
             }
             return examinations;
         }

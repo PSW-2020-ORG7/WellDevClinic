@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using PSW_Pharmacy_Adapter.Converter;
+using PSW_Pharmacy_Adapter.Dto;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
@@ -43,10 +44,10 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                ActionAndBenefit actionBenefit;
-                actionBenefit = JsonConvert.DeserializeObject<ActionAndBenefit>(jsonMessage.ToString());
-                Console.WriteLine(" [x] Received {0}", actionBenefit.PharmacyName);
-                _ActionRepository.Save(actionBenefit);
+                ActionAndBenefitDto actionBenefitDto;
+                actionBenefitDto = JsonConvert.DeserializeObject<ActionAndBenefitDto>(jsonMessage.ToString());
+                Console.WriteLine(" [x] Received {0}", actionBenefitDto.PharmacyName);
+                _ActionRepository.Save(new ActionAndBenefit(actionBenefitDto, ActionStatus.pending));
             };
             channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,

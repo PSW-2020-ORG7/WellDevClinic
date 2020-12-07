@@ -22,6 +22,7 @@ namespace bolnica.Service
         List<Examination> GetPreviousExaminationsByRoomAndPeriod(Room room, Period period);
         List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user);
         List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2);
+        List<DateTime> GetCancelationDatesByPatient(long id);
    
     }
 }
