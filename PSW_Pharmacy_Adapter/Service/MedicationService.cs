@@ -9,18 +9,24 @@ using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class MedicationService 
+    public class MedicationService : IMedicationService
     {
-        static readonly HttpClient client = new HttpClient();
+        private readonly HttpClient client;
+        public MedicationService()
+        {
+            client = new HttpClient();
+        }
 
         public async Task<List<Medication>> GetAllMedication()
         {
             HttpResponseMessage response = await client.GetAsync("https://localhost:44375/api/drug");
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<Medication> medications = JsonConvert.DeserializeObject<List<Medication>>(responseBody);
-            medications.ForEach(medication => Console.WriteLine(medication.ToString()));
-            return medications;
+            string responseBody = response.Content.ReadAsStringAsync().Result;
+
+            List<Medication> meds = JsonConvert.DeserializeObject<List<Medication>>(responseBody);
+            foreach (Medication m in meds)
+                Console.WriteLine("id:", m.Id);
+            return meds;
+
         }
 
     }

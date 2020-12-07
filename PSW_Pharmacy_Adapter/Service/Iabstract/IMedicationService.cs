@@ -6,8 +6,8 @@ using PSW_Pharmacy_Adapter.Model;
 
 namespace PSW_Pharmacy_Adapter.Service.Iabstract
 {
-    public class IMedicationService
+    public interface IMedicationService
     {
-        public async void GetAllMedication() { }
+        public Task<List<Medication>> GetAllMedication();
     }
 }

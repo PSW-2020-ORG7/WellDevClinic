@@ -38,7 +38,8 @@ namespace PSW_Pharmacy_Adapter
             //services.AddScoped<IGreetingsService, GreetingsService>();
             services.AddScoped<IActionsAndBenefitsService, ActionsAndBenefitsService>();
             services.AddScoped<IRabbitMQService, RabbitMQService>();
-
+            services.AddScoped<IMedicationService, MedicationService>();
+ 
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
             services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
             //services.AddHttpClient<IHttpClientBuilder>();

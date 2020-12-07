@@ -20,9 +20,9 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> getHospitalsMedicationStockAsync()
+        public async Task<List<Medication>> getHospitalsMedicationStockAsync()
         {
-            return Ok(await _medicationService.GetAllMedication());
+            return await _medicationService.GetAllMedication();
         }
     }
 }

@@ -20,8 +20,9 @@ namespace PSW_Pharmacy_Adapter
 
         public static void Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
-            ActionsAndBenefitsMessages(args).Build().Run();   
+            CreateHostBuilder(args).Build().Run();
+            //ActionsAndBenefitsMessages(args).Build().Run();
+           
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

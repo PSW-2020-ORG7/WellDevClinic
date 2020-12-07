@@ -10,7 +10,7 @@ namespace PSW_Pharmacy_Adapter.Model
     {
         public DbSet<Api> ApiKeys { get; set; }
         public DbSet<ActionAndBenefit> ActionsAndBenefits { get; set; }
-        public DbSet<Medication> Medications { get; set; }
+
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
@@ -33,8 +33,7 @@ namespace PSW_Pharmacy_Adapter.Model
                 new ActionAndBenefit(6, "PH1", "Cheap sedatives!", 10, 15)
                );
 
-            //TODO 
-            //modelBuilder.Entity<Medication>().HasData();
+           
         }
     }
 }
