@@ -20,8 +20,8 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [Route("sendReport")]
-        public bool UploadFileToSftpServer(String path) =>
-            _sftpService.UploadFileToSftpServer(path);
+        public bool UploadFileToSftpServer(String path)
+            => _sftpService.UploadFileToSftpServer(path);
 
     }
 }

@@ -1,22 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PSW_Pharmacy_Adapter.Migrations
 {
-    public partial class TestData : Migration
+    public partial class Testdata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
                 table: "ActionsAndBenefits",
-                columns: new[] { "Id", "EndDate", "MessageAboutAction", "PharmacyName", "StartDate" },
+                columns: new[] { "Id", "EndDate", "MessageAboutAction", "PharmacyName", "StartDate", "Status" },
                 values: new object[,]
                 {
-                    { 1L, 15L, "Andol on sale! 50% off!!", "PH1", 10L },
-                    { 2L, 30L, "Cheap bromazepam on huge quantities!!", "PH1", 1L },
-                    { 3L, 13L, "Aspirin C for free!!", "PH3", 8L },
-                    { 4L, 45L, "Amazing deal!! Brufen was 5$, now 15$", "PH3", 10L },
-                    { 5L, 50L, "Cant miss!! Vitamin C just for 99$", "PH2", 18L },
-                    { 6L, 15L, "Cheap sedatives!", "PH1", 10L }
+                    { 1L, new DateTime(2020, 12, 21, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(5081), "Andol on sale! 50% off!!", "PH1", new DateTime(2020, 11, 26, 15, 23, 57, 496, DateTimeKind.Local).AddTicks(8302), 1 },
+                    { 2L, new DateTime(2021, 1, 5, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8512), "Cheap bromazepam on huge quantities!!", "PH1", new DateTime(2020, 12, 11, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8496), 0 },
+                    { 3L, new DateTime(2020, 12, 13, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8575), "Aspirin C for free!!", "PH3", new DateTime(2020, 12, 7, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8571), 0 },
+                    { 4L, new DateTime(2020, 12, 28, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8581), "Amazing deal!! Brufen was 5$, now 15$", "PH3", new DateTime(2020, 12, 8, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8578), 2 },
+                    { 5L, new DateTime(2020, 12, 21, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8586), "Cant miss!! Vitamin C just for 99$", "PH2", new DateTime(2020, 12, 6, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8584), 2 },
+                    { 6L, new DateTime(2020, 12, 5, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8592), "Cheap sedatives!", "PH1", new DateTime(2020, 11, 26, 15, 23, 57, 498, DateTimeKind.Local).AddTicks(8589), 1 }
                 });
 
             migrationBuilder.InsertData(

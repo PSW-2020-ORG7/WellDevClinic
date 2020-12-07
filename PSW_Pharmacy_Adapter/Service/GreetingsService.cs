@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class GreetingsService
+    public class GreetingsService : IGreetingsService
     {
         private readonly IApiKeyRepository _ApiKeyRepo;
         private readonly HttpClient _Client;

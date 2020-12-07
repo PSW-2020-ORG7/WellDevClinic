@@ -24,7 +24,8 @@ namespace PSW_Pharmacy_Adapter.Repository
             return apis;
         }
 
-        public bool Exists(string id) => Get(id) != null;
+        public bool Exists(string id)
+            => Get(id) != null;
 
         public bool Delete(string id)
         {
@@ -44,6 +45,18 @@ namespace PSW_Pharmacy_Adapter.Repository
             if (a == null)
             {
                 _MyDbContext.ApiKeys.Add(api);
+                _MyDbContext.SaveChanges();
+                return api;
+            }
+            return null;
+        }
+
+        public Api Update(Api api)
+        {
+            Api a = _MyDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
+            if (a != null)
+            {
+                _MyDbContext.ApiKeys.Update(api);
                 _MyDbContext.SaveChanges();
                 return api;
             }

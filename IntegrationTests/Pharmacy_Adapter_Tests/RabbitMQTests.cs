@@ -16,15 +16,15 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         public const int TEST_ID1 = 5555;
         public const string TEST_PHARMACY = "Benu";
         public const string TEST_MESSAGE = "Ponuda koju ne mozete propustiti!";
-        public const long TEST_START = 1604262583000;
-        public const long TEST_END = 1609360183000;
+        public DateTime TEST_START = DateTime.Now;
+        public DateTime TEST_END = DateTime.Now.AddDays(5);
 
         [Fact]
         public void Add_Message()
         {
             MyContextFactory cf = new MyContextFactory();
             actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
-            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END);
+            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, ActionStatus.pending);
             //Console.WriteLine(" [x] Received {0}", ab.PharmacyName);
 
             actionRepository.Save(ab);
@@ -39,7 +39,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             MyContextFactory cf = new MyContextFactory();
             actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
-            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID1, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END);
+            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID1, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, ActionStatus.pending);
 
             ab = actionRepository.Get(TEST_ID1);
             ab.ShouldBeNull();

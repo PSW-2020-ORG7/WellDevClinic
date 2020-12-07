@@ -5,25 +5,31 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using PSW_Pharmacy_Adapter.Converter;
+using PSW_Pharmacy_Adapter.Dto;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class RabbitMQService : BackgroundService
+    public class RabbitMQService : BackgroundService, IRabbitMQService
     {
         IConnection connection;
         IModel channel;
-        //TODO: Dependency injection
 
-        private IActionAndBenefitRepository _actionRepository;
+        private IActionAndBenefitRepository _ActionRepository;
+        /*public RabbitMQService(IActionAndBenefitRepository actionsRepo)
+        {
+            _ActionRepository = actionsRepo;
+        }*/
+
         public override Task StartAsync(CancellationToken cancellationToken)
         {
             MyContextFactory cf = new MyContextFactory();
-            _actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
+            _ActionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
@@ -38,10 +44,10 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                ActionAndBenefit actionBenefit;
-                actionBenefit = JsonConvert.DeserializeObject<ActionAndBenefit>(jsonMessage.ToString());
-                Console.WriteLine(" [x] Received {0}", actionBenefit.PharmacyName);
-                _actionRepository.Save(actionBenefit);
+                ActionAndBenefitDto actionBenefitDto;
+                actionBenefitDto = JsonConvert.DeserializeObject<ActionAndBenefitDto>(jsonMessage.ToString());
+                Console.WriteLine(" [x] Received {0}", actionBenefitDto.PharmacyName);
+                _ActionRepository.Save(new ActionAndBenefit(actionBenefitDto, ActionStatus.pending));
             };
             channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,
@@ -49,6 +55,7 @@ namespace PSW_Pharmacy_Adapter.Service
             
             return base.StartAsync(cancellationToken);
         }
+
 
         public override Task StopAsync(CancellationToken cancellationToken)
         {
@@ -61,5 +68,6 @@ namespace PSW_Pharmacy_Adapter.Service
         {
             return Task.CompletedTask;
         }
+
     }
 }
