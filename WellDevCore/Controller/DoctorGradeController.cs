@@ -45,6 +45,16 @@ namespace Controller
 
         }
 
+        public List<GradeDTO> GetAverageGradeDoctor(List<DoctorGrade> surveys)
+        {
+            return _doctorGradeService.GetAverageGradeDoctor(surveys);
+        }
+
+        public List<DoctorGrade> GetByDoctor(string doctor)
+        {
+            return _doctorGradeService.GetByDoctor(doctor);
+        }
+
         public DoctorGrade Save(DoctorGrade entity)
         {
             return _doctorGradeService.Save(entity);

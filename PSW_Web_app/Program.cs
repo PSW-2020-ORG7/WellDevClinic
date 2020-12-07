@@ -30,7 +30,6 @@ namespace PSW_Web_app
         {
             CreateHostBuilder(args).Build().Run();
         }
-
         private static int calculatePort()
         {
             var port = System.Environment.GetEnvironmentVariable("PORT");

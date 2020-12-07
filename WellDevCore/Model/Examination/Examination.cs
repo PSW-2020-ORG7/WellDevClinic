@@ -84,6 +84,14 @@ namespace Model.PatientSecretary
             Id = id;
         }
 
+        public Examination(long id, Patient patient, bool canceled, DateTime date)
+        {
+            Id = id;
+            Patient = patient;
+            Canceled = canceled;
+            CanceledDate = date;
+        }
+
         public Examination() { }
 
         public long GetId()

@@ -17,6 +17,7 @@ namespace Model.Users
         public String BloodType { get; set; }
         public String VerificationToken { get; set; }
         public long DoctorId { get; set; }
+        public bool Blocked { get; set; }
 
         public Patient() { }
 
