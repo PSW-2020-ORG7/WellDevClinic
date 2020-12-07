@@ -2,7 +2,7 @@ services:
 
   servers:
     build: .
-    image: daviddrvar/welldevclinic:275
+    image: proba10
     container_name: welldevclinic
     restart: on-failure
     networks:
@@ -20,7 +20,7 @@ services:
       - mysql
 
   mysql:
-    image: mysql:latest
+    image: mysql:8.0.19
     container_name: mysql
     restart: always
     networks:

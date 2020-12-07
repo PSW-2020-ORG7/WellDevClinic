@@ -15,11 +15,11 @@ WORKDIR /src
 
 FROM build AS publish
 ENV PATH $PATH:/root/.dotnet/tools
-RUN dotnet tool install -g dotnet-ef --version 3.1.9
+RUN dotnet tool install -g dotnet-ef --version 3.1.0
 WORKDIR "/src/PSW_Web_app"
 RUN dotnet publish "PSW_Web_app.csproj" -c Release -o /app/publish 
 WORKDIR /src
-RUN dotnet-ef migrations script -p "PSW_Web_app/PSW_Web_app.csproj" -o /app/sql/init.sql
+COPY init.sql /app/sql/
 
 FROM base AS final
 WORKDIR /app

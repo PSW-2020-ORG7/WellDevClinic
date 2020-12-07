@@ -9,8 +9,8 @@ using bolnica.Model;
 namespace WellDevCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201202183253_sprint3")]
-    partial class sprint3
+    [Migration("20201207145437_WellDevCoreMigrations")]
+    partial class WellDevCoreMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WellDevCore.Migrations
 {
-    public partial class CompleteDatabase : Migration
+    public partial class WellDevCoreMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -295,7 +295,8 @@ namespace WellDevCore.Migrations
                     Gender = table.Column<string>(nullable: true),
                     Race = table.Column<string>(nullable: true),
                     BloodType = table.Column<string>(nullable: true),
-                    VerificationToken = table.Column<string>(nullable: true)
+                    VerificationToken = table.Column<string>(nullable: true),
+                    DoctorId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -410,6 +411,8 @@ namespace WellDevCore.Migrations
                     AnemnesisId = table.Column<long>(nullable: true),
                     TherapyId = table.Column<long>(nullable: true),
                     RefferalId = table.Column<long>(nullable: true),
+                    Canceled = table.Column<bool>(nullable: false),
+                    CanceledDate = table.Column<DateTime>(nullable: false),
                     PatientFileId = table.Column<long>(nullable: true),
                     RoomOccupationReportDTOId = table.Column<long>(nullable: true),
                     RoomOccupationReportDTOId1 = table.Column<long>(nullable: true),
