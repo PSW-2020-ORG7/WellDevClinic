@@ -53,8 +53,8 @@ namespace bolnica.Repository.CSV.Converter
                 String[] operation = tokens[3].Split(_arrayDelimiter.ToCharArray());
                 for (int i = 0; i < operation.Length; i++)
                 {
-                    operationList.Add(new Operation()); // Maja migracija
-                        /*long.Parse(operation[i])));*/
+                    operationList.Add(new Operation(//)); // Maja migracija
+                        long.Parse(operation[i])));
                 }
             }
             patientFile.Operation = operationList;

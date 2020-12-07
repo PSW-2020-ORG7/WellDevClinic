@@ -20,7 +20,9 @@ namespace bolnica.Repository.CSV.Converter
         public Hospitalization ConvertCSVFormatToEntity(string entityCSVFormat)
         {
             string[] tokens = entityCSVFormat.Split(_delimiter.ToCharArray());
+
             Hospitalization hospitalization = new Hospitalization(long.Parse(tokens[0]), (User) new Patient(long.Parse(tokens[1])), new Doctor(long.Parse(tokens[2])), new Period(DateTime.Parse(tokens[3]), DateTime.Parse(tokens[4])), new Room(long.Parse(tokens[5])));
+
             return hospitalization;
         }
 

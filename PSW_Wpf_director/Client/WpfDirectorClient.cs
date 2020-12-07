@@ -22,7 +22,6 @@ namespace PSW_Wpf_director.Client
 
         public static async Task<Director> GetUser(string username, string password)
         {
-            //var client = new HttpClient();
             var content = new StringContent(JsonConvert.SerializeObject(new LoginModel { username = username, password = password }));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var responseBody = await client.PostAsync("https://localhost:44375/api/user", content);
