@@ -17,13 +17,7 @@ namespace Repository
             myDbContext = context;
         }
 
-        /*public EquipmentRepository(ICSVStream<Equipment> stream, ISequencer<long> sequencer)
-   : base(stream, sequencer)
-        {
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
-
+        
         public void Delete(Equipment entity)
         {
             throw new NotImplementedException();

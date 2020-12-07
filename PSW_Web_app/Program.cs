@@ -10,6 +10,7 @@ using bolnica.Repository;
 using bolnica.Repository.CSV.Converter;
 using bolnica.Service;
 using Controller;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +28,7 @@ namespace PSW_Web_app
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
 
         }
 
@@ -37,6 +38,15 @@ namespace PSW_Web_app
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        // heroku port variable
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+    WebHost.CreateDefaultBuilder(args)
+        .UseStartup<Startup>()
+        .UseKestrel(options =>
+        {
+            options.ListenAnyIP(Int32.Parse(System.Environment.GetEnvironmentVariable("PORT")));
+        });
     }
 }
 

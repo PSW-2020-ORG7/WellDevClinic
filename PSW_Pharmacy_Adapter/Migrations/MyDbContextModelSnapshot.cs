@@ -38,6 +38,56 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ActionsAndBenefits");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            EndDate = 15L,
+                            MessageAboutAction = "Andol on sale! 50% off!!",
+                            PharmacyName = "PH1",
+                            StartDate = 10L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            EndDate = 30L,
+                            MessageAboutAction = "Cheap bromazepam on huge quantities!!",
+                            PharmacyName = "PH1",
+                            StartDate = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            EndDate = 13L,
+                            MessageAboutAction = "Aspirin C for free!!",
+                            PharmacyName = "PH3",
+                            StartDate = 8L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            EndDate = 45L,
+                            MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
+                            PharmacyName = "PH3",
+                            StartDate = 10L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            EndDate = 50L,
+                            MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
+                            PharmacyName = "PH2",
+                            StartDate = 18L
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            EndDate = 15L,
+                            MessageAboutAction = "Cheap sedatives!",
+                            PharmacyName = "PH1",
+                            StartDate = 10L
+                        });
                 });
 
             modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Api", b =>
@@ -54,6 +104,32 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.HasKey("NameOfPharmacy");
 
                     b.ToTable("ApiKeys");
+
+                    b.HasData(
+                        new
+                        {
+                            NameOfPharmacy = "PH1",
+                            ApiKey = "4545-as84-8s8g-zXCV",
+                            Url = "localhost:4200/Ph1"
+                        },
+                        new
+                        {
+                            NameOfPharmacy = "PH2",
+                            ApiKey = "7788-AV5R-zxQt-5845",
+                            Url = "localhost:4200/Ph2"
+                        },
+                        new
+                        {
+                            NameOfPharmacy = "PH3",
+                            ApiKey = "9745-At7S-Aqtr-5q8t",
+                            Url = "localhost:4200/Ph3"
+                        },
+                        new
+                        {
+                            NameOfPharmacy = "PH4",
+                            ApiKey = "HgT8-n47E-bE41-2gt5",
+                            Url = "localhost:4200/Ph4"
+                        });
                 });
 #pragma warning restore 612, 618
         }

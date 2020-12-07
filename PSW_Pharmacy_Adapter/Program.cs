@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
+using Renci.SshNet;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -18,8 +20,8 @@ namespace PSW_Pharmacy_Adapter
 
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build();
-            ActionsAndBenefitsMessages(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
+            //ActionsAndBenefitsMessages(args).Build().Run();   
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

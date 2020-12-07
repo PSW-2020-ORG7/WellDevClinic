@@ -4,11 +4,13 @@ using Model.PatientSecretary;
 using System;
 using System.Collections.Generic;
 
-namespace Controller
+namespace bolnica.Controller
 {
     public class DrugController : IDrugController
     {
         private readonly IDrugService _drugService;
+
+        public DrugController() { }
 
         public DrugController(IDrugService service)
         {
