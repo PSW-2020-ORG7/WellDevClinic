@@ -106,5 +106,21 @@ namespace bolnica.Controller.decorators
             else
                 return null;
         }
+
+        public List<Examination> SearchPreviousExamination(string date, string doctorName, string drugName, string speacialistName, User user)
+        {
+            if (AuthorizedUsers["SearchPreviousExamination"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.SearchPreviousExamination(date,doctorName,drugName,speacialistName,user);
+            else
+                return null;
+        }
+
+        public List<Examination> SearchPreviousExaminations(string date, string doctorName, string drugName, string speacialistName, bool Radio1, bool Radio2)
+        {
+            if (AuthorizedUsers["SearchPreviousExaminations"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.SearchPreviousExaminations(date, doctorName, drugName, speacialistName,Radio1,Radio2);
+            else
+                return null;
+        }
     }
 }

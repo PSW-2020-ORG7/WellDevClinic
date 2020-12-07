@@ -1,20 +1,21 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Repository;
+using PSW_Pharmacy_Adapter.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class ApiKeyService
+    public class ApiKeyService : IApiKeyService
     {
         private readonly IApiKeyRepository _KeyRepo;
 
-        public ApiKeyService(MyDbContext dbContext)
+        public ApiKeyService(IApiKeyRepository apiKeyRepository)
         {
-            _KeyRepo = new ApiKeyRepository(dbContext);
+            _KeyRepo = apiKeyRepository;
         }
 
         public Api GetPharmacy(string id)

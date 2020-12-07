@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bolnica.Model.Users;
 using bolnica.Service;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace PSW_Web_app.Controllers
 {
@@ -12,80 +15,47 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class FeedbackController : ControllerBase
     {
-
-        private readonly IFeedbackService _feedbackService;
-
-        public FeedbackController(IFeedbackService feedbackService) {
-            _feedbackService = feedbackService;
-        }
-
-        /// <summary>
-        ///calls GetAll() method from class FeedbackService
-        ///so it can get all feedback from database
-        /// </summary>
-        /// <returns>status 200 OK response with a list of feedback</returns>
+        static readonly HttpClient client = new HttpClient();
         [HttpGet]
-        public IActionResult GetAllFeedback()
+        public async Task<List<Feedback>> GetAllFeedback()
         {
-            List<Feedback> result = (List<Feedback>)_feedbackService.GetAllFeedback();
-            return Ok(result);
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/feedback");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Feedback> result = JsonConvert.DeserializeObject<List<Feedback>>(responseBody);
+            return result;
         }
 
-        /// <summary>
-        /// calls Get(long id) method from class FeedbackService so  
-        /// it can get a feedback by given id from database
-        /// </summary>
-        /// <param name="id">id of wanted feedback</param>
-        /// <returns>iActionResult object with a specified feedback</returns>
+        
         [HttpGet]
         [Route("{id?}")]
-        public IActionResult GetFeedback(long id)
+        public async Task<Feedback> GetFeedback(long id)
         {
-            IActionResult actionResult;
-            Feedback feedback = _feedbackService.GetFeedback(id);
-            if (feedback == null)
-            {
-                actionResult = NotFound();
-            }
-            else
-            {
-                actionResult = Ok(feedback);
-            }
-            return actionResult;
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/feedback/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Feedback result = JsonConvert.DeserializeObject<Feedback>(responseBody);
+            return result;
         }
 
-        /// <summary>
-        /// calls Save(Feedback feedback) method from class FeedbackService so  
-        ///it can save a new feedback to database
-        /// </summary>
-        /// <param name="feedback">new feedback of Object type Feedback</param>
-        /// <returns>iActionResult object with a saved feedback</returns>
         [HttpPost]
-        public IActionResult LeaveFeedback([FromBody] Feedback feedback)
+        public async Task<Feedback> LeaveFeedback([FromBody] Feedback feedback)
         {
-            IActionResult actionResult;
-            Feedback result = _feedbackService.LeaveFeedback(feedback);
-            if(result == null || feedback.Content.Length == 0)
-            {
-                actionResult = BadRequest();
-            }
-            else
-            {
-                actionResult = Ok(result);
-            }
-            return actionResult;
+            var content = new StringContent(JsonConvert.SerializeObject(feedback, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("http://localhost:51393/api/feedback", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Feedback result = JsonConvert.DeserializeObject<Feedback>(responseBody);
+            return result;
         }
 
 
-        /// <summary>
-        /// calls Edit(Feedback feedback) method from class FeedbackService so  
-        ///it can update specified feedback in database
-        /// </summary>
-        /// <param name="feedback">sprecified feedback of Object type Feedback</param>
+      
         [HttpPut]
-        public void PublishFeedback(Feedback feedback)
+        public async void PublishFeedback(Feedback feedback)
         {
-            _feedbackService.PublishFeedback(feedback);
+            var content = new StringContent(JsonConvert.SerializeObject(feedback, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PutAsync("http://localhost:51393/api/feedback", content);
+ 
         }
 
     }

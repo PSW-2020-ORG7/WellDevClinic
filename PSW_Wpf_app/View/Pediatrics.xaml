@@ -10,7 +10,7 @@
         <DataGrid  
             ItemsSource="{Binding FloorElementsP}" 
             HorizontalAlignment="Left"
-            Height="401" 
+            Height="372" 
             Margin="19,47,0,0" 
             VerticalAlignment="Top" 
             Width="581"
@@ -23,6 +23,6 @@
                 <DataGridTextColumn Header="Additional Information" Width="*" Binding="{Binding Info}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Save" Command="{ Binding SavePediatricsCommand}" HorizontalAlignment="Left" Margin="203,26,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Save" Command="{ Binding SavePediatricsCommand}" HorizontalAlignment="Left" Margin="471,10,0,0" VerticalAlignment="Top" Width="130"/>
     </Grid>
 </UserControl>

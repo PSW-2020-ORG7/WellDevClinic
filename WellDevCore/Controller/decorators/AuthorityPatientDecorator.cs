@@ -105,5 +105,26 @@ namespace bolnica.Controller.decorators
                 return PatientController.Save(entity);
             return null;
         }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            if (AuthorizedUsers["GetPatientsForBlocking"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetPatientsForBlocking();
+            return null;
+        }
+
+        public List<Patient> GetBlockedPatients()
+        {
+            if (AuthorizedUsers["GetBlockedPatients"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetBlockedPatients();
+            return null;
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            if (AuthorizedUsers["GetPatientToken"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return PatientController.GetPatientToken(token);
+            return null;
+        }
     }
 }

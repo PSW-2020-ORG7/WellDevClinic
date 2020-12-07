@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Service;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -13,12 +14,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class GreetingsController : ControllerBase
     {
-        private readonly GreetingsService _GreetService;
+        private readonly IGreetingsService _GreetService;
 
-        public GreetingsController()
+        public GreetingsController(IGreetingsService greetingsService)
         {
             MyContextFactory cf = new MyContextFactory();
             _GreetService = new GreetingsService(cf.CreateDbContext(new string[0]), new HttpClient());
+            //_GreetService = greetingsService;
         }
 
         [HttpGet]

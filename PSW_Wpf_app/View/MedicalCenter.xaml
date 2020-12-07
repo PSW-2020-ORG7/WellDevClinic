@@ -7,13 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="610">
     <Grid>
-        <Button Content="Save" Command="{Binding SaveMedicalCommand}" Margin="261,44,0,0" HorizontalAlignment="Left" Width="97" Height="23" VerticalAlignment="Top" ></Button>
+        <Button Content="Save" Command="{Binding SaveMedicalCommand}" Margin="471,10,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"  Width="130"/>
 
         <DataGrid  
             ItemsSource="{Binding FloorElementsM}" 
             HorizontalAlignment="Left"
-            Height="381" 
-            Margin="19,67,0,0" 
+            Height="372" 
+            Margin="19,47,0,0" 
             VerticalAlignment="Top" 
             Width="581"
             AutoGenerateColumns="False"

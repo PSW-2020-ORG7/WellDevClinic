@@ -1,13 +1,13 @@
 using System;
 using Xunit;
 using Model.Doctor;
-using Xunit;
 using System.Collections.Generic;
 using Moq;
 using Repository;
 using Service;
 using bolnica.Model.Dto;
 using Shouldly;
+
 
 namespace UnitTests
 {
