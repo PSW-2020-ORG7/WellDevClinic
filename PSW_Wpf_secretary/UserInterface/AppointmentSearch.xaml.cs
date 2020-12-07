@@ -1,16 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using bolnica.Model.Dto;
 using Model.Users;
 
@@ -43,7 +33,6 @@ namespace UserInterface
             ToYear = DateTime.Now.Year;
 
             App app = Application.Current as App;
-            Doctors = app.DoctorController.GetAll().ToList();
             SelectedDoctor = Doctors[0];
             NoPriority.IsChecked = true;
         }

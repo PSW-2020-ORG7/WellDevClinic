@@ -1,30 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using bolnica.Controller;
-using Controller;
 using Microsoft.Win32;
 using Model.Users;
 using Model.PatientSecretary;
 using Model.Dto;
-using Model.Director;
 using bolnica.Model.Dto;
-using bolnica.Service;
 using Model.Doctor;
 using System.Configuration;
 
@@ -96,20 +82,11 @@ namespace UserInterface
             Year = secretary.DateOfBirth.Year;
             FullDate = string.Join("/", Day, Month, Year);
             _fileName = Secretary.Image.ToString();
-            PopulateCombos();
-            PopulatePatients();
-
-            //ProfilePic.Source = new BitmapImage(Secretary.Image);
-            //ChProfilePic.Source = new BitmapImage(Secretary.Image);
 
             se = ScheduledExaminations;
             ee = EmptyExaminations;
             tb = FilterInfo;
             msg = SuccessMsg;
-
-            FillExaminationTable();
-            FillOperationTable();
-
 
             FreeSlots = new List<ExaminationDTO>();
             freeSlots = new List<ExaminationDTO>(FreeSlots);
@@ -127,14 +104,12 @@ namespace UserInterface
         private void FillOperationTable()
         {
             App app = Application.Current as App;
-            Operations = app.OperationController.GetAll().ToList();
             ScheduledOperations.ItemsSource = Operations;
         }
 
         private static void FillExaminationTable()
         {
             App app = Application.Current as App;
-            Examinations = app.ExaminationController.GetAll().ToList();
             ExaminationDisplay = ConvertExaminationToExaminationDTO(Examinations);
             examinationDisplay = new List<ExaminationDTO>(ExaminationDisplay);
             se.ItemsSource = examinationDisplay;
@@ -143,17 +118,7 @@ namespace UserInterface
         private static List<ExaminationDTO> ConvertExaminationToExaminationDTO(List<Examination> examinations)
         {
             List<ExaminationDTO> retVal = new List<ExaminationDTO>();
-            foreach (Examination examination in examinations)
-            {
-                Room room = null;
-                foreach (BusinessDay businessDay in examination.Doctor.BusinessDay)
-                    if (businessDay.Shift.StartDate.Date == examination.Period.StartDate.Date)
-                    {
-                        room = businessDay.room;
-                        break;
-                    }
-                retVal.Add(new ExaminationDTO(examination.Id, examination.Doctor, room, examination.Period, (Patient)examination.User));
-            }
+            
             return retVal;
         }
 
@@ -195,8 +160,6 @@ namespace UserInterface
         private void PopulatePatients()
         {
             App app = Application.Current as App;
-            IPatientController patientController = app.PatientController;
-            Patients = patientController.GetAll().ToList();
         }
 
         private void Edit(object sender, RoutedEventArgs e)
@@ -206,7 +169,6 @@ namespace UserInterface
             Secretary.Address = SelectedAddress;
             Secretary.Address.Town = SelectedTown;
             Secretary.Address.Town.State = SelectedState;
-            Secretary.Image = new Uri(_fileName);
             FullDate = string.Join("/", Day, Month, Year);
 
             TextBlock date = FindName("txtDate") as TextBlock;
@@ -217,10 +179,6 @@ namespace UserInterface
             town.Text = SelectedTown.Name;
             TextBlock address = FindName("txtAddress") as TextBlock;
             address.Text = SelectedAddress.FullAddress;
-
-            app.SecretaryController.Edit(Secretary);
-
-            ProfilePic.Source = new BitmapImage(Secretary.Image);
             CancelProfileChangeDialog(sender, e);
         }
 
@@ -279,16 +237,12 @@ namespace UserInterface
             ExaminationDTO examination = ScheduledExaminations.SelectedItem as ExaminationDTO;
             App app = Application.Current as App;
             Examination toDelete = Examinations.SingleOrDefault(entity => entity.Id == examination.Id);
-            app.ExaminationController.Delete(toDelete);
-            BusinessDay selectedDay = app.BusinessDayController.GetExactDay(toDelete.Doctor, toDelete.Period.StartDate);
             List<DateTime> dateList = new List<DateTime>();
             dateList.Add(toDelete.Period.StartDate);
-            app.BusinessDayController.FreePeriod(selectedDay, dateList);
             FillExaminationTable();
 
             PatientNotification notification = new PatientNotification((Patient)examination.Patient, false, "Pregled zakazan za " + examination.Period.StartDate + " je otkazan!");
-            app.NotificationController.Save(notification);
-
+            
             msg.Content = "Pregled upsešno otkazan.";
             msg.Visibility = Visibility.Visible;
             dispatcherTimer.Start();
@@ -315,11 +269,11 @@ namespace UserInterface
 
         private void RequiredFieldError(object sender, KeyEventArgs e)
         {
-            //TextBox textField = sender as TextBox;
-            //textField.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            //ScheduleBtn.IsEnabled = false;
-            //if (IGuestJMBG.Text != "" && IGuestFirstName.Text != "" && IGuestLastName.Text != "" && IGuestYear.Text != "" && IGuestMonth.Text != "" && IGuestDay.Text != "")
-            //    ScheduleBtn.IsEnabled = true;
+            TextBox textField = sender as TextBox;
+            textField.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            ScheduleBtn.IsEnabled = false;
+            if (IGuestJMBG.Text != "" && IGuestFirstName.Text != "" && IGuestLastName.Text != "" && IGuestYear.Text != "" && IGuestMonth.Text != "" && IGuestDay.Text != "")
+                ScheduleBtn.IsEnabled = true;
         }
 
         private void UpdateTownAddress(object sender, RoutedEventArgs e)
@@ -387,45 +341,7 @@ namespace UserInterface
             }
             
             App app = Application.Current as App;
-            IPatientController patientController = app.PatientController;
-            Patient guest = patientController.GetPatientByJMBG(jmbg);
-            
-            if (guest != null)
-            {
-                GuestPatient = guest;
-
-                txtFirstName.Text = guest.FirstName;
-                txtFirstName.IsEnabled = false;
-
-                txtLastName.Text = guest.LastName;
-                txtLastName.IsEnabled = false;
-
-                txtPhone.Text = guest.Phone;
-                txtPhone.IsEnabled = false;
-
-                txtEmail.Text = guest.Email;
-                txtEmail.IsEnabled = false;
-
-                NewDay = "" + guest.DateOfBirth.Day;
-                txtDay.Text = NewDay;
-                txtDay.IsEnabled = false;
-
-                NewMonth = "" + guest.DateOfBirth.Month;
-                txtMonth.Text = NewMonth;
-                txtMonth.IsEnabled = false;
-
-                NewYear = "" + guest.DateOfBirth.Year;
-                txtYear.Text = NewYear;
-                txtYear.IsEnabled = false;
-
-                Button search = FindName("SearchBtn") as Button;
-                search.Focus();
-            }
-            else
-            {
-                txtFirstName.Focus();
-            }
-
+         
         }
 
         private void PassValidation(object sender, KeyEventArgs e)
@@ -479,7 +395,6 @@ namespace UserInterface
             Secretary.Password = confPass.Password;
 
             App app = Application.Current as App;
-            app.SecretaryController.Edit(Secretary);
             CancelProfileChangeDialog(sender, e);
         }
 
@@ -605,17 +520,9 @@ namespace UserInterface
             tb.Text = "";
         }
 
-        private void SwapFreeLists(object sender, RoutedEventArgs e)
-        {
-            //freeSlots = new List<Examination>(FreeSlots);
-            //ee.ItemsSource = null;
-            //ee.ItemsSource = freeSlots;
-        }
-
         public static void FilterExaminations(ExaminationDTO examinationFilter)
         {
             App app = Application.Current as App;
-            examinationDisplay = ConvertExaminationToExaminationDTO(app.ExaminationController.GetExaminationsByFilter(examinationFilter, true));
             tb.Text = "Lekar:\t\t" + ((examinationFilter.Doctor != null) ? examinationFilter.Doctor.FullName : "") + "\n\nPacijent:\t\t" + ((examinationFilter.Patient != null) ? examinationFilter.Patient.FullName : "") + "\n\nOd:\t\t" + examinationFilter.Period.StartDate + "\nDo:\t\t" + examinationFilter.Period.EndDate + "\n\nSala:\t\t" + ((examinationFilter.Room != null) ? examinationFilter.Room.RoomCode : "");
             tb.FontSize = 13;
             se.ItemsSource = examinationDisplay;
@@ -625,46 +532,11 @@ namespace UserInterface
         {
             ExaminationDTO examinationDTO = se.SelectedItem as ExaminationDTO;
             App app = Application.Current as App;
-            BusinessDay previousDay = app.BusinessDayController.GetExactDay(examinationDTO.Doctor, examinationDTO.Period.StartDate);
             Examination toEdit = Examinations.SingleOrDefault(entity => entity.Id == examinationDTO.Id);
 
             toEdit.Doctor = newExamination.Doctor;
             toEdit.Period = newExamination.Period;
-            toEdit.User = newExamination.User;
-
-            if (examinationDTO.Doctor.Id != newExamination.Doctor.Id || examinationDTO.Period.StartDate != newExamination.Period.StartDate)
-            {
-                BusinessDay selectedDay = app.BusinessDayController.GetExactDay(toEdit.Doctor, toEdit.Period.StartDate);
-                if (selectedDay == null)
-                {
-                    MessageBox.Show("Izabrani doktor ne radi u izabranom terminu.", "Oops", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                if (!app.BusinessDayController.isExaminationPossible(toEdit))
-                {
-                    MessageBox.Show("Izabrani termin nije validan.", "Oops", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                app.ExaminationController.Edit(toEdit);
-                List<DateTime> dateList = new List<DateTime>();
-                dateList.Add(examinationDTO.Period.StartDate);
-                app.BusinessDayController.FreePeriod(previousDay, dateList);
-                selectedDay = app.BusinessDayController.GetExactDay(toEdit.Doctor, toEdit.Period.StartDate);
-                List<Period> periodList = new List<Period>();
-                periodList.Add(toEdit.Period);
-                app.BusinessDayController.MarkAsOccupied(periodList, selectedDay);
-            }
-            else
-                app.ExaminationController.Edit(toEdit);
-
-            FillExaminationTable();
-
-            PatientNotification notification = new PatientNotification((Patient) toEdit.User, false, "Pregled zakazan za " + examinationDTO.Period.StartDate + " je izmenjen!");
-            app.NotificationController.Save(notification);
-            msg.Content = "Pregled upsešno izmenjen.";
-            msg.Visibility = Visibility.Visible;
-            dispatcherTimer.Start();
+            
         }
 
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -683,14 +555,7 @@ namespace UserInterface
         public static void FilterFreeSlots(BusinessDayDTO examinationFilter, String choice)
         {
             App app = Application.Current as App;
-            if(choice == "noPriority")
-                app.businessDayService._searchPeriods = new NoPrioritySearch();
-            else if(choice == "doctorFirst")
-                app.businessDayService._searchPeriods = new DoctorPrioritySearch();
-            else
-                app.businessDayService._searchPeriods = new DatePrioritySearch();
-            FreeSlots = app.BusinessDayController.Search(examinationFilter);
-            ee.ItemsSource = FreeSlots;
+          
         }
 
         ExaminationDTO SelectedFreeSlot;
@@ -705,33 +570,11 @@ namespace UserInterface
             }
 
             App app = Application.Current as App;
-            IPatientController patientController = app.PatientController;
-            Patient guest = patientController.GetPatientByJMBG(GuestPatient.Jmbg);
-            SelectedFreeSlot = ee.SelectedItem as ExaminationDTO;
-            if (SelectedFreeSlot == null)
-            {
-                MessageBox.Show("Selektujte pregled pre zakazivanja.", "Oops", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            if (GuestPatient.Guest && guest == null)
-            {
-                GuestPatient.DateOfBirth = new DateTime(int.Parse(IGuestYear.Text), int.Parse(IGuestMonth.Text), int.Parse(IGuestDay.Text));
-                GuestPatient.Address = Addresses[0];
-                GuestPatient.Address.Town = Towns[0];
-                GuestPatient.Address.Town.State = States[0];
-                GuestPatient.Username = GuestPatient.Jmbg;
-                GuestPatient.Password = GuestPatient.Jmbg;
-                GuestPatient.Image = new Uri("C:\\Users\\Asus\\Desktop\\SIMS\\hospital_system\\code\\Resources\\Images\\Anonimus.Jpeg");
-                GuestPatient = app.PatientController.Save(GuestPatient);
-            }
-                
+           
             Examination newExamination = new Examination(GuestPatient, SelectedFreeSlot.Doctor, SelectedFreeSlot.Period);
-            BusinessDay businessDay = app.BusinessDayController.GetExactDay(newExamination.Doctor, newExamination.Period.StartDate);
             List<Period> periodList = new List<Period>();
             periodList.Add(newExamination.Period);
-            app.BusinessDayController.MarkAsOccupied(periodList, businessDay);
 
-            app.ExaminationController.Save(newExamination);
             FillExaminationTable();
             FreeSlots.Clear();
             ee.ItemsSource = FreeSlots;
@@ -754,7 +597,6 @@ namespace UserInterface
             if (result == MessageBoxResult.No) return;
 
             App app = Application.Current as App;
-            app.OperationController.Delete(SelectedOperation);
 
             List<DateTime> toDelete = new List<DateTime>();
             DateTime time = SelectedOperation.Period.StartDate;
@@ -763,11 +605,21 @@ namespace UserInterface
                 toDelete.Add(time);
                 time = time.AddMinutes(ExaminationDuration);
             }
-            BusinessDay businessDay = app.BusinessDayController.GetExactDay(SelectedOperation.Doctor, SelectedOperation.Period.StartDate);
-            app.BusinessDayController.FreePeriod(businessDay, toDelete);
             FillOperationTable();
             OperationMsg.Visibility = Visibility.Visible;
             dispatcherTimer.Start();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Map(object sender, RoutedEventArgs e)
+        {
+            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow();
+
+            main = new PSW_Wpf_app.MainWindow();
+            main.Show();
         }
     }
 
@@ -782,4 +634,5 @@ namespace UserInterface
             Description = description;
         }
     }
+
 }

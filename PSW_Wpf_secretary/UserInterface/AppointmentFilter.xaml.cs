@@ -1,17 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using bolnica.Controller;
 using Model.Director;
 using Model.Dto;
 using Model.PatientSecretary;
@@ -53,15 +42,12 @@ namespace UserInterface
 
             App app = Application.Current as App;
 
-            Rooms = app.RoomController.GetAll().ToList();
             Rooms.Insert(0, null);
             SelectedRoom = Rooms[0];
 
-            Patients = app.PatientController.GetAll().ToList();
             Patients.Insert(0, null);
             SelectedPatient = Patients[0];
 
-            Doctors = app.DoctorController.GetAll().ToList();
             Doctors.Insert(0, null);
             SelectedDoctor = Doctors[0];
         }

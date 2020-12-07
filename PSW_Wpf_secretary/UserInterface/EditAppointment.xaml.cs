@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using bolnica.Controller;
 using Model.Director;
 using Model.Dto;
 using Model.PatientSecretary;
@@ -45,10 +35,8 @@ namespace UserInterface
             SelectedExamination = examination;
             App app = Application.Current as App;
 
-            Patients = app.PatientController.GetAll().ToList();
             SelectedPatient = Patients.SingleOrDefault(entity => entity.Id == examination.Patient.Id);
 
-            Doctors = app.DoctorController.GetAll().ToList();
             SelectedDoctor = Doctors.SingleOrDefault(entity => entity.Id == examination.Doctor.Id);
 
             Year = examination.Period.StartDate.Year;

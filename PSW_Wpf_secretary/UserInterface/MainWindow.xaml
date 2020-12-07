@@ -57,6 +57,7 @@
 
                             <Button Content="_Izmeni profil" Margin="10,30,10,10" Click="OpenEditPanel" ToolTip="Izmena ličnih informacija i lozinke" GotFocus="DisplayToolTip" LostFocus="RemoveToolTip"/>
                             <Button Content="_Odjavi se" Margin="10,10,10,10" Click="Logout" ToolTip="Odjava sa profila" GotFocus="DisplayToolTip" LostFocus="RemoveToolTip"/>
+                            <Button Content="Map"  Width="200" Click="Button_Map"/>
                         </StackPanel>
                     </Grid>
 

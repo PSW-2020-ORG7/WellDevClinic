@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Model.Users;
+using PSW_Wpf_secretary.Client;
 
 namespace UserInterface
 {
@@ -28,16 +29,15 @@ namespace UserInterface
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             var app = Application.Current as App;
 
             var userController = app.UserController;
-            var SecretaryController = app.SecretaryController;
             PasswordBox passwordBox = FindName("password") as PasswordBox;
             try
             {
-                Secretary user = (Secretary)userController.Login(Username, passwordBox.Password);
+                Secretary user = await WpfSecretaryClient.GetUser(username.Text, password.Password);
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();
                 this.Close();
