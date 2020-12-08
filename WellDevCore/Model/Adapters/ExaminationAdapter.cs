@@ -29,6 +29,32 @@ namespace bolnica.Model.Adapters
             return dto;
         }
 
-       
+        public static ExaminationDto ExaminationPreviousToExaminationDto(Examination examination)
+        {
+            ExaminationDto dto = new ExaminationDto();
+            dto.doctor = examination.Doctor.FullName;
+            dto.date = examination.Period.StartDate.Date.ToShortDateString();
+            dto.startTime = examination.Period.StartDate.ToShortTimeString();
+            dto.endTime = examination.Period.EndDate.ToShortTimeString();
+            dto.diagnosis = examination.Diagnosis.Name;
+            dto.therapy = examination.Therapy.Note;
+            dto.filledSurvey = examination.FilledSurvey;
+            dto.id = examination.Id;
+            return dto;
+        }
+
+        public static ExaminationDto ExaminationUpcomingToExaminationDto(Examination examination)
+        {
+            ExaminationDto dto = new ExaminationDto();
+            dto.doctor = examination.Doctor.FullName;
+            dto.date = examination.Period.StartDate.Date.ToShortDateString();
+            dto.startTime = examination.Period.StartDate.ToShortTimeString();
+            dto.endTime = examination.Period.EndDate.ToShortTimeString();
+            dto.id = examination.Id;
+
+            return dto;
+        }
+
+
     }
 }

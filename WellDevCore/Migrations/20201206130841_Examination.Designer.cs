@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bolnica.Model;
 
 namespace WellDevCore.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201206130841_Examination")]
+    partial class Examination
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -915,9 +917,6 @@ namespace WellDevCore.Migrations
             modelBuilder.Entity("Model.Users.Patient", b =>
                 {
                     b.HasBaseType("Model.Users.User");
-
-                    b.Property<bool>("Blocked")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("BloodType")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

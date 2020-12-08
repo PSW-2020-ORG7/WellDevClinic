@@ -26,7 +26,7 @@ namespace InterlayerController.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public IActionResult GetFinishedxaminations()
+        public IActionResult GetFinishedExaminations()
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
             List<Examination> result = (List<Examination>)_examinationController.GetAllPrevious();
@@ -37,24 +37,7 @@ namespace InterlayerController.Controllers
             return Ok(resultDto);
         }
 
-        /// <summary>
-        ///  calls GetFinishedxaminationsByUser(User user) method from class ExaminationService so  
-        /// it can get examinations of specified user
-        /// </summary>
-        /// <param name="user">specified user</param>
-        /// <returns>status 200 OK response with a list of examinations mapped to ExaminationDto</returns>
-        [HttpPost]
-        [Route("getByUser")]
-        public IActionResult GetFinishedxaminationsByUser([FromBody] Patient user)
-        {
-            List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = (List<Examination>)_examinationController.GetFinishedxaminationsByUser(user);
-            foreach (Examination examination in result)
-            {
-                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
-            }
-            return Ok(resultDto);
-        }
+      
         /// <summary>
         /// calls SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user)
         /// method from class ExaminationService so  it get filtered examinations
@@ -64,12 +47,66 @@ namespace InterlayerController.Controllers
         public IActionResult SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = _examinationController.SearchPreviousExamination(documentsDTO.Date, documentsDTO.Doctor, documentsDTO.Drug, documentsDTO.Specialist, documentsDTO.User);
+            List<Examination> result = _examinationController.SearchPreviousExamination(documentsDTO.Date, documentsDTO.Doctor, documentsDTO.Drug, documentsDTO.Specialist, documentsDTO.PatientId);
             foreach (Examination examination in result)
             {
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
             }
             return Ok(resultDto);
+        }
+
+        [HttpPut]
+        [Route("{id?}")]
+        public void FillSurvey(long id)
+        {
+            Examination entity = _examinationController.GetPrevious(id);
+            entity.FilledSurvey = true;
+            _examinationController.EditPrevious(entity);
+
+        }
+
+        [HttpGet]
+        [Route("{id?}")]
+        public List<ExaminationDto> GetFinishedExaminationsByUser(long id)
+        {
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+            List<Examination> result = (List<Examination>)_examinationController.GetFinishedExaminationsByUser(id);
+            foreach (Examination examination in result)
+            {
+                resultDto.Add(ExaminationAdapter.ExaminationPreviousToExaminationDto(examination));
+            }
+            return resultDto;
+        }
+
+        [HttpGet]
+        [Route("upcoming/{id?}")]
+        public List<ExaminationDto> GetUpcomingExaminationsByUser(long id)
+        {
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+            List<Examination> result = (List<Examination>)_examinationController.GetUpcomingExaminationsByUser(id);
+            foreach (Examination examination in result)
+            {
+                resultDto.Add(ExaminationAdapter.ExaminationUpcomingToExaminationDto(examination));
+            }
+            return resultDto;
+        }
+        /// <summary>
+        ///  calls GetFinishedExaminationsByUser(User user) method from class ExaminationService so  
+        /// it can get examinations of specified user
+        /// </summary>
+        /// <param name="user">specified user</param>
+        /// <returns>status 200 OK response with a list of examinations mapped to ExaminationDto</returns>
+        [HttpGet]
+        [Route("getByUser/{id?}")]
+        public List<ExaminationDto> GetFinishedExaminationDocumentsByUser(long id)
+        {
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+            List<Examination> result = (List<Examination>)_examinationController.GetFinishedExaminationsByUser(id);
+            foreach (Examination examination in result)
+            {
+                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
+            }
+            return resultDto;
         }
 
         [HttpPost]
@@ -86,5 +123,7 @@ namespace InterlayerController.Controllers
             }
             return Ok(resultDto);
         }
+
+
     }
 }

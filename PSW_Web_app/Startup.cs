@@ -16,6 +16,8 @@ using bolnica.Repository;
 using bolnica.Controller;
 using Service;
 using bolnica.Service;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace PSW_Web_app
 {
