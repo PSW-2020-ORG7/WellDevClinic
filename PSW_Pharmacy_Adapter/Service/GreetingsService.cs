@@ -12,24 +12,22 @@ namespace PSW_Pharmacy_Adapter.Service
 {
     public class GreetingsService : IGreetingsService
     {
-        private readonly IApiKeyRepository _ApiKeyRepo;
-        private readonly HttpClient _Client;
+        private readonly IApiKeyRepository _apiKeyRepo;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public GreetingsService(MyDbContext dbContext, HttpClient client)
+        public GreetingsService(IApiKeyRepository apiKeyRepo, IHttpClientFactory clientFactory)
         {
-            _ApiKeyRepo = new ApiKeyRepository(dbContext);
-            _Client = client;
+            _apiKeyRepo = apiKeyRepo;
+            _clientFactory = clientFactory;
         }
 
         public async Task<HttpResponseMessage> GreetPharmacy(string id)
         {
-            Api a = _ApiKeyRepo.Get(id);
+            Api a = _apiKeyRepo.Get(id);
 
-            _Client.DefaultRequestHeaders.Add("api-key", a.ApiKey);
-            HttpResponseMessage response = await _Client.GetAsync(a.Url + "/greet");
-            Console.WriteLine("Status: " + response.StatusCode.ToString());
-
-            return response;
+            HttpClient client = _clientFactory.CreateClient();
+            client.DefaultRequestHeaders.Add("api-key", a.ApiKey);
+            return await client.GetAsync(a.Url + "/greet");
         }
     }
 }

@@ -3,9 +3,9 @@
         $.ajax({
             method: "GET",
             url: "../api/medication",
-            dataType: "application/json",
+            contentType: "application/json",
             success: function (data) {
-                alert(data.id);
+                alert(data[0].id);
             },
         });
     })

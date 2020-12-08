@@ -35,7 +35,7 @@ namespace PSW_Pharmacy_Adapter
                     opts.UseMySql(ConfigurationExtensions.GetConnectionString(Configuration, "MyDbContextConnectionString")).UseLazyLoadingProxies());
 
             services.AddScoped<IApiKeyService, ApiKeyService>();
-            //services.AddScoped<IGreetingsService, GreetingsService>();
+            services.AddScoped<IGreetingsService, GreetingsService>();
             services.AddScoped<IActionsAndBenefitsService, ActionsAndBenefitsService>();
             services.AddScoped<IRabbitMQService, RabbitMQService>();
             services.AddScoped<IMedicationService, MedicationService>();
@@ -43,6 +43,7 @@ namespace PSW_Pharmacy_Adapter
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
             services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
             //services.AddHttpClient<IHttpClientBuilder>();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

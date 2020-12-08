@@ -11,20 +11,16 @@ namespace PSW_Pharmacy_Adapter.Service
 {
     public class MedicationService : IMedicationService
     {
-        private readonly HttpClient client;
-        public MedicationService()
+        private readonly IHttpClientFactory _clientFactory;
+
+        public MedicationService(IHttpClientFactory clientFactory)
         {
-            client = new HttpClient();
+            _clientFactory = clientFactory;
         }
 
         public async Task<List<Medication>> GetAllMedication()
-        {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/drug");
-            string responseBody = response.Content.ReadAsStringAsync().Result;
-            List<Medication> meds = JsonConvert.DeserializeObject<List<Medication>>(responseBody);
-            return meds;
-
-        }
-
+            => JsonConvert.DeserializeObject<List<Medication>>(
+                           (await _clientFactory.CreateClient().GetAsync("http://localhost:51393/api/drug"))
+                           .Content.ReadAsStringAsync().Result);
     }
 }

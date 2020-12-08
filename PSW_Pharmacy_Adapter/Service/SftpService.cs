@@ -29,7 +29,7 @@ namespace PSW_Pharmacy_Adapter.Service
                     _sftpClient.UploadFile(stream, Path.GetFileName(sourceFile));
                 }
             }
-            catch(IOException e)
+            catch
             {
                 return false;
             }

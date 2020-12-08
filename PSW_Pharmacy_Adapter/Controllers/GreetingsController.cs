@@ -18,9 +18,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         public GreetingsController(IGreetingsService greetingsService)
         {
-            MyContextFactory cf = new MyContextFactory();
-            _GreetService = new GreetingsService(cf.CreateDbContext(new string[0]), new HttpClient());
-            //_GreetService = greetingsService;
+            _GreetService = greetingsService;
         }
 
         [HttpGet]
