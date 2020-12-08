@@ -21,8 +21,8 @@ $(document).ready(function () {
 
 function viewActionsAndBenefits(data) {
 	$("#viewAction").empty();
-	for (act of data) {
-		content = '<div class="card" id="' + act.id + '">';
+	for (let act of data) {
+		let content = '<div class="card" id="' + act.id + '">';
 		content += '<p class="card-text">';
 		content += act.messageAboutAction;
 		content += '<span class="fa fa-star star';
@@ -42,12 +42,10 @@ function viewActionsAndBenefits(data) {
 		content += ISOtoShort(new Date(act.endDate));
 		content += '</td></tr>';
 		content += '</table>';
-		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter1" id=';
-		content += act.id;
-		content += ' onclick="deleteAction(this)" class="buttonDeleteCard"> Reject </button > ';
-		content += '<button id=';
-		content += act.id;
-		content += ' onclick="useAction(this)" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"> Use it now </button > ';
+		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter1" ';
+		content += ' onclick="deleteAction(' + act.id + ')"> Discard </button > ';
+		content += '<button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"';
+		content += ' onclick="useAction(' + act.id + ')"> Use it now </button > ';
 		content += '</div></div></div>';
 		content += '</div>';
 
@@ -66,9 +64,9 @@ function getSortData() {
 // Dates are in format : yyyy-MM-dd so we can compare them as strings
 function sortCards(sort, order) {
 	if (order == "asc") {
-		for (i = 0; i < (actions.length - 1); i++) {
+		for (let i = 0; i < (actions.length - 1); i++) {
 			let minIdx = i;
-			for (j = i + 1; j < actions.length; j++) {
+			for (let j = i + 1; j < actions.length; j++) {
 				if (sort == "phName") {
 					if (actions[minIdx].pharmacyName.toLowerCase() > actions[j].pharmacyName.toLowerCase())
 						minIdx = j;
@@ -112,12 +110,12 @@ function sortCards(sort, order) {
     }
 }
 
-function deleteAction(button) {
+function deleteAction(id) {
 	$("#deleteAction").show();
 	$("button#btnYes1").click(function () {
 		$.ajax({
 			method: "DELETE",
-			url: "../api/actionsandbenefits/delete/" + button.id,
+			url: "../api/actionsandbenefits/delete/" + id,
 			contentType: "application/json",
 			success: function (data) {
 				if (data) {
@@ -135,8 +133,6 @@ function toggleFav(id) {
 	let newStatus;
 	for (act of actions)
 		if (act.id == id) {
-			toggleAct = act;
-
 			if (act.status != 2)
 				newStatus = 2;
 			else
@@ -156,7 +152,7 @@ function toggleFav(id) {
 	});
 }
 
-function useAction(data) {
+function useAction(id) {
 	$("#useAction").show();
 
 	//$("#btnYes").click(function () {
@@ -167,9 +163,9 @@ function useAction(data) {
 }
 
 function ISOtoShort(date) {
-	day = date.getDate();
-	month = (date.getMonth() + 1);
-	year = date.getFullYear();
+	let day = date.getDate();
+	let month = (date.getMonth() + 1);
+	let year = date.getFullYear();
 
 	if (day < 10)
 		day = '0' + day;

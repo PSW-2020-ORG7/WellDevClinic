@@ -14,26 +14,25 @@
 });
 
 function viewApis(apiDb) {
-    for (api of apiDb) {
-        content = '<tr><td>';
+    for (let api of apiDb) {
+        let content = '<tr><td>';
         content += api.nameOfPharmacy;
         content += '</td><td>';
         content += api.apiKey;
         content += '</td><td>';
         content += api.url;
         content += '</td><td>';
-        content += '<button class="buttonDelete" id=';
-        content += api.nameOfPharmacy;
-        content += ' onclick="deleteEntry(this)" class="buttonDelete"> &times; </button > ';
+        content += '<button class="buttonDelete" ';
+        content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button > ';
         content += '</td></tr>'
         $("#apiTable").append(content);
     }
 }
 
-function deleteEntry(button) {
+function deleteEntry(id) {
     $.ajax({
         method: "DELETE",
-        url: "../api/apikey/delete/" + button.id,
+        url: "../api/apikey/delete/" + id,
         contentType: "application/json",
         success: function (data) {
             if (data) {

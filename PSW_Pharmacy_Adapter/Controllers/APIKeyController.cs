@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 
@@ -13,18 +8,18 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class ApiKeyController : ControllerBase
     {
-        private readonly IApiKeyService _KeyService;
+        private readonly IApiKeyService _keyService;
 
         public ApiKeyController(IApiKeyService apiKeyService)
         {
-            _KeyService = apiKeyService;
+            _keyService = apiKeyService;
         }
 
         [HttpGet]
         [Route("{id?}")]
         public IActionResult GetPharmacy(string id)
         {
-            Api api = _KeyService.GetPharmacy(id);
+            Api api = _keyService.GetPharmacy(id);
             if (api == null)
                 return NotFound();
             return Ok(api);
@@ -33,13 +28,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [HttpGet]
         [Route("all")]
         public IActionResult GetAllPharmacies()
-            => Ok(_KeyService.GetAllPharmacies());
+            => Ok(_keyService.GetAllPharmacies());
 
         [HttpPost]
         [Route("add")]
         public IActionResult AddPharmacy(Api api)
         {
-            Api a = _KeyService.AddPharmacy(api);
+            Api a = _keyService.AddPharmacy(api);
             if (a != null)
                 return Ok(a);
             return BadRequest();
@@ -49,7 +44,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("delete/{id?}")]
         public IActionResult DeletePharmacy(string id)
         {
-            if (_KeyService.DeletePharmacy(id))
+            if (_keyService.DeletePharmacy(id))
                 return Ok(true);
             return NotFound();
         }

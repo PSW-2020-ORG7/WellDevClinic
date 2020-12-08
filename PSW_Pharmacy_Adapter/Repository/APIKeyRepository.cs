@@ -7,20 +7,20 @@ namespace PSW_Pharmacy_Adapter.Repository
 {
     public class ApiKeyRepository : IApiKeyRepository
     {
-        private readonly MyDbContext _MyDbContext;
+        private readonly MyDbContext _dbContext;
 
         public ApiKeyRepository(MyDbContext DbContext)
         {
-            _MyDbContext = DbContext;
+            _dbContext = DbContext;
         }
 
         public Api Get(string id)
-            => _MyDbContext.ApiKeys.FirstOrDefault(api => api.NameOfPharmacy == id);
+            => _dbContext.ApiKeys.FirstOrDefault(api => api.NameOfPharmacy == id);
 
         public IEnumerable<Api> GetAll()
         {
             List<Api> apis = new List<Api>();
-            _MyDbContext.ApiKeys.ToList().ForEach(a => apis.Add(a));
+            _dbContext.ApiKeys.ToList().ForEach(a => apis.Add(a));
             return apis;
         }
 
@@ -29,11 +29,11 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public bool Delete(string id)
         {
-            Api a = _MyDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == id);
+            Api a = _dbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == id);
             if (a != null)
             {
-                _MyDbContext.ApiKeys.Remove(a);
-                _MyDbContext.SaveChanges();
+                _dbContext.ApiKeys.Remove(a);
+                _dbContext.SaveChanges();
                 return true;
             }
             return false;
@@ -41,11 +41,11 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public Api Save(Api api)
         {
-            Api a = _MyDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
+            Api a = _dbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
             if (a == null)
             {
-                _MyDbContext.ApiKeys.Add(api);
-                _MyDbContext.SaveChanges();
+                _dbContext.ApiKeys.Add(api);
+                _dbContext.SaveChanges();
                 return api;
             }
             return null;
@@ -53,11 +53,11 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public Api Update(Api api)
         {
-            Api a = _MyDbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
+            Api a = _dbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
             if (a != null)
             {
-                _MyDbContext.ApiKeys.Update(api);
-                _MyDbContext.SaveChanges();
+                _dbContext.ApiKeys.Update(api);
+                _dbContext.SaveChanges();
                 return api;
             }
             return null;
