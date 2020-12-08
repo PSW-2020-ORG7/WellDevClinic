@@ -19,12 +19,9 @@ namespace PSW_Pharmacy_Adapter.Service
 
         public async Task<List<Medication>> GetAllMedication()
         {
-            HttpResponseMessage response = await client.GetAsync("https://localhost:44375/api/drug");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/drug");
             string responseBody = response.Content.ReadAsStringAsync().Result;
-
             List<Medication> meds = JsonConvert.DeserializeObject<List<Medication>>(responseBody);
-            foreach (Medication m in meds)
-                Console.WriteLine("id:", m.Id);
             return meds;
 
         }

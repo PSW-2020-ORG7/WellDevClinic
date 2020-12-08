@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -12,17 +13,15 @@ namespace PSW_Pharmacy_Adapter.Controllers
     public class MedicationController : ControllerBase
     {
 
-        private readonly MedicationService _medicationService;
+        private readonly IMedicationService _medicationService;
 
-        public MedicationController(MedicationService medicationService) 
+        public MedicationController(IMedicationService medicationService) 
         {
             _medicationService = medicationService;
         }
         [HttpGet]
-        [Route("getAll")]
         public async Task<List<Medication>> getHospitalsMedicationStockAsync()
-        {
-            return await _medicationService.GetAllMedication();
-        }
+            => await _medicationService.GetAllMedication();
+        
     }
 }

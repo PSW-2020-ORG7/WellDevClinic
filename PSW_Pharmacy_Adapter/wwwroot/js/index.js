@@ -2,8 +2,8 @@
     $("#testDugme").click(function () {
         $.ajax({
             method: "GET",
-            url: "../api/medication/getAll",
-            contentType: "application/json",
+            url: "../api/medication",
+            dataType: "application/json",
             success: function (data) {
                 alert(data.id);
             },
