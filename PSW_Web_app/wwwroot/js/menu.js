@@ -39,4 +39,9 @@
         var origin = window.location.origin;
         window.location.href = origin + "/html/blockUsers.html"
     });
+
+    $('#patientFile').click(function (event) {
+        var origin = window.location.origin;
+        window.location.href = origin + "/html/viewPatientFile.html"
+    });
 });

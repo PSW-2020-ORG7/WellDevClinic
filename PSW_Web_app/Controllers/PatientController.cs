@@ -5,10 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Model.Users;
 using bolnica.Service;
-using System.Net.Http;
+
+using WellDevCore.Model.Adapters;
 using WellDevCore.Model.dtos;
+
+using System.Net.Http;
+
 using Newtonsoft.Json;
 using System.Text;
+
 
 namespace PSW_Web_app.Controllers
 {
@@ -29,6 +34,20 @@ namespace PSW_Web_app.Controllers
             return patients;
         }
 
+
+        [HttpGet]
+
+        [Route("patientFile/{id?}")]
+        public async Task<PatientDTO> GetPatientByIdDto(long id)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/patient/patientFile/"+id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            PatientDTO patient = JsonConvert.DeserializeObject<PatientDTO>(responseBody);
+            return patient;
+        }
+
+
         [HttpGet]
         [Route("blocked_patients")]
         public  async Task<List<PatientDTO>> GetBlockedPatients()
@@ -48,5 +67,6 @@ namespace PSW_Web_app.Controllers
             var response = await client.PutAsync("http://localhost:51393/api/patient/"+ id ,content);
 
         }
+
     }
 }

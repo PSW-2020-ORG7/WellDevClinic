@@ -464,7 +464,7 @@ namespace PSW_Wpf_Patient
         private List<ExaminationDTO> GetScheduledExaminations()
         {
             var app = Application.Current as App;
-            List<Examination> upcomingExaminations = app.ExaminationDecorator.GetUpcomingExaminationsByUser(this._patient);
+            List<Examination> upcomingExaminations = app.ExaminationDecorator.GetUpcomingExaminationsByUser(this._patient.Id);
             List<ExaminationDTO> retVal = new List<ExaminationDTO>();
             if (upcomingExaminations == null)
             {

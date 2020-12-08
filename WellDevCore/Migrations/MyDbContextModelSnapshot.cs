@@ -449,6 +449,9 @@ namespace WellDevCore.Migrations
                     b.Property<long?>("DoctorId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("FilledSurvey")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<long?>("PatientFileId")
                         .HasColumnType("bigint");
 
