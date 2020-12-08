@@ -41,6 +41,7 @@
                     </StackPanel>
                 </ComboBoxItem>
             </ComboBox>
+            <Button Content="Map" Width="150" Click="Button_Map"/>
 
         </DockPanel>
         <TabControl BorderBrush="LightBlue" BorderThickness="1" x:Name="TabControl" TabStripPlacement="Left" Margin="0.3">
