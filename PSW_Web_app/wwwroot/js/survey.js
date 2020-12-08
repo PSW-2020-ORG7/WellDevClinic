@@ -65,13 +65,25 @@ $(document).ready(function () {
 		doctor.push(hospital3_dto)
 		doctor.push(hospital4_dto)
 
-		let doctor_name = "Marjana Zalar"
 
+		let searchParams = new URLSearchParams(window.location.search);
+		let doctor_name = searchParams.get('doctor');
+		let examination_id =  searchParams.get('id');
+				
 		$.post({
 			url: "http://localhost:49153/api/survey",
 			data: JSON.stringify({grades:doctor, doctor:doctor_name}),
 			success: function () {
 				alert("You have completed the survey");
+				$.ajax({
+					url: 'http://localhost:49153/api/examination/'+examination_id,
+					type: 'PUT',
+					success: function (data) {
+						var origin = window.location.origin;
+						window.location.href = origin + "/html/viewExaminations.html"
+						
+					},
+				});
 			},
 			contentType: "application/json; charset=utf-8"
 		})
@@ -81,6 +93,6 @@ $(document).ready(function () {
 
 	$('#quit').click(function (event) {
 		var origin = window.location.origin;
-		window.location.href = origin + "/html/feedback.html"
+		window.location.href = origin + "/html/viewExaminations.html"
 	});
 });

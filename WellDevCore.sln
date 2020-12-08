@@ -18,11 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Pharmacy_Adapter", "PSW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterlayerController", "InterlayerController\InterlayerController.csproj", "{CC215C64-17EA-4AD8-96E5-9EEF44C6B153}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C95DB488-42C9-425C-B2B6-56F3724662DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C95DB488-42C9-425C-B2B6-56F3724662DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6C43663C-A3BA-4FDA-9B26-F3114D85C5B2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Wpf_secretary", "PSW_Wpf_secretary\UserInterface\PSW_Wpf_secretary.csproj", "{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6C43663C-A3BA-4FDA-9B26-F3114D85C5B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,14 +110,6 @@ Global
 		{6C43663C-A3BA-4FDA-9B26-F3114D85C5B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C43663C-A3BA-4FDA-9B26-F3114D85C5B2}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C43663C-A3BA-4FDA-9B26-F3114D85C5B2}.Release|x86.Build.0 = Release|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Debug|x86.Build.0 = Debug|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Release|x86.ActiveCfg = Release|Any CPU
-		{7F63E61A-6017-4BBF-9DB7-8927AE065F1E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
