@@ -1,22 +1,16 @@
 using System;
 using bolnica.Model;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using bolnica.Repository;
-using bolnica.Controller;
 using Service;
 using bolnica.Service;
-
+using System.Reflection;
 namespace PSW_Web_app
 {
     public class Startup
@@ -33,8 +27,9 @@ namespace PSW_Web_app
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContextPool<MyDbContext>(opts =>
-                    opts.UseMySql(ConfigurationExtensions.GetConnectionString(Configuration, "MyDbContextConnectionString")).UseLazyLoadingProxies());
+            services.AddDbContext<MyDbContext>(opts =>
+                    opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
             services.AddScoped<IExaminationService, ExaminationService>();
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IAddressService, AddressService>();
@@ -106,6 +101,7 @@ namespace PSW_Web_app
             {
                 app.UseDeveloperExceptionPage();
             }
+           
 
             app.UseRouting();
 
@@ -117,5 +113,16 @@ namespace PSW_Web_app
             });
             app.UseStaticFiles();
         }
+
+        private string CreateConnectionStringFromEnvironment()
+        {
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "newmydb";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            return $"server={server};port={port};database={database};user={user};password={password};";
+        }
+
     }
 }
