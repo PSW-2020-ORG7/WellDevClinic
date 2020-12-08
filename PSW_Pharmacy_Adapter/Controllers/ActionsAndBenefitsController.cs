@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
 
@@ -13,19 +8,18 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class ActionsAndBenefitsController : ControllerBase
     {
-        private readonly IActionsAndBenefitsService _ActionService;
+        private readonly IActionsAndBenefitsService _actionService;
         
         public ActionsAndBenefitsController(IActionsAndBenefitsService service)
         {
-            
-            _ActionService = service;
+            _actionService = service;
         }
 
         [HttpGet]
         [Route("{id?}")]
         public IActionResult GetBenefit(long id)
         {
-            ActionAndBenefit act = _ActionService.GetBenefit(id);
+            ActionAndBenefit act = _actionService.GetBenefit(id);
             if (act == null)
                 return NotFound();
             return Ok(act);
@@ -34,13 +28,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [HttpGet]
         [Route("all")]
         public IActionResult GetAll()
-            => Ok(_ActionService.GetAll());
+            => Ok(_actionService.GetAll());
 
         [HttpDelete]
         [Route("delete/{id?}")]
         public IActionResult DeleteBenefit(long id)
         {
-            if (_ActionService.DeleteBenefit(id))
+            if (_actionService.DeleteBenefit(id))
                 return Ok(true);
             return BadRequest();
         }
@@ -49,7 +43,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("status/{id?}/{stat?}")]
         public IActionResult UpdateStatus(long id, int stat)
         {
-            ActionAndBenefit action = _ActionService.UpdateStatus(id, stat);
+            ActionAndBenefit action = _actionService.UpdateStatus(id, stat);
             if (action != null)
                 return Ok(action);
             return BadRequest();
@@ -59,7 +53,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("deleteExpired")]
         public IActionResult DeleteExpired()
         {
-            _ActionService.DeleteExpiredAction();
+            _actionService.DeleteExpiredAction();
             return Ok();
         }
 

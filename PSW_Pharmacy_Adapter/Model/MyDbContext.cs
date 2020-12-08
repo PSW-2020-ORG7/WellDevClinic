@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Model
 {
@@ -10,6 +7,7 @@ namespace PSW_Pharmacy_Adapter.Model
     {
         public DbSet<Api> ApiKeys { get; set; }
         public DbSet<ActionAndBenefit> ActionsAndBenefits { get; set; }
+
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
@@ -31,6 +29,8 @@ namespace PSW_Pharmacy_Adapter.Model
                 new ActionAndBenefit(5, "PH2", "Cant miss!! Vitamin C just for 99$", DateTime.Now, DateTime.Now.AddDays(15), ActionStatus.favourite),
                 new ActionAndBenefit(6, "PH1", "Cheap sedatives!", DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1), ActionStatus.accepted)
                );
+
+           
         }
     }
 }
