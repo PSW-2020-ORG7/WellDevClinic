@@ -12,6 +12,8 @@ namespace bolnica.Controller
     public  interface IDoctorGradeController : IController<DoctorGrade,long>
     {
         List<GradeDTO> GetAverageGrade(DoctorGrade survey);
+        List<DoctorGrade> GetByDoctor(String doctor);
+        List<GradeDTO> GetAverageGradeDoctor(List<DoctorGrade> surveys);
 
     }
 }

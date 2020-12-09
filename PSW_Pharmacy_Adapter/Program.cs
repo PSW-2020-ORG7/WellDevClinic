@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
-using Renci.SshNet;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -23,6 +18,7 @@ namespace PSW_Pharmacy_Adapter
             var consumer = new Task(() => CreateHostBuilderForRabbitMQ(args).Build().Run());
             consumer.Start();
             CreateHostBuilder(args).Build().Run();
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -37,7 +33,6 @@ namespace PSW_Pharmacy_Adapter
                  .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    Console.WriteLine("tu je");
                     services.AddHostedService<RabbitMQService>();
                 });
 

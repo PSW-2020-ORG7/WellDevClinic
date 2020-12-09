@@ -43,9 +43,17 @@
     <PackageReference Include="SSH.NET" Version="2016.1.0" />
     <PackageReference Include="WinSCP" Version="5.17.6" />
   </ItemGroup>
+
   <ItemGroup>
     <Protobuf Include="Protos\model.proto" GrpcServices="None" />
     <Protobuf Include="Protos\netGrpcService.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\springGrpcService.proto" GrpcServices="Client" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\InterlayerController\InterlayerController.csproj" />
+  </ItemGroup>
+
+
 </Project>

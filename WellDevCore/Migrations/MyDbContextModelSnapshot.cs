@@ -449,6 +449,9 @@ namespace WellDevCore.Migrations
                     b.Property<long?>("DoctorId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("FilledSurvey")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<long?>("PatientFileId")
                         .HasColumnType("bigint");
 
@@ -912,6 +915,9 @@ namespace WellDevCore.Migrations
             modelBuilder.Entity("Model.Users.Patient", b =>
                 {
                     b.HasBaseType("Model.Users.User");
+
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("BloodType")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

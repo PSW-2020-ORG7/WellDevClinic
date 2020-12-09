@@ -21,7 +21,10 @@ namespace bolnica.Repository
             _patientRepository = patientRepository;
             myDbContext = context;
         }
-
+        public Examination Save(Examination entity)
+        {
+            throw new NotImplementedException();
+        }
         public void Delete(Examination entity)
         {
             throw new NotImplementedException();
@@ -45,9 +48,13 @@ namespace bolnica.Repository
         public IEnumerable<Examination> GetAllEager()
         {
             List<Examination> examinations = new List<Examination>();
-            foreach(Examination exam in GetEager().ToList())
+            foreach (Examination exam in myDbContext.Examination.ToList())
             {
-                examinations.Add(GetEager(exam.GetId()));
+                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now) >= 0)
+
+                {
+                    examinations.Add(exam);
+                }
             }
             return examinations;
         }
@@ -60,8 +67,11 @@ namespace bolnica.Repository
             return exam;
         }
 
+
+    
+
         public  List<Examination> GetUpcomingExaminationsByUser(User user)
-        {
+        {  
             try
             {
                 Doctor doctor = (Doctor)user;
@@ -75,7 +85,6 @@ namespace bolnica.Repository
                     }
                 }
                 return findExamination;
-
             }catch(Exception e)
             {
                 Patient patient = (Patient)user;
@@ -88,13 +97,11 @@ namespace bolnica.Repository
                         findExamination.Add(examination);
                     }
                 }
-                return findExamination;
+                 return findExamination;
             }
         }
 
-        public Examination Save(Examination entity)
-        {
-            throw new NotImplementedException();
-        }
+
+
     }
 }

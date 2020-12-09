@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
@@ -10,25 +8,25 @@ namespace PSW_Pharmacy_Adapter.Service
 {
     public class ActionsAndBenefitsService : IActionsAndBenefitsService
     {
-        private readonly IActionAndBenefitRepository _ActionRepository;
+        private readonly IActionAndBenefitRepository _actionRepository;
 
-        public ActionsAndBenefitsService(MyDbContext dbContext)
+        public ActionsAndBenefitsService(IActionAndBenefitRepository actionAndBenefitRepo)
         {
-            _ActionRepository = new ActionAndBenefitRepository(dbContext);
+            _actionRepository = actionAndBenefitRepo;
         }
 
         public ActionAndBenefit GetBenefit(long id) =>
-            _ActionRepository.Get(id);
+            _actionRepository.Get(id);
 
         public IEnumerable<ActionAndBenefit> GetAll() =>
-            _ActionRepository.GetAll();
+            _actionRepository.GetAll();
 
         public bool DeleteBenefit(long id) =>
-            _ActionRepository.Delete(id);
+            _actionRepository.Delete(id);
 
         public ActionAndBenefit UpdateStatus(long id, int stat) 
         {
-            ActionAndBenefit action = _ActionRepository.Get(id);
+            ActionAndBenefit action = _actionRepository.Get(id);
             switch (stat)
             {
                 case 0:
@@ -41,7 +39,7 @@ namespace PSW_Pharmacy_Adapter.Service
                     action.Status = ActionStatus.favourite;
                     break;
             }
-            return _ActionRepository.Update(action);
+            return _actionRepository.Update(action);
         }
 
         public void DeleteExpiredAction()
@@ -50,7 +48,7 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 if (action.EndDate < DateTime.Now)
                 {
-                    _ActionRepository.Delete((long)action.Id);
+                    _actionRepository.Delete((long)action.Id);
                 }
             }
         }

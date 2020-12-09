@@ -62,6 +62,22 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
+        public List<GradeDTO> GetAverageGradeDoctor(List<DoctorGrade> surveys)
+        {
+            if (AuthorizedUsers["GetAverageGradeDoctor"].SingleOrDefault(x => x == Role) != null)
+                return DoctorGradeController.GetAverageGradeDoctor(surveys);
+            else
+                return null;
+        }
+
+        public List<DoctorGrade> GetByDoctor(string doctor)
+        {
+            if (AuthorizedUsers["GetByDoctor"].SingleOrDefault(x => x == Role) != null)
+                return DoctorGradeController.GetByDoctor(doctor);
+            else
+                return null;
+        }
+
         public DoctorGrade Save(DoctorGrade entity)
         {
             if (AuthorizedUsers["Save"].SingleOrDefault(x => x == Role) != null)

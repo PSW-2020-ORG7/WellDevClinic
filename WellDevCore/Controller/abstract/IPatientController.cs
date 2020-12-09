@@ -19,6 +19,12 @@ namespace bolnica.Controller
 
         Patient CheckExistence(String jmbg, String username, String email);
 
+        List<Patient> GetPatientsForBlocking();
+
+        List<Patient> GetBlockedPatients();
+
+        Patient GetPatientToken(string token);
+
         /*
         Patient GetPatientByMail(String email);
 

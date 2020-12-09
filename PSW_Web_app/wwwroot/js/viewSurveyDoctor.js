@@ -32,6 +32,7 @@ function addAverage(grades) {
     let tdDoctor2;
     let tdDoctor3;
     let tdDoctor4;
+    let tdAverage;
 
     for (let grade of grades) {
 

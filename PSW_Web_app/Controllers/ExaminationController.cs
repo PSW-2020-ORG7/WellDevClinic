@@ -9,12 +9,13 @@ using bolnica.Model.Adapters;
 using bolnica.Model.dtos;
 using bolnica.Controller;
 using bolnica.Model;
-using bolnica.Model.Adapters;
-using bolnica.Model.dtos;
 using bolnica.Service;
 using Model.Dto;
 using WellDevCore.Model.Dto;
 using System.Globalization;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace PSW_Web_app.Controllers
 {
@@ -23,73 +24,79 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class ExaminationController : ControllerBase
     {
-        private readonly IExaminationService _examinationService;
+        static readonly HttpClient client = new HttpClient();
 
-        public ExaminationController(IExaminationService examinationService)
-        {
-            _examinationService = examinationService;
-        }
-
-        [HttpPost]
+        [HttpGet]
         [Route("getAll")]
-        public IActionResult GetFinishedxaminations()
+        public async Task<IActionResult> GetFinishedExaminations()
         {
-            List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = (List<Examination>)_examinationService.GetAllPrevious();
-            foreach (Examination examination in result)
-            {
-                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
-            }
-            return Ok(resultDto);
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAll");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            IActionResult result = JsonConvert.DeserializeObject<IActionResult>(responseBody);
+            return result;
         }
 
+        [HttpPut]
+        [Route("{id?}")]
+        public async void FillSurvey(long id)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(id));
+            var response = await client.PutAsync("http://localhost:51393/api/examination/" + id, content);
+        }
+
+        [HttpGet]
+        [Route("{id?}")]
+        public async Task<List<ExaminationDto>> GetFinishedExaminationsByUser(long id)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/"+id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            return result;
+        }
+        [HttpGet]
+        [Route("upcoming/{id?}")]
+        public async Task<List<ExaminationDto>> GetUpcomingExaminationsByUser(long id)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/upcoming/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            return result;
+        }
         /// <summary>
-        ///  calls GetFinishedxaminationsByUser(User user) method from class ExaminationService so  
+        ///  calls GetFinishedExaminationsByUser(User user) method from class ExaminationService so  
         /// it can get examinations of specified user
         /// </summary>
         /// <param name="user">specified user</param>
         /// <returns>status 200 OK response with a list of examinations mapped to ExaminationDto</returns>
-        [HttpPost]
-        [Route("getByUser")]
-        public IActionResult GetFinishedxaminationsByUser([FromBody]Patient user)
+        [HttpGet]
+        [Route("getByUser/{id?}")]
+        public async Task<List<ExaminationDto>> GetFinishedExaminationDocumentsByUser(long id)
         {
-            List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = (List<Examination>)_examinationService.GetFinishedxaminationsByUser(user);
-            foreach (Examination examination in result) {
-                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination)); 
-            }
-            return Ok(resultDto); 
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getByUser/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            return result;
         }
-        /// <summary>
-        /// calls SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user)
-        /// method from class ExaminationService so  it get filtered examinations
-        /// <param name="documentsDTO"></param>
-        /// <returns>status 200 OK response with a list of feedback filtered examinations mapped to ExaminationDto</returns>
+       
         [HttpPost]
-        public IActionResult SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
+        public async Task<List<ExaminationDto>> SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
         {
-            List<ExaminationDto> resultDto = new List<ExaminationDto>();
-            List<Examination> result = _examinationService.SearchPreviousExamination(documentsDTO.Date, documentsDTO.Doctor, documentsDTO.Drug, documentsDTO.Specialist, documentsDTO.User);
-            foreach (Examination examination in result)
-            {
-                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
-            }
-            return Ok(resultDto);
+            var content = new StringContent(JsonConvert.SerializeObject(documentsDTO, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("http://localhost:51393/api/examination", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            return result;
         }
 
         [HttpPost]
         [Route("search")]
         public IActionResult SearchExamination([FromBody] DocumentsDTO2 documentsDTO2)
         {
-            List<ExaminationDto> resultDto = new List<ExaminationDto>();
-
-            List<Examination> result = _examinationService.SearchPreviousExaminations(documentsDTO2.Date, documentsDTO2.Doctor, documentsDTO2.Drug, documentsDTO2.Specialist, documentsDTO2.Radio1, documentsDTO2.Radio2);
-            foreach (Examination examination in result)
-            {
-                resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
-
-            }
-            return Ok(resultDto);
+            throw new NotImplementedException();
         }
     }
 }

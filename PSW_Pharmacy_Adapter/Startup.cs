@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
 using PSW_Pharmacy_Adapter.Repository;
@@ -35,13 +29,14 @@ namespace PSW_Pharmacy_Adapter
                     opts.UseMySql(ConfigurationExtensions.GetConnectionString(Configuration, "MyDbContextConnectionString")).UseLazyLoadingProxies());
 
             services.AddScoped<IApiKeyService, ApiKeyService>();
-            //services.AddScoped<IGreetingsService, GreetingsService>();
+            services.AddScoped<IGreetingsService, GreetingsService>();
             services.AddScoped<IActionsAndBenefitsService, ActionsAndBenefitsService>();
             services.AddScoped<IRabbitMQService, RabbitMQService>();
-
+            services.AddScoped<IMedicationService, MedicationService>();
+ 
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
             services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
-            //services.AddHttpClient<IHttpClientBuilder>();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

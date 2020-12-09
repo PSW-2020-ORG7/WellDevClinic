@@ -148,7 +148,7 @@ namespace PSW_Wpf_doctor
             DrugService drugService = new DrugService(drugRepository);
             IngredientService ingredientService = new IngredientService(ingredientRepository);
             PatientFileService patientFileService = new PatientFileService(patientFileRepository, hospitalizationService, operationService);
-            PatientService patientService = new PatientService(patientRepository, patientFileService, doctorGradeService);
+            PatientService patientService = new PatientService(patientRepository, patientFileService, doctorGradeService,examinationService);
             BusinessDayService = new BusinessDayService(businessDayRepository, doctorService);
             RenovationService renovationService = new RenovationService(renovationRepository);
             RoomService roomService = new RoomService(roomRepository, renovationService, BusinessDayService, hospitalizationService);
