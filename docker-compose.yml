@@ -16,7 +16,7 @@ services:
 
   web:
     build: .
-    image: jovanjelicki/webapp:1
+    image: jovanjelicki/webapp:3
     container_name: webapp
     restart : always
     networks:
@@ -33,7 +33,7 @@ services:
 
   servers:
     build: .
-    image: jovanjelicki/interlayer:1
+    image: jovanjelicki/interlayer:2
     container_name: interlayer
     restart : always
     networks:
