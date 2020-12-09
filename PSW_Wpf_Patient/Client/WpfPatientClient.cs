@@ -23,7 +23,7 @@ namespace PSW_Wpf_Patient.Client
             //var client = new HttpClient();
             var content = new StringContent(JsonConvert.SerializeObject(new LoginModel { username = username, password = password }));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("https://localhost:44375/api/user", content);
+            var responseBody = await client.PostAsync("http://localhost:51393/api/user", content);
             var value = await responseBody.Content.ReadAsStringAsync();
             Patient user = JsonConvert.DeserializeObject<Patient>(value);
 
