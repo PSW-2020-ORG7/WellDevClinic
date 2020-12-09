@@ -51,25 +51,16 @@ namespace PSW_Wpf_Patient
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             _patient = patient;
 
-            scheduledExaminations = GetScheduledExaminations();
-            upcomingExaminations = new List<ExaminationDTO>();
-
             InitializeComponent();
 
             Country.DisplayMemberPath = "Name";
             Country.SelectedValuePath = "Id";
             App app = Application.Current as App;
-            States = app.StateController.GetAll().ToList();
-            States.Sort((x, y) => x.Name.CompareTo(y.Name));
-            Country.ItemsSource = States;
             Town.DisplayMemberPath = "Name";
             Town.SelectedValuePath = "Id";
             Addressessss.DisplayMemberPath = "FullAddress";
             Addressessss.SelectedValuePath = "Id";
-            Country.SelectedValue = _patient.Address.Town.State.GetId();
-            Town.SelectedValue = _patient.Address.Town.GetId();
-            Addressessss.SelectedValue = _patient.Address.GetId();
-
+           
             PriorityBox.SelectedIndex = 0;
             Picker2.Visibility = Visibility.Hidden;
             if (_patient.Guest == true)
@@ -79,27 +70,12 @@ namespace PSW_Wpf_Patient
                 FeedbackHeader.Visibility = Visibility.Hidden;
             }
 
-            FillData();
-
             PasswordValidation2.password2 = _patient.Password;
 
-            DoctorsForFeedback.DisplayMemberPath = "FullName";
-            DoctorsForExaminations.DisplayMemberPath = "FullName";
             Picker.DisplayDateStart = DateTime.Now.AddDays(1);
             Picker2.DisplayDateStart = DateTime.Now.AddDays(1);
             this.DataContext = this;
 
-            /*if (Theme == 1)
-            {
-                ThemeManager.Current.ChangeTheme(this, "Dark.Green");
-                DarkMode.Value = DarkMode.Maximum;
-            }
-            else
-            {
-                ThemeManager.Current.ChangeTheme(this, "Dark.Gre");
-                DarkMode.Value = DarkMode.Minimum;
-            }*/
-            NotifyPatient();
         }
 
         private void NotifyPatient()
@@ -1232,6 +1208,13 @@ namespace PSW_Wpf_Patient
             {
                 ButtonGrade.Content = app.DoctorGradeDecorator.GetAverageGrade(null).ToString();
             }
+        }
+        private void Button_Map(object sender, RoutedEventArgs e)
+        {
+            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow();
+
+            main = new PSW_Wpf_app.MainWindow();
+            main.Show();
         }
     }
 }
