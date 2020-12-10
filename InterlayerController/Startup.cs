@@ -159,12 +159,17 @@ namespace InterlayerController
                 endpoints.MapControllers();
             });
             app.UseStaticFiles();
-            // app.UseStaticFiles(new StaticFileOptions
-            // {
-            //     FileProvider = new PhysicalFileProvider(
-            //     Path.Combine(env.ContentRootPath, "profilePictures")),
-            //     RequestPath = "/StaticFiles"
-            // });
+            try {
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "profilePictures")),
+                    RequestPath = "/StaticFiles"
+                });
+            }
+            catch {
+
+            }
         }
         private string CreateConnectionStringFromEnvironment()
         {
