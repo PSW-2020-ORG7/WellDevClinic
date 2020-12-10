@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace InterlayerController
 {
@@ -35,10 +36,12 @@ namespace InterlayerController
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
+            System.Threading.Thread.Sleep(25000);
             services.AddMvc();
-            services.AddDbContextPool<MyDbContext>(opts =>
-                    opts.UseMySql(ConfigurationExtensions.GetConnectionString(Configuration, "MyDbContextConnectionString")).UseLazyLoadingProxies());
+            services.AddDbContext<MyDbContext>(opts =>
+                    opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
             services.AddScoped<IExaminationController, ExaminationController>();
             services.AddScoped<IDoctorController, DoctorController>();
             services.AddScoped<IAddressController, AddressController>();
@@ -137,12 +140,15 @@ namespace InterlayerController
     
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
         {
+            System.Threading.Thread.Sleep(25000);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            db.Database.EnsureCreated();
 
             app.UseRouting();
 
@@ -159,6 +165,15 @@ namespace InterlayerController
                 Path.Combine(env.ContentRootPath, "profilePictures")),
                 RequestPath = "/StaticFiles"
             });
+        }
+        private string CreateConnectionStringFromEnvironment()
+        {
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "newmydb";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            return $"server={server};port={port};database={database};user={user};password={password};";
         }
     }
 }

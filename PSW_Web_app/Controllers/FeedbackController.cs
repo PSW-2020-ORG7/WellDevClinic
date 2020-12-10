@@ -19,7 +19,9 @@ namespace PSW_Web_app.Controllers
         [HttpGet]
         public async Task<List<Feedback>> GetAllFeedback()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/feedback");
+            string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+
+            HttpResponseMessage response = await client.GetAsync(communicationLink+"/api/feedback");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Feedback> result = JsonConvert.DeserializeObject<List<Feedback>>(responseBody);
