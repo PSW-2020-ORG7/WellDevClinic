@@ -1,29 +1,20 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 WORKDIR /app
-EXPOSE 51393
+EXPOSE 49153
 
-RUN useradd -u 8877 psw
-
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["InterlayerController/InterlayerController.csproj", "InterlayerController/"]
+COPY ["PSW_Web_app/PSW_Web_app.csproj", "PSW_Web_app/"]
 COPY ["WellDevCore/WellDevCore.csproj", "WellDevCore/"]
-RUN dotnet restore "InterlayerController/InterlayerController.csproj"
+RUN dotnet restore "PSW_Web_app/PSW_Web_app.csproj"
 COPY . .
-WORKDIR "/src/InterlayerController"
-RUN dotnet build "InterlayerController.csproj" -c Release -o /app/build
+WORKDIR "/src/PSW_Web_app"
+RUN dotnet build "PSW_Web_app.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "InterlayerController.csproj" -c Release -o /app/publish
+RUN dotnet publish "PSW_Web_app.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-CMD ASPNETCORE_URLS=http://*:51393 dotnet InterlayerController.dll
-
-USER psw
-
-
-
-
-
+CMD ASPNETCORE_URLS=http://*:49153 dotnet PSW_Web_app.dll

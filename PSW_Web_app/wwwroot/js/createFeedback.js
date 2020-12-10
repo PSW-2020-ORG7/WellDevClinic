@@ -21,7 +21,7 @@ $(document).ready(function () {
             }
 
             $.post({
-                url: window.location.protocol + "//" + window.location.host + "api/feedback",
+                url: window.location.protocol + "//" + window.location.host + "/api/feedback",
                 data: JSON.stringify({ content: comment.val(), isAnonymous: anonymousBool, isPrivate: privateBool, patient: patient}),
                 success: function () {
                     alert("Uspesno ste poslali komentar")
