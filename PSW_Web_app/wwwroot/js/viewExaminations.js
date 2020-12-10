@@ -37,7 +37,7 @@ function addUpcomingExamination(examination, i) {
 }
 $(document).ready(function () {
     $.get({
-		url: 'http://localhost:49153/api/examination/1',
+		url: window.location.protocol + "//" + window.location.host + '/api/examination/1',
 		success: function (list) {
 			i = 1;
 			for (let examination of list) {
@@ -48,7 +48,7 @@ $(document).ready(function () {
 	});
 
     $.get({
-		url: 'http://localhost:49153/api/examination/upcoming/1',
+		url: window.location.protocol + "//" + window.location.host + '/api/examination/upcoming/1',
 		success: function (list) {
 			i = 1;
 			for (let examination of list) {

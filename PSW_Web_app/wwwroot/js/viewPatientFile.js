@@ -5,7 +5,7 @@
 }
 $(document).ready(function () {
     $.get({
-        url: 'http://localhost:49153/api/patient/patientFile/1',
+        url: window.location.protocol + "//" + window.location.host + '/api/patient/patientFile/1',
         success: function (user) {
             $('label[id="username"]').text(user.username);
             $('label[id="fullName"]').text(user.fullName);
