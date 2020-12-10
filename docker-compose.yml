@@ -16,16 +16,13 @@ services:
 
   web:
     build: .
-    image: jovanjelicki/webapp:3
+    image: webapp:latest
     container_name: webapp
     restart : always
+    environment: 
+      - server_address= http://servers:51393
     networks:
       - demo
-    environment:
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: root
-      DATABASE_HOST: mysql
-      DATABASE_SCHEMA: newmydb
     ports: 
       - 49153:49153
     depends_on:
@@ -33,7 +30,7 @@ services:
 
   servers:
     build: .
-    image: jovanjelicki/interlayer:2
+    image: jovanjelicki/interlayer:3
     container_name: interlayer
     restart : always
     networks:
@@ -55,3 +52,4 @@ networks:
   demo:
     name: demo
     driver: bridge
+    external: true

@@ -41,7 +41,7 @@ namespace PSW_Web_app.Controllers
         [Route("getByUser")]
         public IActionResult GetFinishedxaminationsByUser([FromBody]Patient user)
         {
-            throw new NotImplementedException();
+            return Ok(null);
         }
        
         [HttpPost]
