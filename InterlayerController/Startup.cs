@@ -37,7 +37,7 @@ namespace InterlayerController
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {   
-            System.Threading.Thread.Sleep(25000);
+            //System.Threading.Thread.Sleep(25000);
             services.AddMvc();
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
@@ -142,7 +142,7 @@ namespace InterlayerController
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
         {
-            System.Threading.Thread.Sleep(25000);
+            //System.Threading.Thread.Sleep(25000);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -159,12 +159,12 @@ namespace InterlayerController
                 endpoints.MapControllers();
             });
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                Path.Combine(env.ContentRootPath, "profilePictures")),
-                RequestPath = "/StaticFiles"
-            });
+            // app.UseStaticFiles(new StaticFileOptions
+            // {
+            //     FileProvider = new PhysicalFileProvider(
+            //     Path.Combine(env.ContentRootPath, "profilePictures")),
+            //     RequestPath = "/StaticFiles"
+            // });
         }
         private string CreateConnectionStringFromEnvironment()
         {
