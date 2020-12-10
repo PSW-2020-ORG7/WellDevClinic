@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    console.log(window.location.protocol + "//" + window.location.host);
     let form = $("#feedbackForm");
     form.submit(function (event) {
 
@@ -21,7 +21,7 @@ $(document).ready(function () {
             }
 
             $.post({
-                url: "http://localhost:49153/api/feedback",
+                url: window.location.protocol + "//" + window.location.host + "api/feedback",
                 data: JSON.stringify({ content: comment.val(), isAnonymous: anonymousBool, isPrivate: privateBool, patient: patient}),
                 success: function () {
                     alert("Uspesno ste poslali komentar")
