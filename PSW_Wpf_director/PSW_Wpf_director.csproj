@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InterlayerController\InterlayerController.csproj" />
     <ProjectReference Include="..\PSW_Wpf_app\PSW_Wpf_app.csproj" />
+    <ProjectReference Include="..\WellDevCore\WellDevCore.csproj" />
   </ItemGroup>
 
 </Project>

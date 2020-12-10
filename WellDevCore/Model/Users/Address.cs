@@ -35,7 +35,7 @@ namespace Model.Users
 
         public String GetFullAddress()
         {
-            return String.Join(" ", Street, Number);
+            return String.Join(" ", Street, Number)+ ", " + Town.Name +", " + Town.State.Name;
         }
 
         public Town GetTown()

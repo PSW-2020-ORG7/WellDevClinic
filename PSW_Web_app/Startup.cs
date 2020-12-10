@@ -11,6 +11,8 @@ using bolnica.Repository;
 using Service;
 using bolnica.Service;
 using System.Reflection;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 namespace PSW_Web_app
 {
     public class Startup

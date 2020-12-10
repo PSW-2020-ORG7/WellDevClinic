@@ -23,7 +23,7 @@ namespace PSW_Wpf_secretary.Client
         {
             var content = new StringContent(JsonConvert.SerializeObject(new LoginModel { username = username, password = password }));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("https://localhost:44375/api/user", content);
+            var responseBody = await client.PostAsync("http://localhost:51393/api/user", content);
             var value = await responseBody.Content.ReadAsStringAsync();
             Secretary user = JsonConvert.DeserializeObject<Secretary>(value);
 
