@@ -361,7 +361,7 @@ $(document).ready(function () {
                         , Username: username.val(), Password: password.val(), Address: address1, Gender: genderVal, Race: raceVal,BloodType: bloodVal, validation: false, Image: base64
                     }
                     $.ajax({
-                        url: "http://localhost:49153/api/registration",
+                        url: window.location.protocol + "//" + window.location.host + "/api/registration",
                         type: 'POST',
                         data: JSON.stringify(data2),
                         contentType: "application/json; charset=utf-8",

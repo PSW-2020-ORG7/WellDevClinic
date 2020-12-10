@@ -71,12 +71,12 @@ $(document).ready(function () {
 		let examination_id =  searchParams.get('id');
 				
 		$.post({
-			url: "http://localhost:49153/api/survey",
+			url: window.location.protocol + "//" + window.location.host + "/api/survey",
 			data: JSON.stringify({grades:doctor, doctor:doctor_name}),
 			success: function () {
 				alert("You have completed the survey");
 				$.ajax({
-					url: 'http://localhost:49153/api/examination/'+examination_id,
+					url: window.location.protocol + "//" + window.location.host + '/api/examination/'+examination_id,
 					type: 'PUT',
 					success: function (data) {
 						var origin = window.location.origin;

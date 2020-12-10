@@ -24,13 +24,15 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class ExaminationController : ControllerBase
     {
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+
         static readonly HttpClient client = new HttpClient();
 
         [HttpGet]
         [Route("getAll")]
         public async Task<IActionResult> GetFinishedExaminations()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAll");
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/getAll");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             IActionResult result = JsonConvert.DeserializeObject<IActionResult>(responseBody);
@@ -42,14 +44,14 @@ namespace PSW_Web_app.Controllers
         public async void FillSurvey(long id)
         {
             var content = new StringContent(JsonConvert.SerializeObject(id));
-            var response = await client.PutAsync("http://localhost:51393/api/examination/" + id, content);
+            var response = await client.PutAsync(communicationLink + "/api/examination/" + id, content);
         }
 
         [HttpGet]
         [Route("{id?}")]
         public async Task<List<ExaminationDto>> GetFinishedExaminationsByUser(long id)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/"+id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/"+id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
@@ -59,7 +61,7 @@ namespace PSW_Web_app.Controllers
         [Route("upcoming/{id?}")]
         public async Task<List<ExaminationDto>> GetUpcomingExaminationsByUser(long id)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/upcoming/" + id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/upcoming/" + id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
@@ -75,7 +77,7 @@ namespace PSW_Web_app.Controllers
         [Route("getByUser/{id?}")]
         public async Task<List<ExaminationDto>> GetFinishedExaminationDocumentsByUser(long id)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getByUser/" + id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/getByUser/" + id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
@@ -86,7 +88,7 @@ namespace PSW_Web_app.Controllers
         public async Task<List<ExaminationDto>> SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
         {
             var content = new StringContent(JsonConvert.SerializeObject(documentsDTO, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:51393/api/examination", content);
+            var response = await client.PostAsync(communicationLink + "/api/examination", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
             return result;
