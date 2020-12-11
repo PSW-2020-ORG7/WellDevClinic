@@ -39,7 +39,7 @@ namespace Repository
 
         public void Edit(Examination entity)
         {
-            throw new NotImplementedException();
+            myDbContext.SaveChanges();
         }
 
         public Examination Get(long id)
@@ -76,7 +76,11 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public List<Examination> GetExaminationsByUser(User user)
+        public Examination Save(Examination entity)
+        {
+            throw new NotImplementedException();
+        }
+        public List<Examination> GetFinishedExaminationsByUser(User user)
         {
             try
             {
@@ -92,7 +96,7 @@ namespace Repository
                 }
                 return findExamination;
             }
-            catch 
+            catch (Exception e)
             {
                 Patient patient = (Patient)user;
                 List<Examination> examinations = GetAllEager().ToList();
@@ -106,11 +110,6 @@ namespace Repository
                 }
                 return findExamination;
             }
-        }
-
-        public Examination Save(Examination entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

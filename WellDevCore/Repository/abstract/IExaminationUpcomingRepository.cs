@@ -9,6 +9,6 @@ namespace bolnica.Repository
 {
    public interface IExaminationUpcomingRepository : IRepository<Examination, long>, IEagerRepository<Examination, long>
    {
-      List<Examination> GetUpcomingExaminationsByUser(User user);
+        List<Examination> GetUpcomingExaminationsByUser(User user);
    }
 }

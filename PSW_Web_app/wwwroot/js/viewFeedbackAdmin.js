@@ -43,7 +43,7 @@ function buttonFunction(item) {
 	var row = $(item).closest("tr");
 	var tds = row.find("td");
 	var code_str = tds[0].innerHTML;
-	url = "http://localhost:49153/html/viewFeedbackAdmin.html?id=" + code_str;
+	url = window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html?id=" + code_str;
 	location.href = url;
 }
 
@@ -63,7 +63,7 @@ $(document).ready(function () {
 	}
 
 	$.get({
-		url: 'http://localhost:49153/api/feedback/' + code1,
+		url: window.location.protocol + "//" + window.location.host + '/api/feedback/' + code1,
 		success: function (feedback) {
 
 			if (code1 == "") {
@@ -74,12 +74,12 @@ $(document).ready(function () {
 			}
 			else {
 				$.ajax({
-					url: 'http://localhost:49153/api/feedback/',
+					url: window.location.protocol + "//" + window.location.host + '/api/feedback/',
 					type: 'PUT',
 					data: JSON.stringify({ id: feedback.id, patient: feedback.patient, content: feedback.content, isPrivate: feedback.isPrivate, isAnonymous: feedback.isAnonymous, publish: true }),
 					contentType: "application/json; charset=utf-8",
 					success: function (data) {
-						window.location.href = "http://localhost:49153/html/viewFeedbackAdmin.html";
+						window.location.href = window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html";
 					},
 				});
 			}
@@ -92,7 +92,7 @@ $(document).ready(function () {
 		deleteTable();
 		var filter = $("#filter").val();
 		$.get({
-			url: 'http://localhost:49153/api/feedback',
+			url: window.location.protocol + "//" + window.location.host + '/api/feedback',
 			success: function (feedback) {
 				for (let f of feedback) {
 					if (filter == "all") {

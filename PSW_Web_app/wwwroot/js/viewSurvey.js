@@ -69,7 +69,7 @@
 $(document).ready(function () {
 
     $.get({
-        url: 'http://localhost:49153/api/survey',
+        url: window.location.protocol + "//" + window.location.host + '/api/survey',
         success: function (surveys) {
             for (let survey of surveys) {
                 addSurvey(survey);

@@ -1,28 +1,26 @@
 ﻿using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Repository
 {
     public class ActionAndBenefitRepository : IActionAndBenefitRepository
     {
-        private readonly MyDbContext myDbContext;
+        private readonly MyDbContext _dbContext;
 
         public ActionAndBenefitRepository(MyDbContext DbContext)
         {
-            myDbContext = DbContext;
+            _dbContext = DbContext;
         }
 
         public ActionAndBenefit Get(long id)
-            => myDbContext.ActionsAndBenefits.FirstOrDefault(action => action.Id == id);
+            => _dbContext.ActionsAndBenefits.FirstOrDefault(action => action.Id == id);
 
         public IEnumerable<ActionAndBenefit> GetAll()
         {
             List<ActionAndBenefit> actions = new List<ActionAndBenefit>();
-            myDbContext.ActionsAndBenefits.ToList().ForEach(a => actions.Add(a));
+            _dbContext.ActionsAndBenefits.ToList().ForEach(a => actions.Add(a));
             return actions;
         }
 
@@ -30,11 +28,11 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public bool Delete(long id)
         {
-            ActionAndBenefit a = myDbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == id);
+            ActionAndBenefit a = _dbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == id);
             if (a != null)
             {
-                myDbContext.ActionsAndBenefits.Remove(a);
-                myDbContext.SaveChanges();
+                _dbContext.ActionsAndBenefits.Remove(a);
+                _dbContext.SaveChanges();
                 return true;
             }
             return false;
@@ -42,11 +40,11 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public ActionAndBenefit Save(ActionAndBenefit action)
         {
-            ActionAndBenefit a = myDbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == action.Id);
+            ActionAndBenefit a = _dbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == action.Id);
             if (a == null)
             {
-                myDbContext.ActionsAndBenefits.Add(action);
-                myDbContext.SaveChanges();
+                _dbContext.ActionsAndBenefits.Add(action);
+                _dbContext.SaveChanges();
                 return action;
             }
             return null;
@@ -54,11 +52,11 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public ActionAndBenefit Update(ActionAndBenefit action)
         {
-            ActionAndBenefit a = myDbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == action.Id);
+            ActionAndBenefit a = _dbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == action.Id);
             if (a != null)
             {
-                myDbContext.ActionsAndBenefits.Update(action);
-                myDbContext.SaveChanges();
+                _dbContext.ActionsAndBenefits.Update(action);
+                _dbContext.SaveChanges();
                 return action;
             }
             return null;
