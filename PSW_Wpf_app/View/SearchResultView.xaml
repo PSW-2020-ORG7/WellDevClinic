@@ -13,6 +13,7 @@
         <Grid>
             <DataGrid  
             ItemsSource="{Binding SearchedObjectResults}" 
+            SelectedItem="{Binding SelectedResult}"
             HorizontalAlignment="Center"
             Height="372" 
             VerticalAlignment="Center" 
