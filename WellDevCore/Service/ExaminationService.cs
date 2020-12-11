@@ -351,7 +351,7 @@ namespace Service
             exams.AddRange((List<Examination>)_previousRepository.GetAllEager());
             foreach(Examination exam in exams)
             {
-                if (exam.Patient.Id == id && exam.Canceled)
+                if (exam.Patient.Id == id && exam.Canceled && (DateTime.Today.Date - exam.CanceledDate.Date).TotalDays <= 30)
                     result.Add(exam.CanceledDate);
             }
             return result;
