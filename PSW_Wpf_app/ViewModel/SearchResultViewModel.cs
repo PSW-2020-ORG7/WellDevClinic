@@ -9,7 +9,7 @@ namespace PSW_Wpf_app.ViewModel
 {
     public class SearchResultViewModel : BindableBase
     {
-
+        public static FloorElement SelectedResult { get; set; }
         private List<FloorElement> searchedObjectResults;
         private List<FloorElement> floorSurgical;
         private List<FloorElement> floorsMedical;

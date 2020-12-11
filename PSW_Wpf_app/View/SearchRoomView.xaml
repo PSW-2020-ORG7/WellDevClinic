@@ -9,6 +9,7 @@
     <Grid>
         <DataGrid  
             ItemsSource="{Binding SearchedFloorElements}" 
+            SelectedItem="{Binding SelectedResult}"
             HorizontalAlignment="Left"
             Height="372" 
             Margin="19,47,0,0" 

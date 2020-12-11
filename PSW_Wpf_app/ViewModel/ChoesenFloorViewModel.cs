@@ -12,7 +12,7 @@ namespace PSW_Wpf_app.ViewModel
     public class ChoesenFloorViewModel : BindableBase
     {
 
-        
+
 
         List<FloorElement> floors = new List<FloorElement>();
 
@@ -57,71 +57,104 @@ namespace PSW_Wpf_app.ViewModel
 
         public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms)
         {
-            choosenBuilding = build;
-            choosenFloor = floor;
-            floors = getFloor(ChoosenBuilding);
-
-            DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
-
-            bool flag = false;
-            foreach (FloorElement f in floors)
+            if (SearchResultViewModel.SelectedResult == null)
             {
-                flag = false;
-                if (f.Floor.Equals(choosenFloor))
-                {
-                    foreach (FloorElement foundRoom in rooms)
-                    {
-                        if (foundRoom.Floor == choosenFloor && foundRoom.Name == f.Name)
-                        {
-                            flag = true;
-                        }
-                    }
+                choosenBuilding = build;
+                choosenFloor = floor;
+                floors = getFloor(ChoosenBuilding);
 
-                    Shape shape = floorDrawer.DrawElement(f, flag);
-                    shape.MouseDown += openInfo;
-                    canvasFloor.Children.Add(shape);
-                }
-            }
-        }
+                DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
 
-
-        private List<FloorElement> getFloor(object name)
-        {
-            string pathSurgical = "../../../Data/surgicalBranchesFloors.txt";
-            string pathMedical = "../../../Data/medicalCenter.txt";
-            string pathPediatrics = "../../../Data/pediatrics.txt";
-
-            List<FloorElement> floors = new List<FloorElement>();
-
-            switch (ChoosenBuilding)
-            {
-                case "Surgical":
-                    floors = ShapeViewModel.ReadFloor(pathSurgical);
-                    break;
-                case "MedicalCenter":
-                    floors = ShapeViewModel.ReadFloor(pathMedical);
-                    break;
-                case "Pediatrics":
-                    floors = ShapeViewModel.ReadFloor(pathPediatrics);
-                    break;
-            }
-
-            return floors;
-        }
-        void openInfo(object sender, MouseButtonEventArgs e)
-        {
-            floors = getFloor(ChoosenBuilding);
-
-            var mouseWasDownOn = e.Source as FrameworkElement;
-            if (mouseWasDownOn != null)
-            {
-                string elementName = mouseWasDownOn.Name;
+                bool flag = false;
                 foreach (FloorElement f in floors)
                 {
-                    if (elementName.Equals(f.Name))
-                        MessageBox.Show(string.Format("additional information: {0}\n", f.Info));
+                    flag = false;
+                    if (f.Floor.Equals(choosenFloor))
+                    {
+                        foreach (FloorElement foundRoom in rooms)
+                        {
+                            if (foundRoom.Floor == choosenFloor && foundRoom.Name == f.Name)
+                            {
+                                flag = true;
+                            }
+                        }
+
+                        Shape shape = floorDrawer.DrawElement(f, flag);
+                        shape.MouseDown += openInfo;
+                        canvasFloor.Children.Add(shape);
+                    }
+                    SearchResultViewModel.SelectedResult = null;
+                }
+            }
+            else if (SearchResultViewModel.SelectedResult != null)
+            {
+                choosenBuilding = build;
+                choosenFloor = floor;
+                floors = getFloor(ChoosenBuilding);
+
+                DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
+
+                bool flag = false;
+                foreach (FloorElement f in floors)
+                {
+                    flag = false;
+                    if (f.Floor.Equals(choosenFloor))
+                    {
+                        foreach (FloorElement foundRoom in rooms)
+                        {
+                            if (foundRoom.Floor == choosenFloor && foundRoom.Name == f.Name && SearchResultViewModel.SelectedResult.Name == f.Name)
+                            {
+                                flag = true;
+                            }
+                        }
+
+                        Shape shape = floorDrawer.DrawElement(f, flag);
+                        shape.MouseDown += openInfo;
+                        canvasFloor.Children.Add(shape);
+                    }
+                }
+                    SearchResultViewModel.SelectedResult = null;
+                }
+            }
+
+
+            private List<FloorElement> getFloor(object name)
+            {
+                string pathSurgical = "../../../Data/surgicalBranchesFloors.txt";
+                string pathMedical = "../../../Data/medicalCenter.txt";
+                string pathPediatrics = "../../../Data/pediatrics.txt";
+
+                List<FloorElement> floors = new List<FloorElement>();
+
+                switch (ChoosenBuilding)
+                {
+                    case "Surgical":
+                        floors = ShapeViewModel.ReadFloor(pathSurgical);
+                        break;
+                    case "MedicalCenter":
+                        floors = ShapeViewModel.ReadFloor(pathMedical);
+                        break;
+                    case "Pediatrics":
+                        floors = ShapeViewModel.ReadFloor(pathPediatrics);
+                        break;
+                }
+
+                return floors;
+            }
+            void openInfo(object sender, MouseButtonEventArgs e)
+            {
+                floors = getFloor(ChoosenBuilding);
+
+                var mouseWasDownOn = e.Source as FrameworkElement;
+                if (mouseWasDownOn != null)
+                {
+                    string elementName = mouseWasDownOn.Name;
+                    foreach (FloorElement f in floors)
+                    {
+                        if (elementName.Equals(f.Name))
+                            MessageBox.Show(string.Format("additional information: {0}\n", f.Info));
+                    }
                 }
             }
         }
     }
-}
