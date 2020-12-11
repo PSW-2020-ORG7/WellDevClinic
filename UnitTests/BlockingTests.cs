@@ -28,9 +28,19 @@ namespace UnitTests
         {
             var stubRepositoryUpcoming = new Mock<IExaminationUpcomingRepository>();
             List<Examination> upcoming = new List<Examination>();
-            upcoming.Add(new Examination(1, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("08/18/2020 07:22:16")));
-            upcoming.Add(new Examination(2, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("08/15/2020 07:22:16")));
-            upcoming.Add(new Examination(4, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("08/16/2020 07:22:16")));
+            upcoming.Add(new Examination(1, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/01/2020 07:22:16")));
+            upcoming.Add(new Examination(2, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/02/2020 07:22:16")));
+            upcoming.Add(new Examination(4, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/03/2020 07:22:16")));
+            stubRepositoryUpcoming.Setup(m => m.GetAllEager()).Returns(upcoming);
+
+            return stubRepositoryUpcoming.Object;
+        }
+
+        private static IExaminationUpcomingRepository CreateUpcomingRepositoryFalse()
+        {
+            var stubRepositoryUpcoming = new Mock<IExaminationUpcomingRepository>();
+            List<Examination> upcoming = new List<Examination>();
+            upcoming.Add(new Examination(1, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/01/2020 07:22:16")));
             stubRepositoryUpcoming.Setup(m => m.GetAllEager()).Returns(upcoming);
 
             return stubRepositoryUpcoming.Object;
@@ -55,26 +65,6 @@ namespace UnitTests
             return stubRepository.Object;
         }
 
-       [Fact]
-        public void CheckIfBlockedTrue()
-        {
-            List<DateTime> dates = CreateDateTimeList();
-            dates.Add(DateTime.Parse("08/11/2020 07:22:16"));
-            PatientService service = new PatientService(CreatePatientRepository());
-            bool result = service.CheckIfBlocked(dates);
-            Assert.True(result);
-        }
-
-        [Fact]
-        public void CheckIfBlockedFalse()
-        {
-            List<DateTime> dates = CreateDateTimeList();
-            dates.Add(DateTime.Parse("11/11/2020 07:22:16"));
-            PatientService service = new PatientService(CreatePatientRepository());
-            bool result = service.CheckIfBlocked(dates);
-            Assert.False(result);
-        }
-
         [Fact]
         public void GetCancelationDatesNotEmpty()
         {
@@ -93,12 +83,21 @@ namespace UnitTests
         }
 
         [Fact]
-        public void GetPatientsForBlocking()
+        public void GetPatientsForBlockingNotEmpty()
         {
             ExaminationService examination_service = new ExaminationService(CreateUpcomingRepository(), CreatePreviousRepository());
             PatientService service = new PatientService(CreatePatientRepository(), null, null, examination_service);
             List<Patient> result = service.GetPatientsForBlocking();
             Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void GetPatientsForBlockingEmpty()
+        {
+            ExaminationService examination_service = new ExaminationService(CreateUpcomingRepositoryFalse(), CreatePreviousRepository());
+            PatientService service = new PatientService(CreatePatientRepository(), null, null, examination_service);
+            List<Patient> result = service.GetPatientsForBlocking();
+            Assert.Empty(result);
         }
 
     }

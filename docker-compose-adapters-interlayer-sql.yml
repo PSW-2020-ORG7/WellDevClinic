@@ -10,27 +10,32 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: root
       MYSQL_PASSWORD: root
+      MYSQL_DATABASE: adaptersdb
       MYSQL_DATABASE: newmydb
     volumes:
       - mysql-data:/var/lib/mysql
 
-  web:
+  adapters:
     build: .
-    image: webapp:latest
-    container_name: webapp
+    image: daviddrvar/adapters:latest
+    container_name: adapters
     restart : always
     environment: 
-      - server_address= http://servers:51393
+      server_address: http://servers:51393
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: adaptersdb
     networks:
       - demo
     ports: 
-      - 49153:49153
+      - 64724:64724
     depends_on:
       - servers
 
   servers:
     build: .
-    image: jovanjelicki/interlayer:3
+    image: daviddrvar/interlayer:latest
     container_name: interlayer
     restart : always
     networks:

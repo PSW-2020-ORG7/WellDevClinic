@@ -18,13 +18,19 @@
       }
     },
     "PSW_Pharmacy_Adapter": {
-        "commandName": "Project",
-        "launchBrowser": true,
-        "launchUrl": "http://localhost:64724/index.html",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:64724/index.html",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/index.html",
+      "publishAllPorts": true,
+      "useSSL": true
     }
   }
 }

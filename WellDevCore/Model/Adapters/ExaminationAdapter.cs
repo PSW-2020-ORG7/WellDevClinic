@@ -40,6 +40,7 @@ namespace bolnica.Model.Adapters
             dto.therapy = examination.Therapy.Note;
             dto.filledSurvey = examination.FilledSurvey;
             dto.id = examination.Id;
+            dto.canceled = examination.Canceled;
             return dto;
         }
 
@@ -51,6 +52,16 @@ namespace bolnica.Model.Adapters
             dto.startTime = examination.Period.StartDate.ToShortTimeString();
             dto.endTime = examination.Period.EndDate.ToShortTimeString();
             dto.id = examination.Id;
+            dto.canceled = examination.Canceled;
+
+            if (DateTime.Compare(DateTime.Now.AddDays(2), examination.Period.StartDate) < 0)
+            {
+                dto.canBeCanceled = true;
+            }
+            else
+            {
+                dto.canBeCanceled = false;
+            }
 
             return dto;
         }

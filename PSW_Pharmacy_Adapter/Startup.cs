@@ -9,6 +9,8 @@ using PSW_Pharmacy_Adapter.Service;
 using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
+using System;
+using System.Reflection;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -26,8 +28,8 @@ namespace PSW_Pharmacy_Adapter
         {
             services.AddControllers();
             services.AddDbContext<MyDbContext>(opts =>
-                    opts.UseMySql(ConfigurationExtensions.GetConnectionString(Configuration, "MyDbContextConnectionString")).UseLazyLoadingProxies());
-
+                    opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
             services.AddScoped<IApiKeyService, ApiKeyService>();
             services.AddScoped<IGreetingsService, GreetingsService>();
             services.AddScoped<IActionsAndBenefitsService, ActionsAndBenefitsService>();
@@ -40,12 +42,14 @@ namespace PSW_Pharmacy_Adapter
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            db.Database.EnsureCreated();
 
             app.UseRouting();
 
@@ -56,6 +60,16 @@ namespace PSW_Pharmacy_Adapter
                 endpoints.MapControllers();
             });
             app.UseStaticFiles();
+        }
+
+        private string CreateConnectionStringFromEnvironment()
+        {
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "adaptersdb";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            return $"server={server};port={port};database={database};user={user};password={password};";
         }
     }
 }

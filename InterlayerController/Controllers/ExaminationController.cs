@@ -65,6 +65,16 @@ namespace InterlayerController.Controllers
 
         }
 
+        [HttpPut]
+        [Route("canceled/{id?}")]
+        public void CancelExamination(long id)
+        {
+            Examination entity = _examinationController.Get(id);
+            entity.Canceled = true;
+            entity.CanceledDate = DateTime.Now;
+            _examinationController.Edit(entity);
+        }
+
         [HttpGet]
         [Route("{id?}")]
         public List<ExaminationDto> GetFinishedExaminationsByUser(long id)
