@@ -47,7 +47,7 @@ function hideAll() {
 $(document).ready(function () {
 	validDate()
 	$.get({
-		url: 'http://localhost:49153/api/examination/getByUser/1',
+		url: window.location.protocol + "//" + window.location.host + '/api/examination/getByUser/1',
 		success: function (list) {
 			deleteTable();
 			i = 1;
@@ -103,7 +103,7 @@ $(document).ready(function () {
 		if (type == "none") {
 			copyExaminations.pop();
 			$.post({
-				url: 'http://localhost:49153/api/examination',
+				url: window.location.protocol + "//" + window.location.host + '/api/examination',
 				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
 				contentType: 'application/json',
 				success: function (list) {
@@ -138,7 +138,7 @@ $(document).ready(function () {
 				}
 			}
 			$.post({
-				url: 'http://localhost:49153/api/examination',
+				url: window.location.protocol + "//" + window.location.host + '/api/examination',
 				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
 				contentType: 'application/json',
 				success: function (list) {
@@ -153,7 +153,7 @@ $(document).ready(function () {
 		}
 		if (type == "Prescription") {
 			$.post({
-				url: 'http://localhost:49153/api/examination',
+				url: window.location.protocol + "//" + window.location.host + '/api/examination',
 				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
 				contentType: 'application/json',
 				success: function (list) {
