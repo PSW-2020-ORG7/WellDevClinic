@@ -11,6 +11,7 @@ using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 using Grpc.Core;
 using PSW_Pharmacy_Adapter.Protos;
+using System;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -28,7 +29,7 @@ namespace PSW_Pharmacy_Adapter
         {
             services.AddControllers();
             services.AddDbContext<MyDbContext>(opts =>
-                    opts.UseMySql(ConfigurationExtensions.GetConnectionString(Configuration, "MyDbContextConnectionString")).UseLazyLoadingProxies());
+                    opts.UseMySql(CreateConnectionString()).UseLazyLoadingProxies());
 
             services.AddScoped<IApiKeyService, ApiKeyService>();
             services.AddScoped<IGreetingsService, GreetingsService>();
@@ -80,6 +81,16 @@ namespace PSW_Pharmacy_Adapter
                 server.ShutdownAsync().Wait();
             }
 
+        }
+
+        private string CreateConnectionString()
+        {
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "adaptersdb";
+            string username = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            return $"server={server};port={port};database={database};username={username};password={password}";
         }
 
     }

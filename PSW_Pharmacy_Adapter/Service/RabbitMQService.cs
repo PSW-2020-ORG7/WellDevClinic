@@ -12,7 +12,6 @@ using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using PSW_Pharmacy_Adapter.Converter;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
