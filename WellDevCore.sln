@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSW_Wpf_secretary", "PSW_Wpf_secretary\UserInterface\PSW_Wpf_secretary.csproj", "{D7B83E3B-220A-448F-B502-A3C9BF9722A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,14 @@ Global
 		{D7B83E3B-220A-448F-B502-A3C9BF9722A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7B83E3B-220A-448F-B502-A3C9BF9722A2}.Release|x86.ActiveCfg = Release|Any CPU
 		{D7B83E3B-220A-448F-B502-A3C9BF9722A2}.Release|x86.Build.0 = Release|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Debug|x86.Build.0 = Debug|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Release|x86.ActiveCfg = Release|Any CPU
+		{06BCBC1A-1E8D-4936-AD94-C6CF56FD665E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
