@@ -30,7 +30,7 @@ services:
 
   servers:
     build: .
-    image: jovanjelicki/interlayer:3
+    image: daviddrvar/interlayer:latest
     container_name: interlayer
     restart : always
     networks:
