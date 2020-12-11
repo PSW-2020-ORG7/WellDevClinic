@@ -16,4 +16,4 @@ RUN dotnet publish "PSW_Pharmacy_Adapter.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PSW_Pharmacy_Adapter.dll"]
+CMD ASPNETCORE_URLS=http://*:64724 dotnet PSW_Pharmacy_Adapter.dll
