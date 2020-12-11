@@ -32,13 +32,12 @@ namespace bolnica.Repository
 
         public void Edit(Examination entity)
         {
-            throw new NotImplementedException();
+            myDbContext.SaveChanges();
         }
 
         public Examination Get(long id)
-        {
-            throw new NotImplementedException();
-        }
+             => myDbContext.Examination.FirstOrDefault(examination => examination.Id == id);
+        
 
         public IEnumerable<Examination> GetEager()
         {
