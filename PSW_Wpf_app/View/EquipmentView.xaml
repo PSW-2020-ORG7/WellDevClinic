@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
               d:DesignHeight="500" d:DesignWidth="610">
     <Grid>
-        <DataGrid  
-            ItemsSource="{Binding Equipments,  UpdateSourceTrigger=PropertyChanged}" 
+        <DataGrid  IsReadOnly="True"
+            ItemsSource="{Binding Equipments,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedEquipment}"
             HorizontalAlignment="Left"
             Height="372" 
             Margin="19,47,0,0" 

@@ -10,6 +10,8 @@ namespace PSW_Wpf_app.ViewModel
     {
         BindingList<Equipment> equipments = new BindingList<Equipment>();
         BindingList<Drug> drugs;
+        public static Equipment SelectedEquipment { get; set; }
+        public static Drug SelectedDrug { get; set; }
         public static MyICommand<object> SearchCommand { get; set; }
 
         public BindingList<Equipment> Equipments
