@@ -30,6 +30,21 @@ namespace PSW_Wpf_app.Client
         public virtual List<Drug> Alternative { get; set; }
     }
 
+    public class Doctor
+    {
+        public long Id;
+        public string FirstName;
+        public string LastName;
+        public string Jmbg;
+        public string Email;
+        public string Phone;
+        public DateTime DateOfBirth;
+        //public Address Address;
+        public string Username;
+        public string Password;
+       // public Speciality Specialty;
+    }
+
     static class WpfClient
     {
 
@@ -53,6 +68,16 @@ namespace PSW_Wpf_app.Client
             List<Drug> drugs = JsonConvert.DeserializeObject<List<Drug>>(responseBody);
 
             return drugs;
+        }
+
+        public static async Task<List<Doctor>> GetAllDoctors()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/doctor");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Doctor> doctors = JsonConvert.DeserializeObject<List<Doctor>>(responseBody);
+
+            return doctors;
         }
 
     }

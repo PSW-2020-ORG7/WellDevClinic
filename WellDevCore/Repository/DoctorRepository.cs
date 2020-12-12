@@ -62,21 +62,22 @@ namespace Repository
             Doctor doctor = Get(id);
            
 
-            List<BusinessDay> businessDays = new List<BusinessDay>();
+           List<BusinessDay> businessDays = new List<BusinessDay>();
             if (doctor.BusinessDay != null)
             {
                 foreach (BusinessDay day in doctor.BusinessDay)
                 {
+                   // day.doctor = null;
                     businessDays.Add(_businessDayRepository.GetEager(day.GetId()));
                 }
             }
-            doctor.BusinessDay = businessDays;
+           // doctor.BusinessDay = businessDays;
 
-            doctor.Specialty = _specialityRepository.Get(doctor.Specialty.GetId());
+           /* doctor.Specialty = _specialityRepository.Get(doctor.Specialty.GetId());
             doctor.Address = _addressRepository.GetEager(doctor.Address.GetId());
             doctor.Address.Town = _townRepository.GetEager(doctor.Address.Town.GetId());
             doctor.Address.Town.State = _stateRepository.GetEager(doctor.Address.Town.State.GetId());
-            doctor.DoctorGrade = _doctorGradeRepository.Get(doctor.DoctorGrade.GetId());
+            doctor.DoctorGrade = _doctorGradeRepository.Get(doctor.DoctorGrade.GetId());*/
 
             return doctor;
         }

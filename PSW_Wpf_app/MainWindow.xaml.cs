@@ -116,6 +116,12 @@ namespace PSW_Wpf_app
             equipmentDrugsView.Show();
         }
 
+        private void Button_Appointment(object sender, RoutedEventArgs e)
+        {
+            AppointmentView appointment = new AppointmentView();
+            appointment.Show();
+        }
+
     }
 
 }

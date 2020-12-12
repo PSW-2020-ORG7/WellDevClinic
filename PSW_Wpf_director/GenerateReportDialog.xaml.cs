@@ -70,12 +70,12 @@ namespace PSW_Wpf_director
             equipment_inventory.Add(equipmentHeader);
             equipment_inventory.Add(new Chunk("\n"));
 
-            foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+          /*  foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
             {
                 equipment_inventory.Add(pair.Key.Name + ": " + pair.Value);
                 equipment_inventory.Add(new Chunk("\n"));
                 found = true;
-            }
+            }*/
 
             if (!found)
             {
@@ -155,12 +155,12 @@ namespace PSW_Wpf_director
             equipment_inventory.Add(equipmentHeader);
             equipment_inventory.Add(new Chunk("\n"));
 
-            foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+           /* foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
             {
                 equipment_inventory.Add(pair.Key.Name + ": " + pair.Value);
                 equipment_inventory.Add(new Chunk("\n"));
                 found = true;
-            }
+            }*/
 
             if (!found)
             {
