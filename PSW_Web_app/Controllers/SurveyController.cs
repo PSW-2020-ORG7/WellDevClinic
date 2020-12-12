@@ -9,6 +9,10 @@ using bolnica.Service;
 using PSW_Web_app.DTO;
 using PSW_Web_app.Adapters;
 using bolnica.Model.Dto;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
+
 
 namespace PSW_Web_app.Controllers
 {
@@ -16,55 +20,51 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class SurveyController : ControllerBase
     {
-        private readonly IDoctorGradeService _doctorGradeService;
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
 
-        public SurveyController(IDoctorGradeService doctorGradeService)
-        {
-            _doctorGradeService = doctorGradeService;
-        }
-
+        static readonly HttpClient client = new HttpClient();
         [HttpPost]
-        public DoctorGrade SaveSurvey([FromBody] DoctorGrade survey)
+        public async Task<DoctorGrade> SaveSurvey([FromBody] DoctorGrade survey)
         {
-            DoctorGrade result = _doctorGradeService.Save(survey);
+            var content = new StringContent(JsonConvert.SerializeObject(survey, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink + "/api/survey", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            DoctorGrade result = JsonConvert.DeserializeObject<DoctorGrade>(responseBody);
             return result;
         }
 
-        /// <summary>
-        /// Gets all surveys and maps them on DoctorGradeDTO 
-        /// </summary>
-        /// <returns>List of mapped surveys</returns>
+       
         [HttpGet]
-        public List<DoctorGradeDTO> GetAll()
+        public async Task<List<DoctorGradeDTO>> GetAll()
         {
-            List<DoctorGrade> list = (List<DoctorGrade>)_doctorGradeService.GetAll();
-            List<DoctorGradeDTO> result = new List<DoctorGradeDTO>();
-            foreach (DoctorGrade doctorGrade in list)
-                result.Add(DoctorGradeAdapter.DoctorGradeToDoctorGradeDTO(doctorGrade));
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/survey");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<DoctorGradeDTO> result = JsonConvert.DeserializeObject<List<DoctorGradeDTO>>(responseBody);
             return result;
         }
 
-        /// <summary>
-        /// Gets all surveys of specified doctor and maps them on DoctorGradeDTO 
-        /// </summary>
-        /// <param name="doctor">Specified doctor</param>
-        /// <returns>List of mapped surveys</returns>
+      
         [HttpGet]
         [Route("{doctor?}")]
-        public List<DoctorGradeDTO> GetByDoctor(string doctor)
+        public async Task<List<DoctorGradeDTO>> GetByDoctor(string doctor)
         {
-            List<DoctorGrade> list =_doctorGradeService.GetByDoctor(doctor);
-            List<DoctorGradeDTO> result = new List<DoctorGradeDTO>();
-            foreach (DoctorGrade doctorGrade in list)
-                result.Add(DoctorGradeAdapter.DoctorGradeToDoctorGradeDTO(doctorGrade));
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/survey/" + doctor);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<DoctorGradeDTO> result = JsonConvert.DeserializeObject<List<DoctorGradeDTO>>(responseBody);
             return result;
         }
 
         [HttpPost]
         [Route("doctor_average")]
-        public List<GradeDTO> GetAverageGradeDoctor([FromBody] List<DoctorGrade> surveys)
+        public async Task<List<GradeDTO>> GetAverageGradeDoctor([FromBody] List<DoctorGrade> surveys)
         {
-            return _doctorGradeService.GetAverageGradeDoctor(surveys);
+            var content = new StringContent(JsonConvert.SerializeObject(surveys, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink + "/api/survey/doctor_average", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<GradeDTO> result = JsonConvert.DeserializeObject<List<GradeDTO>>(responseBody);
+            return result;
         }
 
     }

@@ -164,7 +164,7 @@ namespace PSW_Wpf_Patient
             var doctorGradeService = new DoctorGradeService(doctorGradeRepository);
             var articleService = new ArticleService(articleRepository);
             var patientFileService = new PatientFileService(patientFileRepository);
-            var patientService = new PatientService(patientRepository, patientFileService, doctorGradeService);
+            var patientService = new PatientService(patientRepository, patientFileService, doctorGradeService,examinationService);
             var secretaryService = new SecretaryService(secretaryRepository);
             var directorService = new DirectorService(directorRepository);
             var userService = new UserService(patientService, doctorService, secretaryService, directorService);

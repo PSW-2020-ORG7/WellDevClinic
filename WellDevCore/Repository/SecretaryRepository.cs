@@ -39,12 +39,18 @@ namespace Repository
 
         public Secretary Get(long id)
         {
-            throw new NotImplementedException();
+            Secretary secretary = null;
+            
+            secretary = myDbContext.Secretary.FirstOrDefault(secretary => secretary.Id == id);
+            
+            return secretary;
         }
 
         public IEnumerable<Secretary> GetEager()
         {
-            throw new NotImplementedException();
+            List<Secretary> result = new List<Secretary>();
+            myDbContext.Secretary.ToList().ForEach(secretary => result.Add(secretary));
+            return result;
         }
 
         public IEnumerable<Secretary> GetAllEager()

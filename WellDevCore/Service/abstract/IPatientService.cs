@@ -23,5 +23,8 @@ namespace bolnica.Service
         Patient CheckExistence(string jmbg, string username, string email);
 
         Patient GetPatientToken(string token);
+        List<Patient> GetPatientsForBlocking();
+        List<Patient> GetBlockedPatients();
+        List<Patient> GetUnblockedPatients();
     }
 }

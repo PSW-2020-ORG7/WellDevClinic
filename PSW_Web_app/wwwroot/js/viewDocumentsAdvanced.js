@@ -49,8 +49,8 @@ $(document).ready(function () {
 	//$.get({
 		//url: 'http://localhost:49153/api/patient/1',
 		//success: function (user) {
-			$.post({
-				url: 'http://localhost:49153/api/examination/getAll',
+			$.get({
+				url: window.location.protocol + "//" + window.location.host + '/api/examination/getAll',
 				//data: JSON.stringify(user),
 				contentType: 'application/json',
 				success: function (list) {
@@ -145,7 +145,7 @@ $(document).ready(function () {
 				if (type == "none") {
 					copyExaminations.pop();
 					$.post({
-						url: 'http://localhost:49153/api/examination/search',
+						url: window.location.protocol + "//" + window.location.host + '/api/examination/search',
 						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, Radio1: radio1, Radio2: true}),
 						contentType: 'application/json',
 						success: function (list) {
@@ -181,7 +181,7 @@ $(document).ready(function () {
 					}
 
 					$.post({
-						url: 'http://localhost:49153/api/examination/search',
+						url: window.location.protocol + "//" + window.location.host + '/api/examination/search',
 						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, Radio1: radio1, Radio2: radio2}),
 						contentType: 'application/json',
 						success: function (list) {
@@ -197,7 +197,7 @@ $(document).ready(function () {
 
 				if (type == "Prescription") {
 					$.post({
-						url: 'http://localhost:49153/api/examination/search',
+						url: window.location.protocol + "//" + window.location.host + '/api/examination/search',
 						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, Radio1: radio1, Radio2: radio2}),
 						contentType: 'application/json',
 						success: function (list) {

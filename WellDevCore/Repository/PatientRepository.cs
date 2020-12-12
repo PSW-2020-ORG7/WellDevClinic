@@ -36,11 +36,16 @@ namespace Repository
 
         public void Edit(Patient entity)
         {
-            throw new NotImplementedException();
+            myDbContext.SaveChanges();
         }
 
         public Patient Get(long id)
-            => myDbContext.Patient.FirstOrDefault(patient => patient.Id==id);
+        {
+            Patient patient = myDbContext.Patient.FirstOrDefault(patient => patient.Id == id);
+            String filePath = "/StaticFiles/" + patient.Username + ".jpg";
+            patient.Image = filePath;
+            return patient;
+        }
         public IEnumerable<Patient> GetEager()
         {
             List<Patient> result = new List<Patient>();

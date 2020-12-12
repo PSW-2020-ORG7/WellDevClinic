@@ -47,23 +47,16 @@ function hideAll() {
 $(document).ready(function () {
 	validDate()
 	$.get({
-		url: 'http://localhost:49153/api/patient/1',
-		success: function (user) {
-			$.post({
-				url: 'http://localhost:49153/api/examination/getByUser',
-				data: JSON.stringify(user),
-				contentType: 'application/json',
-				success: function(list) {
-					deleteTable();
-					i = 1;
-					for (let examination of list) {
-						addPrescription(examination,i);
-						addReferral(examination, i);
-						examinations.push(examination);
-						i++;
-					}
-				},
-			});
+		url: window.location.protocol + "//" + window.location.host + '/api/examination/getByUser/1',
+		success: function (list) {
+			deleteTable();
+			i = 1;
+			for (let examination of list) {
+				addPrescription(examination,i);
+				addReferral(examination, i);
+				examinations.push(examination);
+				i++;
+			}	
 		}
 	});
 
@@ -107,94 +100,88 @@ $(document).ready(function () {
 		let doctor = $('input[name="doctor"]').val();
 		let specialist = $('input[name="specialist"]').val();
 		let drug = $('input[name="drug"]').val();
-		$.get({
-			url: 'http://localhost:49153/api/patient/1',
-			success: function (user) {
-				if (type == "none") {
-					copyExaminations.pop();
-					$.post({
-						url: 'http://localhost:49153/api/examination',
-						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, user: user }),
-						contentType: 'application/json',
-						success: function (list) {
-							deleteTable();
-							i = 1;
-							for (let exam of list) {
-								addPrescription(exam, i);
-								addReferral(exam, i);
-								copyExaminations.push(exam);
-								i++;
-							}
-						},
-					});
-				}
-
-				if (type == "Referral") {
-
-					$('#tableP tbody').empty();
-
-					if (!copyExaminations.length) {
-						i = 1;
-						for (let exam of examinations) {
-							addPrescription(exam, i);
-							i++;
-						}
+		if (type == "none") {
+			copyExaminations.pop();
+			$.post({
+				url: window.location.protocol + "//" + window.location.host + '/api/examination',
+				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
+				contentType: 'application/json',
+				success: function (list) {
+					deleteTable();
+					i = 1;
+					for (let exam of list) {
+						addPrescription(exam, i);
+						addReferral(exam, i);
+						copyExaminations.push(exam);
+						i++;
 					}
-					else {
-						i = 1;
-						for (let exam of copyExaminations) {
-							addPrescription(exam, i);
-							i++;
-						}
-					}
+				},
+			});
+		}
 
-					$.post({
-						url: 'http://localhost:49153/api/examination',
-						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, user: user }),
-						contentType: 'application/json',
-						success: function (list) {
-							$('#tableR tbody').empty();
-							i = 1;
-							for (let exam of list) {
-								addReferral(exam, i);
-								i++;
-							}
-						},
-					});
-				}
+		if (type == "Referral") {
 
-				if (type == "Prescription") {
-					$.post({
-						url: 'http://localhost:49153/api/examination',
-						data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, user: user }),
-						contentType: 'application/json',
-						success: function (list) {
-							$('#tableP tbody').empty();
-							i = 1;
-							for (let exam of list) {
-								addPrescription(exam, i);
-								i++;
-							}
-						},
-					});
-					$('#tableR tbody').empty();
-					if (!copyExaminations.length) {
-						i = 1;
-						for (let exam of examinations) {
-							addReferral(exam, i);
-							i++;
-						}
-					}
-					else {
-						i = 1;
-						for (let exam of copyExaminations) {
-							addReferral(exam, i);
-							i++;
-						}
-					}
+			$('#tableP tbody').empty();
+
+			if (!copyExaminations.length) {
+				i = 1;
+				for (let exam of examinations) {
+					addPrescription(exam, i);
+					i++;
 				}
 			}
-		});
+			else {
+				i = 1;
+				for (let exam of copyExaminations) {
+					addPrescription(exam, i);
+					i++;
+				}
+			}
+			$.post({
+				url: window.location.protocol + "//" + window.location.host + '/api/examination',
+				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
+				contentType: 'application/json',
+				success: function (list) {
+					$('#tableR tbody').empty();
+					i = 1;
+					for (let exam of list) {
+						addReferral(exam, i);
+						i++;
+					}
+				},
+			});
+		}
+		if (type == "Prescription") {
+			$.post({
+				url: window.location.protocol + "//" + window.location.host + '/api/examination',
+				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
+				contentType: 'application/json',
+				success: function (list) {
+					$('#tableP tbody').empty();
+					i = 1;
+					for (let exam of list) {
+						addPrescription(exam, i);
+						i++;
+					}
+				},
+			});
+			$('#tableR tbody').empty();
+			if (!copyExaminations.length) {
+				i = 1;
+				for (let exam of examinations) {
+					addReferral(exam, i);
+					i++;
+				}
+			}
+			else {
+				i = 1;
+				for (let exam of copyExaminations) {
+					addReferral(exam, i);
+					i++;
+				}
+			}
+		}
+	
 	});
 
 });

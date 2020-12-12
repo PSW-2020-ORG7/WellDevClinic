@@ -32,6 +32,7 @@ function addAverage(grades) {
     let tdDoctor2;
     let tdDoctor3;
     let tdDoctor4;
+    let tdAverage;
 
     for (let grade of grades) {
 
@@ -63,13 +64,13 @@ $(document).ready(function () {
         deleteTable();
         let doctor = $("#doctor").val();
             $.get({
-                url: "http://localhost:49153/api/survey/"+ doctor,
+                url: window.location.protocol + "//" + window.location.host + "/api/survey/"+ doctor,
                 success: function (surveys) {
                     for (let survey of surveys)
                         addSurvey(survey);
                     if (surveys.length > 0) {
                         $.post({
-                            url: "http://localhost:49153/api/survey/doctor_average",
+                            url: window.location.protocol + "//" + window.location.host + "/api/survey/doctor_average",
                             data: JSON.stringify(surveys),
                             success: function (grades) {
                                 addAverage(grades);

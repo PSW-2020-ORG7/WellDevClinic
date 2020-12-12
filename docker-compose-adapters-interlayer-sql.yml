@@ -1,0 +1,60 @@
+services:
+ 
+  mysql:
+    image: mysql:8.0.19
+    container_name: mysql
+    restart: always
+    networks:
+      - demo
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: adaptersdb
+      MYSQL_DATABASE: newmydb
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  adapters:
+    build: .
+    image: daviddrvar/adapters:latest
+    container_name: adapters
+    restart : always
+    environment: 
+      server_address: http://servers:51393
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: adaptersdb
+    networks:
+      - demo
+    ports: 
+      - 64724:64724
+    depends_on:
+      - servers
+
+  servers:
+    build: .
+    image: daviddrvar/interlayer:latest
+    container_name: interlayer
+    restart : always
+    networks:
+      - demo
+    ports:
+      - 51393:51393
+    environment:
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: newmydb
+    depends_on: 
+      - mysql
+
+volumes:
+  mysql-data:
+
+networks:
+  demo:
+    name: demo
+    driver: bridge
+    external: true

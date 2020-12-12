@@ -72,12 +72,20 @@ namespace Repository
 
         public IEnumerable<Director> GetEager()
         {
-            throw new NotImplementedException();
+            List<Director> result = new List<Director>();
+            myDbContext.Director.ToList().ForEach(director => result.Add(director));
+            return result;
         }
 
         public Director Get(long id)
         {
-            throw new NotImplementedException();
+            Director director = null;
+            try
+            {
+                director = myDbContext.Director.FirstOrDefault(director => director.Id == id);
+            }
+            catch { }
+            return director;
         }
     }
 }

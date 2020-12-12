@@ -437,11 +437,20 @@ namespace WellDevCore.Migrations
                     b.Property<long?>("AnemnesisId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("Canceled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("CanceledDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<long?>("DiagnosisId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("DoctorId")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("FilledSurvey")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<long?>("PatientFileId")
                         .HasColumnType("bigint");
@@ -907,8 +916,14 @@ namespace WellDevCore.Migrations
                 {
                     b.HasBaseType("Model.Users.User");
 
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("BloodType")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<long>("DoctorId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Gender")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

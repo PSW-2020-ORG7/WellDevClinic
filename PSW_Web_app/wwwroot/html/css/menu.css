@@ -1,0 +1,15 @@
+﻿button {
+    text-align: center;
+    background-color: #009999;
+    width: 250px;
+    height: 50px;
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    border-collapse: collapse;
+}
+h1{
+    text-align: center;
+}

@@ -14,19 +14,19 @@ namespace WellDevCore.Model.Dto
         public String Drug { get; set; }
         public String Specialist { get; set; }
 
-        public Patient User { get; set; }
+        public long PatientId { get; set; }
         public DocumentsDTO()
         {
         }
 
-        public DocumentsDTO(String date, String doctorName, String drugName, String specialistName, String type, Patient user)
+        public DocumentsDTO(String date, String doctorName, String drugName, String specialistName, String type, long patientId)
         {
             Date = date;
             Doctor = doctorName;
             Drug = drugName;
             Specialist = specialistName;
             Type = type;
-            User = user;
+            PatientId = patientId;
         }
     }
 }

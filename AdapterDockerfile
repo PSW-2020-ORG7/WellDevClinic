@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+WORKDIR /app
+EXPOSE 64724
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY ["PSW_Pharmacy_Adapter/PSW_Pharmacy_Adapter.csproj", "PSW_Pharmacy_Adapter/"]
+RUN dotnet restore "PSW_Pharmacy_Adapter/PSW_Pharmacy_Adapter.csproj"
+COPY . .
+WORKDIR "/src/PSW_Pharmacy_Adapter"
+RUN dotnet build "PSW_Pharmacy_Adapter.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "PSW_Pharmacy_Adapter.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+CMD ASPNETCORE_URLS=http://*:64724 dotnet PSW_Pharmacy_Adapter.dll

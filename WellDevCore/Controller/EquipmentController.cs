@@ -6,11 +6,13 @@ using Service;
 using System;
 using System.Collections.Generic;
 
-namespace Controller
+namespace bolnica.Controller
 {
    public class EquipmentController : IEquipmentController
    {
         private readonly IEquipmentService _equipmentService;
+
+        public EquipmentController() { }
 
         public EquipmentController(IEquipmentService service)
         {

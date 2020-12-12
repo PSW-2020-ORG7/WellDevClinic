@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Net.Mail;
 using bolnica;
 using Model.Users;
-
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace PSW_Web_app.Controllers
 {
@@ -14,85 +16,20 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        private readonly bolnica.Service.IPatientService _patientService;
-        
-        public RegistrationController(bolnica.Service.IPatientService s)
-        {
-            _patientService = s;
-        }
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
 
-
-        /// <summary>
-        ///calls Save(Patient) method from class RegistrationService 
-        ///so it can register and save new user in database
-        /// </summary>
-        /// <returns>status 200 OK response with a registered user</returns>
+        static readonly HttpClient client = new HttpClient();
+       
         [HttpPost]
-        public Patient UserRegistration([FromBody] Patient entity)
+        public async Task<Patient> UserRegistration([FromBody] Patient entity)
         {
-            Patient retVal;
-
-            Patient patient = _patientService.CheckExistence(entity.Jmbg,entity.Username,entity.Email);
-            if (patient == null)
-            {
-                String token = GenerateToken();
-                entity.VerificationToken = token;
-                _patientService.Save(entity);
-                SendVerification(entity.Email, entity.Jmbg, token);
-                retVal = entity;
-            }
-            else
-            {
-                retVal = patient;
-            }
-
-            return retVal;
+            var content = new StringContent(JsonConvert.SerializeObject(entity, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink + "/api/registration", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Patient result = JsonConvert.DeserializeObject<Patient>(responseBody);
+            return result;
         }
 
 
-        /// <summary>
-        /// sends email with autentification token so that user can verify his account
-        /// </summary>
-        public void SendVerification(String email, String jmbg, String authToken)
-        {
-
-            MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-
-            mail.From = new MailAddress("hospitalservicePSW@gmail.com");
-            mail.To.Add(email);
-            mail.Subject = "Verification Mail";
-            String token = "http://localhost:49153/html/login.html/" + authToken;
-            mail.Body = "A verification link has been sent to your email account. " +
-                "Please click on the link to verify your account and finish registration process. " + token;
-
-            SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("hospitalservicePSW@gmail.com", "hospitalservicePSW1998");
-            SmtpServer.EnableSsl = true;
-
-            SmtpServer.Send(mail);
-
-        }
-
-        /// <summary>
-        /// generate random token 
-        /// </summary>
-        /// <returns> autentification token to method SendVerification</returns>
-        public String GenerateToken()
-        {
-            var allChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var random = new Random();
-            var resultToken = new string(
-               Enumerable.Repeat(allChar, 12)
-               .Select(token => token[random.Next(token.Length)]).ToArray());
-
-            string authToken = resultToken.ToString();
-            Patient patient = _patientService.GetPatientToken(authToken);
-            if(patient != null)
-            {
-                authToken = GenerateToken();
-            }
-            return authToken;
-        }
     }
 }

@@ -25,7 +25,7 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["GetAll"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetAllPrevious"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetExaminationsByFilter"] = new List<String>() { "Secretary" };
-            AuthorizedUsers["GetFinishedxaminationsByUser"] = new List<String>() { "Doctor" };
+            AuthorizedUsers["GetFinishedExaminationsByUser"] = new List<String>() { "Doctor" };
             AuthorizedUsers["GetUpcomingExaminationsByUser"] = new List<String>() { "Patient", "Doctor", "Director" };
             AuthorizedUsers["Save"] = new List<String>() { "Patient", "Secretary", "Doctor" };
             AuthorizedUsers["SaveFinishedExamination"] = new List<String>() { "Doctor" };
@@ -41,6 +41,11 @@ namespace bolnica.Controller.decorators
         {
             if (AuthorizedUsers["Edit"].SingleOrDefault(x => x == Role) != null)
                 ExaminationController.Edit(entity);
+        }
+
+        public void EditPrevious(Examination entity)
+        {
+            throw new NotImplementedException();
         }
 
         public Examination Get(long id)
@@ -75,12 +80,22 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
-        public List<Examination> GetFinishedxaminationsByUser(User user)
+        public List<Examination> GetFinishedExaminationsByUser(User user)
         {
-            if (AuthorizedUsers["GetFinishedxaminationsByUser"].SingleOrDefault(x => x == Role) != null)
-                return ExaminationController.GetFinishedxaminationsByUser(user);
+            if (AuthorizedUsers["GetFinishedExaminationsByUser"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.GetFinishedExaminationsByUser(user);
             else
                 return null;
+        }
+
+        public List<Examination> GetFinishedExaminationsByUser(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Examination GetPrevious(long id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Examination> GetUpcomingExaminationsByUser(User user)
@@ -89,6 +104,11 @@ namespace bolnica.Controller.decorators
                 return ExaminationController.GetUpcomingExaminationsByUser(user);
             else
                 return null;
+        }
+
+        public List<Examination> GetUpcomingExaminationsByUser(long id)
+        {
+            throw new NotImplementedException();
         }
 
         public Examination Save(Examination entity)
@@ -103,6 +123,22 @@ namespace bolnica.Controller.decorators
         {
             if (AuthorizedUsers["SaveFinishedExamination"].SingleOrDefault(x => x == Role) != null)
                 return ExaminationController.SaveFinishedExamination(examination);
+            else
+                return null;
+        }
+
+        public List<Examination> SearchPreviousExamination(string date, string doctorName, string drugName, string speacialistName, long id)
+        {
+            if (AuthorizedUsers["SearchPreviousExamination"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.SearchPreviousExamination(date, doctorName, drugName, speacialistName, id);
+            else
+                return null;
+        }
+
+        public List<Examination> SearchPreviousExaminations(string date, string doctorName, string drugName, string speacialistName, bool Radio1, bool Radio2)
+        {
+            if (AuthorizedUsers["SearchPreviousExaminations"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.SearchPreviousExaminations(date, doctorName, drugName, speacialistName,Radio1,Radio2);
             else
                 return null;
         }

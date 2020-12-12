@@ -18,14 +18,16 @@ namespace bolnica.Model.dtos
         public List<String> drug { get; set; }
         public String date { get; set; }
 
+        public String startTime { get; set; }
+        public String endTime { get; set; }
+        public String diagnosis { get; set; }
+        public String therapy { get; set; }
+
+        public Boolean filledSurvey { get; set; }
+        public long id { get; set; }
+        public Boolean canBeCanceled { get; set; }
+        public Boolean canceled { get; set; }
         public ExaminationDto() { }
-        public ExaminationDto(string specialist , string textReferral, string doctor , List<string> drug , String date )
-        {
-            this.specialist = specialist;
-            this.textReferral = textReferral;
-            this.doctor = doctor;
-            this.drug = drug;
-            this.date = date;
-        }
+       
     }
 }
