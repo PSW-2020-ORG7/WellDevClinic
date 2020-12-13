@@ -73,13 +73,13 @@ namespace Repository
             Room room = myDbContext.Room.Find(id);
             room.RoomType = _roomTypeRepository.Get(room.RoomType.GetId());
 
-            foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+            /*foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
             {
                 Equipment temp = _equipmentRepository.Get(pair.Key.Id);
                 pair.Key.Name = temp.Name;
                 pair.Key.Type = temp.Type;
                 pair.Key.Amount = temp.Amount;
-            }
+            }*/
             return room;
         }
 

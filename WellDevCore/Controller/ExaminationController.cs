@@ -77,6 +77,12 @@ namespace bolnica.Controller
             return _examinationService.SearchPreviousExaminations(date, date2, doctorName, drugName, speacialistName, text, Radio1, Radio2, Radio3);
         }
 
+        public Examination NewExamination(long DoctorId, String Period)
+        {
+            Examination examination = _examinationService.NewExamination(DoctorId, Period);
+            return examination;
+        }
+
         public void EditPrevious(Examination entity)
         {
              _examinationService.EditPrevious(entity);
@@ -95,6 +101,7 @@ namespace bolnica.Controller
         public List<Examination> GetFinishedExaminationsByUser(User user)
         {
             return _examinationService.GetFinishedExaminationsByUser(user);
+
         }
     }
 }

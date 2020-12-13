@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.PatientSecretary;
 using Model.Users;
 using WellDevCore.Model.Dto;
+using WellDevCore.Model.dtos;
 
 namespace InterlayerController.Controllers
 {
@@ -130,6 +131,14 @@ namespace InterlayerController.Controllers
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
             }
             return Ok(resultDto);
+        }
+
+        [HttpPost]
+        [Route("newExamination")]
+        public Examination NewExamination([FromBody] ExaminationIdsDTO examination) 
+        {
+            Examination retVal = _examinationController.NewExamination(examination.DoctorId, examination.Period);
+            return retVal;
         }
     }
 }

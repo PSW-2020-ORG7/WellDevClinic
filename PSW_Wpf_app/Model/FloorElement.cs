@@ -10,7 +10,7 @@ namespace PSW_Wpf_app.Model
     public class FloorElement
     {
 
-
+        
         private string type;
         private int width;
         private int height;
@@ -22,6 +22,8 @@ namespace PSW_Wpf_app.Model
         private string buildingName;
         List<Drug> drugs = new List<Drug>();
         List<Equipment> equipments = new List<Equipment>();
+        
+
         public string BuildingName
         {
             get { return buildingName; }

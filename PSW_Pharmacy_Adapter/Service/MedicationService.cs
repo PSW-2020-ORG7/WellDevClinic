@@ -11,8 +11,6 @@ namespace PSW_Pharmacy_Adapter.Service
     public class MedicationService : IMedicationService
     {
         private readonly IHttpClientFactory _clientFactory;
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
-
 
         public MedicationService(IHttpClientFactory clientFactory)
         {
@@ -21,7 +19,7 @@ namespace PSW_Pharmacy_Adapter.Service
 
         public async Task<List<Medication>> GetAllMedication()
             => JsonConvert.DeserializeObject<List<Medication>>(
-                           (await _clientFactory.CreateClient().GetAsync(communicationLink + "/api/drug"))
+                           (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug"))
                            .Content.ReadAsStringAsync().Result);
     }
 }

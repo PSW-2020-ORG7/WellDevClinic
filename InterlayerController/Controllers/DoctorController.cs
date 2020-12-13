@@ -1,16 +1,16 @@
-﻿using System;
+
+﻿using bolnica.Controller;
+using bolnica.Service;
+using Microsoft.AspNetCore.Mvc;
+using Model.Doctor;
+using Model.PatientSecretary;
+using Model.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bolnica.Controller;
-using bolnica.Model.Adapters;
-using bolnica.Model.dtos;
-using bolnica.Service;
-using Microsoft.AspNetCore.Mvc;
-using Model.PatientSecretary;
-using Model.Users;
 using WellDevCore.Model.Adapters;
-using WellDevCore.Model.Dto;
+using WellDevCore.Model.dtos;
 
 namespace InterlayerController.Controllers
 {
@@ -19,10 +19,11 @@ namespace InterlayerController.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorController _doctorController;
-
-        public DoctorController(IDoctorController doctorController)
+        private readonly IBusinessDayController _businessDayController;
+        public DoctorController(IDoctorController doctorController, IBusinessDayController businessDayController)
         {
             _doctorController = doctorController;
+            _businessDayController = businessDayController;
         }
 
         [HttpGet]
@@ -35,6 +36,44 @@ namespace InterlayerController.Controllers
                 resultDTO.Add(DoctorAdapter.DoctorToDoctorDTO(doctor));
             }
             return Ok(resultDTO);
+        }
+
+        [HttpGet]
+        [Route("{date?}/{id?}")]
+        public List<Period> GetAvailablePeriodsByDoctor(DateTime date,long id)
+        {
+            return _businessDayController.GetAvailablePeriodsByDoctor(date, id);
+        }
+
+        [HttpGet]
+        [Route("{speciality?}")]
+        public List<DoctorDTO> GetDoctorsBySpeciality(String speciality)
+        {
+            Speciality instance = new Speciality(speciality);
+            List<Doctor> doctors = _doctorController.GetDoctorsBySpeciality(instance);
+            List<DoctorDTO> doctorDTOs = new List<DoctorDTO>(); 
+            foreach(Doctor d in doctors)
+            {
+                DoctorDTO doctor2 = DoctorAdapter.DoctorToDoctorDTO(d);
+                if (d.BusinessDay.Count > 0)
+                {
+                    foreach (BusinessDay bd in d.BusinessDay.ToList())
+                    {
+                        doctor2.BusinessDayDTOs.Add(new BusinessDayDTO()
+                        {
+                            StartDate = bd.Shift.StartDate,
+                            EndDate = bd.Shift.EndDate,
+                            ShiftId = bd.Shift.Id,
+                            BusinessDayId = bd.Id,
+                            Room = bd.room,
+                            ScheduledPeriods = bd.ScheduledPeriods
+                        });
+                    }
+                }
+                
+                doctorDTOs.Add(doctor2);
+            }
+            return doctorDTOs;
         }
     }
 }

@@ -22,6 +22,9 @@ namespace Service
         public ISymptomService _symptomService { get; set; }
         public ITherapyService _therapyService { get; set; }
 
+        //public IDoctorService _doctorService;
+        //public IP _articleService;
+
         public ExaminationService(IExaminationUpcomingRepository upcomingRepository, IExaminationPreviousRepository previousRepository, IDiagnosisService diagnosisService, IPrescriptionService prescriptionService, IReferralService referralService, ISymptomService symptomService, ITherapyService therapyService)
         {
             _upcomingRepository = upcomingRepository;
@@ -31,6 +34,8 @@ namespace Service
             _referralService = referralService;
             _symptomService = symptomService;
             _therapyService = therapyService;
+            //_doctorService = doctorService;
+            //_periodService = periodService;
         }
 
         public ExaminationService(IExaminationUpcomingRepository upcomingRepository, IExaminationPreviousRepository previousRepository)
@@ -347,6 +352,16 @@ namespace Service
                     result.Add(exam.CanceledDate);
             }
             return result;
+        }
+
+
+        public Examination NewExamination(long DoctorId, String Period)
+        {
+            String[] dateTimes = Period.Split("S");
+            DateTime start = DateTime.Parse(dateTimes[0]);
+            DateTime end = DateTime.Parse(dateTimes[1]);
+            Examination examination = _upcomingRepository.Save(DoctorId, new Period(start,end));
+            return examination;
         }
 
         public List<Examination> GetUpcomingExaminationsByUser(User user)

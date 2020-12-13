@@ -3,12 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Model.Director
 {
     public class Room : IIdentifiable<long>
     {
-        [NotMapped] public Dictionary<Equipment, int> Equipment_inventory { get; set; }
+        [NotMapped] [JsonIgnore] public Dictionary<Equipment, int> Equipment_inventory { get; set; }
 
         public string RoomCode { get; set; }
 

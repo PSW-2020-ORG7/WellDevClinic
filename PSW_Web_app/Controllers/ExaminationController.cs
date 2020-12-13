@@ -15,6 +15,7 @@ using WellDevCore.Model.Dto;
 using System.Globalization;
 using System.Net.Http;
 using Newtonsoft.Json;
+using WellDevCore.Model.dtos;
 using System.Text;
 
 namespace PSW_Web_app.Controllers
@@ -110,6 +111,17 @@ namespace PSW_Web_app.Controllers
             var response = await client.PostAsync(communicationLink + "/api/examination/search", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            return result;
+        }
+
+        [HttpPost]
+        [Route("newExamination")]
+        public async Task<Examination> NewExaminationAsync([FromBody] ExaminationIdsDTO examination)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(examination, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink + "/api/examination/newExamination", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Examination result = JsonConvert.DeserializeObject<Examination>(responseBody);
             return result;
         }
     }

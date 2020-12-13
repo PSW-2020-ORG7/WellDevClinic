@@ -106,6 +106,10 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
+        public Examination NewExamination(long DoctorId, String Period)
+        {
+            throw new NotImplementedException();
+        }
         public List<Examination> GetUpcomingExaminationsByUser(long id)
         {
             throw new NotImplementedException();
