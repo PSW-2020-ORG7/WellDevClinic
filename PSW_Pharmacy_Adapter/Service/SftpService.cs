@@ -25,8 +25,9 @@ namespace PSW_Pharmacy_Adapter.Service
                     _sftpClient.UploadFile(stream, Path.GetFileName(sourceFile));
                 }
             }
-            catch
+            catch(Exception e)
             {
+                Console.Write(e);
                 return false;
             }
             _sftpClient.Disconnect();
