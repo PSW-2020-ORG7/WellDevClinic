@@ -1572,9 +1572,8 @@ namespace PSW_Wpf_director
         
         private void Button_Map(object sender, RoutedEventArgs e)
         {
-            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow();
+            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow("director");
 
-            main = new PSW_Wpf_app.MainWindow();
             main.Show();
         }
     }

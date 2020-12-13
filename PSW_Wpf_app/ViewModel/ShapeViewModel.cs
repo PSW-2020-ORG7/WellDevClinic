@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PSW_Wpf_app.Model;
 
 namespace PSW_Wpf_app.ViewModel

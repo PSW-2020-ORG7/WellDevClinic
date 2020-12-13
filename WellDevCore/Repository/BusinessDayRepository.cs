@@ -53,7 +53,7 @@ namespace Repository
         {
             BusinessDay businessDay = Get(id);
             //businessDay.doctor = _doctorRepository.Get(businessDay.doctor.GetId());
-            businessDay.room = _roomRepository.GetEager(businessDay.room.GetId());
+            //businessDay.room = _roomRepository.GetEager(businessDay.room.GetId());
             return businessDay;
         }
 

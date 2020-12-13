@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="PSW_Wpf_app.View.RoomOverviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PSW_Wpf_app.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="610" Background="AliceBlue">
+    <Grid>
+        <DataGrid  IsReadOnly="True"
+            HorizontalAlignment="Left"
+            Height="178" 
+            Margin="0,207,0,0" 
+            VerticalAlignment="Top" 
+            Width="295"
+            AutoGenerateColumns="False"
+			CanUserAddRows="False"
+			SelectionMode="Extended"
+            Name ="DgEquipment">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Equipment" x:Name="eqName" IsReadOnly="True" Width="*"   Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Equipment Amount" x:Name="eqAmount" IsReadOnly="True"  Width="*"  Binding="{Binding Amount}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="14,36,0,0" Text="Additional information: " FontSize="15" FontWeight="SemiBold" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
+        <TextBox HorizontalAlignment="Left" Height="56" Margin="10,67,0,0" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Top" Width="439" Name="AdditionalInfo"/>
+        <DataGrid IsReadOnly="True"
+            HorizontalAlignment="Left"
+            Height="178" 
+            Margin="310,207,0,0" 
+            VerticalAlignment="Top" 
+            Width="290"
+            AutoGenerateColumns="False"
+			CanUserAddRows="False"
+			SelectionMode="Extended"
+            Name ="DgDrug">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Drug" IsReadOnly="True" Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Drug Amount" IsReadOnly="True"  Width="*" Binding="{Binding Amount}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
