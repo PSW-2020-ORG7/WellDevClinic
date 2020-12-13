@@ -22,7 +22,7 @@ function viewApis(apiDb) {
         content += '</td><td>';
         content += api.url;
         content += '</td><td>';
-        content += '<button class="buttonDelete" ';
+        content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deletePharmacyModal"';
         content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button > ';
         content += '</td></tr>'
         $("#apiTable").append(content);
@@ -30,15 +30,19 @@ function viewApis(apiDb) {
 }
 
 function deleteEntry(id) {
-    $.ajax({
-        method: "DELETE",
-        url: "../api/apikey/delete/" + id,
-        contentType: "application/json",
-        success: function (data) {
-            if (data) {
-                alert("Successfully deleted");
-                window.location.reload();
-            }
-        },
-    });
+    $("#nameToDelete").html(id);
+    $("#deletePharmacy").show();
+    $("button#btnYes").click(function () {
+        $.ajax({
+            method: "DELETE",
+            url: "../api/apikey/delete/" + id,
+            contentType: "application/json",
+            success: function (data) {
+                if (data) {
+                    alert("Successfully deleted");
+                    window.location.reload();
+                }
+            },
+        });
+    })
 }
