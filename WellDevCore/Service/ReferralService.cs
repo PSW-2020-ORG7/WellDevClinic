@@ -45,7 +45,7 @@ namespace Service
         {
             if (specialistName == "")
                 return false;
-            String specialist = referral.Doctor.FullName;
+            String specialist = referral.Doctor.Specialty.Name;
             return specialist.ToLower().Contains(specialistName.ToLower());
         }
 

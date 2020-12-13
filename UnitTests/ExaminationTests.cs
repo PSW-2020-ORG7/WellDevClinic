@@ -102,11 +102,12 @@ namespace UnitTests
             Patient patient1 = new Patient(1, "Pera", "Peric");
             Doctor doctor1 = new Doctor(2, "Eva", "Evic");
             Doctor doctor2 = new Doctor(3, "Jovan", "Jovanovic");
+            doctor1.Specialty = new Speciality("hirurg");
             DateTime today = DateTime.Today;
             DateTime start = today.AddDays(-1);
             DateTime end = today.AddDays(-1);
             Period period = new Period(start, end);
-            Referral referral = new Referral(1, period, doctor2);
+            Referral referral = new Referral(1, period, doctor1);
             Drug drug = new Drug(1, "aspirin");
             List<Drug> drugs = new List<Drug>();
             drugs.Add(drug);
@@ -189,7 +190,7 @@ namespace UnitTests
             ReferralService referralService = new ReferralService(referralRepository.Object);
             ExaminationService examinationService = new ExaminationService(null, CreateStubRepositoryExamination(), null, prescriptionService, referralService, null, null);
 
-            List<Examination> returnedExaminations = examinationService.SearchPreviousExamination(DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd"), "", "", "", 1);
+            List<Examination> returnedExaminations = examinationService.SearchPreviousExamination(DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd"), "Eva Evic", "aspirin", "hirurg", 1);
 
             returnedExaminations.ShouldNotBeEmpty();
         }
