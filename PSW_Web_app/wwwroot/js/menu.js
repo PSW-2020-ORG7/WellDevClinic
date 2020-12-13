@@ -44,4 +44,9 @@
         var origin = window.location.origin;
         window.location.href = origin + "/html/viewPatientFile.html"
     });
+
+    $('#recommendation').click(function (event) {
+        var origin = window.location.origin;
+        window.location.href = origin + "/html/appointmentRecommendation.html"
+    });
 });
