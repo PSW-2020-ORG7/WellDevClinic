@@ -19,10 +19,10 @@ namespace Service
     {
 
         private readonly IBusinessDayRepository _businessDayRepository;
-        public ISearchPeriods _searchPeriods { get; set; }
+        public ISearchPeriods _searchPeriods { get; set; } 
 
         [Obsolete]
-        public static double durationOfExamination = Double.Parse(ConfigurationSettings.AppSettings["examinationDuration"]);
+        public static double durationOfExamination = 30;
 
         public IDoctorService doctorService;
 
@@ -32,6 +32,7 @@ namespace Service
         {
             _businessDayRepository = businessDayRepository;
             this.doctorService = doctorService;
+            this._searchPeriods = new NoPrioritySearch();
         }
 
         public void Delete(BusinessDay entity)
@@ -99,18 +100,19 @@ namespace Service
         [Obsolete]
         public List<ExaminationDTO> Search(BusinessDayDTO businessDayDTO)
         {
-            TimeSpan difference = businessDayDTO.Period.StartDate - DateTime.Now;
-            if(difference.Days <= Double.Parse(ConfigurationSettings.AppSettings["scheduleRestriction"])){
-                if(businessDayDTO.PatientScheduling)
+            TimeSpan difference = businessDayDTO.Period.StartDate - DateTime.Now;   //da se ne izabere datum pre danasnjeg
+            if(difference.Days < 0){
+                /*if(businessDayDTO.PatientScheduling)
                 {
                     if(_searchPeriods.GetType() != typeof(NoPrioritySearch))
                         businessDayDTO.Period.StartDate = businessDayDTO.Period.StartDate.AddDays(Double.Parse(ConfigurationSettings.AppSettings["scheduleRestriction"]));
                     else
                         return null;
-                }
+                }*/
+                return null;
             }
-            businessDayDTO.Doctor = doctorService.Get(businessDayDTO.Doctor.GetId());
-            List<BusinessDay> businessDayCollection = _businessDayRepository.GetAllEager().ToList();
+            businessDayDTO.Doctor = doctorService.Get(businessDayDTO.Doctor.GetId());           // uzima odredjenog doktora
+            List<BusinessDay> businessDayCollection = _businessDayRepository.GetAllEager().ToList();    // uzima sve buduce businessDay
             return _searchPeriods.Search(businessDayDTO, businessDayCollection);
         }
 
@@ -234,6 +236,20 @@ namespace Service
                     return true;
             }
             return false;
+        }
+
+        [Obsolete]
+        public List<Period> GetAvailablePeriodsByDoctor(DateTime date, long id)
+        {
+            Doctor doctor = doctorService.Get(id);
+            List<ExaminationDTO> examinations = Search(new BusinessDayDTO(doctor, new Period(date)));
+            List<Period> retVal = new List<Period>();
+            foreach(ExaminationDTO exam in examinations)
+            {
+                retVal.Add(exam.Period);
+            }
+
+            return retVal;
         }
 
     }

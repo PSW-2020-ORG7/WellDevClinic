@@ -20,6 +20,7 @@ namespace bolnica.Controller
         List<Examination> GetAllPrevious();
         List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, long id);
         List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2);
+        Examination NewExamination(long DoctorId, String Period);
         void EditPrevious(Examination entity);
         Examination GetPrevious(long id);
 

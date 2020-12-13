@@ -60,9 +60,15 @@ namespace Repository
         public Doctor GetEager(long id)
         {
             Doctor doctor = Get(id);
+            /*foreach(BusinessDay businessDay in doctor.BusinessDay)
+            {
+                businessDay.doctor = null;
+            }*/
            
 
-           List<BusinessDay> businessDays = new List<BusinessDay>();
+            /*
+            List<BusinessDay> businessDays = new List<BusinessDay>();
+
             if (doctor.BusinessDay != null)
             {
                 foreach (BusinessDay day in doctor.BusinessDay)
@@ -71,13 +77,15 @@ namespace Repository
                     businessDays.Add(_businessDayRepository.GetEager(day.GetId()));
                 }
             }
-           // doctor.BusinessDay = businessDays;
 
-           /* doctor.Specialty = _specialityRepository.Get(doctor.Specialty.GetId());
-            doctor.Address = _addressRepository.GetEager(doctor.Address.GetId());
-            doctor.Address.Town = _townRepository.GetEager(doctor.Address.Town.GetId());
-            doctor.Address.Town.State = _stateRepository.GetEager(doctor.Address.Town.State.GetId());
-            doctor.DoctorGrade = _doctorGradeRepository.Get(doctor.DoctorGrade.GetId());*/
+            doctor.BusinessDay = businessDays;
+            */
+            doctor.Specialty = _specialityRepository.Get(doctor.Specialty.GetId());
+            //doctor.Address = _addressRepository.GetEager(doctor.Address.GetId());
+            //doctor.Address.Town = _townRepository.GetEager(doctor.Address.Town.GetId());
+            //doctor.Address.Town.State = _stateRepository.GetEager(doctor.Address.Town.State.GetId());
+            //doctor.DoctorGrade = _doctorGradeRepository.Get(doctor.DoctorGrade.GetId());
+
 
             return doctor;
         }
@@ -91,18 +99,6 @@ namespace Repository
                     return entity;
             }
             return null;
-        }
-
-        public List<Doctor> GetDoctorsBySpeciality(Speciality specialty)
-        {
-            List<Doctor> doctors = this.GetAllEager().ToList();
-            List<Doctor> retVal = new List<Doctor>();
-            foreach (Doctor doct in doctors)
-            {
-                if (doct.Specialty.Name.Equals(specialty.Name))
-                    retVal.Add(doct);
-            }
-            return retVal;
         }
 
         public Doctor Save(Doctor entity)

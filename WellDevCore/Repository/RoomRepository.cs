@@ -81,6 +81,7 @@ namespace Repository
                 e.Equipment.Type = temp.Type;
                 e.Equipment.Amount = temp.Amount;
             }
+
             return room;
         }
 

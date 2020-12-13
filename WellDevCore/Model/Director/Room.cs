@@ -3,14 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using WellDevCore.Model.Dto;
+
 
 namespace Model.Director
 {
     public class Room : IIdentifiable<long>
     {
+
         //[NotMapped] public Dictionary<Equipment, int> Equipment_inventory { get; set; }
         public virtual List<EquipmentDTO> Equipment_inventory { get; set; }
+
 
         public string RoomCode { get; set; }
 
