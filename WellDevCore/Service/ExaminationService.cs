@@ -144,8 +144,21 @@ namespace Service
             return examination.Period.StartDate.Date == date.Date;
         }
 
+        private Boolean CheckDateAdvanced(String date1, String date2, Examination examination)
+        {
+            if (date1 == "" || date2 == "")
+                return false;
+            DateTime dateTime = DateTime.ParseExact(date1, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime dateTime2 = DateTime.ParseExact(date2, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return examination.Period.StartDate.Date >= dateTime && examination.Period.StartDate.Date <= dateTime2;
+        }
+
         private Boolean CheckDoctor(String name, Examination examination)
         {
+            if (name == "")
+            {
+                return false;
+            }
             String doctorName = examination.Doctor.FullName.ToLower();
             return doctorName.Contains(name.ToLower());
         
@@ -188,130 +201,80 @@ namespace Service
             return result;
         }
 
-        public List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2)
+        public List<Examination> SearchPreviousExaminations(String date1, String date2, String doctorName, String drugName, String speacialistName, String text, Boolean Radio1, Boolean Radio2, Boolean Radio3)
         {
-
             List<Examination> result = new List<Examination>();
             List<Examination> examinations = GetAllPrevious().ToList();
-            if (date != "")
+            foreach (Examination examination in examinations)
             {
-                DateTime dateTime = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                foreach (Examination examination in examinations)
+                var date_log = CheckDateAdvanced(date1, date2, examination);
+                var doc_log = CheckDoctor(doctorName, examination);
+                var spec_log = _referralService.CheckSpecialist(speacialistName, examination.Refferal);
+                var text_log = _referralService.CheckText(text, examination.Refferal);
+                var drug_log = _prescriptionService.CheckDrug(drugName, examination.Prescription);
+                var provera = true;
+
+                if (drugName != "")
                 {
-                    var provera = true;
-                    if (drugName != "")
-                    {
-                        provera = _prescriptionService.CheckDrug(drugName, examination.Prescription);
-                    }
-                    else
-                    {
-                        provera = _referralService.CheckSpecialist(speacialistName, examination.Refferal);
-                    }
-
-                    if (Radio1 && Radio2)
-                    {
-                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && provera)
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (!Radio1 && Radio2)
-                    {
-                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) && provera)
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (Radio1 && !Radio2)
-                    {
-                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) || provera)
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (!Radio1 && !Radio2)
-                    {
-                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) || provera)
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    /*if (!Radio1 && Radio2 && Radio3) 
-                    {
-                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (Radio1 && Radio2 && Radio3)
-                    {
-                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (Radio1 && !Radio2 && Radio3)
-                    {
-                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (Radio1 && Radio2 && !Radio3)
-                    {
-                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (!Radio1 && !Radio2 && Radio3)
-                    {
-                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (!Radio1 && Radio2 && !Radio3)
-                    {
-                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (Radio1 && !Radio2 && !Radio3)
-                    {
-                        if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }
-                    if (!Radio1 && !Radio2 && !Radio3)
-                    {
-                        if (CheckDate(dateTime, examination) || CheckDoctor(doctorName, examination) || _prescriptionService.CheckDrug(drugName, examination.Prescription) || _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                        {
-                            result.Add(examination);
-                        }
-                        break;
-                    }*/
-
+                    provera = drug_log;
                 }
-            }
-            else
-            {
-                foreach (Examination examination in examinations)
+                else
                 {
-                    if (CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
+                    provera = spec_log;
+                }
+
+                if (Radio1 && Radio2 && Radio3)
+                {
+                    if (date_log && doc_log && provera && text_log)
+                    {
+                        result.Add(examination);
+                    }
+                }
+                if (!Radio1 && Radio2 && Radio3)
+                {
+                    if ((date_log || doc_log) && provera && text_log)
+                    {
+                        result.Add(examination);
+                    }
+                }
+                if (Radio1 && !Radio2 && Radio3)
+                {
+                    if ((date_log || provera) && doc_log  && text_log)
+                    {
+                        result.Add(examination);
+                    }
+                }
+                if (Radio1 && Radio2 && !Radio3)
+                {
+                    if ((date_log || text_log) && doc_log && provera )
+                    {
+                        result.Add(examination);
+                    }
+                }
+                if (!Radio1 && !Radio2 && Radio3)
+                {
+                    if ((date_log || doc_log || provera) && text_log)
+                    {
+                        result.Add(examination);
+                    }
+                }
+                if (!Radio1 && Radio2 && !Radio3)
+                {
+                    if ((date_log || doc_log || text_log) && provera )
+                    {
+                        result.Add(examination);
+                    }
+                }
+                if (Radio1 && !Radio2 && !Radio3)
+                {
+                    if ((date_log || provera || text_log) && doc_log)
+                    {
+                        result.Add(examination);
+                    }
+                }
+                if (!Radio1 && !Radio2 && !Radio3)
+                {
+                    if (date_log || doc_log || provera || text_log)
                     {
                         result.Add(examination);
                     }

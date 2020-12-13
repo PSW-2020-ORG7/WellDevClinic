@@ -49,6 +49,8 @@ namespace Service
         public Boolean CheckDrug(String drugName, Prescription prescription)
         {
             Boolean check = false;
+            if (drugName == "")
+                return check;
             foreach (Drug drug in prescription.Drug)
             {
                 if (drug.Name.ToLower().Contains(drugName.ToLower()))

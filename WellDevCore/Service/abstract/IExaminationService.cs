@@ -23,7 +23,7 @@ namespace bolnica.Service
         List<Examination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period);
         List<Examination> GetPreviousExaminationsByRoomAndPeriod(Room room, Period period);
         List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, long id);
-        List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2);
+        List<Examination> SearchPreviousExaminations(String date, String date2, String doctorName, String drugName, String speacialistName, String text, Boolean Radio1, Boolean Radio2, Boolean Radio3);
 
         void EditPrevious(Examination entity);
         Examination GetPrevious(long id);

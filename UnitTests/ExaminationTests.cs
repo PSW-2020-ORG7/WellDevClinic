@@ -208,5 +208,27 @@ namespace UnitTests
 
             returnedExaminations.ShouldBeEmpty();
         }
+
+        [Fact]
+        public void GetAllReferrals()
+        {
+            var referralStubRepository = new Mock<IReferralRepository>();
+            var referrals = new List<Referral>();
+            DateTime StartDate = new DateTime();
+            DateTime EndDate = new DateTime();
+            Period period = new Period();
+            period.StartDate = StartDate;
+            period.EndDate = EndDate;
+            Doctor doctor1 = new Doctor(2, "Eva", "Evic");
+            Doctor doctor2 = new Doctor(2, "Jovan", "Jovanovic");
+            Referral referral1 = new Referral(0, period, doctor1);
+            Referral referral2 = new Referral(1, period, doctor2);
+            referrals.Add(referral1);
+            referrals.Add(referral2);
+            referralStubRepository.Setup(r => r.GetEager()).Returns(referrals);
+            ReferralService referralService = new ReferralService(referralStubRepository.Object);
+            IEnumerable<Referral> returnedReferrals = referralService.GetAll();
+            returnedReferrals.ShouldBeEquivalentTo(referrals);
+        }
     }
 }
