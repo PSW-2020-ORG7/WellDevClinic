@@ -57,7 +57,7 @@ namespace PSW_Wpf_app.ViewModel
 
         public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms)
         {
-            if (SearchResultViewModel.SelectedResult == null)
+            if (EquipmentAndDrugsViewModel.SelectedEquipment == null && EquipmentAndDrugsViewModel.SelectedDrug == null && SearchResultViewModel.SelectedResult == null)
             {
                 choosenBuilding = build;
                 choosenFloor = floor;
@@ -83,9 +83,10 @@ namespace PSW_Wpf_app.ViewModel
                         shape.MouseDown += openInfo;
                         canvasFloor.Children.Add(shape);
                     }
-                    SearchResultViewModel.SelectedResult = null;
                 }
             }
+
+
             else if (SearchResultViewModel.SelectedResult != null)
             {
                 choosenBuilding = build;
@@ -113,9 +114,67 @@ namespace PSW_Wpf_app.ViewModel
                         canvasFloor.Children.Add(shape);
                     }
                 }
-                    SearchResultViewModel.SelectedResult = null;
-                }
+                SearchResultViewModel.SelectedResult = null;
+
             }
+
+            else if (EquipmentAndDrugsViewModel.SelectedEquipment != null)
+            {
+                choosenBuilding = build;
+                choosenFloor = floor;
+                floors = getFloor(ChoosenBuilding);
+
+                DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
+
+                bool flag = false;
+                foreach (FloorElement f in floors)
+                {
+                    flag = false;
+                    if (f.Floor.Equals(choosenFloor))
+                    {
+                        if (f.Equipments.Exists(x => x.Id == EquipmentAndDrugsViewModel.SelectedEquipment.Id))
+                        {
+                            flag = true;
+                        }
+
+
+                        Shape shape = floorDrawer.DrawElement(f, flag);
+                        shape.MouseDown += openInfo;
+                        canvasFloor.Children.Add(shape);
+                    }
+                }
+                EquipmentAndDrugsViewModel.SelectedEquipment = null;
+            }
+
+            else if (EquipmentAndDrugsViewModel.SelectedDrug != null)
+            {
+                choosenBuilding = build;
+                choosenFloor = floor;
+                floors = getFloor(ChoosenBuilding);
+
+                DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
+
+                bool flag = false;
+                foreach (FloorElement f in floors)
+                {
+                    flag = false;
+                    if (f.Floor.Equals(choosenFloor))
+                    {
+                        if (f.Drugs.Exists(x => x.Id == EquipmentAndDrugsViewModel.SelectedDrug.Id))
+                        {
+                            flag = true;
+                        }
+
+
+                        Shape shape = floorDrawer.DrawElement(f, flag);
+                        shape.MouseDown += openInfo;
+                        canvasFloor.Children.Add(shape);
+                    }
+                }
+                EquipmentAndDrugsViewModel.SelectedDrug = null;
+            }
+
+        }
 
 
             private List<FloorElement> getFloor(object name)
