@@ -96,11 +96,6 @@ namespace Repository
             return null;
         }
 
-        public List<Doctor> GetDoctorsBySpeciality(Speciality specialty)
-        {
-            return null;
-        }
-
         public Doctor Save(Doctor entity)
         {
             throw new NotImplementedException();

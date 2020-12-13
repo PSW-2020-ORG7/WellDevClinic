@@ -28,7 +28,7 @@ $(".next").click(function () {
 		var app = document.getElementById("appointments");
 		if (fieldSetCounter == 2) {
 			$.ajax({
-				url: "http://localhost:49153/api/doctor/" + date.val() + '/' + doctors.val(),
+				url: window.location.protocol + "//" + window.location.host + "/api/doctor/" + date.val() + '/' + doctors.val(),
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
@@ -57,7 +57,7 @@ $(".next").click(function () {
 		console.log(fieldSetCounter);
 		if (fieldSetCounter == 1) {
 			$.ajax({
-				url: "http://localhost:49153/api/doctor/" + speciality.val(),
+				url: window.location.protocol + "//" + window.location.host + "/api/doctor/" + speciality.val(),
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
@@ -120,7 +120,7 @@ $(document).ready(function () {
 	var sel = document.getElementById("specialization");
 
 	$.ajax({
-		url: "http://localhost:49153/api/speciality",
+		url: window.location.protocol + "//" + window.location.host + "/api/speciality",
 		type: 'GET',
 		success: function (data) {
 			console.log(data);
@@ -179,7 +179,7 @@ form.submit(function (event) {
 	var appointments = $("#appointments");
 	var data2 = { doctorId: parseInt(doctors.val(),10), period: appointments.val() }
 	$.ajax({
-		url: "http://localhost:49153/api/examination/newExamination",
+		url: window.location.protocol + "//" + window.location.host + "/api/examination/newExamination",
 		type: 'POST',
 		data: JSON.stringify(data2),
 		contentType: "application/json; charset=utf-8",
