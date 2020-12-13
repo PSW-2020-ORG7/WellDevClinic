@@ -12,6 +12,7 @@ using WellDevCore.Model.dtos;
 
 namespace PSW_Web_app.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class DoctorController : ControllerBase
@@ -21,6 +22,15 @@ namespace PSW_Web_app.Controllers
         static readonly HttpClient client = new HttpClient();
 
         [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/doctor/");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            IActionResult result = JsonConvert.DeserializeObject<IActionResult>(responseBody);
+            return result;
+        }
+
         [Route("{date?}/{id?}")]
         public async Task<List<Period>> GetAvailablePeriodsByDoctor(DateTime date, long id)
         {

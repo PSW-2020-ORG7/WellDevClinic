@@ -139,10 +139,10 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
-        public List<Examination> SearchPreviousExaminations(string date, string doctorName, string drugName, string speacialistName, bool Radio1, bool Radio2)
+        public List<Examination> SearchPreviousExaminations(string date, string date2, string doctorName, string drugName, string speacialistName, string text, bool Radio1, bool Radio2, bool Radio3)
         {
             if (AuthorizedUsers["SearchPreviousExaminations"].SingleOrDefault(x => x == Role) != null)
-                return ExaminationController.SearchPreviousExaminations(date, doctorName, drugName, speacialistName,Radio1,Radio2);
+                return ExaminationController.SearchPreviousExaminations(date, date2, doctorName, drugName, speacialistName, text, Radio1,Radio2, Radio3);
             else
                 return null;
         }

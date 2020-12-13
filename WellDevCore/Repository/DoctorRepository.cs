@@ -33,20 +33,6 @@ namespace Repository
             myDbContext = context;
         }
 
-        /*public DoctorRepository(ICSVStream<Doctor> stream, ISequencer<long> sequencer, IBusinessDayRepository businessDayRepository, ISpecialityRepository speciality,
-    IDoctorGradeRepository doctorGrade, IAddressRepository addressRepository, ITownRepository townRepository, IStateRepository stateRepository)
-    : base(stream, sequencer)
-        {
-            _specialityRepository = speciality;
-            _businessDayRepository = businessDayRepository;
-            _doctorGradeRepository = doctorGrade;
-            _addressRepository = addressRepository;
-            _townRepository = townRepository;
-            _stateRepository = stateRepository;
-            MyContextContextFactory mccf = new MyContextContextFactory();
-            this.myDbContext = mccf.CreateDbContext(new string[0]);
-        }*/
-
         public IEnumerable<Doctor> GetAllEager()
         {
             List<Doctor> doctors = new List<Doctor>();

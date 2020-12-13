@@ -31,12 +31,12 @@ namespace PSW_Web_app.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetFinishedExaminations()
+        public async Task<List<ExaminationDto>> GetFinishedExaminations()
         {
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/getAll");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            IActionResult result = JsonConvert.DeserializeObject<IActionResult>(responseBody);
+            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
             return result;
         }
 
@@ -105,9 +105,13 @@ namespace PSW_Web_app.Controllers
 
         [HttpPost]
         [Route("search")]
-        public IActionResult SearchExamination([FromBody] DocumentsDTO2 documentsDTO2)
+        public async Task<List<ExaminationDto>> SearchExamination([FromBody] DocumentsDTO2 documentsDTO2)
         {
-            throw new NotImplementedException();
+            var content = new StringContent(JsonConvert.SerializeObject(documentsDTO2, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink + "/api/examination/search", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            return result;
         }
 
         [HttpPost]
