@@ -28,7 +28,11 @@ namespace InterlayerController.Controllers
         public IEnumerable<Prescription> GetAllPrescription()
         {
             List<Prescription> result = (List<Prescription>)_prescriptionController.GetAll();
-
+            foreach (Prescription p in result)  
+                foreach (Drug d in p.Drug)
+                    if (d.Alternative != null)
+                        foreach (Drug alter in d.Alternative)
+                            alter.Alternative = null;
             return result;
         }
     }
