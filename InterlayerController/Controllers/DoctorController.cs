@@ -38,8 +38,7 @@ namespace InterlayerController.Controllers
         {
             Speciality instance = new Speciality(speciality);
             List<Doctor> doctors = _doctorController.GetDoctorsBySpeciality(instance);
-            List<DoctorDTO> doctorDTOs = new List<DoctorDTO>(); // rezultat
-            //BusinessDay bd = doctors[0].BusinessDay[0];
+            List<DoctorDTO> doctorDTOs = new List<DoctorDTO>(); 
             foreach(Doctor d in doctors)
             {
                 DoctorDTO doctor2 = DoctorAdapter.DoctorToDoctorDTO(d);
@@ -55,7 +54,6 @@ namespace InterlayerController.Controllers
                             BusinessDayId = bd.Id,
                             Room = bd.room,
                             ScheduledPeriods = bd.ScheduledPeriods
-
                         });
                     }
                 }

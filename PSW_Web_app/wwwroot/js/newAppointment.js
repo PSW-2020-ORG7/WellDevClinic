@@ -32,6 +32,7 @@ $(".next").click(function () {
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
+					console.log("TERMINI");
 					for (var i = 0; i < data.length; i++) {
 						var opt = document.createElement('option');
 						var startDate = data[i].startDate;
@@ -44,7 +45,7 @@ $(".next").click(function () {
 						var end = endSplit[1].split(":");
 						var startTime = start[0] + ":" + start[1];
 						var endTime = end[0] + ":" + end[1];
-						opt.setAttribute('value', data[i].id);
+						opt.setAttribute('value', data[i].startDate + "S" + data[i].endDate);
 						opt.text = startTime + "-" + endTime;
 						app.appendChild(opt);
 					}
@@ -176,7 +177,7 @@ form.submit(function (event) {
 	event.preventDefault();
 
 	var appointments = $("#appointments");
-	var data2 = { doctorId: doctors.val(), periodId: appointments.val() }
+	var data2 = { doctorId: parseInt(doctors.val(),10), period: appointments.val() }
 	$.ajax({
 		url: "http://localhost:49153/api/examination/newExamination",
 		type: 'POST',

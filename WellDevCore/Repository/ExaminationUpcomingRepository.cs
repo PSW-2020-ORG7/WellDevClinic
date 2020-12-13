@@ -21,7 +21,10 @@ namespace bolnica.Repository
             _patientRepository = patientRepository;
             myDbContext = context;
         }
-
+        public Examination Save(Examination entity)
+        {
+            throw new NotImplementedException();
+        }
         public void Delete(Examination entity)
         {
             throw new NotImplementedException();
@@ -29,13 +32,12 @@ namespace bolnica.Repository
 
         public void Edit(Examination entity)
         {
-            throw new NotImplementedException();
+            myDbContext.SaveChanges();
         }
 
         public Examination Get(long id)
-        {
-            throw new NotImplementedException();
-        }
+             => myDbContext.Examination.FirstOrDefault(examination => examination.Id == id);
+        
 
         public IEnumerable<Examination> GetEager()
         {
@@ -47,7 +49,8 @@ namespace bolnica.Repository
             List<Examination> examinations = new List<Examination>();
             foreach (Examination exam in myDbContext.Examination.ToList())
             {
-                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now) > 0)
+                if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now) >= 0)
+
                 {
                     examinations.Add(exam);
                 }
@@ -63,8 +66,11 @@ namespace bolnica.Repository
             return exam;
         }
 
+
+    
+
         public  List<Examination> GetUpcomingExaminationsByUser(User user)
-        {
+        {  
             try
             {
                 Doctor doctor = (Doctor)user;
@@ -78,7 +84,6 @@ namespace bolnica.Repository
                     }
                 }
                 return findExamination;
-
             }catch(Exception e)
             {
                 Patient patient = (Patient)user;
@@ -91,22 +96,19 @@ namespace bolnica.Repository
                         findExamination.Add(examination);
                     }
                 }
-                return findExamination;
+                 return findExamination;
             }
         }
 
-        public Examination Save(long DoctorId, long PeriodId)
+
+        public Examination Save(long doctorId, Period period)
         {
-            Doctor doctor = _doctorRepository.Get(DoctorId);
-            Examination examination = new Examination(doctor);
+            Doctor doctor = _doctorRepository.Get(doctorId);
+            Examination examination = new Examination(doctor, period);
             myDbContext.Examination.Add(examination);
             myDbContext.SaveChanges();
-            return examination;
+            return null;
         }
 
-        public Examination Save(Examination entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

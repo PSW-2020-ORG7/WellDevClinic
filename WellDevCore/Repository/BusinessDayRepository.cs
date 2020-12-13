@@ -2,6 +2,7 @@ using bolnica;
 using bolnica.Model;
 using bolnica.Repository;
 using Model.Director;
+using Model.PatientSecretary;
 using Model.Users;
 using Service;
 using System;

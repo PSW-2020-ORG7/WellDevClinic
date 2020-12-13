@@ -37,7 +37,7 @@ namespace PSW_Wpf_app.Client
 
         public static async Task<List<Equipment>> GetAllEquipment()
         {
-            HttpResponseMessage response = await client.GetAsync("https://localhost:44375/api/equipment");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/equipment");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Equipment> equipments = JsonConvert.DeserializeObject<List<Equipment>>(responseBody);
@@ -47,7 +47,7 @@ namespace PSW_Wpf_app.Client
 
         public static async Task<List<Drug>> GetAllDrug()
         {
-            HttpResponseMessage response = await client.GetAsync("https://localhost:44375/api/drug");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/drug");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Drug> drugs = JsonConvert.DeserializeObject<List<Drug>>(responseBody);

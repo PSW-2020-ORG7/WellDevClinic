@@ -15,11 +15,13 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class FeedbackController : ControllerBase
     {
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+
         static readonly HttpClient client = new HttpClient();
         [HttpGet]
         public async Task<List<Feedback>> GetAllFeedback()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/feedback");
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/feedback");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Feedback> result = JsonConvert.DeserializeObject<List<Feedback>>(responseBody);
@@ -31,7 +33,7 @@ namespace PSW_Web_app.Controllers
         [Route("{id?}")]
         public async Task<Feedback> GetFeedback(long id)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/feedback/" + id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink+ "/api/feedback/" + id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             Feedback result = JsonConvert.DeserializeObject<Feedback>(responseBody);
@@ -42,7 +44,7 @@ namespace PSW_Web_app.Controllers
         public async Task<Feedback> LeaveFeedback([FromBody] Feedback feedback)
         {
             var content = new StringContent(JsonConvert.SerializeObject(feedback, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:51393/api/feedback", content);
+            var response = await client.PostAsync(communicationLink+ "/api/feedback", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             Feedback result = JsonConvert.DeserializeObject<Feedback>(responseBody);
             return result;
@@ -54,7 +56,7 @@ namespace PSW_Web_app.Controllers
         public async void PublishFeedback(Feedback feedback)
         {
             var content = new StringContent(JsonConvert.SerializeObject(feedback, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PutAsync("http://localhost:51393/api/feedback", content);
+            var response = await client.PutAsync(communicationLink+ "/api/feedback", content);
  
         }
 

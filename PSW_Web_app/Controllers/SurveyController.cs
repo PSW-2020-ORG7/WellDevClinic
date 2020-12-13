@@ -20,12 +20,14 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class SurveyController : ControllerBase
     {
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+
         static readonly HttpClient client = new HttpClient();
         [HttpPost]
         public async Task<DoctorGrade> SaveSurvey([FromBody] DoctorGrade survey)
         {
             var content = new StringContent(JsonConvert.SerializeObject(survey, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:51393/api/survey", content);
+            var response = await client.PostAsync(communicationLink + "/api/survey", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             DoctorGrade result = JsonConvert.DeserializeObject<DoctorGrade>(responseBody);
             return result;
@@ -35,7 +37,7 @@ namespace PSW_Web_app.Controllers
         [HttpGet]
         public async Task<List<DoctorGradeDTO>> GetAll()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/survey");
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/survey");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<DoctorGradeDTO> result = JsonConvert.DeserializeObject<List<DoctorGradeDTO>>(responseBody);
@@ -47,7 +49,7 @@ namespace PSW_Web_app.Controllers
         [Route("{doctor?}")]
         public async Task<List<DoctorGradeDTO>> GetByDoctor(string doctor)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/survey/" + doctor);
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/survey/" + doctor);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<DoctorGradeDTO> result = JsonConvert.DeserializeObject<List<DoctorGradeDTO>>(responseBody);
@@ -59,7 +61,7 @@ namespace PSW_Web_app.Controllers
         public async Task<List<GradeDTO>> GetAverageGradeDoctor([FromBody] List<DoctorGrade> surveys)
         {
             var content = new StringContent(JsonConvert.SerializeObject(surveys, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:51393/api/survey/doctor_average", content);
+            var response = await client.PostAsync(communicationLink + "/api/survey/doctor_average", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             List<GradeDTO> result = JsonConvert.DeserializeObject<List<GradeDTO>>(responseBody);
             return result;

@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
-using Renci.SshNet;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -25,20 +20,33 @@ namespace PSW_Pharmacy_Adapter
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-
         public static IHostBuilder CreateHostBuilderForRabbitMQ(string[] args) =>
             Host.CreateDefaultBuilder(args)
                  .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    Console.WriteLine("tu je");
                     services.AddHostedService<RabbitMQService>();
+                });
+
+        private static int calculatePort()
+        {
+            var port = System.Environment.GetEnvironmentVariable("PORT");
+            if (port == null)
+                return 64724;
+            else
+                return Int32.Parse(System.Environment.GetEnvironmentVariable("PORT"));
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                        serverOptions.ListenAnyIP(calculatePort());
+                    })
+                    .UseStartup<Startup>();
+
                 });
 
     }

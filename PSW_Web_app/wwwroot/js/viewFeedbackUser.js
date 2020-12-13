@@ -25,7 +25,7 @@
 $(document).ready(function () {
 
 	$.get({
-		url: 'http://localhost:49153/api/feedback',
+		url: window.location.protocol + "//" + window.location.host + '/api/feedback',
 		success: function (allFeedback) {
 
 			for (let feedback of allFeedback) {

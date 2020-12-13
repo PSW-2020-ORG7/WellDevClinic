@@ -66,5 +66,14 @@ namespace InterlayerController.Controllers
             _patientController.Edit(patient);
         }
 
+        [HttpGet]
+        [Route("patientFile/{id?}")]
+        public PatientDTO GetPatientByIdDto(long id)
+        {
+            Patient patient = _patientController.Get(id);
+           
+            return PatientAdapter.PatientToPatientDto(patient);
+        }
+
     }
 }

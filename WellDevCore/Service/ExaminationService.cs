@@ -59,9 +59,25 @@ namespace Service
             _upcomingRepository.Edit(entity);
         }
 
-        public List<Examination> GetFinishedxaminationsByUser(User user)
+        public void EditPrevious(Examination entity)
         {
-            return _previousRepository.GetExaminationsByUser(user);
+            _previousRepository.Edit(entity);
+        }
+
+        public List<Examination> GetFinishedExaminationsByUser(long id)
+        {
+           
+            List<Examination> examinations = _previousRepository.GetAllEager().ToList();
+            List<Examination> findExamination = new List<Examination>();
+            foreach (Examination examination in examinations)
+            {
+                if (examination.Patient.Id == id)
+                {
+                    findExamination.Add(examination);
+                }
+            }
+            return findExamination;
+            
         }
 
         public Examination Save(Examination entity)
@@ -74,9 +90,18 @@ namespace Service
             return _previousRepository.Save(examination);
         }
 
-        public List<Examination> GetUpcomingExaminationsByUser(User user)
+        public List<Examination> GetUpcomingExaminationsByUser(long id)
         {
-            return _upcomingRepository.GetUpcomingExaminationsByUser(user);
+            List<Examination> examinations = _upcomingRepository.GetAllEager().ToList();
+            List<Examination> findExamination = new List<Examination>();
+            foreach (Examination examination in examinations)
+            {
+                if (examination.Patient.Id == id)
+                {
+                    findExamination.Add(examination);
+                }
+            }
+            return findExamination;
         }
 
         public List<Examination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
@@ -101,8 +126,12 @@ namespace Service
 
         public Examination Get(long id)
         {
-
             return _upcomingRepository.Get(id);
+        }
+
+        public Examination GetPrevious(long id)
+        {
+            return _previousRepository.Get(id);
         }
 
         public IEnumerable<Examination> GetAll()
@@ -136,10 +165,10 @@ namespace Service
         /// <param name="user">specified user</param>
         /// <returns>list of examinations</returns>
 
-        public List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user) 
+        public List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, long id) 
         { 
             List<Examination> result = new List<Examination>();
-            List<Examination> examinations = GetFinishedxaminationsByUser(user).ToList();
+            List<Examination> examinations = GetFinishedExaminationsByUser(id).ToList();
             if (date != "")
             {
                 DateTime dateTime = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
@@ -356,16 +385,30 @@ namespace Service
             exams.AddRange((List<Examination>)_previousRepository.GetAllEager());
             foreach(Examination exam in exams)
             {
-                if (exam.Patient.Id == id && exam.Canceled)
+                if (exam.Patient.Id == id && exam.Canceled && (DateTime.Today.Date - exam.CanceledDate.Date).TotalDays <= 30)
                     result.Add(exam.CanceledDate);
             }
             return result;
         }
 
-        public Examination NewExamination(long DoctorId, long PeriodId)
+
+        public Examination NewExamination(long DoctorId, String Period)
         {
-            Examination examination = _upcomingRepository.Save(DoctorId, PeriodId);
+            String[] dateTimes = Period.Split("S");
+            DateTime start = DateTime.Parse(dateTimes[0]);
+            DateTime end = DateTime.Parse(dateTimes[1]);
+            Examination examination = _upcomingRepository.Save(DoctorId, new Period(start,end));
             return examination;
+        }
+
+        public List<Examination> GetUpcomingExaminationsByUser(User user)
+        {
+            return _upcomingRepository.GetUpcomingExaminationsByUser(user);
+        }
+
+        public List<Examination> GetFinishedExaminationsByUser(User user)
+        {
+            return _previousRepository.GetFinishedExaminationsByUser(user);
         }
     }
 }

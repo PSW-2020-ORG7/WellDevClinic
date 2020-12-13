@@ -646,7 +646,7 @@ namespace PSW_Wpf_doctor
                     num1++;
                 }
             }
-            foreach (var exam in app.ExaminationDecorator.GetFinishedxaminationsByUser(user))
+            foreach (var exam in app.ExaminationDecorator.GetFinishedExaminationsByUser(user))
             {
                 if (!helpExam.Contains(exam.Patient.Id))
                 {

@@ -16,13 +16,15 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+
         static readonly HttpClient client = new HttpClient();
        
         [HttpPost]
         public async Task<Patient> UserRegistration([FromBody] Patient entity)
         {
             var content = new StringContent(JsonConvert.SerializeObject(entity, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:51393/api/registration", content);
+            var response = await client.PostAsync(communicationLink + "/api/registration", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             Patient result = JsonConvert.DeserializeObject<Patient>(responseBody);
             return result;

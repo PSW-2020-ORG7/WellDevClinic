@@ -21,7 +21,7 @@ function addPatient(patient) {
 $(document).ready(function () {
 
 	$.get({
-		url: 'http://localhost:49153/api/patient/patients_for_blocking',
+		url: window.location.protocol + "//" + window.location.host + '/api/patient/patients_for_blocking',
 		success: function (patients) {
 			for (let patient of patients) {
 				addPatient(patient);
@@ -30,7 +30,7 @@ $(document).ready(function () {
 	});
 
 	$.get({
-		url: 'http://localhost:49153/api/patient/blocked_patients',
+		url: window.location.protocol + "//" + window.location.host + '/api/patient/blocked_patients',
 		success: function (patients) {
 			for (let patient of patients) {
 				addPatient(patient);
@@ -44,7 +44,7 @@ $(document).ready(function () {
 		let dataId = Tr.find("td:eq(0)").html();
 
 		$.ajax({
-			url: "http://localhost:49153/api/patient/" + dataId,
+			url: window.location.protocol + "//" + window.location.host + "/api/patient/" + dataId,
 			type: 'PUT',
 			success: function () {
 				alert("Uspesno blokiran pacijent")
@@ -53,5 +53,10 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8"
 		})
 
+	});
+
+	$('#quit').click(function (event) {
+		var origin = window.location.origin;
+		window.location.href = origin + "/html/feedback.html"
 	});
 });

@@ -50,14 +50,16 @@ namespace bolnica.Controller
             return _examinationService.GetExaminationsByFilter(examinationDTO, upcomingOnly);
         }
 
-        public List<Examination> GetFinishedxaminationsByUser(User user)
+        public List<Examination> GetFinishedExaminationsByUser(long id)
         {
-            return _examinationService.GetFinishedxaminationsByUser(user);
+            return _examinationService.GetFinishedExaminationsByUser(id);
         }
 
-        public List<Examination> GetUpcomingExaminationsByUser(User user)
+        public List<Examination> GetUpcomingExaminationsByUser(long id)
         {
-            return _examinationService.GetUpcomingExaminationsByUser(user);
+           return _examinationService.GetUpcomingExaminationsByUser(id);
+            
+
         }
 
         public Examination SaveFinishedExamination(Examination examination)
@@ -65,9 +67,9 @@ namespace bolnica.Controller
             return _examinationService.SaveFinishedExamination(examination);
         }
 
-        public List<Examination> SearchPreviousExamination(string date, string doctorName, string drugName, string speacialistName, User user)
+        public List<Examination> SearchPreviousExamination(string date, string doctorName, string drugName, string speacialistName, long id)
         {
-            return _examinationService.SearchPreviousExamination(date, doctorName, drugName, speacialistName, user);
+            return _examinationService.SearchPreviousExamination(date, doctorName, drugName, speacialistName, id);
         }
 
         public List<Examination> SearchPreviousExaminations(string date, string doctorName, string drugName, string speacialistName, bool Radio1, bool Radio2)
@@ -75,10 +77,31 @@ namespace bolnica.Controller
             return _examinationService.SearchPreviousExaminations(date, doctorName, drugName, speacialistName, Radio1, Radio2);
         }
 
-        public Examination NewExamination(long DoctorId, long PeriodId)
+        public Examination NewExamination(long DoctorId, String Period)
         {
-            Examination examination = _examinationService.NewExamination(DoctorId, PeriodId);
+            Examination examination = _examinationService.NewExamination(DoctorId, Period);
             return examination;
+        }
+
+        public void EditPrevious(Examination entity)
+        {
+             _examinationService.EditPrevious(entity);
+        }
+
+        public Examination GetPrevious(long id)
+        {
+            return _examinationService.GetPrevious(id);
+        }
+
+        public List<Examination> GetUpcomingExaminationsByUser(User user)
+        {
+            return _examinationService.GetUpcomingExaminationsByUser(user);
+        }
+
+        public List<Examination> GetFinishedExaminationsByUser(User user)
+        {
+            return _examinationService.GetFinishedExaminationsByUser(user);
+
         }
     }
 }
