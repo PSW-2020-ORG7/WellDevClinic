@@ -32,13 +32,12 @@ namespace bolnica.Repository
 
         public void Edit(Examination entity)
         {
-            throw new NotImplementedException();
+            myDbContext.SaveChanges();
         }
 
         public Examination Get(long id)
-        {
-            throw new NotImplementedException();
-        }
+             => myDbContext.Examination.FirstOrDefault(examination => examination.Id == id);
+        
 
         public IEnumerable<Examination> GetEager()
         {
@@ -102,6 +101,14 @@ namespace bolnica.Repository
         }
 
 
+        public Examination Save(long doctorId, Period period)
+        {
+            Doctor doctor = _doctorRepository.Get(doctorId);
+            Examination examination = new Examination(doctor, period);
+            myDbContext.Examination.Add(examination);
+            myDbContext.SaveChanges();
+            return null;
+        }
 
     }
 }

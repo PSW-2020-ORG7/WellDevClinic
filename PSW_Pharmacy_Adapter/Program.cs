@@ -19,15 +19,7 @@ namespace PSW_Pharmacy_Adapter
             consumer.Start();
             CreateHostBuilder(args).Build().Run();
             //CreateHostBuilderForGrpc(args).Build().Run();
-
         }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
 
         public static IHostBuilder CreateHostBuilderForRabbitMQ(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -36,6 +28,7 @@ namespace PSW_Pharmacy_Adapter
                 {
                     services.AddHostedService<RabbitMQService>();
                 });
+
 
         public static IHostBuilder CreateHostBuilderForGrpc(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -46,6 +39,27 @@ namespace PSW_Pharmacy_Adapter
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                });
+
+        private static int calculatePort()
+        {
+            var port = System.Environment.GetEnvironmentVariable("PORT");
+            if (port == null)
+                return 64724;
+            else
+                return Int32.Parse(System.Environment.GetEnvironmentVariable("PORT"));
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                        serverOptions.ListenAnyIP(calculatePort());
+                    })
+                    .UseStartup<Startup>();
+
                 });
 
     }

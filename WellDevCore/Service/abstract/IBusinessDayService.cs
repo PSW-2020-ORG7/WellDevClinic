@@ -29,5 +29,7 @@ namespace bolnica.Service
 
 
         Boolean isExaminationPossible(Examination examination);
+
+        List<Period> GetAvailablePeriodsByDoctor(DateTime date, long id);
     }
 }

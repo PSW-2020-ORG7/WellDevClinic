@@ -36,7 +36,7 @@ div {
     vertical-align: middle;
     padding: 3px;
 }
-#tableP .button, #tableU .button {
+#tableP .button, #tableU .buttonCancel {
     background-color: #bde2da;
     border: none;
     outline: none;

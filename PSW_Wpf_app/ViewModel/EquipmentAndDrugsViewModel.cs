@@ -1,8 +1,6 @@
 ﻿using PSW_Wpf_app.Client;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace PSW_Wpf_app.ViewModel
 {
@@ -10,6 +8,8 @@ namespace PSW_Wpf_app.ViewModel
     {
         BindingList<Equipment> equipments = new BindingList<Equipment>();
         BindingList<Drug> drugs;
+        public static Equipment SelectedEquipment { get; set; }
+        public static Drug SelectedDrug { get; set; }
         public static MyICommand<object> SearchCommand { get; set; }
 
         public BindingList<Equipment> Equipments

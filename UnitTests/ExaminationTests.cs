@@ -102,11 +102,12 @@ namespace UnitTests
             Patient patient1 = new Patient(1, "Pera", "Peric");
             Doctor doctor1 = new Doctor(2, "Eva", "Evic");
             Doctor doctor2 = new Doctor(3, "Jovan", "Jovanovic");
+            doctor1.Specialty = new Speciality("hirurg");
             DateTime today = DateTime.Today;
             DateTime start = today.AddDays(-1);
             DateTime end = today.AddDays(-1);
             Period period = new Period(start, end);
-            Referral referral = new Referral(1, period, doctor2);
+            Referral referral = new Referral(1, period, doctor1);
             Drug drug = new Drug(1, "aspirin");
             List<Drug> drugs = new List<Drug>();
             drugs.Add(drug);
@@ -189,7 +190,7 @@ namespace UnitTests
             ReferralService referralService = new ReferralService(referralRepository.Object);
             ExaminationService examinationService = new ExaminationService(null, CreateStubRepositoryExamination(), null, prescriptionService, referralService, null, null);
 
-            List<Examination> returnedExaminations = examinationService.SearchPreviousExamination(DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd"), "", "", "", 1);
+            List<Examination> returnedExaminations = examinationService.SearchPreviousExamination(DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd"), "Eva Evic", "aspirin", "hirurg", 1);
 
             returnedExaminations.ShouldNotBeEmpty();
         }
@@ -207,6 +208,28 @@ namespace UnitTests
             List<Examination> returnedExaminations = examinationService.SearchPreviousExamination(DateTime.Today.AddDays(+1).ToString("yyyy-MM-dd"), "", "", "", 1);
 
             returnedExaminations.ShouldBeEmpty();
+        }
+
+        [Fact]
+        public void GetAllReferrals()
+        {
+            var referralStubRepository = new Mock<IReferralRepository>();
+            var referrals = new List<Referral>();
+            DateTime StartDate = new DateTime();
+            DateTime EndDate = new DateTime();
+            Period period = new Period();
+            period.StartDate = StartDate;
+            period.EndDate = EndDate;
+            Doctor doctor1 = new Doctor(2, "Eva", "Evic");
+            Doctor doctor2 = new Doctor(2, "Jovan", "Jovanovic");
+            Referral referral1 = new Referral(0, period, doctor1);
+            Referral referral2 = new Referral(1, period, doctor2);
+            referrals.Add(referral1);
+            referrals.Add(referral2);
+            referralStubRepository.Setup(r => r.GetEager()).Returns(referrals);
+            ReferralService referralService = new ReferralService(referralStubRepository.Object);
+            IEnumerable<Referral> returnedReferrals = referralService.GetAll();
+            returnedReferrals.ShouldBeEquivalentTo(referrals);
         }
     }
 }

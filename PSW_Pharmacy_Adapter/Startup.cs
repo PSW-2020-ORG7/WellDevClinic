@@ -12,6 +12,8 @@ using PSW_Pharmacy_Adapter.Service.Iabstract;
 using Grpc.Core;
 using PSW_Pharmacy_Adapter.Protos;
 using System;
+using System.Reflection;
+
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -29,14 +31,15 @@ namespace PSW_Pharmacy_Adapter
         {
             services.AddControllers();
             services.AddDbContext<MyDbContext>(opts =>
-                    opts.UseMySql(CreateConnectionString()).UseLazyLoadingProxies());
-
+                    opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
             services.AddScoped<IApiKeyService, ApiKeyService>();
             services.AddScoped<IGreetingsService, GreetingsService>();
             services.AddScoped<IActionsAndBenefitsService, ActionsAndBenefitsService>();
             services.AddScoped<IRabbitMQService, RabbitMQService>();
             services.AddScoped<IMedicationService, MedicationService>();
- 
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
+
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
             services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
             services.AddHttpClient();
@@ -45,12 +48,15 @@ namespace PSW_Pharmacy_Adapter
         private Server server;
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime, MyDbContext db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            db.Database.EnsureCreated();
 
             app.UseRouting();
 
@@ -83,7 +89,8 @@ namespace PSW_Pharmacy_Adapter
 
         }
 
-        private string CreateConnectionString()
+
+        private string CreateConnectionStringFromEnvironment()
         {
             string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
             string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
@@ -92,6 +99,5 @@ namespace PSW_Pharmacy_Adapter
             string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
             return $"server={server};port={port};database={database};username={username};password={password}";
         }
-
     }
 }

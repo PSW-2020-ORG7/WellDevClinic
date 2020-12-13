@@ -1,6 +1,7 @@
 using bolnica.Controller;
 using bolnica.Service;
 using Model.Doctor;
+using Model.PatientSecretary;
 using Model.Users;
 using System;
 using System.Collections.Generic;
@@ -50,5 +51,6 @@ namespace Controller
         {
             return _doctorservice.Save(entity);
         }
+
     }
 }

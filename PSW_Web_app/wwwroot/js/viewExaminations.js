@@ -28,11 +28,17 @@ function addUpcomingExamination(examination, i) {
 	let row = $('<th scope="row">' + i + '</th>');
 	let doctor = $('<td>' + examination.doctor +'</td>');
 	let date = $('<td>' + examination.date +'</td>');
-    let time = $('<td>' + examination.startTime + ' - '+ examination.endTime + '</td>');
-   
-    let buttonCancel =  $('<button class="button">Cancel examination</button>');
+	let time = $('<td>' + examination.startTime + ' - ' + examination.endTime + '</td>');
 
-	tr.append(row).append(doctor).append(date).append(time).append(buttonCancel);
+	if (examination.canBeCanceled) {
+		let buttonCancel = $('<button class="buttonCancel">Cancel examination</button>');
+		buttonCancel.attr("id", examination.id);
+		tr.append(row).append(doctor).append(date).append(time).append(buttonCancel);
+	}
+	else {
+		tr.append(row).append(doctor).append(date).append(time);
+	}
+
 	$('#tableU tbody').append(tr);
 }
 $(document).ready(function () {
@@ -41,8 +47,10 @@ $(document).ready(function () {
 		success: function (list) {
 			i = 1;
 			for (let examination of list) {
-				addPrviousExamination(examination, i)
-				i++;
+				if (!(examination.canceled)) {
+					addPrviousExamination(examination, i)
+					i++;
+				}
 			}	
 		}
 	});
@@ -52,10 +60,24 @@ $(document).ready(function () {
 		success: function (list) {
 			i = 1;
 			for (let examination of list) {
-				addUpcomingExamination(examination, i)
-				i++;
+				if (!(examination.canceled)) {
+					addUpcomingExamination(examination, i)
+					i++;
+				}
 			}	
 		}
+	});
+
+	$("#tableU tbody").on("click", ".buttonCancel", function () {
+		var id = $(this).attr('id');
+		$.ajax({
+			url: window.location.protocol + "//" + window.location.host + "/api/examination/canceled/" + id,
+			type: 'PUT',
+			success: function () {
+				alert("Appointment canceled successfully");
+				window.location.reload();
+			},
+		});
 	});
 
 });

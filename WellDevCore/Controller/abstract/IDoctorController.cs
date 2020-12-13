@@ -1,5 +1,6 @@
 ﻿using Controller;
 using Model.Doctor;
+using Model.PatientSecretary;
 using Model.Users;
 using System;
 using System.Collections.Generic;

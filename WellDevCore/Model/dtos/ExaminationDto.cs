@@ -25,6 +25,8 @@ namespace bolnica.Model.dtos
 
         public Boolean filledSurvey { get; set; }
         public long id { get; set; }
+        public Boolean canBeCanceled { get; set; }
+        public Boolean canceled { get; set; }
         public ExaminationDto() { }
        
     }
