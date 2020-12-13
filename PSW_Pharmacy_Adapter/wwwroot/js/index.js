@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+<<<<<<< HEAD
     $("#testDugme").click(function () {
         $.ajax({
             method: "GET",
@@ -40,6 +41,8 @@
     })
 
     
+=======
+>>>>>>> dda16d98e4c284df4516241573714402f92d60ec
     
 });
 
