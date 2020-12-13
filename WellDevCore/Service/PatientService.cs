@@ -179,34 +179,6 @@ namespace bolnica.Service
             return dates;
         }
 
-        public bool CheckIfBlocked(List<DateTime> dates)
-        {
-            dates = SortDates(dates);
-            bool result = false;
-            int check;
-            int j;
-            for(int i = 0; i<dates.Count; i++)
-            {
-                check = 1;
-                for(j = i + 1; j < dates.Count; j++)
-                {
-                    if ((dates[j].Date - dates[i].Date).TotalDays <= 30)
-                        check += 1;
-                    else
-                        break;
-                }
-                    
-                if(check >= 3)
-                {
-                    result = true;
-                    break;
-                }
-                    
-            }
-
-            return result;
-        }
-
         public List<Patient> GetPatientsForBlocking()
         {
             List<Patient> result = new List<Patient>();
@@ -217,7 +189,7 @@ namespace bolnica.Service
                 if(!patient.Blocked)
                 {
                     List<DateTime> dates = _examinationService.GetCancelationDatesByPatient(patient.Id);
-                    if (CheckIfBlocked(dates))
+                    if (dates.Count>=3)
                         result.Add(patient);
                 }
 

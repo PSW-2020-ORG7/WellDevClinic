@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSW_Wpf_app.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace PSW_Wpf_app.Model
     public class FloorElement
     {
 
-
+        
         private string type;
         private int width;
         private int height;
@@ -19,6 +20,9 @@ namespace PSW_Wpf_app.Model
         private int floor;
         private string info;
         private string buildingName;
+        List<Drug> drugs = new List<Drug>();
+        List<Equipment> equipments = new List<Equipment>();
+        
 
         public string BuildingName
         {
@@ -78,6 +82,9 @@ namespace PSW_Wpf_app.Model
 
         }
 
+
+        public List<Drug> Drugs { get => drugs; set => drugs = value; }
+        public List<Equipment> Equipments { get => equipments; set => equipments = value; }
 
         public FloorElement(string t, int w, int h, int xx, int yy)
         {

@@ -52,7 +52,7 @@ namespace Repository
         public BusinessDay GetEager(long id)
         {
             BusinessDay businessDay = Get(id);
-            businessDay.doctor.BusinessDay = null;
+
             //businessDay.doctor = _doctorRepository.Get(businessDay.doctor.GetId());
             //businessDay.room = _roomRepository.GetEager(businessDay.room.GetId());
             return businessDay;

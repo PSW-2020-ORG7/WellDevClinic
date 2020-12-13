@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PSW_Wpf_app.Model;
 
 namespace PSW_Wpf_app.ViewModel
@@ -62,7 +60,24 @@ namespace PSW_Wpf_app.ViewModel
                     try
                     {
                         FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7], temp1[8]);
-                        floors.Add(shape);
+
+                        if (temp1.Count() == 11)
+                        {
+                            string[] equipments = temp1[9].Split(':', '-');
+                            for (int i = 0; i < equipments.Count() - 1; i += 3)
+                            {
+                                shape.Equipments.Add(new Client.Equipment() { Id = int.Parse(equipments[(i % 4) + 1]), Name = equipments[(i % 4) + 2], Amount = int.Parse(equipments[(i % 4) + 3]) });
+                            }
+
+                            string[] drugs = temp1[10].Split(':', '-');
+                            for (int i = 0; i < drugs.Count() - 1; i += 3)
+                            {
+                                shape.Drugs.Add(new Client.Drug() { Id = int.Parse(drugs[(i % 4) + 1]), Name = drugs[(i % 4) + 2], Amount = int.Parse(drugs[(i % 4) + 3]) });
+                            }
+
+                        }
+
+                            floors.Add(shape);
                         
                     }
                     catch { }

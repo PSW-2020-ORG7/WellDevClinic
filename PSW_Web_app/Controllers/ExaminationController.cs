@@ -47,6 +47,14 @@ namespace PSW_Web_app.Controllers
             var response = await client.PutAsync(communicationLink + "/api/examination/" + id, content);
         }
 
+        [HttpPut]
+        [Route("canceled/{id?}")]
+        public async void CancelExamination(long id)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(id));
+            var response = await client.PutAsync(communicationLink + "/api/examination/canceled/" + id, content);
+        }
+
         [HttpGet]
         [Route("{id?}")]
         public async Task<List<ExaminationDto>> GetFinishedExaminationsByUser(long id)
