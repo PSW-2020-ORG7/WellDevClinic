@@ -23,6 +23,8 @@ namespace bolnica.Service
         List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user);
         List<Examination> SearchPreviousExaminations(String date, String doctorName, String drugName, String speacialistName, Boolean Radio1, Boolean Radio2);
         List<DateTime> GetCancelationDatesByPatient(long id);
-   
+        Examination NewExamination(long DoctorId, long PeriodId);
+
+
     }
 }

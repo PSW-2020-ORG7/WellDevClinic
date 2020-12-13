@@ -91,6 +91,11 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
+        public Examination NewExamination(long DoctorId, long PeriodId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Examination Save(Examination entity)
         {
             if (AuthorizedUsers["Save"].SingleOrDefault(x => x == Role) != null)

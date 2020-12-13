@@ -60,8 +60,12 @@ namespace Repository
         public Doctor GetEager(long id)
         {
             Doctor doctor = Get(id);
+            /*foreach(BusinessDay businessDay in doctor.BusinessDay)
+            {
+                businessDay.doctor = null;
+            }*/
            
-
+            /*
             List<BusinessDay> businessDays = new List<BusinessDay>();
             if (doctor.BusinessDay != null)
             {
@@ -71,7 +75,7 @@ namespace Repository
                 }
             }
             doctor.BusinessDay = businessDays;
-
+            */
             doctor.Specialty = _specialityRepository.Get(doctor.Specialty.GetId());
             //doctor.Address = _addressRepository.GetEager(doctor.Address.GetId());
             //doctor.Address.Town = _townRepository.GetEager(doctor.Address.Town.GetId());
@@ -94,14 +98,7 @@ namespace Repository
 
         public List<Doctor> GetDoctorsBySpeciality(Speciality specialty)
         {
-            List<Doctor> doctors = this.GetAllEager().ToList();
-            List<Doctor> retVal = new List<Doctor>();
-            foreach (Doctor doct in doctors)
-            {
-                if (doct.Specialty.Name.Equals(specialty.Name))
-                    retVal.Add(doct);
-            }
-            return retVal;
+            return null;
         }
 
         public Doctor Save(Doctor entity)

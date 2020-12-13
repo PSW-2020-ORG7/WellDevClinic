@@ -74,5 +74,11 @@ namespace bolnica.Controller
         {
             return _examinationService.SearchPreviousExaminations(date, doctorName, drugName, speacialistName, Radio1, Radio2);
         }
+
+        public Examination NewExamination(long DoctorId, long PeriodId)
+        {
+            Examination examination = _examinationService.NewExamination(DoctorId, PeriodId);
+            return examination;
+        }
     }
 }

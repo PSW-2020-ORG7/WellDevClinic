@@ -12,8 +12,7 @@ namespace Repository
 {
    public class BusinessDayRepository : IBusinessDayRepository
    {
-        public IDoctorRepository _doctorRepository;
-
+        public IDoctorRepository _doctorRepository { get; set; }
         private readonly IRoomRepository _roomRepository;
         private readonly MyDbContext myDbContext;
 
@@ -52,7 +51,7 @@ namespace Repository
         public BusinessDay GetEager(long id)
         {
             BusinessDay businessDay = Get(id);
-            businessDay.doctor = _doctorRepository.Get(businessDay.doctor.GetId());
+            //businessDay.doctor = _doctorRepository.Get(businessDay.doctor.GetId());
             businessDay.room = _roomRepository.GetEager(businessDay.room.GetId());
             return businessDay;
         }

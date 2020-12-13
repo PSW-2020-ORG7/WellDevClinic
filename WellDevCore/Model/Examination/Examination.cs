@@ -29,13 +29,16 @@ namespace Model.PatientSecretary
             Diagnosis = diagnosis;
         }
 
-
-
         public Examination(long id,  Users.Doctor doctor, Period period)
         {
             Id = id;
             Doctor = doctor;
             Period = period;
+        }
+
+        public Examination( Users.Doctor doctor)
+        {
+            Doctor = doctor;
         }
 
         public Examination(Patient patient, Users.Doctor doctor, Period period)

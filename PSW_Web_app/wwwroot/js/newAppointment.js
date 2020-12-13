@@ -6,6 +6,7 @@ var animating; //flag to prevent quick multi-click glitches
 
 var date = $("#calendar");
 var speciality = $("#specialization");
+var doctors = $("#doctors");
 var fieldSetCounter = 0;
 
 $(".next").click(function () {
@@ -22,20 +23,48 @@ $(".next").click(function () {
 		//activate next step on progressbar using the index of next_fs
 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
+		console.log(fieldSetCounter);
+		console.log(doctors.val());
+		var app = document.getElementById("appointments");
+		if (fieldSetCounter == 2) {
+			$.ajax({
+				url: "http://localhost:49153/api/doctor/" + date.val() + '/' + doctors.val(),
+				type: 'GET',
+				success: function (data) {
+					console.log(data);
+					for (var i = 0; i < data.length; i++) {
+						var opt = document.createElement('option');
+						var startDate = data[i].startDate;
+						console.log(data[i].startDate);
+						console.log(data[i].endDate);
+						var endDate = data[i].endDate;
+						var startSplit = startDate.split("T");
+						var endSplit = endDate.split("T");
+						var start = startSplit[1].split(":");
+						var end = endSplit[1].split(":");
+						var startTime = start[0] + ":" + start[1];
+						var endTime = end[0] + ":" + end[1];
+						opt.setAttribute('value', data[i].id);
+						opt.text = startTime + "-" + endTime;
+						app.appendChild(opt);
+					}
+				}
+			});
+		}
 		//show the next fieldset
 		var selDoc = document.getElementById("doctors");
 		console.log(fieldSetCounter);
-		if(fieldSetCounter == 1){
+		if (fieldSetCounter == 1) {
 			$.ajax({
-				url: "http://localhost:49153/api/appointment/" + speciality.val(),
+				url: "http://localhost:49153/api/doctor/" + speciality.val(),
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
 					for (var i = 0; i < data.length; i++) {
 						//var opt = "<option" + "value=" + data[i].name + ">" + data[i].name + "</option>";
 						var opt = document.createElement('option');
-						opt.setAttribute('value', data[i].Id);
-						opt.text ="Dr " + data[i].firstName + ' ' + data[i].lastName;
+						opt.setAttribute('value', data[i].id);
+						opt.text = "Dr " + data[i].name + ' ' + data[i].surname;
 						selDoc.appendChild(opt);
 					}
 				}
@@ -90,7 +119,7 @@ $(document).ready(function () {
 	var sel = document.getElementById("specialization");
 
 	$.ajax({
-		url: "http://localhost:49153/api/appointment",
+		url: "http://localhost:49153/api/speciality",
 		type: 'GET',
 		success: function (data) {
 			console.log(data);
@@ -142,6 +171,20 @@ $(".previous").click(function () {
 	});
 });
 
-$(".submit").click(function () {
-	return false;
-})
+let form = $("#msform");
+form.submit(function (event) {
+	event.preventDefault();
+
+	var appointments = $("#appointments");
+	var data2 = { doctorId: doctors.val(), periodId: appointments.val() }
+	$.ajax({
+		url: "http://localhost:49153/api/examination/newExamination",
+		type: 'POST',
+		data: JSON.stringify(data2),
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			console.log(data);
+		}
+	})
+});
+

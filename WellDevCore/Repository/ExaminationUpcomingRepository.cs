@@ -95,6 +95,15 @@ namespace bolnica.Repository
             }
         }
 
+        public Examination Save(long DoctorId, long PeriodId)
+        {
+            Doctor doctor = _doctorRepository.Get(DoctorId);
+            Examination examination = new Examination(doctor);
+            myDbContext.Examination.Add(examination);
+            myDbContext.SaveChanges();
+            return examination;
+        }
+
         public Examination Save(Examination entity)
         {
             throw new NotImplementedException();

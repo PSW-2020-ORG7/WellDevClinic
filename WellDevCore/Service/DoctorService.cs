@@ -1,24 +1,28 @@
+using bolnica.Model.Dto;
 using bolnica.Service;
 using Model.Doctor;
+using Model.Dto;
+using Model.PatientSecretary;
 using Model.Users;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Service
 {
    public class DoctorService : IDoctorService
    {
         public IDoctorGradeService _doctorGradeService { get; set; }
-        //public IBusinessDayService _businessDayService;
         public IArticleService _articleService;
+        //private readonly IBusinessDayService _businessDayService;
         private readonly IDoctorRepository _doctorRepository;
 
         public DoctorService(IDoctorRepository doctorRepository, IDoctorGradeService doctorGradeService,  IArticleService articleService)
         {
             _doctorRepository = doctorRepository;
             _doctorGradeService = doctorGradeService;
-           // _businessDayService = businessDayService;
+            //_businessDayService = businessDayService;
             _articleService = articleService;
         }
 
@@ -57,7 +61,14 @@ namespace Service
 
         public List<Doctor> GetDoctorsBySpeciality(Speciality specialty)
         {
-            return _doctorRepository.GetDoctorsBySpeciality(specialty);
+            List<Doctor> doctors = _doctorRepository.GetAllEager().ToList();
+            List<Doctor> retVal = new List<Doctor>();
+            foreach (Doctor doct in doctors)
+            {
+                if (doct.Specialty.Name.Equals(specialty.Name))
+                    retVal.Add(doct);
+            }
+            return retVal;
         }
 
         public User GetUserByUsername(string username)
@@ -71,13 +82,13 @@ namespace Service
                 {
                     return null;
                 }
-            Dictionary<string, double> questionsGradesDictionary = new Dictionary<string, double>();
-            questionsGradesDictionary["0"] = 0;
-            questionsGradesDictionary["1"] = 0;
-            questionsGradesDictionary["2"] = 0;
-            questionsGradesDictionary["3"] = 0;
-            questionsGradesDictionary["4"] = 0;
-            entity.DoctorGrade = _doctorGradeService.Save(new DoctorGrade(0, questionsGradesDictionary));
+            //Dictionary<string, double> questionsGradesDictionary = new Dictionary<string, double>();
+            //questionsGradesDictionary["0"] = 0;
+            //questionsGradesDictionary["1"] = 0;
+            //questionsGradesDictionary["2"] = 0;
+            //questionsGradesDictionary["3"] = 0;
+            //questionsGradesDictionary["4"] = 0;
+            //entity.DoctorGrade = _doctorGradeService.Save(new DoctorGrade(0, questionsGradesDictionary));
             return _doctorRepository.Save(entity);
         }
 
