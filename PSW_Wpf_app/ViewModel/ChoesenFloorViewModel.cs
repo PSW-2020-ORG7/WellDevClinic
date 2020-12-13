@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using PSW_Wpf_app.Drawing;
 using System;
+using PSW_Wpf_app.View;
 
 namespace PSW_Wpf_app.ViewModel
 {
@@ -17,6 +18,13 @@ namespace PSW_Wpf_app.ViewModel
         List<FloorElement> floors = new List<FloorElement>();
 
         private string choosenBuilding;
+        private string user;
+        public string User
+        {
+            get { return user; }
+            set { }
+
+        }
         public string ChoosenBuilding
         {
             get { return choosenBuilding; }
@@ -38,6 +46,7 @@ namespace PSW_Wpf_app.ViewModel
 
         public ChoesenFloorViewModel(Canvas canvasFloor, string buil, int floor)
         {
+            
             choosenBuilding = buil;
             choosenFloor = floor;
             floors = getFloor(ChoosenBuilding);
@@ -55,8 +64,9 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
-        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms)
+        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms, string userType)
         {
+            user = userType;
             if (EquipmentAndDrugsViewModel.SelectedEquipment == null && EquipmentAndDrugsViewModel.SelectedDrug == null && SearchResultViewModel.SelectedResult == null)
             {
                 choosenBuilding = build;
@@ -210,8 +220,19 @@ namespace PSW_Wpf_app.ViewModel
                     string elementName = mouseWasDownOn.Name;
                     foreach (FloorElement f in floors)
                     {
-                        if (elementName.Equals(f.Name))
+                    if (elementName.Equals(f.Name))
+                    {
+                        if (user == "patient")
+                        {
                             MessageBox.Show(string.Format("additional information: {0}\n", f.Info));
+                        }
+                        else
+                        {
+                            RoomStuffView roomStuffView = new RoomStuffView(f);
+                            roomStuffView.Show();
+                        }
+                    }
+                        
                     }
                 }
             }
