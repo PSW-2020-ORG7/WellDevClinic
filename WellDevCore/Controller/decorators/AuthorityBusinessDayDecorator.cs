@@ -75,6 +75,11 @@ namespace bolnica.Controller.decorators
             return null;
         }
 
+        public List<Period> GetAvailablePeriodsByDoctor(DateTime date, long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<BusinessDay> GetBusinessDaysByDoctor(Doctor doctor)
         {
             if (AuthorizedUsers["GetBusinessDaysByDoctor"].SingleOrDefault(any => any.Equals(Role)) != null)

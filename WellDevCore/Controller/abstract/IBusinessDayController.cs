@@ -20,6 +20,7 @@ namespace bolnica.Controller
         void FreePeriod(BusinessDay businessDay, List<DateTime> period);
         Boolean isExaminationPossible(Examination examination);
         Boolean ChangeDoctorShift(BusinessDay newShift);
+        List<Period> GetAvailablePeriodsByDoctor(DateTime date, long id);
 
     }
 }

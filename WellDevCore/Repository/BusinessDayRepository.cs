@@ -2,6 +2,7 @@ using bolnica;
 using bolnica.Model;
 using bolnica.Repository;
 using Model.Director;
+using Model.PatientSecretary;
 using Model.Users;
 using Service;
 using System;
@@ -12,8 +13,7 @@ namespace Repository
 {
    public class BusinessDayRepository : IBusinessDayRepository
    {
-        public IDoctorRepository _doctorRepository;
-
+        public IDoctorRepository _doctorRepository { get; set; }
         private readonly IRoomRepository _roomRepository;
         private readonly MyDbContext myDbContext;
 
