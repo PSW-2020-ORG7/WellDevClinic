@@ -1,29 +1,4 @@
 ﻿$(document).ready(function () {
-<<<<<<< HEAD
-    $("#testDugme").click(function () {
-        $.ajax({
-            method: "GET",
-            url: "../api/medication",
-            contentType: "application/json",
-            //datatype: "application/json",
-            success: function (data) {          
-                alert(data[0].id);
-            },
-        });
-    })
-
-    $("#testDugmeRecepti").click(function () {
-        $.ajax({
-            method: "GET",
-            url: "../api/prescription",
-            contentType: "application/json",
-            //dataType: "application/json",
-            success: function (data) {
-                alert(data[0].id);
-            },
-        });
-    })
-
     $("#testDugmeSlanje").click(function () {
         $.post({
             url: "../api/sftp/sendReport",
@@ -38,11 +13,6 @@
                 alert("Nije usao")
             }
         });
-    })
-
-    
-=======
->>>>>>> dda16d98e4c284df4516241573714402f92d60ec
-    
+    }) 
 });
 
