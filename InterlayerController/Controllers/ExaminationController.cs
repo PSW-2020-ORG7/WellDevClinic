@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.PatientSecretary;
 using Model.Users;
 using WellDevCore.Model.Dto;
+using WellDevCore.Model.dtos;
 
 namespace InterlayerController.Controllers
 {
@@ -36,7 +37,6 @@ namespace InterlayerController.Controllers
             }
             return Ok(resultDto);
         }
-
       
         /// <summary>
         /// calls SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, User user)
@@ -125,15 +125,20 @@ namespace InterlayerController.Controllers
         {
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
 
-            List<Examination> result = _examinationController.SearchPreviousExaminations(documentsDTO2.Date, documentsDTO2.Doctor, documentsDTO2.Drug, documentsDTO2.Specialist, documentsDTO2.Radio1, documentsDTO2.Radio2);
+            List<Examination> result = _examinationController.SearchPreviousExaminations(documentsDTO2.Date, documentsDTO2.Date2, documentsDTO2.Doctor, documentsDTO2.Drug, documentsDTO2.Specialist, documentsDTO2.Text, documentsDTO2.Radio1, documentsDTO2.Radio2, documentsDTO2.Radio3);
             foreach (Examination examination in result)
             {
                 resultDto.Add(ExaminationAdapter.ExaminationToExaminationDto(examination));
-
             }
             return Ok(resultDto);
         }
 
-
+        [HttpPost]
+        [Route("newExamination")]
+        public Examination NewExamination([FromBody] ExaminationIdsDTO examination) 
+        {
+            Examination retVal = _examinationController.NewExamination(examination.DoctorId, examination.Period);
+            return retVal;
+        }
     }
 }

@@ -42,7 +42,7 @@ function viewActionsAndBenefits(data) {
 		content += ISOtoShort(new Date(act.endDate));
 		content += '</td></tr>';
 		content += '</table>';
-		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter1" ';
+		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
 		content += ' onclick="deleteAction(' + act.id + ')"> Discard </button > ';
 		content += '<button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"';
 		content += ' onclick="useAction(' + act.id + ')"> Use it now </button > ';

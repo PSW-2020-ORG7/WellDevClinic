@@ -1,8 +1,6 @@
 ﻿using PSW_Wpf_app.Client;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace PSW_Wpf_app.ViewModel
 {

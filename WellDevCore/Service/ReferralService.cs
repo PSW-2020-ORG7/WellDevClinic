@@ -43,8 +43,20 @@ namespace Service
 
         public Boolean CheckSpecialist(String specialistName, Referral referral)
         {
-            String specialist = referral.Doctor.FullName;
+            if (specialistName == "")
+                return false;
+            String specialist = referral.Doctor.Specialty.Name;
             return specialist.ToLower().Contains(specialistName.ToLower());
+        }
+
+        public Boolean CheckText(String text, Referral referral)
+        {
+            if (text == "")
+            {
+                return false;
+            }
+            String ref_text = referral.Text.ToLower();
+            return ref_text.Contains(text.ToLower());
         }
     }
 }

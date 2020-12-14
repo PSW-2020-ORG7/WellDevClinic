@@ -28,7 +28,7 @@
             <Button Content="HOME" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,16,0,0" VerticalAlignment="Top" Width="73" Click="Button_Click_HOME">
 
             </Button>
-            <Button Content="Map Info" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="109,16,0,0" VerticalAlignment="Top" Width="99" Click="OnMoreInfoClick" IsEnabled="True"/>
+            <Button Content="Map Info" Name="Map_Info" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="109,16,0,0" VerticalAlignment="Top" Width="99" Click="OnMoreInfoClick" IsEnabled="True"/>
 
         </Grid>
     </Grid>

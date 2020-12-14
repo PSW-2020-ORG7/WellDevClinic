@@ -31,7 +31,7 @@ namespace PSW_Pharmacy_Adapter.Model
             Status = status;
         }
 
-        public ActionAndBenefit(ActionAndBenefitDto actionDto, ActionStatus status)
+        public ActionAndBenefit(ActionAndBenefitDtoConverted actionDto, ActionStatus status)
         {
             Id = actionDto.Id;
             PharmacyName = actionDto.PharmacyName;
