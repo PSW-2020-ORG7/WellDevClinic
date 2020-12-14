@@ -34,14 +34,20 @@ namespace PSW_Pharmacy_Adapter.Service
                            .Content.ReadAsStringAsync().Result);
         }
 
-        public bool SyncMedicationIngredients(List<Medication> hospMeds, List<Medication> phMeds)
+        public List<Medication> GetUnsyncedMedicines(string pharmacyName)
+            => CheckIngredientsMatching(GetAllMedication().Result, GetPharmacyMedications(pharmacyName).Result);
+
+        public List<Medication> CheckIngredientsMatching(List<Medication> hospMeds, List<Medication> phMeds)
         {
-            foreach(Medication phMed in phMeds)
+            List<Medication> changedMeds = new List<Medication>();
+            foreach (Medication phMed in phMeds)
             {
                 if (!CompareMedications(hospMeds.Find(x => x.Id == phMed.Id), phMed))
-                    return false;
+                    changedMeds.Add(phMed);
             }
-            return true;
+            if (changedMeds.Count == 0)
+                return null;
+            return changedMeds;
         }
 
         private bool CompareMedications(Medication hospM, Medication phM)

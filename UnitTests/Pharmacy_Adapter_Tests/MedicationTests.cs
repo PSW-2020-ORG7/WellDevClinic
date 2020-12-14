@@ -20,9 +20,9 @@ namespace UnitTests.Pharmacy_Adapter_Tests
             var keyRepo = new Mock<IApiKeyRepository>();
             MedicationService service = new MedicationService(client.Object, keyRepo.Object);
 
-            bool equal = service.SyncMedicationIngredients(CreateMedicationList(), CreateMedicationList());
+            List<Medication> allGood = service.CheckIngredientsMatching(CreateMedicationList(), CreateMedicationList());
 
-            equal.ShouldBeTrue();
+            allGood.ShouldBeNull();
         }
 
         [Fact]
@@ -32,9 +32,9 @@ namespace UnitTests.Pharmacy_Adapter_Tests
             var keyRepo = new Mock<IApiKeyRepository>();
             MedicationService service = new MedicationService(client.Object, keyRepo.Object);
 
-            bool notEqual = service.SyncMedicationIngredients(CreateMedicationList(), CreateAnotherMedicationList());
+            List<Medication> notEqual = service.CheckIngredientsMatching(CreateMedicationList(), CreateAnotherMedicationList());
 
-            notEqual.ShouldBeFalse();
+            notEqual.ShouldNotBeNull();
         }
 
         public List<Medication> CreateMedicationList()
