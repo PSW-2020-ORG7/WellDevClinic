@@ -55,7 +55,6 @@ function sendToPharmacies(data) {
 	$.post({
 		url: "../api/sftp/sendReport",
 		contentType: "aplication/json",
-		dataType: "aplication/json",
 		data: JSON.stringify({ patientName: patientName1, jmbg: jmbg1, startTime: startTime1, endTime: endTime1, medicines: medicines1 }),
 		success: function (data) {
 			//location.href = "../index.html";
