@@ -1,4 +1,5 @@
 ﻿using Model.Doctor;
+using Model.PatientSecretary;
 using Model.Users;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,11 @@ namespace bolnica.Controller.decorators
             if (AuthorizedUsers["GetAll"].SingleOrDefault(any => any.Equals(Role)) != null)
                 return DoctorController.GetAll();
             return null;
+        }
+
+        public List<Period> GetAvailablePeriodsByDoctor(DateTime date, long id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Doctor> GetDoctorsBySpeciality(Speciality specialty)

@@ -17,10 +17,14 @@
             <tr>
                 <td><label for="date">Date:</label></td>
                 <td><input type="date" name="date"></td>
+            </tr>
+            <tr>
+                <td><label for="date">To Date:</label></td>
+                <td><input type="date" name="date2"></td>
                 <td>
-                    <fieldset id="group1">
-                        <input type="radio" value="and" name="group1">and</input>
-                        <input type="radio" value="or" name="group1">or</input>
+                    <fieldset id="group4">
+                        <input type="radio" value="and" name="group4">and</input>
+                        <input type="radio" value="or" name="group4" checked="checked">or</input>
                     </fieldset>
                 </td>
             </tr>
@@ -28,9 +32,9 @@
                 <td><label for="doctor">Doctor:</label></td>
                 <td><input type="text" name="doctor"></td>
                 <td>
-                    <fieldset id="group2">
-                        <input type="radio" value="and" name="group2">and</input>
-                        <input type="radio" value="or" name="group2">or</input>
+                    <fieldset id="group1">
+                        <input type="radio" value="and" name="group1">and</input>
+                        <input type="radio" value="or" name="group1" checked="checked">or</input>
                     </fieldset>
                 </td>
             </tr>
@@ -39,7 +43,7 @@
                 <td>
                     <select name="type">
                         <option value="none"></option>
-                        <option value="Refferal">Refferal</option>
+                        <option value="Referral">Referral</option>
                         <option value="Prescription">Prescription</option>
                     </select>
                 </td>
@@ -48,9 +52,19 @@
                 <td><label for="specialist">Specialty doctor:</label></td>
                 <td><input type="text" name="specialist"></td>
                 <td>
+                    <fieldset id="group2">
+                        <input type="radio" value="and" name="group2">and</input>
+                        <input type="radio" value="or" name="group2" checked="checked">or</input>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr id="Referral2" style="display: none;">
+                <td><label for="text">Text:</label></td>
+                <td><input type="text" name="text"></td>
+                <td>
                     <fieldset id="group3">
                         <input type="radio" value="and" name="group3">and</input>
-                        <input type="radio" value="or" name="group3">or</input>
+                        <input type="radio" value="or" name="group3" checked="checked">or</input>
                     </fieldset>
                 </td>
             </tr>
@@ -58,9 +72,9 @@
                 <td><label for="drug">Drug:</label></td>
                 <td><input type="text" name="drug"></td>
                 <td>
-                    <fieldset id="group4">
-                        <input type="radio" value="and" name="group4">and</input>
-                        <input type="radio" value="or" name="group4">or</input>
+                    <fieldset id="group5">
+                        <input type="radio" value="and" name="group5">and</input>
+                        <input type="radio" value="or" name="group5" checked="checked">or</input>
                     </fieldset>
                 </td>
             </tr>
@@ -91,6 +105,7 @@
                 <th scope="col">Doctor</th>
                 <th scope="col">Date</th>
                 <th scope="col">Specialist</th>
+                <th scope="col">Text</th>
             </tr>
         </thead>
         <tbody>

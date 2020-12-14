@@ -4,6 +4,7 @@ using Model.Users;
 using bolnica.Service;
 using System.Collections.Generic;
 using Model.Doctor;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.PatientSecretary
 {
@@ -20,6 +21,7 @@ namespace Model.PatientSecretary
         public virtual Referral Refferal { get; set; }
         public Boolean Canceled { get; set; }
         public DateTime CanceledDate { get; set; }
+        [NotMapped] 
         public Boolean FilledSurvey { get; set; }
 
         public Examination(long id, Patient user, Users.Doctor doctor, Period period, Diagnosis diagnosis) : this(id)
@@ -30,11 +32,15 @@ namespace Model.PatientSecretary
             Diagnosis = diagnosis;
         }
 
-
-
         public Examination(long id,  Users.Doctor doctor, Period period)
         {
             Id = id;
+            Doctor = doctor;
+            Period = period;
+        }
+
+        public Examination( Users.Doctor doctor, Period period)
+        {
             Doctor = doctor;
             Period = period;
         }

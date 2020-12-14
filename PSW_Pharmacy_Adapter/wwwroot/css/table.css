@@ -34,20 +34,3 @@ th {
     padding: 10px 25px;
     margin-top: 20px;
 }
-
-.buttonDelete {
-    border: 0px solid #3498db;
-    background: #d60b0b;
-    color: white;
-    padding: 5px 20px;
-    font-size: 30px;
-    cursor: pointer;
-    margin: 10px;
-}
-
-    .buttonDelete:hover {
-        font-weight: bold;
-        border: 3px solid #d60b0b;
-        margin: 7px;
-        transition: ease 0.3s;
-    }

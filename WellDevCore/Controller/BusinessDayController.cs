@@ -81,5 +81,10 @@ namespace Controller
         {
             return _businessDayService.ChangeDoctorShift(newShift);
         }
+
+        public List<Period> GetAvailablePeriodsByDoctor(DateTime date, long id)
+        {
+            return _businessDayService.GetAvailablePeriodsByDoctor(date, id);
+        }
     }
 }

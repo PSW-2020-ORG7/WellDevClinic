@@ -12,8 +12,8 @@ namespace Model.Users
     {
       public virtual Period Shift { get; set; }
 
-        public long Id { get; set; }
-        public virtual List<Period> ScheduledPeriods { get; set; }
+      public long Id { get; set; }
+      public virtual List<Period> ScheduledPeriods { get; set; }
       public virtual Doctor doctor { get; set; }
       public virtual Room room { get; set; }
 
