@@ -1,6 +1,10 @@
-﻿using Renci.SshNet;
+﻿using PSW_Pharmacy_Adapter.Dto;
+using Renci.SshNet;
 using System;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 namespace PSW_Pharmacy_Adapter.Service
 {
@@ -14,19 +18,24 @@ namespace PSW_Pharmacy_Adapter.Service
             _sftpClient = sftpClient;
         }
 
-        public bool UploadFileToSftpServer(String sourceFile)
+        public bool UploadFileToSftpServer(String path)
         {
-            
+            using (System.IO.StreamWriter file =
+            new System.IO.StreamWriter(path, false))
+            {
+                file.WriteLine("test123");
+            }
             _sftpClient.Connect();
             try
             {
-                using (Stream stream = File.OpenRead(sourceFile))
+                using (Stream stream = File.OpenRead(path))
                 {
-                    _sftpClient.UploadFile(stream, Path.GetFileName(sourceFile));
+                    _sftpClient.UploadFile(stream, Path.GetFileName(path));
                 }
             }
-            catch
+            catch(Exception e)
             {
+                Console.Write(e);
                 return false;
             }
             _sftpClient.Disconnect();

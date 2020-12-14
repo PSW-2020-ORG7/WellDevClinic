@@ -19,7 +19,6 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
 
             SftpService service = new SftpService(new SftpClient("192.168.0.16", 22, "user", "password"));
-
             bool Successfull = service.UploadFileToSftpServer(EXISTING_PATH);
 
             Successfull.ShouldBeTrue();
