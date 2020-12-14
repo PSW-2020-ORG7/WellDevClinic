@@ -23,7 +23,9 @@ function viewApis(apiDb) {
         content += api.url;
         content += '</td><td>';
         content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deletePharmacyModal"';
-        content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button > ';
+        content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button></td> ';
+        content += '<td><button class="btn btn-primary"';
+        content += ' onclick="getMedicines(\'' + api.nameOfPharmacy + '\')"> Medication stock</button> ';
         content += '</td></tr>'
         $("#apiTable").append(content);
     }
@@ -45,4 +47,20 @@ function deleteEntry(id) {
             },
         });
     })
+}
+
+function getMedicines(id) {
+    $.ajax({
+        method: "GET",
+        url: "../api/medication/check/" + id,
+        contentType: "application/json",
+        success: function (changes) {
+            if (changes) {
+                for (let med in changes)
+                    alert("Changes detected for:" + med.id + " !!!");
+            } else {
+                alert("All good. No differences in medication structure");
+            }
+        },
+    });
 }

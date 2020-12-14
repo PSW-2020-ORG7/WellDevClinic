@@ -7,5 +7,7 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
     public interface IMedicationService
     {
         public Task<List<Medication>> GetAllMedication();
+
+        public List<Medication> GetUnsyncedMedicines(string pharmacyName);
     }
 }

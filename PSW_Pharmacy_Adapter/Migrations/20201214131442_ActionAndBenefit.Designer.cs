@@ -9,8 +9,8 @@ using PSW_Pharmacy_Adapter.Model;
 namespace PSW_Pharmacy_Adapter.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201203005333_AlterActionsAndBenefits")]
-    partial class AlterActionsAndBenefits
+    [Migration("20201214131442_ActionAndBenefit")]
+    partial class ActionAndBenefit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,9 @@ namespace PSW_Pharmacy_Adapter.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
