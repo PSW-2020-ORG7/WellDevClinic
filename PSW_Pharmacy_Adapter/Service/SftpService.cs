@@ -20,11 +20,14 @@ namespace PSW_Pharmacy_Adapter.Service
 
         public bool UploadFileToSftpServer(string path)
         {
-            using (System.IO.StreamWriter file =
-            new System.IO.StreamWriter(path, false))
+            if (File.Exists(path))
             {
-                file.WriteLine("Marko Markovic"+ "\n" + "5472012479531" +"\n"+ DateTime.Now.ToShortDateString() +"\n"+ "Brufen" +"\n" + "3");
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(path, false))
+                {
+                    file.WriteLine("Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Now.ToShortDateString() + "\n" + "Brufen" + "\n" + "3");
+                }
             }
+                
             _sftpClient.Connect();
             try
             {
