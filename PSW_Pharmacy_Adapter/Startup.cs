@@ -92,12 +92,12 @@ namespace PSW_Pharmacy_Adapter
 
         private string CreateConnectionStringFromEnvironment()
         {
-            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            string host = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
             string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
             string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "adaptersdb";
             string username = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
             string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
-            return $"server={server};port={port};database={database};username={username};password={password}";
+            return $"server={host};port={port};database={database};username={username};password={password}";
         }
     }
 }

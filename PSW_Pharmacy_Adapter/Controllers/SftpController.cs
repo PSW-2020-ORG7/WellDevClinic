@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using PSW_Pharmacy_Adapter.Dto;
 using PSW_Pharmacy_Adapter.Service;
 using Renci.SshNet;
 
