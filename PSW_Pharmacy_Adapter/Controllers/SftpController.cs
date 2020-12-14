@@ -19,8 +19,8 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("sendReport")]
         public bool UploadFileToSftpServer(String path)
         {
-            path = @"wwwroot/primer.txt";
-            return _sftpService.UploadFileToSftpServer( path);
+            path = @"wwwroot/example.txt";
+            return _sftpService.UploadFileToSftpServer(path);
         }
 
     }
