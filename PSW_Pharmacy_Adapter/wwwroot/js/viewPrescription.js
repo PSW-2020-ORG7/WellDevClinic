@@ -49,13 +49,14 @@ function sendToPharmacies(data) {
 	var jmbg1 = 123456789;
 	var startTime1 = data.startDate;
 	var endTime1 = data.endDate;
-	var medicines1 = {};
+	var medicines1 = [];
 	//var medicines = { data.medicines.name: "Fiat", model: "500", color: "white" };
 	//["Brufen", "Bromazepam", "Andol"];
 	$.post({
 		url: "../api/sftp/sendReport",
 		contentType: "aplication/json",
-		data: JSON.stringify({ patientName: patientName1, jmbg: jmbg1, startDate: startTime1, endDate: endTime1, medicines: medicines1 }),
+		dataType: "aplication/json",
+		data: JSON.stringify({ patientName: patientName1, jmbg: jmbg1, startTime: startTime1, endTime: endTime1, medicines: medicines1 }),
 		success: function (data) {
 			//location.href = "../index.html";
 			$("#sentAction").show();
