@@ -2,7 +2,6 @@
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
