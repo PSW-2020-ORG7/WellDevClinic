@@ -1,29 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
-using QRCoder;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using QRCoder;
 
-namespace PSW_Pharmacy_Adapter.Controllers
+namespace PSW_Pharmacy_Adapter.Service
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class QrCodeController : Controller
+    public class QrCodeService
     {
-        private readonly IQrCodeService _qrCodeService;
-
-        public QrCodeController(IQrCodeService qrCodeService) 
-        {
-            _qrCodeService = qrCodeService;
-        }
-
-        [HttpGet]
-        public IActionResult Generate()
+        public void Generate()
         {
             string input = "Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Today.ToShortDateString() + "\n" + "brufen" + "\n" + "3";
             using (MemoryStream memoryStream = new MemoryStream())
@@ -34,10 +22,9 @@ namespace PSW_Pharmacy_Adapter.Controllers
                 using (Bitmap bitmap = qrCode.GetGraphic(5))
                 {
                     bitmap.Save(memoryStream, ImageFormat.Png);
-                    ViewBag.QRCode = "data:image/png;base64," + Convert.ToBase64String(memoryStream.ToArray());
+ //                   ViewBag.QRCode = "data:image/png;base64," + Convert.ToBase64String(memoryStream.ToArray());
                 }
             }
-            return View();
         }
     }
 }

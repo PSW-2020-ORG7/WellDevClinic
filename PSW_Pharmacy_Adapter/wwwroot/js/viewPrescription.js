@@ -9,6 +9,17 @@
 			getAllPrescriptions(data);
 		},
 	});
+
+	$.ajax({
+		method: "GET",
+		url: "../api/qrcode",
+		contentType: "application/json",
+		success: function (data) {
+			console.log(data);
+			$(".loader").css("display", "none");
+			getAllPrescriptions(data);
+		},
+	});
 });
 
 function getAllPrescriptions(data) {
@@ -38,6 +49,7 @@ function getAllPrescriptions(data) {
 		content += 'Send to pharmacies</button > ';
 		content += '</td></tr>';
 		content += '</table>';
+		content += '<img id="qrcode" src="images/qrcode.png"/>';
 		content += '</div></div></div>';
 		content += '</div>';
 		$("#viewPrescription").append(content);
