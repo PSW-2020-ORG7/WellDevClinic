@@ -15,10 +15,10 @@ namespace PSW_Pharmacy_Adapter.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Api>().HasData(
-                new Api("PH1", "4545-as84-8s8g-zXCV", "localhost:4200/Ph1"),
-                new Api("PH2", "7788-AV5R-zxQt-5845", "localhost:4200/Ph2"),
-                new Api("PH3", "9745-At7S-Aqtr-5q8t", "localhost:4200/Ph3"),
-                new Api("PH4", "HgT8-n47E-bE41-2gt5", "localhost:4200/Ph4")
+                new Api("PH1", "4545-as84-8s8g-zXCV", "http://localhost:4200/Ph1"),
+                new Api("PH2", "7788-AV5R-zxQt-5845", "http://localhost:4200/Ph2"),
+                new Api("PH3", "9745-At7S-Aqtr-5q8t", "http://localhost:4200/Ph3"),
+                new Api("PH4", "HgT8-n47E-bE41-2gt5", "http://localhost:4200/Ph4")
                 );
 
             modelBuilder.Entity<ActionAndBenefit>().HasData(

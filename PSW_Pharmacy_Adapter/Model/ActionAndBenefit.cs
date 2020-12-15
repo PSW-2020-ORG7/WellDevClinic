@@ -1,11 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using PSW_Pharmacy_Adapter.Dto;
+﻿using PSW_Pharmacy_Adapter.Dto;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Model
 {
@@ -31,7 +26,7 @@ namespace PSW_Pharmacy_Adapter.Model
             Status = status;
         }
 
-        public ActionAndBenefit(ActionAndBenefitDto actionDto, ActionStatus status)
+        public ActionAndBenefit(ActionAndBenefitDtoConverted actionDto, ActionStatus status)
         {
             Id = actionDto.Id;
             PharmacyName = actionDto.PharmacyName;

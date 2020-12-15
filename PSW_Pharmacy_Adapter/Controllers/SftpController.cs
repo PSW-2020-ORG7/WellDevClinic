@@ -13,12 +13,15 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         public SftpController() 
         {
-            _sftpService = new SftpService(new SftpClient("192.168.0.16", 22, "user", "password"));
+            _sftpService = new SftpService(new SftpClient("192.168.1.12", 22, "tester", "password"));
         }
 
         [Route("sendReport")]
         public bool UploadFileToSftpServer(String path)
-            => _sftpService.UploadFileToSftpServer(path);
+        {
+            path = @"wwwroot/example.txt";
+            return _sftpService.UploadFileToSftpServer(path);
+        }
 
     }
 }

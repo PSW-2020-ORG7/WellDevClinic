@@ -42,7 +42,7 @@ function viewActionsAndBenefits(data) {
 		content += ISOtoShort(new Date(act.endDate));
 		content += '</td></tr>';
 		content += '</table>';
-		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter1" ';
+		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
 		content += ' onclick="deleteAction(' + act.id + ')"> Discard </button > ';
 		content += '<button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"';
 		content += ' onclick="useAction(' + act.id + ')"> Use it now </button > ';
@@ -86,9 +86,9 @@ function sortCards(sort, order) {
 			actions[minIdx] = temp;
 		}
 	} else if (order == "desc") {
-		for (i = 0; i < (actions.length - 1); i++) {
+		for (let i = 0; i < (actions.length - 1); i++) {
 			let maxIdx = i;
-			for (j = i + 1; j < actions.length; j++) {
+			for (let j = i + 1; j < actions.length; j++) {
 				if (sort == "phName") {
 					if (actions[maxIdx].pharmacyName.toLowerCase() < actions[j].pharmacyName.toLowerCase())
 						maxIdx = j;
@@ -131,7 +131,7 @@ function deleteAction(id) {
 
 function toggleFav(id) {
 	let newStatus;
-	for (act of actions)
+	for (let act of actions)
 		if (act.id == id) {
 			if (act.status != 2)
 				newStatus = 2;

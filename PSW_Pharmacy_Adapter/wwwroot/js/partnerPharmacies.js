@@ -22,22 +22,44 @@ function viewApis(apiDb) {
         content += '</td><td>';
         content += api.url;
         content += '</td><td>';
-        content += '<button class="buttonDelete" ';
-        content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button > ';
+        content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deletePharmacyModal"';
+        content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button></td> ';
+        content += '<td><button class="btn btn-primary"';
+        content += ' onclick="getMedicines(\'' + api.nameOfPharmacy + '\')"> Medication stock</button> ';
         content += '</td></tr>'
         $("#apiTable").append(content);
     }
 }
 
 function deleteEntry(id) {
+    $("#nameToDelete").html(id);
+    $("#deletePharmacy").show();
+    $("button#btnYes").click(function () {
+        $.ajax({
+            method: "DELETE",
+            url: "../api/apikey/delete/" + id,
+            contentType: "application/json",
+            success: function (data) {
+                if (data) {
+                    alert("Successfully deleted");
+                    window.location.reload();
+                }
+            },
+        });
+    })
+}
+
+function getMedicines(id) {
     $.ajax({
-        method: "DELETE",
-        url: "../api/apikey/delete/" + id,
+        method: "GET",
+        url: "../api/medication/check/" + id,
         contentType: "application/json",
-        success: function (data) {
-            if (data) {
-                alert("Successfully deleted");
-                window.location.reload();
+        success: function (changes) {
+            if (changes) {
+                for (let med in changes)
+                    alert("Changes detected for:" + med.id + " !!!");
+            } else {
+                alert("All good. No differences in medication structure");
             }
         },
     });

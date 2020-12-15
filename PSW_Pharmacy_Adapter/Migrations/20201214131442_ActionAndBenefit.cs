@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PSW_Pharmacy_Adapter.Migrations
 {
-    public partial class ActionsAndBenefits : Migration
+    public partial class ActionAndBenefit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +16,9 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     PharmacyName = table.Column<string>(nullable: true),
                     MessageAboutAction = table.Column<string>(nullable: true),
-                    StartDate = table.Column<long>(nullable: false),
-                    EndDate = table.Column<long>(nullable: false)
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

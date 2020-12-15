@@ -1,3 +1,4 @@
+
 ﻿using bolnica.Controller;
 
 using bolnica.Service;
@@ -28,6 +29,18 @@ namespace InterlayerController.Controllers
         {
             _doctorController = doctorController;
             _businessDayController = businessDayController;
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<DoctorDTO> resultDTO = new List<DoctorDTO>();
+            List<Doctor> result = (List<Doctor>)_doctorController.GetAll();
+            foreach (Doctor doctor in result)
+            {
+                resultDTO.Add(DoctorAdapter.DoctorToDoctorDTO(doctor));
+            }
+            return Ok(resultDTO);
         }
 
         [HttpGet]

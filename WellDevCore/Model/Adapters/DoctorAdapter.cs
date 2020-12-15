@@ -1,4 +1,4 @@
-﻿using Model.PatientSecretary;
+using Model.PatientSecretary;
 using Model.Users;
 using System;
 using System.Collections.Generic;
@@ -17,30 +17,14 @@ namespace WellDevCore.Model.Adapters
             doctorDTO.Surname = doctor.LastName;
             doctorDTO.Speciality = doctor.Specialty.Name;
             List<BusinessDayDTO> businessDayDTOs = new List<BusinessDayDTO>();
-
-            /*foreach (BusinessDay businessDay in doctor.BusinessDay)
-            {
-                BusinessDayDTO businessDayDTO = new BusinessDayDTO();
-                businessDayDTO.Room = businessDay.room;
-                businessDayDTO.Shift = businessDay.Shift;
-                List<Period> list = new List<Period>();
-                if(businessDay.ScheduledPeriods.Count > 0)
-                {
-                    foreach(Period p in businessDay.ScheduledPeriods)
-                    {
-                        list.Add(p);
-                    }   
-                }
-                businessDayDTO.ScheduledPeriods = list;
-                businessDayDTOs.Add(businessDayDTO);
-            }*/
-
-            //doctorDTO.BusinessDayDTO = businessDayDTOs;
-
-
-
             return doctorDTO;
 
+        }
+
+        public static DoctorDTO DoctorToDoctorDTO2(Doctor doctor){
+            //DoctorDTO dto = new DoctorDTO(doctor.Id, doctor.FullName);
+            DoctorDTO dto = new DoctorDTO();
+            return dto;
         }
     }
 }

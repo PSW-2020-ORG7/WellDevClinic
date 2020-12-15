@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Dto
 {
-    public class ActionAndBenefitDto
+    public class ActionAndBenefitDtoConverted
     {
         public long? Id { get; set; }
         public string PharmacyName { get; set; }
@@ -13,14 +10,14 @@ namespace PSW_Pharmacy_Adapter.Dto
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public ActionAndBenefitDto() { }
+        public ActionAndBenefitDtoConverted() { }
 
 
-        public ActionAndBenefitDto(long id, string pharmacyName, string messageAbouAction, DateTime startDate, DateTime endDate)
+        public ActionAndBenefitDtoConverted(long? id, string pharmacyName, string messageAboutAction, DateTime startDate, DateTime endDate)
         {
             Id = id;
             PharmacyName = pharmacyName;
-            MessageAboutAction = messageAbouAction;
+            MessageAboutAction = messageAboutAction;
             StartDate = startDate;
             EndDate = endDate;
         }

@@ -9,8 +9,11 @@ using PSW_Pharmacy_Adapter.Service;
 using PSW_Pharmacy_Adapter.Repository;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
+using Grpc.Core;
+using PSW_Pharmacy_Adapter.Protos;
 using System;
 using System.Reflection;
+
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -42,8 +45,11 @@ namespace PSW_Pharmacy_Adapter
             services.AddHttpClient();
         }
 
+        private Server server;
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime, MyDbContext db)
         {
             if (env.IsDevelopment())
             {
@@ -61,16 +67,37 @@ namespace PSW_Pharmacy_Adapter
                 endpoints.MapControllers();
             });
             app.UseStaticFiles();
+
+
+            server = new Server
+            {
+                Services = { NetGrpcService.BindService(new NetGrpcServiceImpl()) },
+                Ports = { new ServerPort("localhost", 8989, ServerCredentials.Insecure) }
+            };
+            server.Start();
+
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
         }
+
+        private void OnShutdown()
+        {
+            if (server != null)
+            {
+                server.ShutdownAsync().Wait();
+            }
+
+        }
+
 
         private string CreateConnectionStringFromEnvironment()
         {
-            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            string host = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
             string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
             string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "adaptersdb";
-            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
+            string username = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
             string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
-            return $"server={server};port={port};database={database};user={user};password={password};";
+            return $"server={host};port={port};database={database};username={username};password={password}";
         }
     }
 }
