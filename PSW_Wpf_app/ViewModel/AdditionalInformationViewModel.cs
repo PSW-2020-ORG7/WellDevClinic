@@ -6,7 +6,7 @@ using PSW_Wpf_app.Model;
 
 namespace PSW_Wpf_app.ViewModel
 {
-    public class AdditionalInformationViewModel
+    public static class AdditionalInformationViewModel
     {
 
         public static void openInfo(object sender, MouseButtonEventArgs e)

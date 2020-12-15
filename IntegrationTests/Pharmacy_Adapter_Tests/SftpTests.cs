@@ -11,7 +11,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
 {
     public class SftpTests
     {
-        private const string EXISTING_PATH = @"../../../../PSW_Pharmacy_Adapter/wwwroot/index.html";
+        private const string EXISTING_PATH = @"../../../../PSW_Pharmacy_Adapter/wwwroot/test.html";
         private const string UNEXISTING_PATH = @"../../../PSW_Pharmacy_Adapter/wwwroot/unexisting.html";
 
         [Fact]
