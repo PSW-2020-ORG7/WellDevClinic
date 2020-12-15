@@ -46,8 +46,8 @@ namespace PSW_Wpf_app.ViewModel
             if (!File.Exists(path))
             {
                 Console.WriteLine("Error loading file!");
-                using (StreamWriter sw = File.CreateText(path))
-                { }
+                using StreamWriter sw = File.CreateText(path);
+                
             }
 
             using (StreamReader sr = File.OpenText(path))

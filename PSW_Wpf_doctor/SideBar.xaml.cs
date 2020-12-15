@@ -1,26 +1,18 @@
 ﻿using bolnica.Model.Dto;
-using Controller;
 using Microsoft.Win32;
-using MindFusion.Charting.Wpf;
-using Model.Director;
 using Model.Doctor;
 using Model.Dto;
 using Model.PatientSecretary;
 using Model.Users;
-using Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace PSW_Wpf_doctor
 {
@@ -227,7 +219,6 @@ namespace PSW_Wpf_doctor
                 user.Address = selectedAddress;
                 user.Address.Town = town;
                 user.Address.Town.State = state;
-                user.DoctorGrade = user.DoctorGrade;
                 app.UserController.Edit((Doctor)user);
 
                 string messageBoxText1 = "Uspesno ste promenili podatke!";
