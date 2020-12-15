@@ -181,36 +181,6 @@ namespace UnitTests
         }
 
         [Fact]
-        public void Search_examinatin_by_user()
-        {
-            var prescriptionRepository = new Mock<IPrescriptionRepository>();
-            var referralRepository = new Mock<IReferralRepository>();
-
-            PrescriptionService prescriptionService = new PrescriptionService(prescriptionRepository.Object);
-            ReferralService referralService = new ReferralService(referralRepository.Object);
-            ExaminationService examinationService = new ExaminationService(null, CreateStubRepositoryExamination(), null, prescriptionService, referralService, null, null);
-
-            List<Examination> returnedExaminations = examinationService.SearchPreviousExamination(DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd"), "Eva Evic", "aspirin", "hirurg", 1);
-
-            returnedExaminations.ShouldNotBeEmpty();
-        }
-
-        [Fact]
-        public void Search_examinatin_by_user_empty()
-        {
-            var prescriptionRepository = new Mock<IPrescriptionRepository>();
-            var referralRepository = new Mock<IReferralRepository>();
-     
-            PrescriptionService prescriptionService = new PrescriptionService(prescriptionRepository.Object);
-            ReferralService referralService = new ReferralService(referralRepository.Object);
-            ExaminationService examinationService = new ExaminationService(null, CreateStubRepositoryExamination(), null, prescriptionService, referralService, null, null);
-
-            List<Examination> returnedExaminations = examinationService.SearchPreviousExamination(DateTime.Today.AddDays(+1).ToString("yyyy-MM-dd"), "", "", "", 1);
-
-            returnedExaminations.ShouldBeEmpty();
-        }
-
-        [Fact]
         public void GetAllReferrals()
         {
             var referralStubRepository = new Mock<IReferralRepository>();

@@ -9,6 +9,5 @@ namespace bolnica.Service
 {
     public interface IPrescriptionService  : IService<Prescription,long>
     {
-        Boolean CheckDrug(String drugName, Prescription prescription);
     }
 }
