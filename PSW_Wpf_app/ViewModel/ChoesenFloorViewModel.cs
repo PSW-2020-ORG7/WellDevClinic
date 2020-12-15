@@ -13,8 +13,6 @@ namespace PSW_Wpf_app.ViewModel
     public class ChoesenFloorViewModel : BindableBase
     {
 
-
-
         List<FloorElement> floors = new List<FloorElement>();
 
         private string choosenBuilding;
@@ -22,7 +20,7 @@ namespace PSW_Wpf_app.ViewModel
         public string User
         {
             get { return user; }
-            set { }
+            set { user = value; }
 
         }
         public string ChoosenBuilding

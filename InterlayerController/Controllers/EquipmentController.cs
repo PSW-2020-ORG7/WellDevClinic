@@ -1,11 +1,7 @@
 ﻿using bolnica.Controller;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Director;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InterlayerController.Controllers
 {
