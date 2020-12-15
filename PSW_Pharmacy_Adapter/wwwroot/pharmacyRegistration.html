@@ -3,10 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <title>Pharmacy registration</title>
-    <link rel="icon" type="image/png" href="images/favicon.png" />
-    <link rel="stylesheet" href="css/pharmacyRegistration.css">
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/PharmacyRegistration.js"></script>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" href="css/pharmacyRegistration.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
     <div class="login-page">
@@ -18,13 +23,24 @@
                 <input type="text" placeholder="Api key" id="txtApi">
                 <label id="invalidUrl" class="valid">Required field!</label>
                 <input type="text" placeholder="Url" id="txtUrl">
-                <button id="btnAddPharmacy" type="button">Add pharmacy</button>
+                <button id="btnAddPharmacy" type="button" data-toggle="modal" data-target="#exampleModalCenter1">Add pharmacy</button>
                 <a href="http://localhost:4200" target="_blank">Visit partner pharmacy site</a>
             </form>
         </div>
     </div>
 
-   
+    <div id="regAction" style="display:none">
+        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="write"> </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </body>

@@ -33,7 +33,6 @@ function viewApis(apiDb) {
 
 function deleteEntry(id) {
     $("#nameToDelete").html(id);
-    $("#deletePharmacy").show();
     $("button#btnYes").click(function () {
         $.ajax({
             method: "DELETE",
@@ -41,8 +40,10 @@ function deleteEntry(id) {
             contentType: "application/json",
             success: function (data) {
                 if (data) {
-                    alert("Successfully deleted");
-                    window.location.reload();
+                    $("#deletePharmacy").show();
+                    $("#btnYes").click(function () {
+                        window.location.reload();
+                    });
                 }
             },
         });

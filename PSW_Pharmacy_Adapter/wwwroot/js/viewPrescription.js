@@ -49,7 +49,7 @@ function getAllPrescriptions(data) {
 		content += 'Send to pharmacies</button > ';
 		content += '</td></tr>';
 		content += '</table>';
-		content += '<img id="qrcode" src="images/qrcode.png"/>';
+		content += '<img id="qrcode" src="images/qrcode1.png"/>';
 		content += '</div></div></div>';
 		content += '</div>';
 		$("#viewPrescription").append(content);

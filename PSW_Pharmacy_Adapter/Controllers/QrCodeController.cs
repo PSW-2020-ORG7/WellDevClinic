@@ -23,9 +23,9 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [HttpGet]
-        public IActionResult Generate()
+        public IActionResult Generate(string input)
         {
-            string input = "Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Today.ToShortDateString() + "\n" + "brufen" + "\n" + "3";
+            //string input = "Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Today.ToShortDateString() + "\n" + "brufen" + "\n" + "3";
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
