@@ -1,14 +1,25 @@
-﻿body {
-    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('/images/hospitalBackground.jpg');
-    height: 100vh;
-    background-size: cover;
-    background-position: center center;
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 3% 3%;
+﻿.notifications {
+    border: 3px solid #4b4b4b;
+    background-color: #b6a9a9;
+    margin: 5px;
+    float: right;
+}
+    .notifications .notifyTitle {
+        background-color: #4b4b4b;
+        color: #c0c0c0;
+        width: 100%;
+        font-size: 20px;
+        text-align: center;
+    }
+
+div.card {
+    margin: 10px;
+    padding: 5px;
+    background: #f2f2f2;
+    width: 300px;
+    transition: width 0.5s;
 }
 
-*{
-    margin:0;
-    padding:0;
-}
+    div.card:hover {
+        cursor: pointer;
+    }

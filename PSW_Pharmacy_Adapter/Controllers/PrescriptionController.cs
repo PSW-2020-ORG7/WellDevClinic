@@ -16,10 +16,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> getHospitalsPrescriptionsStockAsync()
+        public async Task<IActionResult> GetHospitalsPrescriptionsStockAsync()
             => Ok(await _prescriptionService.GetAllPrescriptions());
 
-
+        [HttpGet]
+        [Route("{id?}")]
+        public async Task<IActionResult> GetPrescription(long id)
+            => Ok(await _prescriptionService.GetPrescription(id));
 
     }
 }

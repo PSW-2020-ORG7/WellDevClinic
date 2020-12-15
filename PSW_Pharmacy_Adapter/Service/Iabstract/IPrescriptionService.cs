@@ -7,5 +7,6 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
     public interface IPrescriptionService
     {
         public Task<List<Prescription>> GetAllPrescriptions();
+        public Task<Prescription> GetPrescription(long id);
     }
 }

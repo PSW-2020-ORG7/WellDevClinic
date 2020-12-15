@@ -41,7 +41,6 @@ function deleteEntry(id) {
             contentType: "application/json",
             success: function (data) {
                 if (data) {
-                    alert("Successfully deleted");
                     window.location.reload();
                 }
             },
