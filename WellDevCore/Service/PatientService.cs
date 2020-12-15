@@ -161,24 +161,6 @@ namespace bolnica.Service
             return patient;
         }
 
-        public List<DateTime> SortDates(List<DateTime> dates)
-        {
-            DateTime pom;
-            for(int i=0; i<dates.Count; i++)
-            {
-                for(int j = i+1; j<dates.Count; j++)
-                {
-                    if(DateTime.Compare(dates[i], dates[j])>0)
-                    {
-                        pom = dates[i];
-                        dates[i] = dates[j];
-                        dates[j] = pom;
-                    }
-                }
-            }
-            return dates;
-        }
-
         public List<Patient> GetPatientsForBlocking()
         {
             List<Patient> result = new List<Patient>();

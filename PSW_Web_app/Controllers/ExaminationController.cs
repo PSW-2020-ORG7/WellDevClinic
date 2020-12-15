@@ -92,27 +92,6 @@ namespace PSW_Web_app.Controllers
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
             return result;
         }
-       
-        [HttpPost]
-        public async Task<List<ExaminationDto>> SearchPreviousExamination([FromBody] DocumentsDTO documentsDTO)
-        {
-            var content = new StringContent(JsonConvert.SerializeObject(documentsDTO, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(communicationLink + "/api/examination", content);
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
-            return result;
-        }
-
-        [HttpPost]
-        [Route("search")]
-        public async Task<List<ExaminationDto>> SearchExamination([FromBody] DocumentsDTO2 documentsDTO2)
-        {
-            var content = new StringContent(JsonConvert.SerializeObject(documentsDTO2, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(communicationLink + "/api/examination/search", content);
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
-            return result;
-        }
 
         [HttpPost]
         [Route("newExamination")]

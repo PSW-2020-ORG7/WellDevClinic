@@ -18,8 +18,6 @@ namespace bolnica.Controller
         List<Examination> GetFinishedExaminationsByUser(User user);
         List<Examination> GetExaminationsByFilter(ExaminationDTO examinationDTO, Boolean upcomingOnly);
         List<Examination> GetAllPrevious();
-        List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, long id);
-        List<Examination> SearchPreviousExaminations(String date, String date2, String doctorName, String drugName, String speacialistName, String text, Boolean Radio1, Boolean Radio2, Boolean Radio3);
         Examination NewExamination(long DoctorId, String Period);
         void EditPrevious(Examination entity);
         Examination GetPrevious(long id);

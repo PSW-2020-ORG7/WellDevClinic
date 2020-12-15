@@ -1,11 +1,55 @@
 var examinations = [];
 var copyExaminations = [];
 
+function CheckDoctor(name, examination) {
+	let doctorName = examination.doctor.toLowerCase();
+	return doctorName.includes(name.toLowerCase());
+}
+
+function CheckDate(date, examination) {
+
+	return examination.date === date;
+}
+function CheckSpecialist(specialistName, examination) {
+	let specialist = examination.specialist.toLowerCase();
+	return specialist.includes(specialistName.toLowerCase());
+}
+function CheckDrug(drugName, examination) {
+	let check = false;
+	for (let drug of examination.drug) {
+		if (drug.toLowerCase().includes(drugName.toLowerCase())) {
+			check = true;
+		}
+	}
+	return check;
+}
+
+function SearchPreviousExamination(date, doctorName, drugName, specialistName) {
+	let result = [];
+	if (date != "") {
+		for (let examination of examinations) {
+
+			if (CheckDate(date, examination) && CheckDoctor(doctorName, examination) && CheckDrug(drugName, examination) && CheckSpecialist(specialistName, examination)) {
+				result.push(examination);
+			}
+		}
+	}
+	else {
+		for (let examination of examinations) {
+			if (CheckDoctor(doctorName, examination) && CheckDrug(drugName, examination) && CheckSpecialist(specialistName, examination)) {
+				result.push(examination);
+			}
+		}
+	}
+	return result;
+}
+
+
 function addPrescription(examination, i) {
 	tr = $('<tr id="tr"></tr>');
 	let row = $('<th scope="row">' + i + '</th>');
-	let doctor = $('<td>' + examination.doctor+'</td>');
-	let date = $('<td>' + examination.date+'</td>');
+	let doctor = $('<td>' + examination.doctor + '</td>');
+	let date = $('<td>' + examination.date + '</td>');
 	let drugList = $('<td>' + examination.drug + '</td>');
 	tr.append(row).append(doctor).append(date).append(drugList);
 	$('#tableP tbody').append(tr);
@@ -52,11 +96,11 @@ $(document).ready(function () {
 			deleteTable();
 			i = 1;
 			for (let examination of list) {
-				addPrescription(examination,i);
+				addPrescription(examination, i);
 				addReferral(examination, i);
 				examinations.push(examination);
 				i++;
-			}	
+			}
 		}
 	});
 
@@ -83,7 +127,8 @@ $(document).ready(function () {
 		hideAll();
 		document.forms["formParams"].reset();
 		deleteTable();
-		copyExaminations.pop();
+		copyExaminations = [];
+
 		i = 1;
 		for (let e of examinations) {
 			addPrescription(e, i);
@@ -101,26 +146,18 @@ $(document).ready(function () {
 		let specialist = $('input[name="specialist"]').val();
 		let drug = $('input[name="drug"]').val();
 		if (type == "none") {
-			copyExaminations.pop();
-			$.post({
-				url: window.location.protocol + "//" + window.location.host + '/api/examination',
-				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
-				contentType: 'application/json',
-				success: function (list) {
-					deleteTable();
-					i = 1;
-					for (let exam of list) {
-						addPrescription(exam, i);
-						addReferral(exam, i);
-						copyExaminations.push(exam);
-						i++;
-					}
-				},
-			});
+			copyExaminations = [];
+			deleteTable();
+			i = 1;
+			for (let exam of SearchPreviousExamination(date, doctor, drug, specialist)) {
+				addPrescription(exam, i);
+				addReferral(exam, i);
+				copyExaminations.push(exam);
+				i++;
+			}
 		}
 
 		if (type == "Referral") {
-
 			$('#tableP tbody').empty();
 
 			if (!copyExaminations.length) {
@@ -137,34 +174,23 @@ $(document).ready(function () {
 					i++;
 				}
 			}
-			$.post({
-				url: window.location.protocol + "//" + window.location.host + '/api/examination',
-				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
-				contentType: 'application/json',
-				success: function (list) {
-					$('#tableR tbody').empty();
-					i = 1;
-					for (let exam of list) {
-						addReferral(exam, i);
-						i++;
-					}
-				},
-			});
+
+			$('#tableR tbody').empty();
+			i = 1;
+			for (let exam of SearchPreviousExamination(date, doctor, drug, specialist)) {
+				addReferral(exam, i);
+				i++;
+			}
 		}
 		if (type == "Prescription") {
-			$.post({
-				url: window.location.protocol + "//" + window.location.host + '/api/examination',
-				data: JSON.stringify({ date: date, doctor: doctor, drug: drug, specialist: specialist, patientId: 1 }),
-				contentType: 'application/json',
-				success: function (list) {
-					$('#tableP tbody').empty();
-					i = 1;
-					for (let exam of list) {
-						addPrescription(exam, i);
-						i++;
-					}
-				},
-			});
+			$('#tableP tbody').empty();
+			i = 1;
+			for (let exam of SearchPreviousExamination(date, doctor, drug, specialist)) {
+				addPrescription(exam, i);
+				i++;
+			}
+
+
 			$('#tableR tbody').empty();
 			if (!copyExaminations.length) {
 				i = 1;
@@ -181,7 +207,7 @@ $(document).ready(function () {
 				}
 			}
 		}
-	
+
 	});
 
 });

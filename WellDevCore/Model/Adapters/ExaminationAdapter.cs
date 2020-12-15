@@ -19,8 +19,7 @@ namespace bolnica.Model.Adapters
             ExaminationDto dto = new ExaminationDto();
             dto.drug = new List<String>();
             dto.doctor = examination.Doctor.FullName;
-            dto.date = examination.Period.StartDate.Date.ToShortDateString();
-
+            dto.date = examination.Period.StartDate.Date.ToString("yyyy-MM-dd");
             foreach (Drug d in examination.Prescription.Drug) {
                 dto.drug.Add(d.Name);
             }

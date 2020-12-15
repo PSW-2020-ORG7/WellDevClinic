@@ -1,6 +1,142 @@
 ﻿var examinations = [];
 var copyExaminations = [];
 
+function CheckDoctor(name, examination) {
+	if (name == "") {
+		return false;
+	}
+	let doctorName = examination.doctor.toLowerCase();
+	return doctorName.includes(name.toLowerCase());
+}
+
+function CheckDateAdvanced(date, date2, examination) {
+	if (date == "" || date2 == "")
+		return false;
+	//console.log(date);
+	//console.log(date2);
+	console.log(examination.date);
+	var exam_date = new Date(examination.date);
+	console.log("exam datum u date formatu");
+	console.log(exam_date);
+	var date = new Date(date);
+	console.log("datum u date formatu");
+	console.log(date);
+	var date2 = new Date(date2);
+	console.log("datum2 u date formatu");
+	console.log(date2);
+	return exam_date >= date && exam_date <= date2;
+}
+function CheckSpecialist(specialistName, examination) {
+	if (specialistName == "")
+		return false;
+	let specialist = examination.specialist.toLowerCase();
+	return specialist.includes(specialistName.toLowerCase());
+}
+
+function CheckText( text,  examination)
+{
+	if (text == "") {
+		return false;
+	}
+	let ref_text = examination.textReferral.toLowerCase();
+	return ref_text.includes(text.toLowerCase());
+}
+
+function CheckDrug(drugName, examination) {
+	let check = false;
+	if (drugName == "")
+		return check;
+	for (let drug of examination.drug) {
+		if (drug.toLowerCase().includes(drugName.toLowerCase())) {
+			check = true;
+		}
+	}
+	return check;
+}
+
+function SearchPreviousExamination(date, doctorName, drugName, specialistName) {
+	let result = [];
+	if (date != "") {
+		for (let examination of examinations) {
+
+			if (CheckDate(date, examination) && CheckDoctor(doctorName, examination) && CheckDrug(drugName, examination) && CheckSpecialist(specialistName, examination)) {
+				result.push(examination);
+			}
+		}
+	}
+	else {
+		for (let examination of examinations) {
+			if (CheckDoctor(doctorName, examination) && CheckDrug(drugName, examination) && CheckSpecialist(specialistName, examination)) {
+				result.push(examination);
+			}
+		}
+	}
+	return result;
+}
+
+function SearchPreviousExaminations(date1, date2, doctorName, drugName, speacialistName, text, Radio1, Radio2, Radio3 = false)
+{
+	let result = [];
+	for(examination of examinations)
+	{
+		var date_log = CheckDateAdvanced(date1, date2, examination);
+		var doc_log = CheckDoctor(doctorName, examination);
+		var spec_log = CheckSpecialist(speacialistName, examination);
+		var text_log = CheckText(text, examination);
+		var drug_log = CheckDrug(drugName, examination);
+		var provera = true;
+
+		if (drugName != "") {
+			provera = drug_log;
+		}
+		else {
+			provera = spec_log;
+		}
+
+		if (Radio1 && Radio2 && Radio3) {
+			if (date_log && doc_log && provera && text_log) {
+				result.push(examination);
+			}
+		}
+		if (!Radio1 && Radio2 && Radio3) {
+			if ((date_log || doc_log) && provera && text_log) {
+				result.push(examination);
+			}
+		}
+		if (Radio1 && !Radio2 && Radio3) {
+			if ((date_log || provera) && doc_log && text_log) {
+				result.push(examination);
+			}
+		}
+		if (Radio1 && Radio2 && !Radio3) {
+			if ((date_log || text_log) && doc_log && provera) {
+				result.push(examination);
+			}
+		}
+		if (!Radio1 && !Radio2 && Radio3) {
+			if ((date_log || doc_log || provera) && text_log) {
+				result.push(examination);
+			}
+		}
+		if (!Radio1 && Radio2 && !Radio3) {
+			if ((date_log || doc_log || text_log) && provera) {
+				result.push(examination);
+			}
+		}
+		if (Radio1 && !Radio2 && !Radio3) {
+			if ((date_log || provera || text_log) && doc_log) {
+				result.push(examination);
+			}
+		}
+		if (!Radio1 && !Radio2 && !Radio3) {
+			if (date_log || doc_log || provera || text_log) {
+				result.push(examination);
+			}
+		}
+	}
+	return result;
+}
+
 function addPrescription(examination, i) {
 	tr = $('<tr id="tr"></tr>');
 	let row = $('<th scope="row">' + i + '</th>');
@@ -29,6 +165,7 @@ function deleteTable() {
 function validDate() {
 	var today = new Date().toISOString().split('T')[0];
 	document.getElementsByName("date")[0].setAttribute('max', today);
+	document.getElementsByName("date2")[0].setAttribute('max', today);
 }
 function showRow(id) {
 	var row = document.getElementById(id);
@@ -47,21 +184,20 @@ function hideAll() {
 }
 
 $(document).ready(function () {
-	validDate();
-		$.get({
-			url: window.location.protocol + "//" + window.location.host + '/api/examination/getAll',
-			contentType: 'application/json',
-			success: function (list) {
-				deleteTable();
-				i = 1;
-				for (let examination of list) {
-					addPrescription(examination, i);
-					addReferral(examination, i);
-					examinations.push(examination);
-					i++;
-				}
-			},
-		});
+	validDate()
+	$.get({
+		url: window.location.protocol + "//" + window.location.host + '/api/examination/getByUser/1',
+		success: function (list) {
+			deleteTable();
+			i = 1;
+			for (let examination of list) {
+				addPrescription(examination, i);
+				addReferral(examination, i);
+				examinations.push(examination);
+				i++;
+			}
+		}
+	});
 
 	$('select[name="type"]').change(function () {
 		var value = $(this).val();
@@ -90,14 +226,14 @@ $(document).ready(function () {
 		hideAll();
 		document.forms["formParams"].reset();
 		deleteTable();
-		copyExaminations.pop();
+		copyExaminations = [];
+
 		i = 1;
 		for (let e of examinations) {
 			addPrescription(e, i);
 			addReferral(e, i);
 			i++;
 		}
-
 	});
 
 	$('form#formParams').submit(function (event) {
@@ -141,26 +277,18 @@ $(document).ready(function () {
 		console.log(radio5);
 
 		if (type == "none") {
-			copyExaminations.pop();
-			$.post({
-				url: window.location.protocol + "//" + window.location.host + '/api/examination/search',
-				data: JSON.stringify({ date: date, date2: date2, doctor: doctor, drug: drug, specialist: specialist, text: text, Radio1: radio1, Radio2: false }),
-				contentType: 'application/json',
-				success: function (list) {
-					deleteTable();
-					i = 1;
-					for (let exam of list) {
-						addPrescription(exam, i);
-						addReferral(exam, i);
-						copyExaminations.push(exam);
-						i++;
-					}
-				},
-			});
+			copyExaminations = [];
+			deleteTable();
+			i = 1;
+			for (let exam of SearchPreviousExaminations(date, date2, doctor, drug, specialist, text, radio1, false)) {
+				addPrescription(exam, i);
+				addReferral(exam, i);
+				copyExaminations.push(exam);
+				i++;
+			}
 		}
 
 		if (type == "Referral") {
-
 			$('#tableP tbody').empty();
 
 			if (!copyExaminations.length) {
@@ -178,38 +306,23 @@ $(document).ready(function () {
 				}
 			}
 
-			$.post({
-				url: window.location.protocol + "//" + window.location.host + '/api/examination/search',
-				data: JSON.stringify({ date: date, date2: date2, doctor: doctor, drug: drug, specialist: specialist, text: text, Radio1: radio1, Radio2: radio2, Radio3: radio3}),
-				contentType: 'application/json',
-				success: function (list) {
-					$('#tableR tbody').empty();
-					i = 1;
-					for (let exam of list) {
-						addReferral(exam, i);
-						i++;
-					}
-				},
-			});
+			$('#tableR tbody').empty();
+			i = 1;
+			for (let exam of SearchPreviousExaminations(date, date2, doctor, drug, specialist, text, radio1, radio2, radio3)) {
+				addReferral(exam, i);
+				i++;
+			}
 		}
-
 		if (type == "Prescription") {
-			$.post({
-				url: window.location.protocol + "//" + window.location.host + '/api/examination/search',
-				data: JSON.stringify({ date: date, date2: date2, doctor: doctor, drug: drug, specialist: specialist, text: text, Radio1: radio1, Radio2: radio5}),
-				contentType: 'application/json',
-				success: function (list) {
-					$('#tableP tbody').empty();
-					i = 1;
-					for (let exam of list) {
-						addPrescription(exam, i);
-						i++;
-					}
-				},
-			});
+			$('#tableP tbody').empty();
+			i = 1;
+			for (let exam of SearchPreviousExaminations(date, date2, doctor, drug, specialist, text, radio1, radio2, radio5)) {
+				addPrescription(exam, i);
+				i++;
+			}
+
 
 			$('#tableR tbody').empty();
-
 			if (!copyExaminations.length) {
 				i = 1;
 				for (let exam of examinations) {
@@ -225,6 +338,7 @@ $(document).ready(function () {
 				}
 			}
 		}
+
 	});
 
 });
