@@ -8,7 +8,7 @@ namespace PSW_Wpf_app.ViewModel
 {
     class AppointmentViewModel:BindableBase
     {
-        BindingList<Doctor> doctors = new BindingList<Doctor>();
+        BindingList<DoctorDTO> doctors = new BindingList<DoctorDTO>();
 
         private BindingList<string> name = new BindingList<string>();
         public BindingList<string> Name
@@ -26,7 +26,7 @@ namespace PSW_Wpf_app.ViewModel
 
 
 
-        public BindingList<Doctor> Doctors
+        public BindingList<DoctorDTO> Doctors
         {
             get
             {
@@ -49,10 +49,10 @@ namespace PSW_Wpf_app.ViewModel
 
         private async void LoadDoctors()
         {
-            Doctors = new BindingList<Doctor>(await WpfClient.GetAllDoctors());
-            foreach (Doctor d in doctors)
+            Doctors = new BindingList<DoctorDTO>(await WpfClient.GetDoctorsBySpeciality("general practice"));
+            foreach (DoctorDTO d in doctors)
             {
-                name.Add(d.FirstName);
+                name.Add(d.Name);
                 
             }
         }
