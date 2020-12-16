@@ -18,27 +18,23 @@
         <a href="index.html">Home</a>
         <a href="partnerPharmacies.html" class="active">Partner Pharmacies</a>
         <a href="actionsAndBenefits.html">Actions & Benefits</a>
-        <a href="viewMedications.html">All medications</a>
+        <a href="viewMedications.html">Medication stock</a>
         <a href="viewPrescriptions.html">All prescriptions</a>
-        <a href="#">Medication consumption report</a>
     </div>
 
-    <div class="welcome-text">
-        <h1>Partner pharmacies</h1>
+    <div>
+        <form action="pharmacyRegistration.html">
+            <input type="submit" value="Add new pharmacy" class="btn btn-outline-warning" />
+        </form>
+    </div>
+
+    <div>
         <div class="loader"></div>
         <table id="apiTable" style="display:none">
-            <tr><th>Pharmacy name</th><th>API key</th><th>Url</th><th></th><th></th></tr>
+            <tr><th>Pharmacy name</th><th>API key</th><th>Url</th><th>Subscribed</th><th></th><th></th></tr>
         </table>
     </div>
-    <div>
-        <div class="wrapper">
-            <ul class="nav-area">
-                <form action="pharmacyRegistration.html">
-                    <input type="submit" value="Add new pharmacy" class="btn btn-outline-warning" />
-                </form>
-            </ul>
-        </div>
-    </div>
+
 
     <div id="deletePharmacy" style="display:none">
         <div class="modal fade" id="deletePharmacyModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -54,7 +50,7 @@
         </div>
     </div>
 
-    
+
 
 </body>
 </html>

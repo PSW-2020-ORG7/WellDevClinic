@@ -12,23 +12,23 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 columns: new[] { "Id", "EndDate", "MessageAboutAction", "PharmacyName", "StartDate", "Status" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2020, 12, 29, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(3210), "Andol on sale! 50% off!!", "PH1", new DateTime(2020, 12, 4, 14, 15, 41, 796, DateTimeKind.Local).AddTicks(6068), 1 },
-                    { 2L, new DateTime(2021, 1, 13, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6497), "Cheap bromazepam on huge quantities!!", "PH1", new DateTime(2020, 12, 19, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6479), 0 },
-                    { 3L, new DateTime(2020, 12, 21, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6558), "Aspirin C for free!!", "PH3", new DateTime(2020, 12, 15, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6554), 0 },
-                    { 4L, new DateTime(2021, 1, 5, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6565), "Amazing deal!! Brufen was 5$, now 15$", "PH3", new DateTime(2020, 12, 16, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6562), 2 },
-                    { 5L, new DateTime(2020, 12, 29, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6571), "Cant miss!! Vitamin C just for 99$", "PH2", new DateTime(2020, 12, 14, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6568), 2 },
-                    { 6L, new DateTime(2020, 12, 13, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6577), "Cheap sedatives!", "PH1", new DateTime(2020, 12, 4, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6574), 1 }
+                    { 1L, new DateTime(2020, 12, 30, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(676), "Andol on sale! 50% off!!", "PH1", new DateTime(2020, 12, 5, 21, 26, 18, 773, DateTimeKind.Local).AddTicks(2931), 1 },
+                    { 2L, new DateTime(2021, 1, 14, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6075), "Cheap bromazepam on huge quantities!!", "PH1", new DateTime(2020, 12, 20, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(5844), 0 },
+                    { 3L, new DateTime(2020, 12, 22, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6151), "Aspirin C for free!!", "PH3", new DateTime(2020, 12, 16, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6148), 0 },
+                    { 4L, new DateTime(2021, 1, 6, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6197), "Amazing deal!! Brufen was 5$, now 15$", "PH3", new DateTime(2020, 12, 17, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6193), 2 },
+                    { 5L, new DateTime(2020, 12, 30, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6203), "Cant miss!! Vitamin C just for 99$", "PH2", new DateTime(2020, 12, 15, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6200), 2 },
+                    { 6L, new DateTime(2020, 12, 14, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6208), "Cheap sedatives!", "PH1", new DateTime(2020, 12, 5, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6205), 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "ApiKeys",
-                columns: new[] { "NameOfPharmacy", "ApiKey", "Url" },
+                columns: new[] { "NameOfPharmacy", "ApiKey", "Subscribed", "Url" },
                 values: new object[,]
                 {
-                    { "PH1", "4545-as84-8s8g-zXCV", "http://localhost:4200/Ph1" },
-                    { "PH2", "7788-AV5R-zxQt-5845", "http://localhost:4200/Ph2" },
-                    { "PH3", "9745-At7S-Aqtr-5q8t", "http://localhost:4200/Ph3" },
-                    { "PH4", "HgT8-n47E-bE41-2gt5", "http://localhost:4200/Ph4" }
+                    { "PH1", "4545-as84-8s8g-zXCV", true, "http://localhost:4200/Ph1" },
+                    { "PH2", "7788-AV5R-zxQt-5845", true, "http://localhost:4200/Ph2" },
+                    { "PH3", "9745-At7S-Aqtr-5q8t", true, "http://localhost:4200/Ph3" },
+                    { "PH4", "HgT8-n47E-bE41-2gt5", true, "http://localhost:4200/Ph4" }
                 });
         }
 

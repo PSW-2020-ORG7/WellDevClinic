@@ -3,6 +3,7 @@
         let name = $("#txtName").val();
         let api = $("#txtApi").val();
         let url = $("#txtUrl").val();
+        let sub = $('#chkSubscribe').is(':checked');
 
         let valid = true;
 
@@ -35,7 +36,8 @@
             var jsonApi = JSON.stringify({
                 NameOfPharmacy: name,
                 ApiKey: api,
-                Url: url
+                Url: url,
+                Subscribed: sub
             });
         }
 

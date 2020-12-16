@@ -9,7 +9,7 @@ using PSW_Pharmacy_Adapter.Model;
 namespace PSW_Pharmacy_Adapter.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201214131542_TestData")]
+    [Migration("20201215202619_TestData")]
     partial class TestData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,55 +48,55 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         new
                         {
                             Id = 1L,
-                            EndDate = new DateTime(2020, 12, 29, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(3210),
+                            EndDate = new DateTime(2020, 12, 30, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(676),
                             MessageAboutAction = "Andol on sale! 50% off!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 4, 14, 15, 41, 796, DateTimeKind.Local).AddTicks(6068),
+                            StartDate = new DateTime(2020, 12, 5, 21, 26, 18, 773, DateTimeKind.Local).AddTicks(2931),
                             Status = 1
                         },
                         new
                         {
                             Id = 2L,
-                            EndDate = new DateTime(2021, 1, 13, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6497),
+                            EndDate = new DateTime(2021, 1, 14, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6075),
                             MessageAboutAction = "Cheap bromazepam on huge quantities!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 19, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6479),
+                            StartDate = new DateTime(2020, 12, 20, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(5844),
                             Status = 0
                         },
                         new
                         {
                             Id = 3L,
-                            EndDate = new DateTime(2020, 12, 21, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6558),
+                            EndDate = new DateTime(2020, 12, 22, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6151),
                             MessageAboutAction = "Aspirin C for free!!",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 15, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6554),
+                            StartDate = new DateTime(2020, 12, 16, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6148),
                             Status = 0
                         },
                         new
                         {
                             Id = 4L,
-                            EndDate = new DateTime(2021, 1, 5, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6565),
+                            EndDate = new DateTime(2021, 1, 6, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6197),
                             MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 16, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6562),
+                            StartDate = new DateTime(2020, 12, 17, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6193),
                             Status = 2
                         },
                         new
                         {
                             Id = 5L,
-                            EndDate = new DateTime(2020, 12, 29, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6571),
+                            EndDate = new DateTime(2020, 12, 30, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6203),
                             MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
                             PharmacyName = "PH2",
-                            StartDate = new DateTime(2020, 12, 14, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6568),
+                            StartDate = new DateTime(2020, 12, 15, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6200),
                             Status = 2
                         },
                         new
                         {
                             Id = 6L,
-                            EndDate = new DateTime(2020, 12, 13, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6577),
+                            EndDate = new DateTime(2020, 12, 14, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6208),
                             MessageAboutAction = "Cheap sedatives!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 4, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6574),
+                            StartDate = new DateTime(2020, 12, 5, 21, 26, 18, 775, DateTimeKind.Local).AddTicks(6205),
                             Status = 1
                         });
                 });
@@ -108,6 +108,9 @@ namespace PSW_Pharmacy_Adapter.Migrations
 
                     b.Property<string>("ApiKey")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("Subscribed")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Url")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -121,24 +124,28 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         {
                             NameOfPharmacy = "PH1",
                             ApiKey = "4545-as84-8s8g-zXCV",
+                            Subscribed = true,
                             Url = "http://localhost:4200/Ph1"
                         },
                         new
                         {
                             NameOfPharmacy = "PH2",
                             ApiKey = "7788-AV5R-zxQt-5845",
+                            Subscribed = true,
                             Url = "http://localhost:4200/Ph2"
                         },
                         new
                         {
                             NameOfPharmacy = "PH3",
                             ApiKey = "9745-At7S-Aqtr-5q8t",
+                            Subscribed = true,
                             Url = "http://localhost:4200/Ph3"
                         },
                         new
                         {
                             NameOfPharmacy = "PH4",
                             ApiKey = "HgT8-n47E-bE41-2gt5",
+                            Subscribed = true,
                             Url = "http://localhost:4200/Ph4"
                         });
                 });
