@@ -16,15 +16,18 @@ namespace PSW_Pharmacy_Adapter
         private Channel channel;
         private SpringGrpcService.SpringGrpcServiceClient client;
 
-        public ClientScheduledService() { }
-
-        public Task StartAsync(CancellationToken cancellationToken)
+        public ClientScheduledService() 
         {
             channel = new Channel("127.0.0.1:8787", ChannelCredentials.Insecure);
             client = new SpringGrpcService.SpringGrpcServiceClient(channel);
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            
             timer = new System.Timers.Timer();
             timer.Elapsed += new ElapsedEventHandler(SendMessage);
-            timer.Interval = 3300; // number in miliseconds  
+            timer.Interval = 10000;   
             timer.Enabled = true;
             return Task.CompletedTask;
         }
@@ -33,8 +36,8 @@ namespace PSW_Pharmacy_Adapter
         {
             try
             {
-                MessageResponseProto response = await client.communicateAsync(new MessageProto() { Message = "Random message from asp.net client: " + Guid.NewGuid().ToString(), RandomInteger = new Random().Next(1, 101) });
-                Console.WriteLine(response.Response + " is response; status: " + response.Status);
+                MessageResponseProto response = await client.communicateAsync(new MessageProto() { Message = "Aspirin"});
+                Console.WriteLine("Pharmacy said: " + response.Response + response.Status);          
             }
             catch (Exception exc)
             {
