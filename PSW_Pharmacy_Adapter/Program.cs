@@ -11,14 +11,12 @@ namespace PSW_Pharmacy_Adapter
 {
     public class Program
     {
-        public static List<Message> Messages = new List<Message>();
-
         public static void Main(string[] args)
         {
-            /*var consumer = new Task(() => CreateHostBuilderForRabbitMQ(args).Build().Run());
+            var consumer = new Task(() => CreateHostBuilderForRabbitMQ(args).Build().Run());
             consumer.Start();
-            CreateHostBuilder(args).Build().Run();*/
-            CreateHostBuilderForGrpc(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
+            //CreateHostBuilderForGrpc(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilderForRabbitMQ(string[] args) =>
@@ -34,7 +32,7 @@ namespace PSW_Pharmacy_Adapter
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<ClientScheduledService>();
+                    services.AddHostedService<ClientService>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
