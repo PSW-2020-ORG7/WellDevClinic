@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using PSW_Pharmacy_Adapter.Protos;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;

@@ -3,17 +3,16 @@
 		method: "GET",
 		url: "../api/actionsandbenefits/all",
 		contentType: "application/json",
-		success: function (data) {
-			actions = data;
-			viewActionsAndBenefits(actions)
+		success: function (sales) {
+			viewNewSales(sales)
 		}
 	});
 })
 
 
-function viewActionsAndBenefits(data) {
+function viewNewSales(sales) {
 	$(".salesNotifications").empty();
-	for (let act of data) {
+	for (let act of sales) {
 		if (act.status != 0)
 			continue;
 		let content = '<div class="card text-center"><div class="card-body">';

@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using PSW_Pharmacy_Adapter.Converter;
 using PSW_Pharmacy_Adapter.Dto;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository;
@@ -46,7 +45,7 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                ActionAndBenefitDtoConverted actionAndBenefitConverted = DateTimeConverter.DtoToModel(
+                ActionAndBenefitDtoConverted actionAndBenefitConverted = new ActionAndBenefitDtoConverted(
                                                                                         JsonConvert.DeserializeObject<ActionAndBenefitDto>(
                                                                                         jsonMessage.ToString()));
                 Console.WriteLine(" [x] Received {0}", actionAndBenefitConverted.PharmacyName);
