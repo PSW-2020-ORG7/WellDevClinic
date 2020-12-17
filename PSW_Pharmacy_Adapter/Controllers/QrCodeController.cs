@@ -2,12 +2,9 @@
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 using QRCoder;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
