@@ -13,7 +13,7 @@
 function viewNewSales(sales) {
 	$(".salesNotifications").empty();
 	var num = 0;
-	for (let act of data) {
+	for (let act of sales) {
 		if (act.status != 0)
 			continue;
 		let content = '<div class="card text-center"><div class="card-body">';
@@ -32,7 +32,7 @@ function viewNewSales(sales) {
 
 		$(".salesNotifications").append(content);
 	}
-	document.getElementById('num').innerHTML = num;
+	$('#num').html(num);
 }
 
 function saveSale(id) {

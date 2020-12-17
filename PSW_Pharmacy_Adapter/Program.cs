@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
 
 namespace PSW_Pharmacy_Adapter
