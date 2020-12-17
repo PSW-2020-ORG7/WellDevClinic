@@ -11,6 +11,10 @@
             }
         },
     });
+
+    $("#sub").click(function () {
+        
+    })
 });
 
 function viewApis(apiDb) {

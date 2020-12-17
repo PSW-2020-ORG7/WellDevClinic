@@ -10,7 +10,7 @@
 		},
 	});
 
-	$.ajax({
+	/*$.ajax({
 		method: "GET",
 		url: "../api/qrcode",
 		contentType: "application/json",
@@ -19,7 +19,7 @@
 			$(".loader").css("display", "none");
 			getAllPrescriptions(data);
 		},
-	});
+	});*/
 });
 
 function getAllPrescriptions(data) {
@@ -76,8 +76,9 @@ function sendToPharmacies(id) {
 		success: function (pre) {
 			console.log(pre);
 			$.post({
-				url: "../api/sftp/sendReport",
+				url: "../api/sftp/sendPrescription",
 				contentType: "aplication/json",
+				dataType: "aplication/json",
 				data: JSON.stringify({ patientName: patientName1, jmbg: jmbg1, startTime: startTime1, endTime: endTime1, medicines: medicines1 }),
 				success: function (data) {
 					//location.href = "../index.html";

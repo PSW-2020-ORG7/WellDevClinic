@@ -1,12 +1,8 @@
 ﻿using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Shouldly;
 using PSW_Pharmacy_Adapter;
-using Microsoft.EntityFrameworkCore;
 using PSW_Pharmacy_Adapter.Repository;
 
 namespace ServiceTests.Pharmacy_Adapter_Tests

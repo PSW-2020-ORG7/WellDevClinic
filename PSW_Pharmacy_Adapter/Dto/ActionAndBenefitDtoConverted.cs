@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSW_Pharmacy_Adapter.Converter;
+using System;
 
 namespace PSW_Pharmacy_Adapter.Dto
 {
@@ -20,6 +21,15 @@ namespace PSW_Pharmacy_Adapter.Dto
             MessageAboutAction = messageAboutAction;
             StartDate = startDate;
             EndDate = endDate;
+        }
+
+        public ActionAndBenefitDtoConverted(ActionAndBenefitDto dto)
+        {
+            Id = dto.Id;
+            PharmacyName = dto.PharmacyName;
+            MessageAboutAction = dto.MessageAboutAction;
+            StartDate = DateTimeConverter.UnixToDateTime(dto.StartDate);
+            EndDate = DateTimeConverter.UnixToDateTime(dto.EndDate);
         }
     }
 }

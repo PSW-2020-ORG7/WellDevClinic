@@ -43,11 +43,11 @@ namespace PSW_Pharmacy_Adapter
 
         private static int calculatePort()
         {
-            var port = System.Environment.GetEnvironmentVariable("PORT");
+            var port = Environment.GetEnvironmentVariable("PORT");
             if (port == null)
                 return 64724;
             else
-                return Int32.Parse(System.Environment.GetEnvironmentVariable("PORT"));
+                return int.Parse(Environment.GetEnvironmentVariable("PORT"));
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
