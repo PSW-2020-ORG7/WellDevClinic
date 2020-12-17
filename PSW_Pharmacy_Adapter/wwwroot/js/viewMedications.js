@@ -1,19 +1,21 @@
-﻿$(document).ready(function () {
+﻿var medications;
+
+$(document).ready(function () {
     $.ajax({
         method: "GET",
         url: "../api/medication",
         contentType: "application/json",
         success: function (data) {
-            console.log(data);
-			getAllMedications(data);
+			medications = data;
+			viewAllMedications(medications);
 			$(".loader").css("display", "none");
         },
     });
 });
 
-function getAllMedications(data) {
+function viewAllMedications(meds) {
 	$("#viewMedication").empty();
-	for (let med of data) {
+	for (let med of meds) {
 		let content = '<div class="card" id="' + med.id + '">';
 		content += '<div class="card-body">';
 		content += '<div class="data">';
@@ -31,5 +33,54 @@ function getAllMedications(data) {
 		content += '</div></div></div>';
 		content += '</div>';
 		$("#viewMedication").append(content);
+	}
+}
+
+function getSortData() {
+	let sort = $("#sort").val();
+	let order = $("#order").val();
+	sortCards(sort, order);
+	viewAllMedications(medications);
+}
+
+function sortCards(sort, order) {
+	if (order == "asc") {
+		for (let i = 0; i < (medications.length - 1); i++) {
+			let minIdx = i;
+			for (let j = i + 1; j < medications.length; j++) {
+				if (sort == "medName") {
+					if (medications[minIdx].name.toLowerCase() > medications[j].name.toLowerCase())
+						minIdx = j;
+				} else if (sort == "amount") {
+					if (medications[minIdx].amount > medications[j].amount)
+						minIdx = j;
+				} else if (sort == "list") {
+					if (medications[minIdx].id > medications[j].id)
+						minIdx = j;
+				}
+			}
+			let temp = medications[i];
+			medications[i] = medications[minIdx];
+			medications[minIdx] = temp;
+		}
+	} else if (order == "desc") {
+		for (let i = 0; i < (medications.length - 1); i++) {
+			let maxIdx = i;
+			for (let j = i + 1; j < medications.length; j++) {
+				if (sort == "medName") {
+					if (medications[maxIdx].name.toLowerCase() < medications[j].name.toLowerCase())
+						maxIdx = j;
+				} else if (sort == "amount") {
+					if (medications[maxIdx].amount < medications[j].amount)
+						maxIdx = j;
+				} else if (sort == "list") {
+					if (medications[maxIdx].id < medications[j].id)
+						maxIdx = j;
+				}
+			}
+			let temp = medications[i];
+			medications[i] = medications[maxIdx];
+			medications[maxIdx] = temp;
+		}
 	}
 }
