@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 	//$("#viewMedication").empty();
-	//for (let med of data) {
+	//for (let med of data) {                   // ajax za dobavljanje svih lekova te apoteke
         let content = '<a class="dropdown-item" href="#">';
         content += "Brufen";
         content += '</a >';
@@ -19,7 +19,7 @@ function getAllMedicationFromPharmacy() {
 }
 
 function askPharmacy() {
-    var name = "Anadol";
+    var name = "Anadol";                        // zameniti kad se doda ajax za dobijanje svih lekova
     $.ajax({
         method: "POST",
         url: "../api/grpc/" + name,             //trebalo bi i oznaku apoteke dodati
