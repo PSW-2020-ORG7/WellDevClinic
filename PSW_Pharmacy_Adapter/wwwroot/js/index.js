@@ -13,6 +13,7 @@
 
 function viewActionsAndBenefits(data) {
 	$(".salesNotifications").empty();
+	var num = 0;
 	for (let act of data) {
 		if (act.status != 0)
 			continue;
@@ -28,9 +29,11 @@ function viewActionsAndBenefits(data) {
 		content += '</div></div>';
 		content += '</div>';
 
+		num += 1;
 
 		$(".salesNotifications").append(content);
 	}
+	document.getElementById('num').innerHTML = num;
 }
 
 function saveSale(id) {
