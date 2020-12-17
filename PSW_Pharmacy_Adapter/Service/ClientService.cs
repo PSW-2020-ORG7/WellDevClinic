@@ -24,20 +24,18 @@ namespace PSW_Pharmacy_Adapter
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
+            => Task.CompletedTask;
 
-        public async void SendMessage(string name)
+        public async Task<string> SendMessage(string name)
         {
             try
             {
                 MessageResponseProto response = await client.communicateAsync(new MessageProto() { Message = name});
-                Console.WriteLine("Pharmacy said: " + response.Response + response.Status);   
+                return response.Response;
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc.StackTrace);
+                return "Try again later.";
             }
         }
 

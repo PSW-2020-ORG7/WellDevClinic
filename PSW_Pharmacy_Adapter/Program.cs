@@ -28,7 +28,7 @@ namespace PSW_Pharmacy_Adapter
                 });
 
 
-        public static IHostBuilder CreateHostBuilderForGrpc(string[] args) =>
+        public static IHostBuilder CreateHostBuilderForGrpc(string[] args) =>           //ne  brisi
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {

@@ -16,10 +16,9 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [HttpPost]
-        public IActionResult ExistMedicationByName([FromBody] string name)
-        {
-            serviceGrpc.SendMessage(name);
-            return Ok();
-        }
+        [Route("{name?}")]
+        public async Task<IActionResult> ExistMedicationByName(string name)
+            => Ok(await serviceGrpc.SendMessage(name));
+
     }
 }

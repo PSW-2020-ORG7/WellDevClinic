@@ -21,7 +21,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
             => Ok(await _medicationService.GetAllMedication());
 
         [HttpGet]
-        [Route("check/{id?}")]
+        //[Route("check/{id?}")]
         public IActionResult CheckStrucutre(string id)
             => Ok(_medicationService.GetUnsyncedMedicines(id));
 
