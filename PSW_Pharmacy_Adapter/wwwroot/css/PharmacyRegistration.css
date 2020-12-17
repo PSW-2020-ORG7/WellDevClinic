@@ -44,14 +44,6 @@
         cursor: pointer;
     }
 
-#chkSubscribe{
-    width: fit-content;
-}
-
-#sublabel:hover{
-    cursor: pointer;
-}
-
 .valid {
     display: none;
     font-size: 10px;

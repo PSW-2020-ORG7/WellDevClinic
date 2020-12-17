@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PSW_Pharmacy_Adapter.Migrations
 {
-    public partial class ApiandSales : Migration
+    public partial class ActionAndBenefit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,29 +24,12 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 {
                     table.PrimaryKey("PK_ActionsAndBenefits", x => x.Id);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "ApiKeys",
-                columns: table => new
-                {
-                    NameOfPharmacy = table.Column<string>(nullable: false),
-                    ApiKey = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
-                    Subscribed = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApiKeys", x => x.NameOfPharmacy);
-                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ActionsAndBenefits");
-
-            migrationBuilder.DropTable(
-                name: "ApiKeys");
         }
     }
 }

@@ -25,11 +25,7 @@ function viewApis(apiDb) {
         content += api.apiKey;
         content += '</td><td>';
         content += api.url;
-        content += '</td><td style="text-align:center">';
-        content += '<input type="checkbox" disabled ';
-        if (api.subscribed)
-            content += 'checked ';
-        content += '/></td><td>';
+        content += '</td><td>';
         content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deletePharmacyModal"';
         content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button></td> ';
         content += '<td><button class="btn btn-primary"';
