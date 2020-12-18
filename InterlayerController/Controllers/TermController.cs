@@ -28,14 +28,6 @@ namespace InterlayerController.Controllers
         {
             List<ExaminationDTO> exams = _businessDayController.Search(businessDTO);
 
-           // List<ExaminationDTO2> ret = new List<ExaminationDTO2>();
-
-          /*  foreach (var item in exams)
-            {
-                ret.Add(new ExaminationDTO2() { Doctor = (item.Doctor.FirstName + " " + item.Doctor.LastName), DoctorId = item.Doctor.Id, RoomId = item.Room.Id, StartDate = item.Period.StartDate, EndDate = item.Period.EndDate });
-
-            }*/
-
             return exams;
         }
     }

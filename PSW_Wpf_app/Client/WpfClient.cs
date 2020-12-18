@@ -40,10 +40,10 @@ namespace PSW_Wpf_app.Client
         public string Email;
         public string Phone;
         public DateTime DateOfBirth;
-        //public Address Address;
+        
         public string Username;
         public string Password;
-        // public Speciality Specialty;
+        
     }
 
     public class DoctorDTO
@@ -52,7 +52,7 @@ namespace PSW_Wpf_app.Client
         public String Name { get; set; }
         public String Surname { get; set; }
 
-        // public List<BusinessDayDTO> BusinessDayDTOs { get; set; } = new List<BusinessDayDTO>();
+        
         public String Speciality { get; set; }
 
 
@@ -85,11 +85,9 @@ namespace PSW_Wpf_app.Client
 
     public class ExaminationDTO
     {
-       // public long Id { get; set; }
-       // public int DoctorId { get; set; }
+       
         public Doctor Doctor { get; set; }
-        //public int RoomId { get; set; }
-        // public string Room { get; set; }
+       
         public Room Room { get; set; }
         public DateTime StartDate { get; set; }
          public DateTime EndDate { get; set; }

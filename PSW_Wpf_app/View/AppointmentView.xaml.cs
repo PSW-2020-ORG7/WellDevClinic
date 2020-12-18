@@ -19,19 +19,8 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class AppointmentView : Window
     {
-        private BindingList<string> name = new BindingList<string>();
-        public BindingList<string> Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                
-            }
-        }
+        
+       
         public AppointmentView()
         {
             InitializeComponent();
@@ -47,7 +36,7 @@ namespace PSW_Wpf_app.View
                 if (Picker.SelectedDate == null)
                     return;
 
-                //app.BusinessDayService._searchPeriods = new NoPrioritySearch();
+                
                 DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
                 Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
                 
@@ -56,47 +45,21 @@ namespace PSW_Wpf_app.View
                 period.StartDate = DateTime.Parse(Picker.Text);
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period);
                 businessDayDTO.PatientScheduling = true;
-                //upcomingExaminations = app.BusinessDayDecorator.Search(businessDayDTO);
                 scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
-                
-                //scheduleExaminationsGrid.ItemsSource = upcomingExaminations;
+               
             }
             else if (PriorityBox.SelectedIndex == 1)
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
 
-                /*  Period period = new Period();
-                  period.StartDate = DateTime.Parse(Picker.Text);
-                  period.EndDate = DateTime.Parse(Picker2.Text);
-
-                  if (period.StartDate >= period.EndDate)
-                      return;
-
-                  app.BusinessDayService._searchPeriods = new DoctorPrioritySearch();
-                  Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
-                  BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period);
-                  businessDayDTO.PatientScheduling = true;
-                  upcomingExaminations = app.BusinessDayDecorator.Search(businessDayDTO);
-                  scheduleExaminationsGrid.ItemsSource = upcomingExaminations;*/
             }
             else
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
 
-                /* Period period = new Period();
-                 period.StartDate = DateTime.Parse(Picker.Text);
-                 period.EndDate = DateTime.Parse(Picker2.Text);
-                 if (period.StartDate >= period.EndDate)
-                     return;
-
-                 app.BusinessDayService._searchPeriods = new DatePrioritySearch();
-                 Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
-                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period);
-                 businessDayDTO.PatientScheduling = true;
-                 upcomingExaminations = app.BusinessDayDecorator.Search(businessDayDTO);
-                 scheduleExaminationsGrid.ItemsSource = upcomingExaminations;*/
+              
             }
         }
 
