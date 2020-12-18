@@ -28,14 +28,14 @@
     <div class="filter">
         <button class="btnFilter">☰ Filters</button>
         <span>Sort by:</span>
-        <select id="sort" onchange="getSortData()">
+        <select id="sort" onchange="sortData()">
             <option value="list">List Order</option>
-            <option value="phName">Name</option>
+            <option value="patName">Patient name</option>
             <option value="start">Starting date</option>
             <option value="expire">Expiry date</option>
         </select>
         <span>Order:</span>
-        <select id="order" onchange="getSortData()">
+        <select id="order" onchange="sortData()">
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
         </select>
@@ -43,9 +43,15 @@
         <div id="divFilterTable">
             <form>
                 <table>
-                    <tr><td>From date:</td><td>To date:</td></tr>
-                    <tr><td><input type="date" /></td><td><input type="date" /></td></tr>
-
+                    <tr>
+                        <td>From date:</td>
+                        <td>To date:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="date" id="start" /></td>
+                        <td><input type="date" id="end" /></td>
+                        <td><input type="button" class="btn btn-primary" onclick="filter()" value="Submit" /></td>
+                    </tr>
                 </table>
             </form>
         </div>
