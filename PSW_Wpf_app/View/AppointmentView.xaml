@@ -12,7 +12,7 @@
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
         <StackPanel  Orientation="Vertical">
-            <TextBlock Name="Note" Margin="10,10,10,1" FontSize="15" Text="Note : You can have a maximum of 3 appointments scheduled at the moment."></TextBlock>
+           
             <StackPanel Orientation="Horizontal">
                 <TextBlock Name="ChooseDoctor" Text="Choose a doctor:" FontSize="20"  Margin="10" Width="150" Height="30"/>
                 <ComboBox HorizontalAlignment="Left" Margin="10"  Width="250" Height="25" Name="DoctorsForExaminations" ItemsSource ="{Binding Path=Doctors,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name">
@@ -55,10 +55,9 @@
                             </DataGrid.CellStyle>
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Width="*"></DataGridTextColumn>
-                                <DataGridTextColumn x:Name="ColumnDateForSchedule" Header="Date"  Width="*"></DataGridTextColumn>
-                                <DataGridTextColumn x:Name="ColumnTimeForSchedule" Header="Time"  Width="*"></DataGridTextColumn>
-                                <DataGridTextColumn x:Name="ColumnOrdinationForSchedule" Header="Ordination" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Binding="{Binding Doctor.FirstName}" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn x:Name="ColumnDateForSchedule" Header="Date and Time"  Binding="{Binding StartDate}" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn x:Name="ColumnOrdinationForSchedule" Header="Ordination" Binding="{Binding Room.Id}" Width="*"></DataGridTextColumn>
 
                             </DataGrid.Columns>
                         </DataGrid>
@@ -67,7 +66,7 @@
             </Grid>
             <TextBlock Name="ErrorSchedule"  Opacity="0" FontSize="15" HorizontalAlignment="Right"  Margin="0,0,10,-5" Foreground="#FFE01F0C"></TextBlock>
 
-            <Button Name="Schedule" Content="Schedule" HorizontalAlignment="Right" Margin="10"  Width="76" >
+            <Button Name="Schedule" Content="Schedule" HorizontalAlignment="Right" Margin="0, -40, 50, 10"  Width="90" >
                 <Button.ToolTip>
                     <ToolTip x:Name="ToolTipSchedule"  Content = "Schedule the selected date" BorderThickness="2" BorderBrush="Gray"/>
                 </Button.ToolTip>

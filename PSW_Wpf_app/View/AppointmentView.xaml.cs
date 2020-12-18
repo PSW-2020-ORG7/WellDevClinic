@@ -1,6 +1,7 @@
 ﻿using PSW_Wpf_app.Client;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,19 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class AppointmentView : Window
     {
+        private BindingList<string> name = new BindingList<string>();
+        public BindingList<string> Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                
+            }
+        }
         public AppointmentView()
         {
             InitializeComponent();
@@ -36,6 +50,7 @@ namespace PSW_Wpf_app.View
                 //app.BusinessDayService._searchPeriods = new NoPrioritySearch();
                 DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
                 Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+                
 
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
@@ -43,6 +58,7 @@ namespace PSW_Wpf_app.View
                 businessDayDTO.PatientScheduling = true;
                 //upcomingExaminations = app.BusinessDayDecorator.Search(businessDayDTO);
                 scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
+                
                 //scheduleExaminationsGrid.ItemsSource = upcomingExaminations;
             }
             else if (PriorityBox.SelectedIndex == 1)

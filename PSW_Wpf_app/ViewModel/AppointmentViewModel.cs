@@ -41,10 +41,8 @@ namespace PSW_Wpf_app.ViewModel
         }
         public AppointmentViewModel()
         {
-            // doctors = new BindingList<Doctor>();
             LoadDoctors();
-           
-           // LoadDoctors();
+          
         }
 
         private async void LoadDoctors()
@@ -53,6 +51,7 @@ namespace PSW_Wpf_app.ViewModel
             foreach (DoctorDTO d in doctors)
             {
                 name.Add(d.Name);
+               
                 
             }
         }

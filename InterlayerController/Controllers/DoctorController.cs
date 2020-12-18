@@ -32,6 +32,15 @@ namespace InterlayerController.Controllers
         }
 
         [HttpGet]
+        public IEnumerable<Doctor> GetAllDoctors()
+        {
+
+            List<Doctor> result = (List<Doctor>)_doctorController.GetAll();
+            
+            return result;
+        }
+
+        [HttpGet]
         public IActionResult GetAll()
         {
             List<DoctorDTO> resultDTO = new List<DoctorDTO>();

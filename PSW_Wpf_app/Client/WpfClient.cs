@@ -31,6 +31,21 @@ namespace PSW_Wpf_app.Client
         public virtual List<Drug> Alternative { get; set; }
     }
 
+    public class Doctor
+    {
+        public long Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName;
+        public string Jmbg;
+        public string Email;
+        public string Phone;
+        public DateTime DateOfBirth;
+        //public Address Address;
+        public string Username;
+        public string Password;
+        // public Speciality Specialty;
+    }
+
     public class DoctorDTO
     {
         public long Id { get; set; }
@@ -41,21 +56,6 @@ namespace PSW_Wpf_app.Client
         public String Speciality { get; set; }
 
 
-    }
-
-    public class Doctor
-    {
-        public long Id;
-        public string FirstName;
-        public string LastName;
-        public string Jmbg;
-        public string Email;
-        public string Phone;
-        public DateTime DateOfBirth;
-        //public Address Address;
-        public string Username;
-        public string Password;
-       // public Speciality Specialty;
     }
 
     public class BusinessDayDTO
@@ -85,14 +85,22 @@ namespace PSW_Wpf_app.Client
 
     public class ExaminationDTO
     {
-        public long Id { get; set; }
-        public int DoctorId { get; set; }
-        public string Doctor { get; set; }
-        public int RoomId { get; set; }
-        public string Room { get; set; }
+       // public long Id { get; set; }
+       // public int DoctorId { get; set; }
+        public Doctor Doctor { get; set; }
+        //public int RoomId { get; set; }
+        // public string Room { get; set; }
+        public Room Room { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+         public DateTime EndDate { get; set; }
+        public Period period;
     }
+
+    public class Room
+    {
+        public long Id { get; set; }
+    }
+
 
 
     static class WpfClient
@@ -129,6 +137,7 @@ namespace PSW_Wpf_app.Client
 
             return doctors;
         }
+
 
         public static async Task<List<ExaminationDTO>> FindTerms(BusinessDayDTO businessDTO)
         {
