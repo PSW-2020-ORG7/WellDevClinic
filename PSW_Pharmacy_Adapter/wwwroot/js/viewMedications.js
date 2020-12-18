@@ -44,43 +44,24 @@ function getSortData() {
 }
 
 function sortCards(sort, order) {
-	if (order == "asc") {
-		for (let i = 0; i < (medications.length - 1); i++) {
-			let minIdx = i;
-			for (let j = i + 1; j < medications.length; j++) {
-				if (sort == "medName") {
-					if (medications[minIdx].name.toLowerCase() > medications[j].name.toLowerCase())
-						minIdx = j;
-				} else if (sort == "amount") {
-					if (medications[minIdx].amount > medications[j].amount)
-						minIdx = j;
-				} else if (sort == "list") {
-					if (medications[minIdx].id > medications[j].id)
-						minIdx = j;
-				}
+	for (let i = 0; i < (medications.length - 1); i++) {
+		let minIdx = i;
+		for (let j = i + 1; j < medications.length; j++) {
+			if (sort == "medName") {
+				if (medications[minIdx].name.toLowerCase() > medications[j].name.toLowerCase())
+					minIdx = j;
+			} else if (sort == "amount") {
+				if (medications[minIdx].amount > medications[j].amount)
+					minIdx = j;
+			} else if (sort == "list") {
+				if (medications[minIdx].id > medications[j].id)
+					minIdx = j;
 			}
-			let temp = medications[i];
-			medications[i] = medications[minIdx];
-			medications[minIdx] = temp;
 		}
-	} else if (order == "desc") {
-		for (let i = 0; i < (medications.length - 1); i++) {
-			let maxIdx = i;
-			for (let j = i + 1; j < medications.length; j++) {
-				if (sort == "medName") {
-					if (medications[maxIdx].name.toLowerCase() < medications[j].name.toLowerCase())
-						maxIdx = j;
-				} else if (sort == "amount") {
-					if (medications[maxIdx].amount < medications[j].amount)
-						maxIdx = j;
-				} else if (sort == "list") {
-					if (medications[maxIdx].id < medications[j].id)
-						maxIdx = j;
-				}
-			}
-			let temp = medications[i];
-			medications[i] = medications[maxIdx];
-			medications[maxIdx] = temp;
-		}
+		let temp = medications[i];
+		medications[i] = medications[minIdx];
+		medications[minIdx] = temp;
 	}
+	if (order == "desc")
+		medications.reverse();
 }
