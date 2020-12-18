@@ -7,6 +7,7 @@ using Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using WellDevCore.Model.Dto;
 
 namespace Service
 {
@@ -58,9 +59,9 @@ namespace Service
             List<Room> result = new List<Room>();
             foreach (Room room in rooms)
             {
-                foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+                foreach (EquipmentDTO e in room.Equipment_inventory)
                 {
-                    if (pair.Key.Id == equipment.Id)
+                    if (e.Equipment.Id == equipment.Id)
                     {
                         result.Add(room);
                     }
@@ -83,9 +84,9 @@ namespace Service
 
             foreach (Room room in GetAll())
             {
-                foreach (Equipment eq in room.Equipment_inventory.Keys)
+                foreach (EquipmentDTO eq in room.Equipment_inventory)
                 {
-                    if (eq.Id == equipment.Id)
+                    if (eq.Equipment.Id == equipment.Id)
                     {
                         room.Equipment_inventory.Remove(eq);
                         Edit(room);

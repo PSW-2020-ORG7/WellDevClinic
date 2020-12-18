@@ -1,16 +1,20 @@
 
 ﻿using bolnica.Controller;
+
 using bolnica.Service;
 using Microsoft.AspNetCore.Mvc;
 using Model.Doctor;
 using Model.PatientSecretary;
+
 using Model.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using WellDevCore.Model.Adapters;
 using WellDevCore.Model.dtos;
+
 
 namespace InterlayerController.Controllers
 {
@@ -18,12 +22,22 @@ namespace InterlayerController.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
+
         private readonly IDoctorController _doctorController;
         private readonly IBusinessDayController _businessDayController;
         public DoctorController(IDoctorController doctorController, IBusinessDayController businessDayController)
         {
             _doctorController = doctorController;
             _businessDayController = businessDayController;
+        }
+
+        [HttpGet]
+        public IEnumerable<Doctor> GetAllDoctors()
+        {
+
+            List<Doctor> result = (List<Doctor>)_doctorController.GetAll();
+            
+            return result;
         }
 
         [HttpGet]
@@ -74,6 +88,7 @@ namespace InterlayerController.Controllers
                 doctorDTOs.Add(doctor2);
             }
             return doctorDTOs;
+
         }
     }
 }

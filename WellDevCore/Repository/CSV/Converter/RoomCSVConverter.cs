@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WellDevCore.Model.Dto;
 
 namespace bolnica.Repository
 {
@@ -20,8 +21,8 @@ namespace bolnica.Repository
             string[] tokens = roomCSV.Split(_delimiter.ToCharArray());
 
             string dictionary = tokens[3];
-            Dictionary<Equipment, int> helping = new Dictionary<Equipment, int>();
-
+           // Dictionary<Equipment, int> helping = new Dictionary<Equipment, int>();
+            List<EquipmentDTO> helping = new List<EquipmentDTO>();
             if (!dictionary.Contains("empty")) 
             {
                 dictionary = dictionary.Substring(1, dictionary.Length - 2);
@@ -30,7 +31,7 @@ namespace bolnica.Repository
                 foreach (string pair in pairs)
                 {
                     string[] nums = pair.Split(":".ToCharArray());
-                    helping[new Equipment(long.Parse(nums[0]))] = int.Parse(nums[1]);
+                 //   helping[new Equipment(long.Parse(nums[0]))] = int.Parse(nums[1]);
                 }
             }
 
@@ -58,11 +59,11 @@ namespace bolnica.Repository
             {
                 sb.Append("{");  
 
-                foreach (KeyValuePair<Equipment, int> item in entity.Equipment_inventory)
+                foreach (EquipmentDTO e in entity.Equipment_inventory)
                 {
-                    sb.Append(item.Key.GetId());
+                    sb.Append(e.Equipment.GetId());
                     sb.Append(":");
-                    sb.Append(item.Value);
+                    sb.Append(e.Amount);  
                     sb.Append("!");
                 }
                 sb.Remove(sb.Length - 1, 1);

@@ -25,10 +25,10 @@ namespace InterlayerController.Controllers
         public IEnumerable<Drug> GetAllDrug()
         {
             List<Drug> result = (List<Drug>)_drugController.GetAll();
-            foreach (Drug d in result)
+           /* foreach (Drug d in result)
                 if (d.Alternative != null)
                     foreach (Drug alter in d.Alternative)
-                        alter.Alternative = null;
+                        alter.Alternative = null;*/
             return result;
         }
     }

@@ -75,7 +75,7 @@ namespace PSW_Wpf_director
                 Room room = (Room)comboRoomCode.SelectedItem;
 
 
-                foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+            /*    foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
                 {
                     if (pair.Key.Id == _selectedEquipment.Id)
                     {
@@ -87,10 +87,10 @@ namespace PSW_Wpf_director
                         MessageBox.Show(messageBoxText, caption, button, icon);
                         return;
                     }
-                }
+                }*/
 
 
-                room.Equipment_inventory.Add(_selectedEquipment, _amount);
+               // room.Equipment_inventory.Add(_selectedEquipment, _amount);
                 _roomController.Edit(room);
             }
             else  //edit case
@@ -101,21 +101,21 @@ namespace PSW_Wpf_director
                 {
 
                     Equipment temp = null;
-                    foreach (KeyValuePair<Equipment, int> pair in _selectedRoom.Equipment_inventory)
+                 /*   foreach (KeyValuePair<Equipment, int> pair in _selectedRoom.Equipment_inventory)
                     {
                         if (pair.Key.Id == _selectedEquipment.Id)
                         {
                             temp = pair.Key as Equipment;
                         }
-                    }
+                    }*/
 
-                    _selectedRoom.Equipment_inventory.Remove(temp);
+                   // _selectedRoom.Equipment_inventory.Remove(temp);
                     _roomController.Edit(_selectedRoom);
 
 
 
 
-                    foreach (KeyValuePair<Equipment, int> pair in final_room.Equipment_inventory)
+                  /* foreach (KeyValuePair<Equipment, int> pair in final_room.Equipment_inventory)
                     {
                         if (pair.Key.Id == _selectedEquipment.Id)
                         {
@@ -127,23 +127,23 @@ namespace PSW_Wpf_director
                             MessageBox.Show(messageBoxText, caption, button, icon);
                             return;
                         }
-                    }
+                    }*/
 
-                    final_room.Equipment_inventory.Add(_selectedEquipment, _amount);
+                    //final_room.Equipment_inventory.Add(_selectedEquipment, _amount);
                     _roomController.Edit(final_room);
                 }
                 else
                 {
                     Equipment temp = null;
-                    foreach (KeyValuePair<Equipment, int> pair in final_room.Equipment_inventory)
+                  /*  foreach (KeyValuePair<Equipment, int> pair in final_room.Equipment_inventory)
                     {
                         if (pair.Key.Id == _selectedEquipment.Id)
                         {
                             temp = pair.Key;
                         }
-                    }
+                    }*/
 
-                    final_room.Equipment_inventory[temp] = _amount;
+                   // final_room.Equipment_inventory[temp] = _amount;
                     _roomController.Edit(final_room);
                 }
             }
@@ -159,13 +159,13 @@ namespace PSW_Wpf_director
 
             foreach (Room room in rooms)
             {
-                foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+               /* foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
                 {
                     if (pair.Key.Id == _selectedEquipment.Id)
                     {
                         result += pair.Value;
                     }
-                }
+                }*/
             }
             if (_selectedRoomEquipmentEdit != null && final_room.RoomCode.Equals(_selectedRoomEquipmentEdit.RoomCode))
                 result -= _selectedRoomEquipmentEdit.Equipment_Amount;

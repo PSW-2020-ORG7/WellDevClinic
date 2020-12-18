@@ -13,22 +13,25 @@
     <Grid Background="White"  DataContext="{Binding Source={StaticResource vm}}">
         <!--<Canvas Background="LightGreen" HorizontalAlignment="Left" Height="470" Margin="0" VerticalAlignment="Top" Width="655" Name="Can1"/>-->
         <UserControl Name="userControl" Margin="0,0,224.6,1.4"></UserControl>
-        <Grid Background="#FFAAC4C5" HorizontalAlignment="Left" Height="469" Margin="674,0,0,0" VerticalAlignment="Top" Width="218">
-            <Grid Background="CadetBlue" HorizontalAlignment="Center" Height="395" Margin="0,55,0,0" VerticalAlignment="Top" Width="198">
-                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" TextWrapping="Wrap" Text="Choose building:" FontSize="16" VerticalAlignment="Top" Width="150"/>
-                <ComboBox HorizontalAlignment="Left" Height="32" Margin="10,34,0,0" VerticalAlignment="Top" Width="181" ItemsSource="{Binding Path=Buildings}" Name="buildC"  DisplayMemberPath="Name"/>
-                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,76,0,0" TextWrapping="Wrap" Text="Choose the floor:" FontSize="16" VerticalAlignment="Top" Width="150"/>
-                <ComboBox HorizontalAlignment="Left" Height="29" Margin="10,100,0,0" VerticalAlignment="Top" Width="181"  ItemsSource="{Binding Path=FloorsCount}" Name="floorC"/>
-                <Button Content="Apply" HorizontalAlignment="Center" Height="48" Margin="0,152,0,0" VerticalAlignment="Top" Width="180" FontSize="28" FontFamily="Segoe UI Semibold" Click="Button_Click"/>
-                <TextBox Name="SearchBuilding" HorizontalAlignment="Left" Height="24" Margin="10,246,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" PreviewTextInput="ValidationTextBox"/>
-                <Button  FontFamily="Segoe UI Semibold" Content="Search" HorizontalAlignment="Left" Height="35" Margin="10,280,0,0" VerticalAlignment="Top" Width="181" Click="Search"/>
-                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,217,0,0" TextWrapping="Wrap" Text="Enter room name or type:" FontSize="16" VerticalAlignment="Top" Width="188"/>
-                <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Left" Height="35" Margin="10,338,0,0" VerticalAlignment="Top" Width="181" Click="Button_Equipment_Drugs"/>
+        <Grid Background="#FFAAC4C5" HorizontalAlignment="Left" Height="484" Margin="674,0,0,0" VerticalAlignment="Center" Width="218">
+            <Grid Background="CadetBlue" HorizontalAlignment="Center" Height="425" Margin="0,49,0,0" VerticalAlignment="Top" Width="198">
+                <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,5,0,0" TextWrapping="Wrap" Text="Choose building:" FontSize="16" VerticalAlignment="Top" Width="150"/>
+                <ComboBox HorizontalAlignment="Center" Height="32" Margin="0,29,0,0" VerticalAlignment="Top" Width="181" ItemsSource="{Binding Path=Buildings}" Name="buildC"  DisplayMemberPath="Name"/>
+                <TextBlock HorizontalAlignment="Left" Height="24" Margin="8,66,0,0" TextWrapping="Wrap" Text="Choose the floor:" FontSize="16" VerticalAlignment="Top" Width="150"/>
+                <ComboBox HorizontalAlignment="Center" Height="29" Margin="0,90,0,0" VerticalAlignment="Top" Width="181"  ItemsSource="{Binding Path=FloorsCount}" Name="floorC"/>
+                <Button Content="Apply" HorizontalAlignment="Center" Height="48" Margin="0,134,0,0" VerticalAlignment="Top" Width="180" FontSize="28" FontFamily="Segoe UI Semibold" Click="Button_Click"/>
+                <TextBox Name="SearchBuilding" HorizontalAlignment="Left" Height="24" Margin="10,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" PreviewTextInput="ValidationTextBox"/>
+                <Button  FontFamily="Segoe UI Semibold" Content="Search" HorizontalAlignment="Center" Height="35" Margin="0,264,0,0" VerticalAlignment="Top" Width="180" Click="Search"/>
+                <TextBlock HorizontalAlignment="Left" Height="24" Margin="8,195,0,0" TextWrapping="Wrap" Text="Enter room name or type:" FontSize="16" VerticalAlignment="Top" Width="188"/>
+                <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Left" Height="35" Margin="10,316,0,0" VerticalAlignment="Top" Width="181" Click="Button_Equipment_Drugs"/>
+                <Button Content="Schedule appointment" x:Name="Appointment" HorizontalAlignment="Left" Height="35" Margin="10,364,0,0" VerticalAlignment="Top" Width="181" Click="Button_Appointment"/>
             </Grid>
-            <Button Content="HOME" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,16,0,0" VerticalAlignment="Top" Width="73" Click="Button_Click_HOME">
+            <Button Content="HOME" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="73" Click="Button_Click_HOME">
 
             </Button>
+
             <Button Content="Map Info" Name="Map_Info" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="109,16,0,0" VerticalAlignment="Top" Width="99" Click="OnMoreInfoClick" IsEnabled="True"/>
+
 
         </Grid>
     </Grid>
