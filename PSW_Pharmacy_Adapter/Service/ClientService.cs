@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Collections.Generic;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -23,6 +24,13 @@ namespace PSW_Pharmacy_Adapter
 
         public Task StartAsync(CancellationToken cancellationToken)
             => Task.CompletedTask;
+
+
+        public async Task<List<string>> getMedications(string name)
+        {
+                ProtoResponseMedications response = await client.communicateMedicationsAsync(new ProtoMedications() {PharmacyName = name });
+                return new List<string>(response.MedicationName);
+        }
 
         public async Task<string> SendMessage(string name)
         {

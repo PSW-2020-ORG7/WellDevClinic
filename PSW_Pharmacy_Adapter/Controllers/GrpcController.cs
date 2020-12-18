@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
-    [Route("api/grpc")]
+    [Route("api/[controller]")]
+    [ApiController]
     public class GrpcController : ControllerBase
     {
         ClientService serviceGrpc;
@@ -15,10 +16,15 @@ namespace PSW_Pharmacy_Adapter.Controllers
             serviceGrpc = new ClientService();
         }
 
-        [HttpPost]
-        [Route("{name?}")]
-        public async Task<IActionResult> ExistMedicationByName(string name)
+        [HttpGet]          
+        [Route("available/{name?}")]
+        public async Task<IActionResult> isAvailableMedication(string name)     
             => Ok(await serviceGrpc.SendMessage(name));
+
+        [HttpGet]
+        [Route("medications/{pharmacyname?}")]
+        public async Task<IActionResult> getMedications(string pharmacyname)
+            => Ok(await serviceGrpc.getMedications(pharmacyname));
 
     }
 }
