@@ -4,12 +4,12 @@ package rs.ac.uns.ftn.grpc;
 option csharp_namespace = "PSW_Pharmacy_Adapter.Protos";
 
 // isAvailable
-message MessageProto {
-  string message = 1;
-  // name apoteke
+message ProtoAvailableMedication {
+  string medicationName = 1;
+  string pharmacyName = 2;
 }
 
-message MessageResponseProto {
+message ProtoResponseAvailableMedication {
   string response = 1;
   bool status = 2;
 }

@@ -32,11 +32,11 @@ namespace PSW_Pharmacy_Adapter
                 return new List<string>(response.MedicationName);
         }
 
-        public async Task<string> SendMessage(string name)
+        public async Task<string> SendMessage(string medicationName, string pharmacyName)
         {
             try
             {
-                MessageResponseProto response = await client.communicateAsync(new MessageProto() { Message = name});
+                ProtoResponseAvailableMedication response = await client.communicateAsync(new ProtoAvailableMedication() {MedicationName = medicationName, PharmacyName = pharmacyName});
                 return response.Response;
             }
             catch (Exception exc)

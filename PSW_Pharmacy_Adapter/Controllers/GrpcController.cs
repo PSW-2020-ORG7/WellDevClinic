@@ -17,9 +17,9 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [HttpGet]          
-        [Route("available/{name?}")]
-        public async Task<IActionResult> isAvailableMedication(string name)     
-            => Ok(await serviceGrpc.SendMessage(name));
+        [Route("available/{medicationName?}/{pharmacyName?}")]
+        public async Task<IActionResult> isAvailableMedication(string medicationName, string pharmacyName)     
+            => Ok(await serviceGrpc.SendMessage(medicationName, pharmacyName));
 
         [HttpGet]
         [Route("medications/{pharmacyname?}")]

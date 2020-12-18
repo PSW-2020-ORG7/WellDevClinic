@@ -15,7 +15,7 @@ function getAllMedicationFromPharmacy() {
         contentType: "text/plain",
         success: function (data) {
             //$("#viewMedication").empty();
-            //for (let med of data) {                   // ajax za dobavljanje svih lekova te apoteke
+            //for (let med of data) {                   // TODO: ajax za dobavljanje svih lekova te apoteke
             let content = '<a class="dropdown-item" href="#">';
             content += "Brufen";
             content += '</a >';
@@ -27,10 +27,11 @@ function getAllMedicationFromPharmacy() {
 }
 
 function askPharmacy() {
-    var name = "Brufen";                        // zameniti kad se doda ajax za dobijanje svih lekova
+    var medicationName = "brufen";                        // TODO: izmeni kad se doda ajax za dobijanje svih lekova
+    var pharmacyName = "Jankovic";
     $.ajax({
         method: "GET",
-        url: "../api/grpc/available/" + name,             //trebalo bi i oznaku apoteke dodati
+        url: "../api/grpc/available/" + medicationName + "/" + pharmacyName,             
         contentType: "text/plain",
         success: function (data) {
             document.getElementById('write').innerHTML = "It's sent to pharmacy. Soon you will get response.";
