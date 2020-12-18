@@ -206,12 +206,12 @@ namespace Service
             return result;
         }
 
-        public Examination NewExamination(long DoctorId, String Period)
+        public Examination NewExamination(long doctorId, String period, long patientId)
         {
-            String[] dateTimes = Period.Split("S");
+            String[] dateTimes = period.Split("S");
             DateTime start = DateTime.Parse(dateTimes[0]);
             DateTime end = DateTime.Parse(dateTimes[1]);
-            Examination examination = _upcomingRepository.Save(DoctorId, new Period(start,end));
+            Examination examination = _upcomingRepository.Save(doctorId, new Period(start,end),patientId);
             return examination;
         }
 

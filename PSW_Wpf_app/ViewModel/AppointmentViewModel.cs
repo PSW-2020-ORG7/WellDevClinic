@@ -9,6 +9,7 @@ namespace PSW_Wpf_app.ViewModel
     class AppointmentViewModel:BindableBase
     {
         BindingList<DoctorDTO> doctors = new BindingList<DoctorDTO>();
+        BindingList<Patient> patients = new BindingList<Patient>();
 
         private BindingList<string> name = new BindingList<string>();
         public BindingList<string> Name
@@ -39,10 +40,24 @@ namespace PSW_Wpf_app.ViewModel
             }
 
         }
+
+        public BindingList<Patient> Patients
+        {
+            get
+            {
+                return patients;
+            }
+            set
+            {
+                patients = value;
+                OnPropertyChanged("Patients");
+            }
+
+        }
         public AppointmentViewModel()
         {
             LoadDoctors();
-          
+            LoadPatients();
         }
 
         private async void LoadDoctors()
@@ -54,6 +69,12 @@ namespace PSW_Wpf_app.ViewModel
                
                 
             }
+        }
+
+        private async void LoadPatients()
+        {
+            Patients = new BindingList<Patient>(await WpfClient.GetAllPatient());
+            
         }
     }
 }

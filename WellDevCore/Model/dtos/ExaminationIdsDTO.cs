@@ -9,14 +9,16 @@ namespace WellDevCore.Model.dtos
     {
         public long DoctorId { get; set; }
         public String Period { get; set; }
+        public long PatientId { get; set; }
         public ExaminationIdsDTO()
         {
 
         }
-        public ExaminationIdsDTO(long doctorId, String period)
+        public ExaminationIdsDTO(long doctorId, String period, long patientId)
         {
             DoctorId = doctorId;
             Period = period;
+            PatientId = patientId;
         }
     }
 }
