@@ -67,16 +67,6 @@ namespace bolnica.Controller
             return _examinationService.SaveFinishedExamination(examination);
         }
 
-        public List<Examination> SearchPreviousExamination(string date, string doctorName, string drugName, string speacialistName, long id)
-        {
-            return _examinationService.SearchPreviousExamination(date, doctorName, drugName, speacialistName, id);
-        }
-
-        public List<Examination> SearchPreviousExaminations(string date, string date2, string doctorName, string drugName, string speacialistName, string text, bool Radio1, bool Radio2, bool Radio3)
-        {
-            return _examinationService.SearchPreviousExaminations(date, date2, doctorName, drugName, speacialistName, text, Radio1, Radio2, Radio3);
-        }
-
         public Examination NewExamination(long DoctorId, String Period)
         {
             Examination examination = _examinationService.NewExamination(DoctorId, Period);

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -14,8 +11,6 @@ namespace PSW_Wpf_app.Drawing
     {
         private Ellipse ellipse;
         private FloorElement floorElement;
-        private StackPanel panel;
-        private TextBlock name;
 
         public DrawEllipseElementFloor(FloorElement floorElement)
         {
@@ -47,12 +42,6 @@ namespace PSW_Wpf_app.Drawing
         public void CustomizeFoundRoom()
         {
             ellipse.Stroke = new SolidColorBrush(Colors.Red);
-        }
-
-        private void CustomizeRoom()
-        {
-            panel.Background = new SolidColorBrush(Colors.CadetBlue);
-            ellipse.Name = floorElement.Name;
         }
 
         private void CustomizeCounter()

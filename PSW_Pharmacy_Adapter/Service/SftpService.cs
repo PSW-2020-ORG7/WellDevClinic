@@ -2,8 +2,6 @@
 using Renci.SshNet;
 using System;
 using System.IO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 namespace PSW_Pharmacy_Adapter.Service
@@ -12,28 +10,21 @@ namespace PSW_Pharmacy_Adapter.Service
     {
 
         private readonly SftpClient _sftpClient;
+        
 
         public SftpService(SftpClient sftpClient)
         {
             _sftpClient = sftpClient;
         }
 
-        public bool UploadFileToSftpServer(string path)
+        public bool UploadFileToSftpServer(string filePath)
         {
-            if (File.Exists(path))
-            {
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(path, false))
-                {
-                    file.WriteLine("Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Now.ToShortDateString() + "\n" + "Brufen" + "\n" + "3");
-                }
-            }
-                
             _sftpClient.Connect();
             try
             {
-                using (Stream stream = File.OpenRead(path))
+                using (Stream stream = File.OpenRead(filePath))
                 {
-                    _sftpClient.UploadFile(stream, Path.GetFileName(path));
+                    _sftpClient.UploadFile(stream, Path.GetFileName(filePath));
                 }
             }
             catch(Exception e)
@@ -44,6 +35,20 @@ namespace PSW_Pharmacy_Adapter.Service
             _sftpClient.Disconnect();
             return true;
             
+        }
+
+        public bool SendPrescriptionfile(EPrescriptionDto prescription, string path)
+        {
+            //if (File.Exists(PRESCRIPTION_PATH))
+            //{
+                using (StreamWriter file = new StreamWriter(path, false))
+                {
+                    file.WriteLine(prescription.PatientName + "\n" + prescription.Jmbg + "\n" + prescription.StartTime.ToShortDateString());
+                    foreach (MedicineDto m in prescription.Medicines)
+                        file.WriteLine(m.Name + "\n" + m.Amount);
+                }
+            //}
+            return UploadFileToSftpServer(path);
         }
 
     }

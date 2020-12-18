@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using Moq;
+﻿using Moq;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service;
 using Shouldly;
+using System.Collections.Generic;
+using System.Net.Http;
 using Xunit;
 
 namespace UnitTests.Pharmacy_Adapter_Tests

@@ -9,9 +9,9 @@ namespace PSW_Wpf_app.ViewModel
     {
         private DrawBuildingEllipse drawBuildingEllipse;
         private DrawBuildingRectangle drawBuildingRectangle;
+        private List<GraphicElement> elements = new List<GraphicElement>();
         public MainBuildingsViewModel(Canvas canvasBuilding)
         {
-            List<GraphicElement> elements = new List<GraphicElement>();
             elements = ShapeViewModel.Read();
             drawBuildingEllipse = new DrawBuildingEllipse();
             drawBuildingRectangle = new DrawBuildingRectangle();

@@ -21,7 +21,7 @@ namespace PSW_Wpf_app
         public string User
         {
             get { return user; }
-            set { }
+            set { user = value; }
 
         }
         public List<FloorElement> FoundRooms

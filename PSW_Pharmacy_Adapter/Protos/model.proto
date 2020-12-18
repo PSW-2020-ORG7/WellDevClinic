@@ -5,12 +5,12 @@ option csharp_namespace = "PSW_Pharmacy_Adapter.Protos";
 
 message MessageProto {
   string message = 1;
-  int64 randomInteger = 2;
+  // id apoteke
 }
 
 message MessageResponseProto {
   string response = 1;
-  string status = 2;
+  bool status = 2;
 }
 
 

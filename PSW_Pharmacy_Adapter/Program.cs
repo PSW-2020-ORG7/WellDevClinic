@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service;
 
 namespace PSW_Pharmacy_Adapter
 {
     public class Program
     {
-        public static List<Message> Messages = new List<Message>();
-
         public static void Main(string[] args)
         {
             var consumer = new Task(() => CreateHostBuilderForRabbitMQ(args).Build().Run());
@@ -30,11 +26,11 @@ namespace PSW_Pharmacy_Adapter
                 });
 
 
-        public static IHostBuilder CreateHostBuilderForGrpc(string[] args) =>
+        public static IHostBuilder CreateHostBuilderForGrpc(string[] args) =>           //ne  brisi
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<ClientScheduledService>();
+                    services.AddHostedService<ClientService>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -43,11 +39,11 @@ namespace PSW_Pharmacy_Adapter
 
         private static int calculatePort()
         {
-            var port = System.Environment.GetEnvironmentVariable("PORT");
+            var port = Environment.GetEnvironmentVariable("PORT");
             if (port == null)
                 return 64724;
             else
-                return Int32.Parse(System.Environment.GetEnvironmentVariable("PORT"));
+                return int.Parse(Environment.GetEnvironmentVariable("PORT"));
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

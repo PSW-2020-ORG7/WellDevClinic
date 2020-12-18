@@ -39,6 +39,7 @@
             });
         }
 
+        
         $.ajax({
             method: "POST",
             url: "../api/apikey/add",
@@ -46,15 +47,22 @@
             data: jsonApi,
             success: function (data) {
                 if (data) {
-                    alert("Succesfully added to database");
-                    window.location.assign(window.location.origin += "/partnerPharmacies.html");
+                    $('#message').html('Succesfully added to database.');
+                    $("#regAction").show();
+                    $("#btnOk").click(function () {
+                        window.location.assign(window.location.origin += "/partnerPharmacies.html");
+                    });
                 }
             },
             error: function (e) {
-                if (name & api & url) {
+                $("#message").empty();
+                if (api != "" & name != "" & url != "") {
                     $("#txtName").css("border-width", "1");
-                    alert("Pharmacy with name " + name + " already exists!");
-                }      
+                    $('#message').html("Pharmacy with name " + name + " already exists!");
+                } else {
+                    $('#message').html("All fields are required!");
+                }
+                $("#regAction").show();
             }
         })
     })

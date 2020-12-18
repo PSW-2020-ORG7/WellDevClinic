@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 
@@ -8,6 +9,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
     public class MedicationController : ControllerBase
     {
         private readonly IMedicationService _medicationService;
+        private ClientService serviceGrpc;
 
         public MedicationController(IMedicationService medicationService) 
         {

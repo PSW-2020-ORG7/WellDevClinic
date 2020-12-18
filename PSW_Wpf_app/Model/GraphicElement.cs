@@ -26,38 +26,38 @@ namespace PSW_Wpf_app.Model
         public string Type
         {
             get { return type; }
-            set { }
+            set { type = value; }
         }
 
         public int Width
         {
             get { return width; }
-            set { }
+            set { width = value; }
         }
 
         public int Height
         {
             get { return height; }
-            set { }
+            set { height = value; }
         }
     
         public int X
         {
             get { return x; }
-            set { }
+            set { x = value; }
         }
         
         public int Y
         {
             get { return y; }
-            set { }
+            set { y = value; }
 
         }
 
         public string Name
         {
             get { return name; }
-            set { }
+            set { name = value; }
 
         }
 

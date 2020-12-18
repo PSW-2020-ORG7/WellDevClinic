@@ -21,6 +21,11 @@ namespace PSW_Pharmacy_Adapter.Service
                            (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/prescription"))
                            .Content.ReadAsStringAsync().Result);
 
+        public async Task<Prescription> GetPrescription(long id)
+            => JsonConvert.DeserializeObject<Prescription>(
+                           (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/prescription/" + id))
+                           .Content.ReadAsStringAsync().Result);
+
 
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PSW_Pharmacy_Adapter.Dto;
 using PSW_Pharmacy_Adapter.Service;
 using Renci.SshNet;
 
@@ -10,18 +10,16 @@ namespace PSW_Pharmacy_Adapter.Controllers
     public class SftpController : ControllerBase
     {
         private readonly SftpService _sftpService;
+        private const string PRESCRIPTION_PATH = @"wwwroot/Prescription.txt";
 
         public SftpController() 
         {
-            _sftpService = new SftpService(new SftpClient("192.168.1.12", 22, "tester", "password"));
+            _sftpService = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
         }
 
-        [Route("sendReport")]
-        public bool UploadFileToSftpServer(String path)
-        {
-            path = @"wwwroot/example.txt";
-            return _sftpService.UploadFileToSftpServer(path);
-        }
+        [Route("sendPrescription")]
+        public bool SendPrescriptionFile(EPrescriptionDto prescription)
+            => _sftpService.SendPrescriptionfile(prescription, PRESCRIPTION_PATH);
 
     }
 }

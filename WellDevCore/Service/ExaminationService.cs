@@ -46,7 +46,6 @@ namespace Service
         public ExaminationService( IExaminationPreviousRepository previousRepository)
         {
               _previousRepository = previousRepository;
-
         }
 
         public void Delete(Examination entity)
@@ -110,7 +109,6 @@ namespace Service
             foreach (Examination examination in GetAll())
                 if (DateTime.Compare(examination.Period.StartDate.Date, period.StartDate.Date) >= 0 && DateTime.Compare(examination.Period.EndDate.Date, period.EndDate.Date) <= 0 && getExaminationRoom(examination).Id == room.Id)
                         examinations.Add(examination);
-
             return examinations;
         }
 
@@ -120,7 +118,6 @@ namespace Service
             foreach (Examination examination in GetAllPrevious())
                 if (DateTime.Compare(examination.Period.StartDate.Date, period.StartDate.Date) >= 0 && DateTime.Compare(examination.Period.EndDate.Date, period.EndDate.Date) <= 0 && getExaminationRoom(examination).Id == room.Id)
                     examinations.Add(examination);
-
             return examinations;
         }
 
@@ -143,151 +140,6 @@ namespace Service
         {
             return (List<Examination>)_previousRepository.GetAllEager();
         }
-
-        private Boolean CheckDate(DateTime date, Examination examination)
-        { 
-            return examination.Period.StartDate.Date == date.Date;
-        }
-
-        private Boolean CheckDateAdvanced(String date1, String date2, Examination examination)
-        {
-            if (date1 == "" || date2 == "")
-                return false;
-            DateTime dateTime = DateTime.ParseExact(date1, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            DateTime dateTime2 = DateTime.ParseExact(date2, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            return examination.Period.StartDate.Date >= dateTime && examination.Period.StartDate.Date <= dateTime2;
-        }
-
-        private Boolean CheckDoctor(String name, Examination examination)
-        {
-            if (name == "")
-            {
-                return false;
-            }
-            String doctorName = examination.Doctor.FullName.ToLower();
-            return doctorName.Contains(name.ToLower());
-        
-        }
-        /// <summary>
-        /// Searches examinations of specified user by date, doctor, drug and specialist
-        /// </summary>
-        /// <param name="date">date</param>
-        /// <param name="doctorName">name of doctor</param>
-        /// <param name="drugName">name of drug</param>
-        /// <param name="speacialistName">name of specialist</param>
-        /// <param name="user">specified user</param>
-        /// <returns>list of examinations</returns>
-
-        public List<Examination> SearchPreviousExamination(String date, String doctorName, String drugName, String speacialistName, long id) 
-        { 
-            List<Examination> result = new List<Examination>();
-            List<Examination> examinations = GetFinishedExaminationsByUser(id).ToList();
-            if (date != "")
-            {
-                DateTime dateTime = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                foreach (Examination examination in examinations)
-                {
-                    if (CheckDate(dateTime, examination) && CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                    {
-                        result.Add(examination);
-                    }
-                }
-            }
-            else
-            {
-                foreach (Examination examination in examinations)
-                {
-                    if (CheckDoctor(doctorName, examination) && _prescriptionService.CheckDrug(drugName, examination.Prescription) && _referralService.CheckSpecialist(speacialistName, examination.Refferal))
-                    {
-                        result.Add(examination);
-                    }
-                }
-            }
-            return result;
-        }
-
-        public List<Examination> SearchPreviousExaminations(String date1, String date2, String doctorName, String drugName, String speacialistName, String text, Boolean Radio1, Boolean Radio2, Boolean Radio3)
-        {
-            List<Examination> result = new List<Examination>();
-            List<Examination> examinations = GetAllPrevious().ToList();
-            foreach (Examination examination in examinations)
-            {
-                var date_log = CheckDateAdvanced(date1, date2, examination);
-                var doc_log = CheckDoctor(doctorName, examination);
-                var spec_log = _referralService.CheckSpecialist(speacialistName, examination.Refferal);
-                var text_log = _referralService.CheckText(text, examination.Refferal);
-                var drug_log = _prescriptionService.CheckDrug(drugName, examination.Prescription);
-                var provera = true;
-
-                if (drugName != "")
-                {
-                    provera = drug_log;
-                }
-                else
-                {
-                    provera = spec_log;
-                }
-
-                if (Radio1 && Radio2 && Radio3)
-                {
-                    if (date_log && doc_log && provera && text_log)
-                    {
-                        result.Add(examination);
-                    }
-                }
-                if (!Radio1 && Radio2 && Radio3)
-                {
-                    if ((date_log || doc_log) && provera && text_log)
-                    {
-                        result.Add(examination);
-                    }
-                }
-                if (Radio1 && !Radio2 && Radio3)
-                {
-                    if ((date_log || provera) && doc_log  && text_log)
-                    {
-                        result.Add(examination);
-                    }
-                }
-                if (Radio1 && Radio2 && !Radio3)
-                {
-                    if ((date_log || text_log) && doc_log && provera )
-                    {
-                        result.Add(examination);
-                    }
-                }
-                if (!Radio1 && !Radio2 && Radio3)
-                {
-                    if ((date_log || doc_log || provera) && text_log)
-                    {
-                        result.Add(examination);
-                    }
-                }
-                if (!Radio1 && Radio2 && !Radio3)
-                {
-                    if ((date_log || doc_log || text_log) && provera )
-                    {
-                        result.Add(examination);
-                    }
-                }
-                if (Radio1 && !Radio2 && !Radio3)
-                {
-                    if ((date_log || provera || text_log) && doc_log)
-                    {
-                        result.Add(examination);
-                    }
-                }
-                if (!Radio1 && !Radio2 && !Radio3)
-                {
-                    if (date_log || doc_log || provera || text_log)
-                    {
-                        result.Add(examination);
-                    }
-                }
-            }
-            return result;
-        }
-
 
         public List<Examination> GetExaminationsByFilter(ExaminationDTO examinationDTO, Boolean upcomingOnly)
         {
@@ -353,7 +205,6 @@ namespace Service
             }
             return result;
         }
-
 
         public Examination NewExamination(long DoctorId, String Period)
         {

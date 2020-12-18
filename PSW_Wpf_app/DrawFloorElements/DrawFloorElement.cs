@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Controls;
 using PSW_Wpf_app.Model;
 using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Windows;
 
 namespace PSW_Wpf_app.Drawing
 {

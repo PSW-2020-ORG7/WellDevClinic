@@ -1,4 +1,5 @@
-﻿using PSW_Pharmacy_Adapter.Dto;
+﻿using PSW_Pharmacy_Adapter.Converter;
+using PSW_Pharmacy_Adapter.Dto;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,13 +27,13 @@ namespace PSW_Pharmacy_Adapter.Model
             Status = status;
         }
 
-        public ActionAndBenefit(ActionAndBenefitDtoConverted actionDto, ActionStatus status)
+        public ActionAndBenefit(ActionAndBenefitDto actionDto, ActionStatus status)
         {
             Id = actionDto.Id;
             PharmacyName = actionDto.PharmacyName;
             MessageAboutAction = actionDto.MessageAboutAction;
-            StartDate = actionDto.StartDate;
-            EndDate = actionDto.EndDate;
+            StartDate = DateTimeConverter.UnixToDateTime(actionDto.StartDate);
+            EndDate = DateTimeConverter.UnixToDateTime(actionDto.EndDate);
             Status = status;
         }
     }
