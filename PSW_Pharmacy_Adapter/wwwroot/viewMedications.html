@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/actionsAndBenefits.css" />
 </head>
@@ -26,14 +25,13 @@
     <div class="filter">
         <button class="btnFilter">☰ Filters</button>
         <span>Sort by:</span>
-        <select id="sort" onchange="getSortData()">
+        <select id="sort" onchange="sortData()">
             <option value="list">List Order</option>
-            <option value="phName">Name</option>
-            <option value="start">Starting date</option>
-            <option value="expire">Expiry date</option>
+            <option value="medName">Name</option>
+            <option value="amount">Amount</option>
         </select>
         <span>Order:</span>
-        <select id="order" onchange="getSortData()">
+        <select id="order" onchange="sortData()">
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
         </select>
@@ -41,8 +39,16 @@
         <div id="divFilterTable">
             <form>
                 <table>
-                    <tr><td>From date:</td><td>To date:</td></tr>
-                    <tr><td><input type="date" /></td><td><input type="date" /></td></tr>
+                    <tr>
+                        <td>From amount:</td>
+                        <td>To amount:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="number" id="amountFrom"/></td>
+                        <td><input type="number" id="amountTo"/></td>
+                        <td><input type="button" class="btn btn-primary" onclick="filter()" value="Submit"/></td>
+                    </tr>
 
                 </table>
             </form>
@@ -52,10 +58,7 @@
 
     
     <div class="loader"></div>
-        <ul class="list-group list-group-flush">
-            <div id="viewMedication"></div>
-        </ul>
-    </div>
+    <div id="viewMedication"></div>
 
 
 </body>

@@ -12,6 +12,7 @@
 
 function viewNewSales(sales) {
 	$(".salesNotifications").empty();
+	var num = 0;
 	for (let act of sales) {
 		if (act.status != 0)
 			continue;
@@ -27,9 +28,11 @@ function viewNewSales(sales) {
 		content += '</div></div>';
 		content += '</div>';
 
+		num += 1;
 
 		$(".salesNotifications").append(content);
 	}
+	$('#num').html(num);
 }
 
 function saveSale(id) {

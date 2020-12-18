@@ -1,12 +1,14 @@
-﻿$(document).ready(function () {
+﻿var allPrescriptions;
+
+$(document).ready(function () {
 	$.ajax({
 		method: "GET",
 		url: "../api/prescription",
 		contentType: "application/json",
 		success: function (data) {
-			console.log(data);
+			allPrescriptions = data;
 			$(".loader").css("display", "none");
-			getAllPrescriptions(data);
+			viewAllPrescriptions(allPrescriptions);
 		},
 	});
 
@@ -17,14 +19,18 @@
 		success: function (data) {
 			console.log(data);
 			$(".loader").css("display", "none");
-			getAllPrescriptions(data);
+			viewAllPrescriptions(data);
 		},
 	});*/
+
+	$(".btnFilter").click(function () {
+		$("#divFilterTable").slideToggle();
+	})
 });
 
-function getAllPrescriptions(data) {
+function viewAllPrescriptions(prescriptions) {
 	$("#viewPrescription").empty();
-	for (let pre of data) {
+	for (let pre of prescriptions) {
 		var content = '<div class="card" id="' + pre.id + '">';
 		content += '<div class="card-body">';
 		content += '<div class="data">';
@@ -32,18 +38,22 @@ function getAllPrescriptions(data) {
 		content += '<tr><td float="right">Id:</td><td>';
 		content += pre.id;
 		content += '</td></tr>';
+		//content += '<tr><td>Patient name:</td>';
+		//content += '<td>' + pre.currentPatient.name + '</td></tr>';
 		content += '<tr><td float="right">Start date:</td><td>';
 		content += ISOtoShort(new Date(pre.period.startDate));
 		content += '</td></tr>';
 		content += '<tr><td float="right">End date:</td><td>';
 		content += ISOtoShort(new Date(pre.period.endDate));
 		content += '</td></tr>';
-		//content += '<tr><td float="right">Prescription medicines:</td><td>';
-		//var c;
-		//for (c = 0; c < data.medication.length; c++) {
-			//content += data.medication[c].name;
-		//}
-		//content += '</td></tr>';
+		if (pre.medication != null) {
+			content += '<tr><td float="right">Prescription medicines:</td>';
+			content += '<td>';
+			for (let med of pre.medication)
+				content += med.name + '<br/>';
+			content += '</td>';
+		}
+		content += '</tr>';
 		content += '<tr><td colspan="2">';
 		content += '<img id="qrcode" src="images/qrcode1.png"/>';
 		content += '</td></tr>';
@@ -59,6 +69,60 @@ function getAllPrescriptions(data) {
 		content += '</div>';
 		$("#viewPrescription").append(content);
 	}
+}
+
+function sortData() {
+	let sort = $("#sort").val();
+	let order = $("#order").val();
+	sortCards(sort, order);
+	viewAllPrescriptions(allPrescriptions);
+}
+
+// Dates are in format : yyyy-MM-dd so we can compare them as strings
+function sortCards(sort, order) {
+	for (let i = 0; i < (allPrescriptions.length - 1); i++) {
+		let minIdx = i;
+		for (let j = i + 1; j < allPrescriptions.length; j++) {
+			if (sort == "patName") {
+				if (allPrescriptions[minIdx].currentPatient.name.toLowerCase() > allPrescriptions[j].currentPatient.name.toLowerCase())
+					minIdx = j;
+			} else if (sort == "start") {
+				if (allPrescriptions[minIdx].startDate > allPrescriptions[j].startDate)
+					minIdx = j;
+			} else if (sort == "expire") {
+				if (allPrescriptions[minIdx].endDate > allPrescriptions[j].endDate)
+					minIdx = j;
+			} else if (sort == "list") {
+				if (allPrescriptions[minIdx].id > allPrescriptions[j].id)
+					minIdx = j;
+			}
+		}
+		let temp = allPrescriptions[i];
+		allPrescriptions[i] = allPrescriptions[minIdx];
+		allPrescriptions[minIdx] = temp;
+	}
+	if (order == 'desc')
+		allPrescriptions.reverse();
+}
+
+function filter() {
+	filtered = [];
+	let startDate = $("#start").val();
+	let endDate = $("#end").val();
+
+	if (startDate != "" && endDate != "" && startDate > endDate) {
+		alert("Start date can't be greater than end date!")
+		return;
+	}
+
+	for (let pre of allPrescriptions) {
+		if (startDate && pre.startDate < startDate)
+			continue;
+		if (endDate && pre.endDate > endDate)
+			continue;
+		filtered.push(pre);
+	}
+	viewAllPrescriptions(filtered);
 }
 
 function sendToPharmacies(id) {

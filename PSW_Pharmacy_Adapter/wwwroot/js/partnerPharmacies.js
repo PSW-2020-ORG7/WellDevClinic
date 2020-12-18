@@ -29,7 +29,7 @@ function viewApis(apiDb) {
         content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deletePharmacyModal"';
         content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button></td> ';
         content += '<td><button class="btn btn-primary"';
-        content += ' onclick="getMedicines(\'' + api.nameOfPharmacy + '\')"> Medication stock</button> ';
+        content += ' onclick="getMedications(\'' + api.nameOfPharmacy + '\')"> Medication stock</button> ';
         content += '</td></tr>'
         $("#apiTable").append(content);
     }
@@ -52,6 +52,7 @@ function deleteEntry(id) {
     })
 }
 
+
 function getMedicines(id) {
     $.ajax({
         method: "GET",
@@ -66,4 +67,9 @@ function getMedicines(id) {
             }
         },
     });
+}
+
+function getMedications(event) {
+    //window.location.assign(window.location.origin += "/api/viewMedicationStock.html?id=" + event.id);
+    window.location.assign(window.location.origin += "/viewMedicationStock.html");
 }

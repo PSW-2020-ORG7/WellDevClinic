@@ -45,11 +45,11 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                ActionAndBenefitDtoConverted actionAndBenefitConverted = new ActionAndBenefitDtoConverted(
-                                                                                        JsonConvert.DeserializeObject<ActionAndBenefitDto>(
-                                                                                        jsonMessage.ToString()));
-                Console.WriteLine(" [x] Received {0}", actionAndBenefitConverted.PharmacyName);
-                _ActionRepository.Save(new ActionAndBenefit(actionAndBenefitConverted, ActionStatus.pending));
+                ActionAndBenefit actionAndBenefit = new ActionAndBenefit(
+                                                     JsonConvert.DeserializeObject<ActionAndBenefitDto>(
+                                                     jsonMessage.ToString()), ActionStatus.pending);
+                Console.WriteLine(" [x] Received {0}", actionAndBenefit.PharmacyName);
+                _ActionRepository.Save(actionAndBenefit);
             };
             channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,
@@ -67,9 +67,7 @@ namespace PSW_Pharmacy_Adapter.Service
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            return Task.CompletedTask;
-        }
+            => Task.CompletedTask;
 
     }
 }
