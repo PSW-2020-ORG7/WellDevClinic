@@ -1,4 +1,4 @@
-﻿var medications;
+﻿var allMedications;
 
 $(document).ready(function () {
     $.ajax({
@@ -6,11 +6,15 @@ $(document).ready(function () {
         url: "../api/medication",
         contentType: "application/json",
         success: function (data) {
-			medications = data;
-			viewAllMedications(medications);
+			allMedications = data;
+			viewAllMedications(allMedications);
 			$(".loader").css("display", "none");
         },
-    });
+	});
+
+	$(".btnFilter").click(function () {
+		$("#divFilterTable").slideToggle();
+	})
 });
 
 function viewAllMedications(meds) {
@@ -36,32 +40,51 @@ function viewAllMedications(meds) {
 	}
 }
 
-function getSortData() {
+function sortData() {
 	let sort = $("#sort").val();
 	let order = $("#order").val();
 	sortCards(sort, order);
-	viewAllMedications(medications);
+	viewAllMedications(allMedications);
 }
 
 function sortCards(sort, order) {
-	for (let i = 0; i < (medications.length - 1); i++) {
+	for (let i = 0; i < (allMedications.length - 1); i++) {
 		let minIdx = i;
-		for (let j = i + 1; j < medications.length; j++) {
+		for (let j = i + 1; j < allMedications.length; j++) {
 			if (sort == "medName") {
-				if (medications[minIdx].name.toLowerCase() > medications[j].name.toLowerCase())
+				if (allMedications[minIdx].name.toLowerCase() > allMedications[j].name.toLowerCase())
 					minIdx = j;
 			} else if (sort == "amount") {
-				if (medications[minIdx].amount > medications[j].amount)
+				if (allMedications[minIdx].amount > allMedications[j].amount)
 					minIdx = j;
 			} else if (sort == "list") {
-				if (medications[minIdx].id > medications[j].id)
+				if (allMedications[minIdx].id > allMedications[j].id)
 					minIdx = j;
 			}
 		}
-		let temp = medications[i];
-		medications[i] = medications[minIdx];
-		medications[minIdx] = temp;
+		let temp = allMedications[i];
+		allMedications[i] = allMedications[minIdx];
+		allMedications[minIdx] = temp;
 	}
 	if (order == "desc")
-		medications.reverse();
+		allMedications.reverse();
+}
+
+function filter() {
+	let amountFrom = $("#amountFrom").val();
+	let amountTo = $("#amountTo").val();
+	if (amountFrom != "" && amountTo != "" && amountFrom > amountTo) {
+		alert("Parameter amount from can't be less than amount to!");
+		return;
+    }
+
+	let filter = [];
+	for (let med of allMedications) {
+		if (amountFrom != "" && med.amount < amountFrom)
+			continue;
+		if (amountTo != "" && med.amount > amountTo)
+			continue;
+		filter.push(med);
+	}
+	viewAllMedications(filter);
 }

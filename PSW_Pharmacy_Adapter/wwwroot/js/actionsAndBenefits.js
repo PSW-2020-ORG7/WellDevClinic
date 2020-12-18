@@ -1,4 +1,4 @@
-﻿var actions;
+﻿var allActions;
 var nameList = [];
 
 $(document).ready(function () {
@@ -7,8 +7,8 @@ $(document).ready(function () {
 		url: "../api/actionsandbenefits/all",
 		contentType: "application/json",
 		success: function (data) {
-			actions = data;
-			viewActionsAndBenefits(actions);
+			allActions = data;
+			viewActionsAndBenefits(allActions);
 			$(".loader").css("display", "none");
 			$("#viewAction").css("display", "block");
 		}
@@ -61,69 +61,64 @@ function viewActionsAndBenefits(data) {
 	}
 }
 
-function getSortData() {
+function sortData() {
 	let sort = $("#sort").val();
 	let order = $("#order").val();
 	sortCards(sort, order);
-	viewActionsAndBenefits(actions);
+	viewActionsAndBenefits(allActions);
 }
 
 // Dates are in format : yyyy-MM-dd so we can compare them as strings
 function sortCards(sort, order) {
-	for (let i = 0; i < (actions.length - 1); i++) {
+	for (let i = 0; i < (allActions.length - 1); i++) {
 		let minIdx = i;
-		for (let j = i + 1; j < actions.length; j++) {
+		for (let j = i + 1; j < allActions.length; j++) {
 			if (sort == "phName") {
-				if (actions[minIdx].pharmacyName.toLowerCase() > actions[j].pharmacyName.toLowerCase())
+				if (allActions[minIdx].pharmacyName.toLowerCase() > allActions[j].pharmacyName.toLowerCase())
 					minIdx = j;
 			} else if (sort == "start") {
-				if (actions[minIdx].startDate > actions[j].startDate)
+				if (allActions[minIdx].startDate > allActions[j].startDate)
 					minIdx = j;
 			} else if (sort == "expire") {
-				if (actions[minIdx].endDate > actions[j].endDate)
+				if (allActions[minIdx].endDate > allActions[j].endDate)
 					minIdx = j;
 			} else if (sort == "list") {
-				if (actions[minIdx].id > actions[j].id)
+				if (allActions[minIdx].id > allActions[j].id)
 					minIdx = j;
             }
 		}
-		let temp = actions[i];
-		actions[i] = actions[minIdx];
-		actions[minIdx] = temp;
+		let temp = allActions[i];
+		allActions[i] = allActions[minIdx];
+		allActions[minIdx] = temp;
 	}
 	if (order == 'desc')
-		actions.reverse();
+		allActions.reverse();
 }
 
 function filter() {
-	$.ajax({
-		method: "GET",
-		url: "../api/actionsandbenefits/all",
-		contentType: "application/json",
-		success: function (data) {
-			actions = [];
-			let name = $("#selectname").val();
-			let startDate = $("#start").val();
-			let endDate = $("#end").val();
-			let fav = $("#fav").is(":checked");
+	filtered = [];
+	let name = $("#selectname").val();
+	let startDate = $("#start").val();
+	let endDate = $("#end").val();
+	let fav = $("#fav").is(":checked");
 
-			for (let act of data) {
-				if (name != "all" && act.pharmacyName != name)
-					continue;
-				if (startDate)
-					if (act.startDate < startDate)
-						continue;
-				if (endDate)
-					if (act.endDate > endDate)
-						continue;
-				if (act.status != 2 && fav == true)
-					continue;
-				actions.push(act);
-            }
+	if (startDate != "" && endDate != "" && startDate > endDate) {
+		alert("Start date can't be greater than end date!")
+		return;
+    }
 
-			getSortData();
-		}
-	});
+	for (let act of allActions) {
+		if (name != "all" && act.pharmacyName != name)
+			continue;
+		if (startDate && act.startDate < startDate)
+			continue;
+		if (endDate && act.endDate > endDate)
+			continue;
+		if (act.status != 2 && fav == true)
+			continue;
+		filtered.push(act);
+	}
+	viewActionsAndBenefits(filtered);
 }
 
 function deleteAction(id) {
@@ -147,7 +142,7 @@ function deleteAction(id) {
 
 function toggleFav(id) {
 	let newStatus;
-	for (let act of actions)
+	for (let act of allActions)
 		if (act.id == id) {
 			if (act.status != 2)
 				newStatus = 2;
@@ -163,7 +158,7 @@ function toggleFav(id) {
 		url: "../api/actionsandbenefits/status/" + id + "/" + newStatus,
 		contentType: "application/json",
 		success: function (data) {
-			viewActionsAndBenefits(actions);
+			viewActionsAndBenefits(allActions);
 		}
 	});
 }
