@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package rs.ac.uns.ftn.grpc;
+option csharp_namespace = "PSW_Pharmacy_Adapter.Protos";
+
+// getMedications
+message ProtoMedications {
+	string pharmacyName = 1;
+}
+
+message ProtoResponseMedications{
+	repeated string medicationName = 1;
+}
+
+
