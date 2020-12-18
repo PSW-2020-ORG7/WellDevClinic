@@ -6,4 +6,5 @@ import "Protos/model.proto";
 
 service SpringGrpcService {
   rpc communicate (MessageProto) returns (MessageResponseProto);
+  rpc communicateMedications (ProtoMedications) returns (ProtoResponseMedications);
 }

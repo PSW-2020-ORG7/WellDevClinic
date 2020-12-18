@@ -6,4 +6,5 @@ import "Protos/model.proto";
 
 service NetGrpcService {
   rpc transfer (MessageProto) returns (MessageResponseProto);
+  rpc transferMedications (ProtoMedications) returns (ProtoResponseMedications);
 }
