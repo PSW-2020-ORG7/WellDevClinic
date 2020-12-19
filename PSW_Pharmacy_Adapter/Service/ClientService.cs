@@ -39,7 +39,7 @@ namespace PSW_Pharmacy_Adapter
                 ProtoResponseAvailableMedication response = await client.communicateAsync(new ProtoAvailableMedication() {MedicationName = medicationName, PharmacyName = pharmacyName});
                 return response.Response;
             }
-            catch (Exception exc)
+            catch
             {
                 return "Try again later.";
             }

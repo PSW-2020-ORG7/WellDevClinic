@@ -11,10 +11,6 @@
             }
         },
     });
-
-    $("#sub").click(function () {
-        
-    })
 });
 
 function viewApis(apiDb) {
@@ -52,24 +48,8 @@ function deleteEntry(id) {
     })
 }
 
-
-function getMedicines(id) {
-    $.ajax({
-        method: "GET",
-        url: "../api/medication/check/" + id,
-        contentType: "application/json",
-        success: function (changes) {
-            if (changes) {
-                for (let med in changes)
-                    alert("Changes detected for:" + med.id + " !!!");
-            } else {
-                alert("All good. No differences in medication structure");
-            }
-        },
-    });
-}
-
-function getMedications(event) {
-    //window.location.assign(window.location.origin += "/api/viewMedicationStock.html?id=" + event.id);
-    window.location.assign(window.location.origin += "/viewMedicationStock.html");
+function getMedications(id) {
+    $("#phName").html(id);
+    $("#txtResponse").val("");
+    $("#medModal").slideDown("fast");
 }
