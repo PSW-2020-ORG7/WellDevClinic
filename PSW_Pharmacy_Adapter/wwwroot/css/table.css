@@ -1,37 +1,17 @@
-﻿tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(odd) {
-    background-color: #c7c7c7;
-}
-
-tr:hover {
-    background-color: #686868;
-    cursor: pointer;
-}
-
-td, th {
-    border: 1px solid #ddd;
-    padding: 8px;
+﻿table {
+    width: 100%;
+    margin-top: 30px;
 }
 
 th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center;
-    background-color: #0031d7;
-    color: white;
+    background: #333;
+    color: #fff;
 }
 
-    th:hover {
-        cursor: default;
-    }
-
-#apiTable {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    padding: 10px 25px;
-    margin-top: 20px;
+td {
+    padding: 5px;
 }
 
+tr {
+    background: whitesmoke;
+}
