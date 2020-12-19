@@ -51,15 +51,19 @@ namespace Repository
                 businessDay.doctor = null;
             }*/
            
+
             /*
             List<BusinessDay> businessDays = new List<BusinessDay>();
+
             if (doctor.BusinessDay != null)
             {
                 foreach (BusinessDay day in doctor.BusinessDay)
                 {
+                   // day.doctor = null;
                     businessDays.Add(_businessDayRepository.GetEager(day.GetId()));
                 }
             }
+
             doctor.BusinessDay = businessDays;
             */
             doctor.Specialty = _specialityRepository.Get(doctor.Specialty.GetId());
@@ -67,6 +71,7 @@ namespace Repository
             //doctor.Address.Town = _townRepository.GetEager(doctor.Address.Town.GetId());
             //doctor.Address.Town.State = _stateRepository.GetEager(doctor.Address.Town.State.GetId());
             //doctor.DoctorGrade = _doctorGradeRepository.Get(doctor.DoctorGrade.GetId());
+
 
             return doctor;
         }

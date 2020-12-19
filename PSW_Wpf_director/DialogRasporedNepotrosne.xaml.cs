@@ -49,14 +49,14 @@ namespace PSW_Wpf_director
 
             foreach (Room room in rooms)
             {
-                foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+              /*  foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
                 {
                     if (pair.Key.Id == _selectedEquipment.Id)
                     {
                         result.Add(new RoomEquipment(room.Id, room.RoomCode, pair.Value, _selectedEquipment.Name));
                         rasporedjeno += pair.Value;
                     }
-                }
+                }*/
             }
 
             txtNerasporedjeno.Text = "" + (_selectedEquipment.Amount - rasporedjeno);
@@ -82,7 +82,7 @@ namespace PSW_Wpf_director
 
                 foreach (Room room in rooms)
                 {
-                    foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+                  /*  foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
                     {
                         if (pair.Key.Id == _selectedEquipment.Id)
                         {
@@ -90,7 +90,7 @@ namespace PSW_Wpf_director
                             rasporedjeno += pair.Value;
 
                         }
-                    }
+                    }*/
                 }
 
 
@@ -128,16 +128,16 @@ namespace PSW_Wpf_director
                     Room room_full = _roomController.Get(roomEq.Id);
 
                     Equipment temp = null;
-                    foreach (KeyValuePair<Equipment, int> pair in room_full.Equipment_inventory)
+                   /* foreach (KeyValuePair<Equipment, int> pair in room_full.Equipment_inventory)
                     {
                         if (pair.Key.Id == _selectedEquipment.Id)
                         {
                             temp = pair.Key as Equipment;
                         }
-                    }
+                    }*/
 
 
-                    room_full.Equipment_inventory.Remove(temp);
+                   // room_full.Equipment_inventory.Remove(temp);
                     _roomController.Edit(room_full);
 
                     List<Room> rooms = _roomController.GetRoomsContainingEquipment(_selectedEquipment).ToList();
@@ -147,14 +147,14 @@ namespace PSW_Wpf_director
 
                     foreach (Room room in rooms)
                     {
-                        foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+                        /*foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
                         {
                             if (pair.Key.Id == _selectedEquipment.Id)
                             {
                                 result.Add(new RoomEquipment(room.Id, room.RoomCode, pair.Value, _selectedEquipment.Name));
                                 rasporedjeno += pair.Value;
                             }
-                        }
+                        }*/
                     }
 
 
@@ -183,14 +183,14 @@ namespace PSW_Wpf_director
 
             foreach (Room room in rooms)
             {
-                foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+                /*foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
                 {
                     if (pair.Key.Id == _selectedEquipment.Id)
                     {
                         result.Add(new RoomEquipment(room.Id, room.RoomCode, pair.Value, _selectedEquipment.Name));
                         rasporedjeno += pair.Value;
                     }
-                }
+                }*/
             }
 
             txtNerasporedjeno.Text = "" + (_selectedEquipment.Amount - rasporedjeno);

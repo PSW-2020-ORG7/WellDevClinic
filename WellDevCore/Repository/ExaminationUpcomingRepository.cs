@@ -101,10 +101,11 @@ namespace bolnica.Repository
         }
 
 
-        public Examination Save(long doctorId, Period period)
+        public Examination Save(long doctorId, Period period, long patientId)
         {
             Doctor doctor = _doctorRepository.Get(doctorId);
-            Examination examination = new Examination(doctor, period);
+            Patient patient = _patientRepository.Get(patientId);
+            Examination examination = new Examination(patient,doctor, period);
             myDbContext.Examination.Add(examination);
             myDbContext.SaveChanges();
             return null;

@@ -35,10 +35,10 @@ namespace PSW_Wpf_director
         {
 
             List<RoomEquipment> lista_opreme = new List<RoomEquipment>();
-            foreach (KeyValuePair<Equipment, int> pair in _roomController.Get(_selectedRoom.Id).Equipment_inventory)
+          /*  foreach (KeyValuePair<Equipment, int> pair in _roomController.Get(_selectedRoom.Id).Equipment_inventory)
             {
                 lista_opreme.Add(new RoomEquipment(pair.Key.Name, pair.Value));
-            }
+            }*/
 
             this.lista.ItemsSource = lista_opreme;
 

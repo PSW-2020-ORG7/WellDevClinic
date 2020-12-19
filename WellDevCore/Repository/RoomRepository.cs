@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using WellDevCore.Model.Dto;
 
 namespace Repository
 {
@@ -49,14 +50,14 @@ namespace Repository
             equipment = equipment.ToList();
             foreach (Room room in rooms)
             {
-                foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+                foreach (EquipmentDTO e in room.Equipment_inventory)
                 {
-                    Equipment temp = equipment.SingleOrDefault(eq => eq.GetId() == pair.Key.GetId());
+                    Equipment temp = equipment.SingleOrDefault(eq => eq.GetId() == e.Equipment.GetId());
                     if (temp != default)
                     {
-                        pair.Key.Name = temp.Name;
-                        pair.Key.Type = temp.Type;
-                        pair.Key.Amount = temp.Amount;
+                        e.Equipment.Name = temp.Name;
+                        e.Equipment.Type = temp.Type;
+                        e.Equipment.Amount = temp.Amount;
                     }
                 }
             }
@@ -73,13 +74,14 @@ namespace Repository
             Room room = myDbContext.Room.Find(id);
             room.RoomType = _roomTypeRepository.Get(room.RoomType.GetId());
 
-            /*foreach (KeyValuePair<Equipment, int> pair in room.Equipment_inventory)
+            foreach (EquipmentDTO e in room.Equipment_inventory)
             {
-                Equipment temp = _equipmentRepository.Get(pair.Key.Id);
-                pair.Key.Name = temp.Name;
-                pair.Key.Type = temp.Type;
-                pair.Key.Amount = temp.Amount;
-            }*/
+                Equipment temp = _equipmentRepository.Get(e.Equipment.Id);
+                e.Equipment.Name = temp.Name;
+                e.Equipment.Type = temp.Type;
+                e.Equipment.Amount = temp.Amount;
+            }
+
             return room;
         }
 
