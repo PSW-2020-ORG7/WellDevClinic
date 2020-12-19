@@ -3,28 +3,37 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 using QRCoder;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class QrCodeService
+    public class QrCodeService : IQrCodeService
     {
+        public Byte[] Generate(String qrText)
+        {
+            //string input = "Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Today.ToShortDateString() + "\n" + "brufen" + "\n" + "3";
+            QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(qrText, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap bitmap = qrCode.GetGraphic(5);
+            Byte[] bytes = BitmapToBytes(bitmap);
+
+            return bytes;
+        }
+
+        private static Byte[] BitmapToBytes(Bitmap image)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
+
         public void Generate()
         {
-            string input = "Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Today.ToShortDateString() + "\n" + "brufen" + "\n" + "3";
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
-                QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(input, QRCodeGenerator.ECCLevel.Q);
-                QRCode qrCode = new QRCode(qrCodeData);
-                using (Bitmap bitmap = qrCode.GetGraphic(5))
-                {
-                    bitmap.Save(memoryStream, ImageFormat.Png);
- //                   ViewBag.QRCode = "data:image/png;base64," + Convert.ToBase64String(memoryStream.ToArray());
-                }
-            }
+            throw new NotImplementedException();
         }
     }
 }
