@@ -10,14 +10,14 @@ namespace PSW_Pharmacy_Adapter.Service
 {
     public class QrCodeService : IQrCodeService
     {
-        public Byte[] Generate(String qrText)
+        public byte[] Generate(string qrText)
         {
             //string input = "Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Today.ToShortDateString() + "\n" + "brufen" + "\n" + "3";
             QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(qrText, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap bitmap = qrCode.GetGraphic(5);
-            Byte[] bytes = BitmapToBytes(bitmap);
+            byte[] bytes = BitmapToBytes(bitmap);
 
             return bytes;
         }
@@ -29,11 +29,6 @@ namespace PSW_Pharmacy_Adapter.Service
                 image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                 return stream.ToArray();
             }
-        }
-
-        public void Generate()
-        {
-            throw new NotImplementedException();
         }
     }
 }

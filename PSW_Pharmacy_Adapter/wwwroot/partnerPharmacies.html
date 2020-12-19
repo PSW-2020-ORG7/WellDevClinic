@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/table.css" />
     <script type="text/javascript" src="js/partnerPharmacies.js"></script>
+    <script type="text/javascript" src="js/viewMedicationStock.js"></script>
 </head>
 <body>
     <div class="topnav">
@@ -35,6 +36,47 @@
         </table>
     </div>
 
+    <div class="modalMed" id="medModal">
+        <div class="d-flex justify-content-center">
+            <div class="card" style="width: 550px; height: 500px;">
+                <div class="card-body">
+                    <span class="close">&times;</span>
+                    <h1 class="card-title"><span id="phName"></span> medication stock</h1>
+                    <br>
+                    <br>
+                    <h4>
+                        Ask for: &nbsp;&nbsp;
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" id="btnMed" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                All medications
+                            </button>
+                            <div class="dropdown-menu">
+                                <div id="viewMedication"></div>
+                            </div>
+                        </div>
+                        &nbsp;&nbsp;
+                        <button type="button" class="btn btn-secondary" id="btnSendMedication" data-toggle="modal" data-target="#medRequestModal">Send</button>
+                    </h4>
+                    <br>
+                    <h4> Response: </h4>
+                    <h5><textarea class="form-control" id="txtResponse" name="Text1" cols="40" rows="9" readonly></textarea></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stockAction" style="display:none">
+        <div class="modal fade" id="medRequestModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="write"></div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="deletePharmacy" style="display:none">
         <div class="modal fade" id="deletePharmacyModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -49,8 +91,5 @@
             </div>
         </div>
     </div>
-
-
-
 </body>
 </html>
