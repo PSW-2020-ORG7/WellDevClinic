@@ -75,5 +75,13 @@ namespace InterlayerController.Controllers
             return PatientAdapter.PatientToPatientDto(patient);
         }
 
+        [HttpGet]
+        public IEnumerable<Patient> GetAllPatients()
+        {
+            List<Patient> result = (List<Patient>)_patientController.GetAll();
+
+            return result;
+        }
+
     }
 }

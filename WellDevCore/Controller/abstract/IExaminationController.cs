@@ -18,7 +18,7 @@ namespace bolnica.Controller
         List<Examination> GetFinishedExaminationsByUser(User user);
         List<Examination> GetExaminationsByFilter(ExaminationDTO examinationDTO, Boolean upcomingOnly);
         List<Examination> GetAllPrevious();
-        Examination NewExamination(long DoctorId, String Period);
+        Examination NewExamination(long DoctorId, String Period, long PatientId);
         void EditPrevious(Examination entity);
         Examination GetPrevious(long id);
 

@@ -106,7 +106,7 @@ namespace InterlayerController.Controllers
         [Route("newExamination")]
         public Examination NewExamination([FromBody] ExaminationIdsDTO examination) 
         {
-            Examination retVal = _examinationController.NewExamination(examination.DoctorId, examination.Period);
+            Examination retVal = _examinationController.NewExamination(examination.DoctorId, examination.Period, examination.PatientId);
             return retVal;
         }
     }

@@ -67,9 +67,9 @@ namespace bolnica.Controller
             return _examinationService.SaveFinishedExamination(examination);
         }
 
-        public Examination NewExamination(long DoctorId, String Period)
+        public Examination NewExamination(long doctorId, String period, long patientId)
         {
-            Examination examination = _examinationService.NewExamination(DoctorId, Period);
+            Examination examination = _examinationService.NewExamination(doctorId, period, patientId);
             return examination;
         }
 
