@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Collections.Generic;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -24,14 +25,23 @@ namespace PSW_Pharmacy_Adapter
         public Task StartAsync(CancellationToken cancellationToken)
             => Task.CompletedTask;
 
-        public async Task<string> SendMessage(string name)
+
+        public async Task<List<string>> getMedications(string name)
+        {
+            List<string> medications = new List<string>();
+            ProtoResponseMedications response = await client.communicateMedicationsAsync(new ProtoMedications() {PharmacyName = name });
+            return new List<string>(response.MedicationName);
+            
+        }
+
+        public async Task<string> SendMessage(string medicationName, string pharmacyName)
         {
             try
             {
-                MessageResponseProto response = await client.communicateAsync(new MessageProto() { Message = name});
+                ProtoResponseAvailableMedication response = await client.communicateAsync(new ProtoAvailableMedication() {MedicationName = medicationName, PharmacyName = pharmacyName});
                 return response.Response;
             }
-            catch (Exception exc)
+            catch
             {
                 return "Try again later.";
             }

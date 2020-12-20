@@ -1,28 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 using QRCoder;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
-    public class QrCodeService
+    public class QrCodeService : IQrCodeService
     {
-        public void Generate()
+        private const string SAVE_PATH = @"wwwroot/images/qrCodes/";
+        public byte[] Generate(string qrText)
         {
-            string input = "Marko Markovic" + "\n" + "5472012479531" + "\n" + DateTime.Today.ToShortDateString() + "\n" + "brufen" + "\n" + "3";
-            using (MemoryStream memoryStream = new MemoryStream())
+            QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(qrText, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap bitmap = qrCode.GetGraphic(5);
+            byte[] bytes = BitmapToBytes(bitmap);
+            SaveFile(bytes, qrText.Substring(0, 3));   //TODO: srediti da se samo id prosledjuje
+
+            return bytes;
+        }
+
+        private static byte[] BitmapToBytes(Bitmap image)
+        {
+            using (MemoryStream stream = new MemoryStream())
             {
-                QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
-                QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(input, QRCodeGenerator.ECCLevel.Q);
-                QRCode qrCode = new QRCode(qrCodeData);
-                using (Bitmap bitmap = qrCode.GetGraphic(5))
+                image.Save(stream, ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
+
+        private static void SaveFile(byte[] array, string fileName)
+        {
+            using (var ms = new MemoryStream(array))
+            {
+                using (var fs = new FileStream(SAVE_PATH + "pre" + fileName + "qr.png" , FileMode.Create))
                 {
-                    bitmap.Save(memoryStream, ImageFormat.Png);
- //                   ViewBag.QRCode = "data:image/png;base64," + Convert.ToBase64String(memoryStream.ToArray());
+                    ms.WriteTo(fs);
                 }
             }
         }

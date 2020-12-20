@@ -5,5 +5,6 @@ option csharp_namespace = "PSW_Pharmacy_Adapter.Protos";
 import "Protos/model.proto";
 
 service NetGrpcService {
-  rpc transfer (MessageProto) returns (MessageResponseProto);
+  rpc transfer (ProtoAvailableMedication) returns (ProtoResponseAvailableMedication);
+  rpc transferMedications (ProtoMedications) returns (ProtoResponseMedications);
 }

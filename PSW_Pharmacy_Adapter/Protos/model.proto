@@ -3,14 +3,26 @@ syntax = "proto3";
 package rs.ac.uns.ftn.grpc;
 option csharp_namespace = "PSW_Pharmacy_Adapter.Protos";
 
-message MessageProto {
-  string message = 1;
-  // id apoteke
+// isAvailable
+message ProtoAvailableMedication {
+  string medicationName = 1;
+  string pharmacyName = 2;
 }
 
-message MessageResponseProto {
+message ProtoResponseAvailableMedication {
   string response = 1;
   bool status = 2;
 }
+
+
+// getMedications
+message ProtoMedications {
+	string pharmacyName = 1;
+}
+
+message ProtoResponseMedications{
+	repeated string medicationName = 1;
+}
+
 
 

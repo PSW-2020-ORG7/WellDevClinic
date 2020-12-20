@@ -26,15 +26,5 @@ namespace PSW_Pharmacy_Adapter.Model
             EndDate = endDate;
             Status = status;
         }
-
-        public ActionAndBenefit(ActionAndBenefitDto actionDto, ActionStatus status)
-        {
-            Id = actionDto.Id;
-            PharmacyName = actionDto.PharmacyName;
-            MessageAboutAction = actionDto.MessageAboutAction;
-            StartDate = DateTimeConverter.UnixToDateTime(actionDto.StartDate);
-            EndDate = DateTimeConverter.UnixToDateTime(actionDto.EndDate);
-            Status = status;
-        }
     }
 }

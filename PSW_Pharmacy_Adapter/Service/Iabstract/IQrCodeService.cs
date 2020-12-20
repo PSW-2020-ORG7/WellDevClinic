@@ -1,7 +1,9 @@
-﻿namespace PSW_Pharmacy_Adapter.Service.Iabstract
+﻿using System;
+
+namespace PSW_Pharmacy_Adapter.Service.Iabstract
 {
     public interface IQrCodeService
     {
-        public void Generate();
+        public Byte[] Generate(string qrText);
     }
 }

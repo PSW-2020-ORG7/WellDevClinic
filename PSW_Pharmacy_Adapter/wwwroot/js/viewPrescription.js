@@ -12,17 +12,6 @@ $(document).ready(function () {
 		},
 	});
 
-	/*$.ajax({
-		method: "GET",
-		url: "../api/qrcode",
-		contentType: "application/json",
-		success: function (data) {
-			console.log(data);
-			$(".loader").css("display", "none");
-			viewAllPrescriptions(data);
-		},
-	});*/
-
 	$(".btnFilter").click(function () {
 		$("#divFilterTable").slideToggle();
 	})
@@ -55,7 +44,9 @@ function viewAllPrescriptions(prescriptions) {
 		}
 		content += '</tr>';
 		content += '<tr><td colspan="2">';
-		content += '<img id="qrcode" src="images/qrcode1.png"/>';
+
+		generateQR(pre);
+		content += '<img src="images/qrCodes/pre' + pre.id + 'qr.png"/>';
 		content += '</td></tr>';
 		content += '<tr></tr>';
 		content += '<tr><td colspan="2">'
@@ -172,4 +163,19 @@ function ISOtoShort(date) {
 
 function generatePDF(id) {
 	alert(id);
+}
+
+function generateQR(pre) {
+	$.ajax({
+		url: 'images/qrCodes/pre' + pre.id + 'qr.png',
+		type: 'HEAD',
+		error: function () {
+			let qrString = String(pre.id) + String(pre.period.startDate) + String(pre.period.endDate); // TODO: Prosledjivati objekat
+			$.ajax({
+				method: "GET",
+				url: "../api/qrcode/" + qrString,
+				contentType: "application/json",
+			});
+		},
+	});
 }
