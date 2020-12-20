@@ -1,7 +1,4 @@
 ﻿$(document).ready(function () {
-
-    getAllMedicationStock();
-
     $("#btnSendMedication").click(function () {
         askPharmacy();
     });
@@ -13,16 +10,18 @@
 
 
 function getAllMedicationStock() {
+    var pharmacyName = document.getElementById("phName").innerText;
     $.ajax({
         method: "GET",
-        url: "../api/medication",
+        url: "../api/grpc/medications/" + pharmacyName,
         contentType: "application/json",
         success: function (allMeds) {
             $("#viewMedication").empty();
             $("#viewMedication").append('<a class="dropdown-item" href="#" onClick="setName(\'All medications\')">All medications</a>');
+            console.log(allMeds);
             for (let med of allMeds) {
-                let content = '<a class="dropdown-item" href="#" onClick="setName(\'' + med.name + '\')">';
-                content += med.name;
+                let content = '<a class="dropdown-item" href="#" onClick="setName(\'' + med + '\')">';
+                content += med;
                 content += '</a>';
 
                 $("#viewMedication").append(content);
@@ -32,7 +31,7 @@ function getAllMedicationStock() {
 }
 
 function askPharmacy() {
-    var medicationName = $("#phName").text();
+    var medicationName = $("#btnMed").text();
     var pharmacyName = $("#phName").text();
 
     let uri;

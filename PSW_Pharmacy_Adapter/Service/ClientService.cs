@@ -28,8 +28,10 @@ namespace PSW_Pharmacy_Adapter
 
         public async Task<List<string>> getMedications(string name)
         {
-                ProtoResponseMedications response = await client.communicateMedicationsAsync(new ProtoMedications() {PharmacyName = name });
-                return new List<string>(response.MedicationName);
+            List<string> medications = new List<string>();
+            ProtoResponseMedications response = await client.communicateMedicationsAsync(new ProtoMedications() {PharmacyName = name });
+            return new List<string>(response.MedicationName);
+            
         }
 
         public async Task<string> SendMessage(string medicationName, string pharmacyName)
