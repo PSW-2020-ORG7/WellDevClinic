@@ -19,6 +19,12 @@ namespace PSW_Pharmacy_Adapter.Model
             Lastname = lastname;
             Allergies = allergies;
         }
-        
+        public Patient(long jmgb, string name, string lastname)
+        {
+            Jmgb = jmgb;
+            Name = name;
+            Lastname = lastname;
+        }
+
     }
 }
