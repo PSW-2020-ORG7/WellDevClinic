@@ -9,12 +9,12 @@ using System;
 
 namespace PSW_Pharmacy_Adapter
 {
-    public class ClientService : IHostedService
+    public class GrpcClientService : IHostedService
     {
         private readonly Channel _channel;
         private readonly SpringGrpcService.SpringGrpcServiceClient _client;
 
-        public ClientService() 
+        public GrpcClientService() 
         {
             _channel = new Channel("127.0.0.1:8787", ChannelCredentials.Insecure);
             _client = new SpringGrpcService.SpringGrpcServiceClient(_channel);
@@ -24,7 +24,7 @@ namespace PSW_Pharmacy_Adapter
             => Task.CompletedTask;
 
 
-        public async Task<object> GetMedications(string name)
+        public async Task<List<Medication>> GetMedications(string name)
         {
             try
             {
@@ -36,11 +36,11 @@ namespace PSW_Pharmacy_Adapter
             }
             catch
             {
-                return Global.ErrorMessage;
+                return null;
             }
         }
 
-        public async Task<object> SendMessage(string medicationName, string pharmacyName)
+        public async Task<int> SendMessage(string medicationName, string pharmacyName)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace PSW_Pharmacy_Adapter
             }
             catch
             {
-                return Global.ErrorMessage;
+                return -408;
             }
         }
 

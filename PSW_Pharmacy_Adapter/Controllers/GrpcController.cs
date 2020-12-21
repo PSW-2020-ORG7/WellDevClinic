@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PSW_Pharmacy_Adapter.Model;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -10,22 +11,34 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class GrpcController : ControllerBase
     {
-        private readonly ClientService _serviceGrpc;
+        private readonly GrpcClientService _serviceGrpc;
 
         public GrpcController() 
         {
-            _serviceGrpc = new ClientService();
+            _serviceGrpc = new GrpcClientService();
         }
 
         [HttpGet]          
         [Route("available/{medicationName?}/{pharmacyName?}")]
-        public async Task<IActionResult> IsAvailableMedication(string medicationName, string pharmacyName)     
-            => Ok(await _serviceGrpc.SendMessage(medicationName, pharmacyName));
+        public async Task<IActionResult> IsAvailableMedication(string medicationName, string pharmacyName)
+        {
+            int amount = await _serviceGrpc.SendMessage(medicationName, pharmacyName);
+            if(amount >= -1)
+                return Ok(amount);
+            return StatusCode(408, Global.ErrorMessage);
+        }
+            
 
         [HttpGet]
         [Route("medications/{pharmacyname?}")]
         public async Task<IActionResult> GetMedications(string pharmacyname)
-            => Ok(await _serviceGrpc.GetMedications(pharmacyname));
+        {
+            List<Medication> meds = await _serviceGrpc.GetMedications(pharmacyname);
+            if(meds != null)
+                return Ok(meds);
+            return StatusCode(408, Global.ErrorMessage);
+        }
+            
 
     }
 }

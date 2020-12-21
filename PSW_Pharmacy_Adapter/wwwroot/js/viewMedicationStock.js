@@ -11,15 +11,13 @@
 
 function getAllMedicationStock() {
     var pharmacyName = document.getElementById("phName").innerText;
+    $("#viewMedication").empty();
+    $("#viewMedication").append('<a class="dropdown-item" href="#" onClick="setName(\'All medications\')">All medications</a>');
     $.ajax({
         method: "GET",
         url: "../api/grpc/medications/" + pharmacyName,
         contentType: "application/json",
         success: function (allMeds) {
-            $("#viewMedication").empty();
-            $("#viewMedication").append('<a class="dropdown-item" href="#" onClick="setName(\'All medications\')">All medications</a>');
-            if (typeof allMeds == "string")
-                return;
             console.log(allMeds);
             for (let med of allMeds) {
                 let content = '<a class="dropdown-item" href="#" onClick="setName(\'' + med.name + '\')">';
@@ -28,6 +26,13 @@ function getAllMedicationStock() {
 
                 $("#viewMedication").append(content);
             }
+        },
+        error: function (e) {
+            $('#write').html(e.responseText);
+            $("#stockAction").show();
+            $("#btnOk").click(function () {
+                $("#txtResponse").val(e.status + " " + e.statusText);
+            });
         },
     });
 }
@@ -54,13 +59,18 @@ function askPharmacy() {
                     for (let med of data)
                         content += med.name + ": " + med.amount + "\n";
                     $("#txtResponse").val(content);
-                } else if (Number.isNaN(Number(data))) {
-                    $("#txtResponse").val(data);
                 } else if (Number(data) >= 1) {
                     $("#txtResponse").val("We have: " + data + " piece(s) of " + medicationName);
                 } else {
                     $("#txtResponse").val("We don't have " + medicationName);
                 }
+            });
+        },
+        error: function (e) {
+            $('#write').html(e.responseText);
+            $("#stockAction").show();
+            $("#btnOk").click(function () {
+                $("#txtResponse").val(e.status + " " + e.statusText);
             });
         },
     });
