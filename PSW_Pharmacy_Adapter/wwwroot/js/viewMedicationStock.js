@@ -18,10 +18,12 @@ function getAllMedicationStock() {
         success: function (allMeds) {
             $("#viewMedication").empty();
             $("#viewMedication").append('<a class="dropdown-item" href="#" onClick="setName(\'All medications\')">All medications</a>');
+            if (typeof allMeds == "string")
+                return;
             console.log(allMeds);
             for (let med of allMeds) {
-                let content = '<a class="dropdown-item" href="#" onClick="setName(\'' + med + '\')">';
-                content += med;
+                let content = '<a class="dropdown-item" href="#" onClick="setName(\'' + med.name + '\')">';
+                content += med.name;
                 content += '</a>';
 
                 $("#viewMedication").append(content);
@@ -47,7 +49,18 @@ function askPharmacy() {
             $('#write').html("It's sent to pharmacy. Soon you will get response.");
             $("#stockAction").show();
             $("#btnOk").click(function () {
-                $("#txtResponse").val(data);
+                if (Array.isArray(data)) {
+                    let content = "";
+                    for (let med of data)
+                        content += med.name + ": " + med.amount + "\n";
+                    $("#txtResponse").val(content);
+                } else if (Number.isNaN(Number(data))) {
+                    $("#txtResponse").val(data);
+                } else if (Number(data) >= 1) {
+                    $("#txtResponse").val("We have: " + data + " piece(s) of " + medicationName);
+                } else {
+                    $("#txtResponse").val("We don't have " + medicationName);
+                }
             });
         },
     });

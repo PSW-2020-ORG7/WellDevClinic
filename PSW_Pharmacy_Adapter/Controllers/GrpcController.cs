@@ -10,21 +10,22 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class GrpcController : ControllerBase
     {
-        ClientService serviceGrpc;
+        private readonly ClientService _serviceGrpc;
+
         public GrpcController() 
         {
-            serviceGrpc = new ClientService();
+            _serviceGrpc = new ClientService();
         }
 
         [HttpGet]          
         [Route("available/{medicationName?}/{pharmacyName?}")]
-        public async Task<IActionResult> isAvailableMedication(string medicationName, string pharmacyName)     
-            => Ok(await serviceGrpc.SendMessage(medicationName, pharmacyName));
+        public async Task<IActionResult> IsAvailableMedication(string medicationName, string pharmacyName)     
+            => Ok(await _serviceGrpc.SendMessage(medicationName, pharmacyName));
 
         [HttpGet]
         [Route("medications/{pharmacyname?}")]
-        public async Task<IActionResult> getMedications(string pharmacyname)
-            => Ok(await serviceGrpc.getMedications(pharmacyname));
+        public async Task<IActionResult> GetMedications(string pharmacyname)
+            => Ok(await _serviceGrpc.GetMedications(pharmacyname));
 
     }
 }

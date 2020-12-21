@@ -14,6 +14,12 @@ namespace PSW_Pharmacy_Adapter.Model
 
         public Medication() { }
 
+        public Medication(string name, int amount)
+        {
+            Name = name;
+            Amount = amount;
+        }
+
         public Medication(long id, string name, int amount, bool approved, List<Ingredient> ingredients, List<Medication> alternative)
         {
             Id = id;
