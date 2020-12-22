@@ -18,7 +18,7 @@
 			SelectionMode="Extended"
             Name ="DgEquipment">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Equipment" x:Name="eqName" IsReadOnly="True" Width="*"   Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Equipment" x:Name="eqName" IsReadOnly="True" Width="*"   Binding="{Binding Equipment.Name}" />
                 <DataGridTextColumn Header="Equipment Amount" x:Name="eqAmount" IsReadOnly="True"  Width="*"  Binding="{Binding Amount}" />
             </DataGrid.Columns>
         </DataGrid>
