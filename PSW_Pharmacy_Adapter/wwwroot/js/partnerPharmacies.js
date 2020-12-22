@@ -53,5 +53,4 @@ function getMedications(id) {
     $("#phName").html(id);
     $("#txtResponse").val("");
     $("#medModal").slideDown("fast");
-    getAllMedicationStock();
 }
