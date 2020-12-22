@@ -5,23 +5,23 @@ namespace PSW_Pharmacy_Adapter.Model
     public class Patient
     {
 
-        public long Jmgb { get; set; }
+        public long Jmbg { get; set; }
         public string Name { get; set; }
         public string Lastname { get; set; }
         public List<Allergy> Allergies { get; set; }
 
 
         public Patient() { }
-        public Patient(long jmgb, string name, string lastname, List<Allergy> allergies)
+        public Patient(long jmbg, string name, string lastname, List<Allergy> allergies)
         {
-            Jmgb = jmgb;
+            Jmbg = jmbg;
             Name = name;
             Lastname = lastname;
             Allergies = allergies;
         }
-        public Patient(long jmgb, string name, string lastname)
+        public Patient(long jmbg, string name, string lastname)
         {
-            Jmgb = jmgb;
+            Jmbg = jmbg;
             Name = name;
             Lastname = lastname;
         }

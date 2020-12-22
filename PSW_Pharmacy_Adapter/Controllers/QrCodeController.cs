@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Controllers
@@ -16,8 +17,8 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [HttpGet]
         [Route("{qrText?}")]
-        public IActionResult Generate(string qrText)
-            => File(_qrCodeService.Generate(qrText), "image/jpeg");
+        public IActionResult Generate(Prescription prescription)
+            => File(_qrCodeService.Generate(prescription), "image/jpeg");
 
     }
 }

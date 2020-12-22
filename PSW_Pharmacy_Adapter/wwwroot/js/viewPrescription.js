@@ -170,11 +170,26 @@ function generateQR(pre) {
 		url: 'images/qrCodes/pre' + pre.id + 'qr.png',
 		type: 'HEAD',
 		error: function () {
-			let qrString = String(pre.id) + String(pre.period.startDate) + String(pre.period.endDate); // TODO: Prosledjivati objekat
 			$.ajax({
-				method: "GET",
-				url: "../api/qrcode/" + qrString,
+				method: "POST",
+				url: "../api/qrcode/eprescription",
+				dataType: "applocation/json",
 				contentType: "application/json",
+				data: JSON.stringify({
+					id: pre.id,
+					period: {
+						startDate: pre.period.startDate,
+						endDate: pre.period.endDate,
+						id: pre.period.id
+					},
+					medication: pre.medication,		// TODO: ??
+					patient: {
+						jmbg: pre.currentPatient.jmbg,
+						name: pre.currentPatient.name,
+						lastName: pre.currentPatient.lastName,
+						allergies: [],
+					},
+                })
 			});
 		},
 	});
