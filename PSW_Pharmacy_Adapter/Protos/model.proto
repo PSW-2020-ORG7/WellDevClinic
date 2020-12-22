@@ -10,8 +10,7 @@ message ProtoAvailableMedication {
 }
 
 message ProtoResponseAvailableMedication {
-  string response = 1;
-  bool status = 2;
+  int32 amount = 1;
 }
 
 
@@ -20,8 +19,13 @@ message ProtoMedications {
 	string pharmacyName = 1;
 }
 
+message ProtoMedication{
+  string name = 1;
+  int32 amount = 2;
+}
+
 message ProtoResponseMedications{
-	repeated string medicationName = 1;
+  repeated ProtoMedication medication = 1;
 }
 
 
