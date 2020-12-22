@@ -121,5 +121,10 @@ namespace bolnica.Controller.decorators
                 return BusinessDayController.Search(businessDayDTO);
             return null;
         }
+
+        public void SetPriority(string priority)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace bolnica.Controller
         Boolean isExaminationPossible(Examination examination);
         Boolean ChangeDoctorShift(BusinessDay newShift);
         List<Period> GetAvailablePeriodsByDoctor(DateTime date, long id);
+        void SetPriority(string priority);
 
     }
 }

@@ -40,11 +40,11 @@ namespace PSW_Wpf_app.View
                 
                 DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
                 Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
-                
 
+                string priority = "noPriority";
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
-                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period);
+                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
                 businessDayDTO.PatientScheduling = true;
                 scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
                
@@ -53,6 +53,17 @@ namespace PSW_Wpf_app.View
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
+
+                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
+                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+
+                string priority = "doctor";
+                Period period = new Period();
+                period.StartDate = DateTime.Parse(Picker.Text);
+                period.EndDate = DateTime.Parse(Picker2.Text);
+                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
+                businessDayDTO.PatientScheduling = true;
+                scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
 
             }
             else
