@@ -30,7 +30,7 @@ namespace PSW_Pharmacy_Adapter
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<ClientService>();
+                    services.AddHostedService<GrpcClientService>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
