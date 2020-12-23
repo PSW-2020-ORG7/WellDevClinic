@@ -26,7 +26,7 @@
                 <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Left" Height="35" Margin="10,316,0,0" VerticalAlignment="Top" Width="181" Click="Button_Equipment_Drugs"/>
                 <Button Content="Schedule appointment" x:Name="Appointment" HorizontalAlignment="Left" Height="35" Margin="10,364,0,0" VerticalAlignment="Top" Width="181" Click="Button_Appointment"/>
             </Grid>
-            <Button Content="HOME" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="73" Click="Button_Click_HOME">
+            <Button Content="HOME" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,16,0,0" VerticalAlignment="Top" Width="73" Click="Button_Click_HOME">
 
             </Button>
 

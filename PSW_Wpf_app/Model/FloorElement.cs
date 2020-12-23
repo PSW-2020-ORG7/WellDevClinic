@@ -18,8 +18,13 @@ namespace PSW_Wpf_app.Model
         private string buildingName;
         List<Drug> drugs = new List<Drug>();
         List<Equipment> equipments = new List<Equipment>();
-        
+        private int roomId;
 
+        public int RoomId
+        {
+            get { return roomId; }
+            set { roomId = value; }
+        }
         public string BuildingName
         {
             get { return buildingName; }
@@ -115,6 +120,20 @@ namespace PSW_Wpf_app.Model
             floor = f;
             buildingName = b;
             info = i;
+        }
+
+        public FloorElement(string t, string n, int w, int h, int xx, int yy, int f, string b, int id, string i = "")
+        {
+            type = t;
+            name = n;
+            width = w;
+            height = h;
+            x = xx;
+            y = yy;
+            floor = f;
+            buildingName = b;
+            info = i;
+            roomId = id;
         }
 
     }
