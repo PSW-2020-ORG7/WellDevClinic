@@ -14,12 +14,19 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         public SftpController() 
         {
-            _sftpService = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
+            _sftpService = new SftpService(new SftpClient("192.168.1.3", 22, "user", "password"));
         }
 
+        [HttpPost]
         [Route("sendPrescription")]
-        public bool SendPrescriptionFile(EPrescriptionDto prescription)
-            => _sftpService.SendPrescriptionfile(prescription, PRESCRIPTION_PATH);
-
+        public IActionResult SendPrescriptionFile(EPrescriptionDto prescription)
+        {
+            int code = _sftpService.SendPrescriptionfile(prescription, PRESCRIPTION_PATH);
+            if (code == -2)
+                return NotFound();
+            else if (code == -1)
+                return StatusCode(503, Global.ErrorSftp);       //TODO A3: Srediti kodove gresaka
+            return Ok();
+        }
     }
 }

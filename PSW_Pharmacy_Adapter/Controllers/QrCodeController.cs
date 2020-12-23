@@ -15,8 +15,8 @@ namespace PSW_Pharmacy_Adapter.Controllers
             _qrCodeService = qrCodeService;
         }
 
-        [HttpGet]
-        [Route("{qrText?}")]
+        [HttpPost]
+        [Route("eprescription")]
         public IActionResult Generate(Prescription prescription)
             => File(_qrCodeService.Generate(prescription), "image/jpeg");
 

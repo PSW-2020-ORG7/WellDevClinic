@@ -46,7 +46,7 @@ function viewAllPrescriptions(prescriptions) {
 		content += '<tr><td colspan="2">';
 
 		generateQR(pre);
-		content += '<img src="images/qrCodes/pre' + pre.id + 'qr.png"/>';
+		content += '<img src="images/qrCodes/pre' + pre.id + 'qr.png" style="width:170px"/>';
 		content += '</td></tr>';
 		content += '<tr></tr>';
 		content += '<tr><td colspan="2">'
@@ -117,35 +117,36 @@ function filter() {
 }
 
 function sendToPharmacies(id) {
-	var patientName1 = "Marko Markovic";
-	var jmbg1 = 123456789;
-	var startTime1 = "2020-12-20";
-	var endTime1 = "2020-12-30";
-	var medicines1 = [];
-	//var medicines = { data.medicines.name: "Fiat", model: "500", color: "white" };
-	//["Brufen", "Bromazepam", "Andol"];
 	$.ajax({
 		method: "GET",
 		url: "../api/prescription/" + id,
 		contentType: "application/json",
 		success: function (pre) {
 			console.log(pre);
-			$.post({
+			$.ajax({
+				method: "POST",
 				url: "../api/sftp/sendPrescription",
-				contentType: "aplication/json",
-				dataType: "aplication/json",
-				data: JSON.stringify({ patientName: patientName1, jmbg: jmbg1, startTime: startTime1, endTime: endTime1, medicines: medicines1 }),
-				success: function (data) {
-					//location.href = "../index.html";
+				contentType: "application/json",
+				data: JSON.stringify({
+					PatientName: pre.patFirstName + " " + pre.patLastName,
+					Jmbg: pre.patJmbg,
+					StartTime: pre.timePeriod.startDate,
+					EndTime: pre.timePeriod.endDate,
+					Medicines: []
+				}),
+				success: function () {
+					$("#sendMessage").text(" File is succesfully sent. ");
 					$("#sentAction").show();
 				},
-				error: function (message) {
+				error: function (e) {
+					if (e.status == 503) {
+						$("#sendMessage").text(e.responseText);
+						$("#sentAction").show();
+                    }
 				}
 			});
 		},
 	});
-
-	
 }
 
 function ISOtoShort(date) {
@@ -176,19 +177,16 @@ function generateQR(pre) {
 				dataType: "applocation/json",
 				contentType: "application/json",
 				data: JSON.stringify({
-					id: pre.id,
-					period: {
-						startDate: pre.timePeriod.startDate,
-						endDate: pre.timePeriod.endDate,
-						id: pre.timePeriod.id
+					Id: pre.id,
+					TimePeriod: {
+						StartDate: pre.timePeriod.startDate,
+						EndDate: pre.timePeriod.endDate,
+						Id: pre.timePeriod.id
 					},
-					medication: pre.medication,		// TODO: ??
-					patient: {
-						jmbg: pre.PatJmbg,
-						name: pre.PatFirtsName,
-						lastName: pre.PatLastName,
-						allergies: [],
-					},
+					Medication: [],				// TODO A2: stringify za lekove
+					PatJmbg: pre.PatJmbg,
+					PatFirstName: pre.PatFirtsName,
+					PatLastName: pre.PatLastName,
                 })
 			});
 		},

@@ -2,7 +2,7 @@
 using Renci.SshNet;
 using System;
 using System.IO;
-
+using System.Net.Sockets;
 
 namespace PSW_Pharmacy_Adapter.Service
 {
@@ -17,37 +17,41 @@ namespace PSW_Pharmacy_Adapter.Service
             _sftpClient = sftpClient;
         }
 
-        public bool UploadFileToSftpServer(string filePath)
+        public int UploadFileToSftpServer(string filePath)
         {
-            _sftpClient.Connect();
             try
             {
+                _sftpClient.Connect();
                 using (Stream stream = File.OpenRead(filePath))
                 {
                     _sftpClient.UploadFile(stream, Path.GetFileName(filePath));
                 }
+                _sftpClient.Disconnect();
             }
-            catch(Exception e)
+            catch(SocketException e)
             {
                 Console.Write(e);
-                return false;
+                return -1;
             }
-            _sftpClient.Disconnect();
-            return true;
+            catch
+            {
+                return -2;
+            }
+            
+            return 1;
             
         }
 
-        public bool SendPrescriptionfile(EPrescriptionDto prescription, string path)
+        public int SendPrescriptionfile(EPrescriptionDto prescription, string path)
         {
             //if (File.Exists(PRESCRIPTION_PATH))
-            //{
-                using (StreamWriter file = new StreamWriter(path, false))
-                {
-                    file.WriteLine(prescription.PatientName + "\n" + prescription.Jmbg + "\n" + prescription.StartTime.ToShortDateString());
-                    foreach (MedicineDto m in prescription.Medicines)
-                        file.WriteLine(m.Name + "\n" + m.Amount);
-                }
-            //}
+            //TODO A1: Path not found exception
+            using (StreamWriter file = new StreamWriter(path, false))
+            {
+                file.WriteLine(prescription.PatientName + "\n" + prescription.Jmbg + "\n" + prescription.StartTime.ToShortDateString() + "\n" + prescription.EndTime.ToShortDateString());
+                foreach (MedicineDto m in prescription.Medicines)
+                    file.WriteLine(m.Name + "\n" + m.Amount);
+            }
             return UploadFileToSftpServer(path);
         }
 
