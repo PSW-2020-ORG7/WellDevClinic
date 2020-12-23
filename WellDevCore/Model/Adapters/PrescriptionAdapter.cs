@@ -27,7 +27,7 @@ namespace bolnica.Model.Adapters
             {
                 Id = examination.Prescription.Id,
                 TimePeriod = examination.Prescription.Period,
-                Drugs = examination.Prescription.Drug,
+                Medications = examination.Prescription.Drug,
                 PatJmbg = examination.Patient.Jmbg,
                 PatFirstName = examination.Patient.FirstName,
                 PatLastName = examination.Patient.LastName,

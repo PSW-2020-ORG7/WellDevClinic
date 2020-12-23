@@ -6,7 +6,7 @@ namespace PSW_Pharmacy_Adapter.Model
     {
         public long Id { get; set; }
         public virtual Period TimePeriod { get; set; }
-        public virtual List<Medication> Medication { get; set; }
+        public virtual List<Medication> Medications { get; set; }
         public string PatJmbg { get; set; }
         public string PatFirstName { get; set; }
         public string PatLastName { get; set; }
@@ -17,7 +17,7 @@ namespace PSW_Pharmacy_Adapter.Model
         {
             Id = id;
             TimePeriod = period;
-            Medication = medication;
+            Medications = medication;
             PatJmbg = jmbg;
             PatFirstName = firstName;
             PatLastName = lastName;

@@ -7,7 +7,7 @@ namespace WellDevCore.Model.dtos
     {
         public long Id { get; set; }
         public virtual Period TimePeriod { get; set; }
-        public virtual List<Drug> Drugs { get; set; }
+        public virtual List<Drug> Medications { get; set; }
         public string PatJmbg { get; set; }
         public string PatFirstName { get; set; }
         public string PatLastName { get; set; }
@@ -18,7 +18,7 @@ namespace WellDevCore.Model.dtos
         {
             Id = id;
             TimePeriod = period;
-            Drugs = drugs;
+            Medications = drugs;
             PatJmbg = jmbg;
             PatFirstName = firstName;
             PatLastName = lastName;

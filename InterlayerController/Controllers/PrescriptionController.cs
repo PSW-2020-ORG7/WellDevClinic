@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.PatientSecretary;
 using WellDevCore.Model.dtos;
 
-namespace InterlayerController.Controllers
+namespace InterlayerController.Controllers      //TODO A1: Ucitati samo lekove recepta iz examinationa!!!
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,7 +24,7 @@ namespace InterlayerController.Controllers
         [Route("{id?}")]
         public PatientPrescriptionDTO GetPrescription(long id)
         {
-            foreach (Examination e in _examinationController.GetAll())
+            foreach (Examination e in _examinationController.GetAllPrevious())
                 if (e.Prescription.Id == id)
                 {
                     foreach (Drug d in e.Prescription.Drug)
@@ -46,7 +46,7 @@ namespace InterlayerController.Controllers
         public IEnumerable<PatientPrescriptionDTO> GetAllPrescription()
         {
             List<PatientPrescriptionDTO> prescriptions = new List<PatientPrescriptionDTO>();
-            foreach(Examination e in _examinationController.GetAll())
+            foreach(Examination e in _examinationController.GetAllPrevious())
             {
                 foreach (Drug d in e.Prescription.Drug)
                     if (d.Alternative != null)

@@ -44,13 +44,17 @@ namespace PSW_Pharmacy_Adapter.Service
 
         public int SendPrescriptionfile(EPrescriptionDto prescription, string path)
         {
-            //if (File.Exists(PRESCRIPTION_PATH))
-            //TODO A1: Path not found exception
-            using (StreamWriter file = new StreamWriter(path, false))
+            if (!File.Exists(Path.GetDirectoryName(path)))
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+
+            using (StreamWriter file = new StreamWriter(path, true))
             {
-                file.WriteLine(prescription.PatientName + "\n" + prescription.Jmbg + "\n" + prescription.StartTime.ToShortDateString() + "\n" + prescription.EndTime.ToShortDateString());
+                file.WriteLine(prescription.PatientName);
+                file.WriteLine(prescription.Jmbg);
+                file.WriteLine(prescription.StartTime.ToShortDateString());
                 foreach (MedicineDto m in prescription.Medicines)
-                    file.WriteLine(m.Name + "\n" + m.Amount);
+                    file.WriteLine(m.Name + ":" + m.Amount);
+                file.WriteLine("*");
             }
             return UploadFileToSftpServer(path);
         }

@@ -33,6 +33,8 @@ namespace PSW_Pharmacy_Adapter.Service
 
         private static void SaveFile(byte[] array, string fileName)
         {
+            if (!File.Exists(SAVE_PATH))
+                Directory.CreateDirectory(SAVE_PATH);
             using var ms = new MemoryStream(array);
             using var fs = new FileStream(SAVE_PATH + "pre" + fileName + "qr.png", FileMode.Create);
             ms.WriteTo(fs);
@@ -42,9 +44,9 @@ namespace PSW_Pharmacy_Adapter.Service
         {
             string text = "Name: " + pre.PatFirstName + " " + pre.PatLastName
                 + ", JMBG: " + pre.PatJmbg + ", StartDate: " + pre.TimePeriod.StartDate
-                + ", EndDate: " + pre.TimePeriod.EndDate + ", Medicines: ";
-            if (pre.Medication != null)
-                foreach (Medication med in pre.Medication)
+                + ", Medicines: ";
+            if (pre.Medications != null)
+                foreach (Medication med in pre.Medications)
                     text += med.Name + ": " + med.Amount + ", ";
             return text;
         }

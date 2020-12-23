@@ -75,7 +75,7 @@ function sortCards(sort, order) {
 		let minIdx = i;
 		for (let j = i + 1; j < allPrescriptions.length; j++) {
 			if (sort == "patName") {
-				if (allPrescriptions[minIdx].PatFirstName.toLowerCase() > allPrescriptions[j].PatFirstName.toLowerCase())
+				if (allPrescriptions[minIdx].patFirstName.toLowerCase() > allPrescriptions[j].patFirstName.toLowerCase())
 					minIdx = j;
 			} else if (sort == "start") {
 				if (allPrescriptions[minIdx].timePeriod.startDate > allPrescriptions[j].timePeriod.startDate)
@@ -122,7 +122,6 @@ function sendToPharmacies(id) {
 		url: "../api/prescription/" + id,
 		contentType: "application/json",
 		success: function (pre) {
-			console.log(pre);
 			$.ajax({
 				method: "POST",
 				url: "../api/sftp/sendPrescription",
@@ -131,8 +130,7 @@ function sendToPharmacies(id) {
 					PatientName: pre.patFirstName + " " + pre.patLastName,
 					Jmbg: pre.patJmbg,
 					StartTime: pre.timePeriod.startDate,
-					EndTime: pre.timePeriod.endDate,
-					Medicines: []
+					Medicines: pre.medications
 				}),
 				success: function () {
 					$("#sendMessage").text(" File is succesfully sent. ");
@@ -147,23 +145,6 @@ function sendToPharmacies(id) {
 			});
 		},
 	});
-}
-
-function ISOtoShort(date) {
-	let day = date.getDate();
-	let month = (date.getMonth() + 1);
-	let year = date.getFullYear();
-
-	if (day < 10)
-		day = '0' + day;
-	if (month < 10)
-		month = '0' + month;
-
-	return String(day + '-' + month + '-' + year);
-}
-
-function generatePDF(id) {
-	alert(id);
 }
 
 function generateQR(pre) {
@@ -183,12 +164,31 @@ function generateQR(pre) {
 						EndDate: pre.timePeriod.endDate,
 						Id: pre.timePeriod.id
 					},
-					Medication: [],				// TODO A2: stringify za lekove
-					PatJmbg: pre.PatJmbg,
-					PatFirstName: pre.PatFirtsName,
-					PatLastName: pre.PatLastName,
+					Medications: pre.medications,
+					PatJmbg: pre.patJmbg,
+					PatFirstName: pre.patFirstName,
+					PatLastName: pre.patLastName,
                 })
 			});
 		},
 	});
+}
+
+
+function generatePDF(id) {
+	alert(id);
+}
+
+
+function ISOtoShort(date) {
+	let day = date.getDate();
+	let month = (date.getMonth() + 1);
+	let year = date.getFullYear();
+
+	if (day < 10)
+		day = '0' + day;
+	if (month < 10)
+		month = '0' + month;
+
+	return String(day + '-' + month + '-' + year);
 }
