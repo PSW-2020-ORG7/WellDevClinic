@@ -1,10 +1,7 @@
 ﻿using Model.PatientSecretary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 //using PSW_Web_app.dtos;
 using bolnica.Model.dtos;
+using WellDevCore.Model.dtos;
 
 namespace bolnica.Model.Adapters
 {
@@ -12,9 +9,11 @@ namespace bolnica.Model.Adapters
     {
         public static PrescriptionDto PrescriptionToPrescriptionDto(Prescription prescription)
         {
-            PrescriptionDto dto = new PrescriptionDto();
-            dto.Period = prescription.Period.StartDate.ToShortDateString();
-            dto.Id = prescription.Id;
+            PrescriptionDto dto = new PrescriptionDto
+            {
+                Period = prescription.Period.StartDate.ToShortDateString(),
+                Id = prescription.Id
+            };
             string str = "";
             foreach (Drug drug in prescription.Drug) {
                 str += (drug.Name + ",");
@@ -22,5 +21,16 @@ namespace bolnica.Model.Adapters
             dto.Drugs = str;
             return dto;
         }
+
+        public static PatientPrescriptionDTO ExaminationToPatientPrescriptionDto(Examination examination)
+            => new PatientPrescriptionDTO()
+            {
+                Id = examination.Prescription.Id,
+                TimePeriod = examination.Prescription.Period,
+                Drugs = examination.Prescription.Drug,
+                PatJmbg = examination.Patient.Jmbg,
+                PatFirstName = examination.Patient.FirstName,
+                PatLastName = examination.Patient.LastName,
+            };
     }
 }

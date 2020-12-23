@@ -40,9 +40,9 @@ namespace PSW_Pharmacy_Adapter.Service
 
         private static string GenerateQRtext(Prescription pre)
         {
-            string text = "Name: " + pre.CurrentPatient.Name + " " + pre.CurrentPatient.Lastname
-                + ", JMBG: " + pre.CurrentPatient.Jmbg + ", StartDate: " + pre.Period.StartDate
-                + ", EndDate: " + pre.Period.EndDate + ", Medicines: ";
+            string text = "Name: " + pre.PatFirstName + " " + pre.PatLastName
+                + ", JMBG: " + pre.PatJmbg + ", StartDate: " + pre.TimePeriod.StartDate
+                + ", EndDate: " + pre.TimePeriod.EndDate + ", Medicines: ";
             if (pre.Medication != null)
                 foreach (Medication med in pre.Medication)
                     text += med.Name + ": " + med.Amount + ", ";

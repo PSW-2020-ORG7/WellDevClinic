@@ -3,19 +3,17 @@ using PSW_Pharmacy_Adapter.Converter;
 
 namespace PSW_Pharmacy_Adapter.Model
 {
-    public class ActionAndBenefitMapper
+    public static class ActionAndBenefitMapper
     {
-        public static ActionAndBenefit mapActionAndBenefit(ActionAndBenefitDto actionDto, ActionStatus status)
-        {
-            ActionAndBenefit actionAndBenefit = new ActionAndBenefit();
-            actionAndBenefit.Id = actionDto.Id;
-            actionAndBenefit.PharmacyName = actionDto.PharmacyName;
-            actionAndBenefit.MessageAboutAction = actionDto.MessageAboutAction;
-            actionAndBenefit.StartDate = DateTimeConverter.UnixToDateTime(actionDto.StartDate);
-            actionAndBenefit.EndDate = DateTimeConverter.UnixToDateTime(actionDto.EndDate);
-            actionAndBenefit.Status = status;
-
-            return actionAndBenefit;
-        }
+        public static ActionAndBenefit MapActionAndBenefit(ActionAndBenefitDto actionDto, ActionStatus status)
+            => new ActionAndBenefit
+            {
+                Id = actionDto.Id,
+                PharmacyName = actionDto.PharmacyName,
+                MessageAboutAction = actionDto.MessageAboutAction,
+                StartDate = DateTimeConverter.UnixToDateTime(actionDto.StartDate),
+                EndDate = DateTimeConverter.UnixToDateTime(actionDto.EndDate),
+                Status = status
+            };
     }
 }

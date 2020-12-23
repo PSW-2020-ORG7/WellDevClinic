@@ -1,23 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using Model.PatientSecretary;
+using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Model
+namespace WellDevCore.Model.dtos
 {
-    public class Prescription
+    public class PatientPrescriptionDTO
     {
         public long Id { get; set; }
         public virtual Period TimePeriod { get; set; }
-        public virtual List<Medication> Medication { get; set; }
+        public virtual List<Drug> Drugs { get; set; }
         public string PatJmbg { get; set; }
         public string PatFirstName { get; set; }
         public string PatLastName { get; set; }
 
-        public Prescription() { }
+        public PatientPrescriptionDTO() { }
 
-        public Prescription(long id, Period period, List<Medication> medication, string jmbg, string firstName, string lastName)
+        public PatientPrescriptionDTO(long id, Period period, List<Drug> drugs, string jmbg, string firstName, string lastName)
         {
             Id = id;
             TimePeriod = period;
-            Medication = medication;
+            Drugs = drugs;
             PatJmbg = jmbg;
             PatFirstName = firstName;
             PatLastName = lastName;

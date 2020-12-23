@@ -3,7 +3,7 @@
 $(document).ready(function () {
 	$.ajax({
 		method: "GET",
-		url: "../api/prescription",
+		url: "../api/prescription/all",
 		contentType: "application/json",
 		success: function (data) {
 			allPrescriptions = data;
@@ -27,13 +27,13 @@ function viewAllPrescriptions(prescriptions) {
 		content += '<tr><td float="right">Id:</td><td>';
 		content += pre.id;
 		content += '</td></tr>';
-		//content += '<tr><td>Patient name:</td>';
-		//content += '<td>' + pre.currentPatient.name + '</td></tr>';
+		content += '<tr><td>Patient:</td>';
+		content += '<td>' + pre.patFirstName + ' ' + pre.patLastName + '</td></tr>';
 		content += '<tr><td float="right">Start date:</td><td>';
-		content += ISOtoShort(new Date(pre.period.startDate));
+		content += ISOtoShort(new Date(pre.timePeriod.startDate));
 		content += '</td></tr>';
 		content += '<tr><td float="right">End date:</td><td>';
-		content += ISOtoShort(new Date(pre.period.endDate));
+		content += ISOtoShort(new Date(pre.timePeriod.endDate));
 		content += '</td></tr>';
 		if (pre.medication != null) {
 			content += '<tr><td float="right">Prescription medicines:</td>';
@@ -75,13 +75,13 @@ function sortCards(sort, order) {
 		let minIdx = i;
 		for (let j = i + 1; j < allPrescriptions.length; j++) {
 			if (sort == "patName") {
-				if (allPrescriptions[minIdx].currentPatient.name.toLowerCase() > allPrescriptions[j].currentPatient.name.toLowerCase())
+				if (allPrescriptions[minIdx].PatFirstName.toLowerCase() > allPrescriptions[j].PatFirstName.toLowerCase())
 					minIdx = j;
 			} else if (sort == "start") {
-				if (allPrescriptions[minIdx].startDate > allPrescriptions[j].startDate)
+				if (allPrescriptions[minIdx].timePeriod.startDate > allPrescriptions[j].timePeriod.startDate)
 					minIdx = j;
 			} else if (sort == "expire") {
-				if (allPrescriptions[minIdx].endDate > allPrescriptions[j].endDate)
+				if (allPrescriptions[minIdx].timePeriod.endDate > allPrescriptions[j].timePeriod.endDate)
 					minIdx = j;
 			} else if (sort == "list") {
 				if (allPrescriptions[minIdx].id > allPrescriptions[j].id)
@@ -107,9 +107,9 @@ function filter() {
 	}
 
 	for (let pre of allPrescriptions) {
-		if (startDate && pre.startDate < startDate)
+		if (startDate && pre.timePeriod.startDate < startDate)
 			continue;
-		if (endDate && pre.endDate > endDate)
+		if (endDate && pre.timePeriod.endDate > endDate)
 			continue;
 		filtered.push(pre);
 	}
@@ -178,15 +178,15 @@ function generateQR(pre) {
 				data: JSON.stringify({
 					id: pre.id,
 					period: {
-						startDate: pre.period.startDate,
-						endDate: pre.period.endDate,
-						id: pre.period.id
+						startDate: pre.timePeriod.startDate,
+						endDate: pre.timePeriod.endDate,
+						id: pre.timePeriod.id
 					},
 					medication: pre.medication,		// TODO: ??
 					patient: {
-						jmbg: pre.currentPatient.jmbg,
-						name: pre.currentPatient.name,
-						lastName: pre.currentPatient.lastName,
+						jmbg: pre.PatJmbg,
+						name: pre.PatFirtsName,
+						lastName: pre.PatLastName,
 						allergies: [],
 					},
                 })
