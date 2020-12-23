@@ -8,17 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Service\abstract\**" />
-    <Compile Remove="UnitTests\**" />
-    <Content Remove="Service\abstract\**" />
-    <Content Remove="UnitTests\**" />
-    <EmbeddedResource Remove="Service\abstract\**" />
-    <EmbeddedResource Remove="UnitTests\**" />
-    <None Remove="Service\abstract\**" />
-    <None Remove="UnitTests\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.12.4" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.30.0" />
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.30.0" />

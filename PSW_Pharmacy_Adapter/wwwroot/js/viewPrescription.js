@@ -50,7 +50,7 @@ function viewAllPrescriptions(prescriptions) {
 		content += '</td></tr>';
 		content += '<tr></tr>';
 		content += '<tr><td colspan="2">'
-		content += '<button type="button" class="btn btn-info" onclick="sendToPharmacies(\'' + pre.id + '\')" id="' + pre.id + '" data-toggle="modal" data-target="#exampleModalCenter1">';
+		content += '<button type="button" class="btn btn-info" onclick="sendToPharmacies(\'' + pre.id + '\')" id="' + pre.id + '" data-toggle="modal" data-target="#sendModal">';
 		content += 'Send it to pharmacy</button > ';
 		content += '</td><td>';
 		content += '<button type="button" class="btn btn-light" style="font-size:22px;color:red" onclick="generatePDF(' + pre.id + ')"><i class="fa fa-file-pdf-o"></i></button>';
@@ -76,6 +76,9 @@ function sortCards(sort, order) {
 		for (let j = i + 1; j < allPrescriptions.length; j++) {
 			if (sort == "patName") {
 				if (allPrescriptions[minIdx].patFirstName.toLowerCase() > allPrescriptions[j].patFirstName.toLowerCase())
+					minIdx = j;
+			} else if (sort == "patLastName") {
+				if (allPrescriptions[minIdx].patLastName.toLowerCase() > allPrescriptions[j].patLastName.toLowerCase())
 					minIdx = j;
 			} else if (sort == "start") {
 				if (allPrescriptions[minIdx].timePeriod.startDate > allPrescriptions[j].timePeriod.startDate)

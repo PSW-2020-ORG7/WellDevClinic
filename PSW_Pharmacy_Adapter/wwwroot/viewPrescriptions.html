@@ -30,6 +30,7 @@
         <select id="sort" onchange="sortData()">
             <option value="list">List Order</option>
             <option value="patName">Patient name</option>
+            <option value="patLastName">Patient Last Name</option>
             <option value="start">Starting date</option>
             <option value="expire">Expiry date</option>
         </select>
@@ -59,11 +60,11 @@
 
 
     <div class="loader"></div>
-    <div class="list-group list-group-flush" id="viewPrescription"></div>
+    <div id="viewPrescription"></div>
 
 
     <div id="sentAction" style="display:none">
-        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body" id="sendMessage"></div>

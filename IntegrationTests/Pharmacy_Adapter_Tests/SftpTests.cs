@@ -18,9 +18,9 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         public void Send_File_Successfully()
         {
             SftpService service = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
-            bool Successfull = service.UploadFileToSftpServer(EXISTING_PATH);
+            int Successfull = service.UploadFileToSftpServer(EXISTING_PATH);
 
-            Successfull.ShouldBeTrue();
+            Successfull.ShouldBeEquivalentTo(1);
         }
 
         [Fact]
@@ -28,9 +28,9 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             SftpService service = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
 
-            bool Unsuccessfull = service.UploadFileToSftpServer(UNEXISTING_PATH);
+            int Unsuccessfull = service.UploadFileToSftpServer(UNEXISTING_PATH);
 
-            Unsuccessfull.ShouldBeFalse();
+            Unsuccessfull.ShouldBeEquivalentTo(-2);
         }
 
         [Fact]
@@ -38,17 +38,16 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             SftpService service = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
 
-            bool Successfull = service.SendPrescriptionfile(CreatePrescription(), PRESCRIPTION_PATH);
+            int Successfull = service.SendPrescriptionfile(CreatePrescription(), PRESCRIPTION_PATH);
 
-            Successfull.ShouldBeTrue();
+            Successfull.ShouldBeEquivalentTo(1);
 
         }
 
         private EPrescriptionDto CreatePrescription()
             => new EPrescriptionDto("Pera Peric",
-                        124563987L,
+                        "1245639870123",
                         DateTime.Now,
-                        DateTime.Now.AddDays(30),
                         new List<MedicineDto>() {
                         new MedicineDto("Brufen", 1L, 15)
                         });
