@@ -105,9 +105,17 @@ namespace PSW_Wpf_app.Client
     public class Room
     {
         public long Id { get; set; }
+        public virtual List<EquipmentDTO> Equipment_inventory { get; set; }
     }
 
-    public class Examination
+    public class EquipmentDTO
+    {
+        public virtual Equipment Equipment { get; set; }
+        public int Amount { get; set; }
+        public int Id { get; set; }
+    }
+
+        public class Examination
     {
         public long Id { get; set; }
         public User User { get; set; }
@@ -237,6 +245,16 @@ namespace PSW_Wpf_app.Client
             List<Patient> patients = JsonConvert.DeserializeObject<List<Patient>>(responseBody);
 
             return patients;
+        }
+
+        public static async Task<Room> GetRoomById(long id)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Room room = JsonConvert.DeserializeObject<Room>(responseBody);
+
+            return room;
         }
 
     }

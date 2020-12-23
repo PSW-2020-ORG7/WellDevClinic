@@ -1,31 +1,35 @@
 ﻿using bolnica.Controller;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Director;
+using System;
 using System.Collections.Generic;
-using WellDevCore.Model.Dto;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InterlayerController.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EquipmentController : ControllerBase
+    public class RoomController : ControllerBase
     {
-        private IEquipmentController _equipmentController;
+        private IRoomController _roomController;
 
-        public EquipmentController(IEquipmentController equipmentController)
+        public RoomController(IRoomController roomController)
         {
-            _equipmentController = equipmentController;
+            _roomController = roomController;
         }
+
         /// <summary>
         ///calls GetAll() method from class EquipmentController 
         ///so it can get all equipment from database
         /// </summary>
         /// <returns>status 200 OK response with a list of equipment</returns>
         [HttpGet]
-        
-        public IEnumerable<Equipment> GetAllEquipment()
+        [Route("{id?}")]
+        public Room GetRoomById(long id)
         {
-            List<Equipment> result = (List<Equipment>)_equipmentController.GetAll();
+            Room result = (Room)_roomController.Get(id);
 
             return result;
         }

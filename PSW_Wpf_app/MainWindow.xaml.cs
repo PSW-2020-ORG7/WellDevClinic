@@ -36,11 +36,17 @@ namespace PSW_Wpf_app
             
             InitializeComponent();
             user = role;
-            if(role == "patient")
+            if (role == "patient")
             {
-                Equipment_Drugs.IsEnabled = false;
-                Map_Info.IsEnabled = false;
+                Equipment_Drugs.Visibility = Visibility.Hidden;
+                Map_Info.Visibility = Visibility.Hidden;
+                Appointment.Visibility = Visibility.Hidden;
             }
+            else if (role == "director")
+            {
+                Appointment.Visibility = Visibility.Hidden;
+            }
+
 
             elements = ShapeViewModel.Read();
             foreach (GraphicElement e in elements)

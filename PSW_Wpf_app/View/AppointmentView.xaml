@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PSW_Wpf_app.View"
         xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel"
         mc:Ignorable="d"
-        Title="AppointmentView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="AppointmentView" Height="500" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <viewmodel:AppointmentViewModel x:Key="vm"></viewmodel:AppointmentViewModel>
     </Window.Resources>

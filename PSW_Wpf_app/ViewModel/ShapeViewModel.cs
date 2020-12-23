@@ -59,17 +59,17 @@ namespace PSW_Wpf_app.ViewModel
                     string[] temp1 = floorElement.Split(',');
                     try
                     {
-                        FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7], temp1[8]);
+                        FloorElement shape = new FloorElement(temp1[0], temp1[1], Convert.ToInt32(temp1[2]), Convert.ToInt32(temp1[3]), Convert.ToInt32(temp1[4]), Convert.ToInt32(temp1[5]), Convert.ToInt32(temp1[6]), temp1[7], Convert.ToInt32(temp1[8]), temp1[9]);
 
-                        if (temp1.Count() == 11)
+                        if (temp1.Count() == 12)
                         {
-                            string[] equipments = temp1[9].Split(':', '-');
+                            string[] equipments = temp1[10].Split(':', '-');
                             for (int i = 0; i < equipments.Count() - 1; i += 3)
                             {
                                 shape.Equipments.Add(new Client.Equipment() { Id = int.Parse(equipments[(i % 4) + 1]), Name = equipments[(i % 4) + 2], Amount = int.Parse(equipments[(i % 4) + 3]) });
                             }
 
-                            string[] drugs = temp1[10].Split(':', '-');
+                            string[] drugs = temp1[11].Split(':', '-');
                             for (int i = 0; i < drugs.Count() - 1; i += 3)
                             {
                                 shape.Drugs.Add(new Client.Drug() { Id = int.Parse(drugs[(i % 4) + 1]), Name = drugs[(i % 4) + 2], Amount = int.Parse(drugs[(i % 4) + 3]) });
@@ -98,7 +98,7 @@ namespace PSW_Wpf_app.ViewModel
             {
                 foreach (FloorElement item in elements)
                 {
-                    sw.WriteLine($"{item.Type},{item.Name},{item.Width},{item.Height},{item.X},{item.Y},{item.Floor},{item.Info}");
+                    sw.WriteLine($"{item.Type},{item.Name},{item.Width},{item.Height},{item.X},{item.Y},{item.Floor},{item.BuildingName},{item.RoomId},{item.Info} ");
                 }
             }
         }
