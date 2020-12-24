@@ -57,17 +57,31 @@ namespace PSW_Wpf_app.Client
 
 
     }
+    public enum PriorityType
+    {
+        NoPriority,
+        Doctor,
+        Date,
 
+    }
     public class BusinessDayDTO
     {
         public long Id { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Period Period { get; set; }
         public Boolean PatientScheduling = false;
+        public PriorityType Priority { get; set; }
         public BusinessDayDTO(Doctor doctor, Period period)
         {
             this.Doctor = doctor;
             this.Period = period;
+        }
+
+        public BusinessDayDTO(Doctor doctor, Period period, PriorityType priority)
+        {
+            this.Doctor = doctor;
+            this.Period = period;
+            this.Priority = priority;
         }
 
         public BusinessDayDTO()
@@ -81,6 +95,10 @@ namespace PSW_Wpf_app.Client
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public Period()
+        {
+        }
     }
 
     public class ExaminationDTO
@@ -89,9 +107,14 @@ namespace PSW_Wpf_app.Client
         public Doctor Doctor { get; set; }
         public Patient Patient { get; set; }
         public Room Room { get; set; }
-        public DateTime StartDate { get; set; }
-         public DateTime EndDate { get; set; }
         public Period Period { get; set; }
+
+        public ExaminationDTO(Doctor doctor, Period period, Patient patient) 
+        {
+            Doctor = doctor;
+            Period = period;
+            Patient = patient;
+        }
     }
 
 
@@ -138,22 +161,7 @@ namespace PSW_Wpf_app.Client
         public long Id { get; set; }
 
     }
-    public class ExaminationIdsDTO
-    {
-        public long DoctorId { get; set; }
-        public String Period { get; set; }
-        public long PatientId { get; set; }
-        public ExaminationIdsDTO()
-        {
-
-        }
-        public ExaminationIdsDTO(long doctorId, String period, long patientId)
-        {
-            DoctorId = doctorId;
-            Period = period;
-            PatientId = patientId;
-        }
-    }
+    
 
     public class  Patient:User
     {
@@ -238,7 +246,7 @@ namespace PSW_Wpf_app.Client
 
         }
 
-        public static async Task<Examination> NewExamination(ExaminationIdsDTO examination)
+        public static async Task<Examination> NewExamination(ExaminationDTO examination)
         {
             var content = new StringContent(JsonConvert.SerializeObject(examination));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");

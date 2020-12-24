@@ -16,6 +16,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [HttpGet]
+        [Route("all")]
         public async Task<IActionResult> GetHospitalsPrescriptionsStockAsync()
             => Ok(await _prescriptionService.GetAllPrescriptions());
 

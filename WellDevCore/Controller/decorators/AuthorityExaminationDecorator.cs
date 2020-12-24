@@ -106,7 +106,7 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
-        public Examination NewExamination(long DoctorId, String Period, long PatientId)
+        public Examination NewExamination(long DoctorId, Period Period, long PatientId)
         {
             throw new NotImplementedException();
         }

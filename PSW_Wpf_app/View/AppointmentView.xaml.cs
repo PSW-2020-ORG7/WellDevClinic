@@ -2,16 +2,7 @@
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PSW_Wpf_app.View
 {
@@ -40,11 +31,11 @@ namespace PSW_Wpf_app.View
                 
                 DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
                 Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
-                
 
+                PriorityType priority = PriorityType.NoPriority;
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
-                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period);
+                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
                 businessDayDTO.PatientScheduling = true;
                 scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
                
@@ -53,6 +44,17 @@ namespace PSW_Wpf_app.View
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
+
+                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
+                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+
+                PriorityType priority = PriorityType.Doctor;
+                Period period = new Period();
+                period.StartDate = DateTime.Parse(Picker.Text);
+                period.EndDate = DateTime.Parse(Picker2.Text);
+                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
+                businessDayDTO.PatientScheduling = true;
+                scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
 
             }
             else
@@ -73,41 +75,29 @@ namespace PSW_Wpf_app.View
                 return;
             }
 
-            ErrorSchedule.Foreground = Brushes.Green;
             ExaminationDTO scheduleExam = (ExaminationDTO)selectedItem;
 
-            ErrorSchedule.Text = "You have successfully scheduled an examination!";
-
+            
             Doctor doctor= scheduleExam.Doctor;
-            long doctorId = doctor.Id;
             AppointmentViewModel a = new AppointmentViewModel();
             List<Patient> p = (List<Patient>)await WpfClient.GetAllPatient();
             Patient patient = (Patient)PatientForExaminations.SelectedItem;
-            long patientId = 0;
-            foreach (Patient pt in p)
-            {
-                if(pt.Username.Equals(patient.Username))
-                    patientId = pt.Id;
-            }
             
-            
-            string period;
-            
-
-            period = scheduleExam.StartDate.ToString() + "S" + scheduleExam.EndDate.ToString();
+            Period period =  new Period();
+            period.StartDate = scheduleExam.Period.StartDate;
+            period.EndDate = scheduleExam.Period.EndDate;
 
 
-            ExaminationIdsDTO ex = new ExaminationIdsDTO(doctorId, period,patientId );
+            ExaminationDTO ex = new ExaminationDTO(doctor, period, patient);
 
             Examination examination = (Examination)await WpfClient.NewExamination(ex);
 
-            if (examination == null)
+            if (examination != null)
             {
                 MessageBox.Show("Appointment is scheduled!");
             }
 
         }
-
 
     }
 }
