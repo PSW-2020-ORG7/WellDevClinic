@@ -45,7 +45,7 @@ namespace PSW_Pharmacy_Adapter.Service
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                ActionAndBenefit actionAndBenefit = ActionAndBenefitMapper.mapActionAndBenefit(
+                ActionAndBenefit actionAndBenefit = ActionAndBenefitMapper.MapActionAndBenefit(
                                                      JsonConvert.DeserializeObject<ActionAndBenefitDto>(
                                                      jsonMessage.ToString()), ActionStatus.pending);
                 Console.WriteLine(" [x] Received {0}", actionAndBenefit.PharmacyName);

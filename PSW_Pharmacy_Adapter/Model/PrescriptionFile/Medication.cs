@@ -29,7 +29,5 @@ namespace PSW_Pharmacy_Adapter.Model
             Ingredients = ingredients;
             Alternative = alternative;
         }
-
-
     }
 }

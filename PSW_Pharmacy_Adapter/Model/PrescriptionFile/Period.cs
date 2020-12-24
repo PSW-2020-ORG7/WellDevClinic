@@ -9,9 +9,7 @@ namespace PSW_Pharmacy_Adapter.Model
         public long Id { get; set; }
 
 
-        public Period()
-        {
-        }
+        public Period() { }
 
         public Period(DateTime? startDate, DateTime? endDate)
         {
