@@ -1,4 +1,6 @@
-﻿using Model.Doctor;
+﻿using Model.Director;
+using Model.Doctor;
+using Model.PatientSecretary;
 using Model.Users;
 using Moq;
 using Repository;
@@ -43,7 +45,32 @@ namespace UnitTests.Graphic_Editor_Tests
             returnedDoctor.ShouldBeEquivalentTo(doctors);
 
         }
+     
+        [Fact]
+        public void GetSpecialityExist()
+        {
+            
+            var specialityStubRepository = new Mock<ISpecialityRepository>();
 
+            Speciality speciality = new Speciality(921, "pedijatar");
+            Speciality speciality1 = new Speciality(922, "ginekolog");
+            List<Speciality> specs = new List<Speciality>();
+
+            specs.Add(speciality);
+            specs.Add(speciality1);
+
+
+
+            specialityStubRepository.Setup(r => r.GetEager()).Returns(specs);
+
+            SpecialityService specialityService = new SpecialityService(specialityStubRepository.Object);
+            List<Speciality> returnedSpeciality = specialityService.GetAll() as List<Speciality>;
+
+            returnedSpeciality.ShouldBeEquivalentTo(specs);
+
+
+        }
+     
         [Fact]
         public void GetOneDoctorNonExist()
         {
@@ -54,5 +81,7 @@ namespace UnitTests.Graphic_Editor_Tests
 
             returnedDoctor.ShouldBeNull();
         }
+
+
     }
 }
