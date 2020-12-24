@@ -70,5 +70,54 @@ namespace PSW_Wpf_app.View
             context.LoadDoctors(((Speciality)specs.SelectedItem).Name);
         }
 
+
+        private async void Schedule_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = scheduleExaminationsGrid.SelectedItem;
+
+            if (selectedItem == null)
+            {
+                return;
+            }
+
+            ErrorSchedule.Foreground = Brushes.Green;
+            ExaminationDTO scheduleExam = (ExaminationDTO)selectedItem;
+
+            ErrorSchedule.Text = "You have successfully scheduled an examination!";
+
+            Doctor doctor = scheduleExam.Doctor;
+            long doctorId = doctor.Id;
+            AppointmentViewModel a = new AppointmentViewModel();
+            List<Patient> p = (List<Patient>)await WpfClient.GetAllPatient();
+            Patient patient = (Patient)PatientForExaminations.SelectedItem;
+            long patientId = 0;
+            foreach (Patient pt in p)
+            {
+                if (pt.Username.Equals(patient.Username))
+                    patientId = pt.Id;
+            }
+
+
+            string period;
+
+
+            period = scheduleExam.StartDate.ToString() + "S" + scheduleExam.EndDate.ToString();
+
+
+            ExaminationIdsDTO ex = new ExaminationIdsDTO(doctorId, period, patientId);
+
+            Examination examination = (Examination)await WpfClient.NewExamination(ex);
+
+            if (examination == null)
+            {
+                MessageBox.Show("Appointment is scheduled!");
+            }
+
+        }
+
+        private void scheduleExaminationsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel"
 
         mc:Ignorable="d"
-        Title="SpecialistAppointmentView" Height="500" Width="800">
+        Title="SpecialistAppointmentView" Height="550" Width="786">
 
     <Grid >
         <Grid.ColumnDefinitions>
@@ -26,13 +26,8 @@
                 <ComboBox  Width="140" Height="25" x:Name="specs" SelectionChanged="OnChangeSpeciality" DisplayMemberPath="Name" ItemsSource ="{Binding Path=Specialities,  UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
                 <TextBlock Name="ChooseDoctor" Text="Choose a doctor:" FontSize="19"  Margin="20,0,0,0" Width="148" Height="30"/>
                 <ComboBox  Width="140" Height="25" Name="DoctorsForExaminations" ItemsSource ="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Margin="50,0,0,0"/>
-                <Button Margin="20,-0,0,0" Foreground="Black" ToolTipService.ShowOnDisabled="true" ToolTip="Average grade of doctor." FontSize="14" x:Name="ButtonGrade" Width="40" Height="40" IsEnabled="False"/>
-
-
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="790">
-
-
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text=" Priority"  FontSize="19" Margin="10" Width="150"></TextBlock>
@@ -78,13 +73,21 @@
                                 <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Binding="{Binding Doctor.FirstName}" Width="*"></DataGridTextColumn>
                                 <DataGridTextColumn x:Name="ColumnDateForSchedule" Header="Date and Time"  Binding="{Binding Period.StartDate}" Width="*"></DataGridTextColumn>
                                 <DataGridTextColumn x:Name="ColumnOrdinationForSchedule" Header="Ordination" Binding="{Binding Room.Id}" Width="*"></DataGridTextColumn>
+                           
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
                 </ScrollViewer>
             </Grid>
-
+            <Button x:Name="Schedule" Content="Schedule"   Width="90" Click="Schedule_Click" Margin="670,-30,0,0">
+                <Button.ToolTip>
+                    <ToolTip x:Name="ToolTipSchedule"  Content = "Schedule the selected date" BorderThickness="2" BorderBrush="Gray"/>
+                </Button.ToolTip>
+            </Button>
             <TextBlock Name="ErrorSchedule"  Opacity="0" FontSize="15" HorizontalAlignment="Right"  Margin="0,0,10,-5" Foreground="#FFE01F0C"></TextBlock>
+
+
         </StackPanel>
+
     </Grid>
 </Window>
