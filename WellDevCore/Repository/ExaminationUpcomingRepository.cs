@@ -108,7 +108,7 @@ namespace bolnica.Repository
             Examination examination = new Examination(patient,doctor, period);
             myDbContext.Examination.Add(examination);
             myDbContext.SaveChanges();
-            return null;
+            return examination;
         }
 
     }
