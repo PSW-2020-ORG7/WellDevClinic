@@ -87,7 +87,7 @@ namespace Controller
             return _businessDayService.GetAvailablePeriodsByDoctor(date, id);
         }
 
-        public void SetPriority(string priority)
+        public void SetPriority(PriorityType priority)
         {
             _businessDayService.SetPriority(priority);
         }

@@ -2,16 +2,7 @@
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PSW_Wpf_app.View
 {
@@ -41,7 +32,7 @@ namespace PSW_Wpf_app.View
                 DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
                 Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
 
-                string priority = "noPriority";
+                PriorityType priority = PriorityType.NoPriority;
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
@@ -57,7 +48,7 @@ namespace PSW_Wpf_app.View
                 DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
                 Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
 
-                string priority = "doctor";
+                PriorityType priority = PriorityType.Doctor;
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
                 period.EndDate = DateTime.Parse(Picker2.Text);
@@ -101,7 +92,7 @@ namespace PSW_Wpf_app.View
 
             Examination examination = (Examination)await WpfClient.NewExamination(ex);
 
-            if (examination == null)
+            if (examination != null)
             {
                 MessageBox.Show("Appointment is scheduled!");
             }

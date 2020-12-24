@@ -122,7 +122,7 @@ namespace bolnica.Controller.decorators
             return null;
         }
 
-        public void SetPriority(string priority)
+        public void SetPriority(PriorityType priority)
         {
             throw new NotImplementedException();
         }

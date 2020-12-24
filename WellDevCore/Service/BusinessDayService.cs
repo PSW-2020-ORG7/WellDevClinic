@@ -253,13 +253,13 @@ namespace Service
             return retVal;
         }
 
-        public void SetPriority(string priority)
+        public void SetPriority(PriorityType priority)
         {
-            if (priority.Equals("doctor"))
+            if (priority == PriorityType.Doctor)
             {
                 this._searchPeriods = new DoctorPrioritySearch();
             }
-            else if (priority.Equals("date"))
+            else if (priority == PriorityType.Date)
             {
                 this._searchPeriods = new DatePrioritySearch();
             }
