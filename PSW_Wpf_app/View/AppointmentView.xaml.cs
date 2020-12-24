@@ -84,31 +84,20 @@ namespace PSW_Wpf_app.View
                 return;
             }
 
-            ErrorSchedule.Foreground = Brushes.Green;
             ExaminationDTO scheduleExam = (ExaminationDTO)selectedItem;
 
-            ErrorSchedule.Text = "You have successfully scheduled an examination!";
-
+            
             Doctor doctor= scheduleExam.Doctor;
-            long doctorId = doctor.Id;
             AppointmentViewModel a = new AppointmentViewModel();
             List<Patient> p = (List<Patient>)await WpfClient.GetAllPatient();
             Patient patient = (Patient)PatientForExaminations.SelectedItem;
-            long patientId = 0;
-            foreach (Patient pt in p)
-            {
-                if(pt.Username.Equals(patient.Username))
-                    patientId = pt.Id;
-            }
             
-            
-            string period;
-            
-
-            period = scheduleExam.StartDate.ToString() + "S" + scheduleExam.EndDate.ToString();
+            Period period =  new Period();
+            period.StartDate = scheduleExam.Period.StartDate;
+            period.EndDate = scheduleExam.Period.EndDate;
 
 
-            ExaminationIdsDTO ex = new ExaminationIdsDTO(doctorId, period,patientId );
+            ExaminationDTO ex = new ExaminationDTO(doctor, period, patient);
 
             Examination examination = (Examination)await WpfClient.NewExamination(ex);
 
@@ -118,7 +107,6 @@ namespace PSW_Wpf_app.View
             }
 
         }
-
 
     }
 }
