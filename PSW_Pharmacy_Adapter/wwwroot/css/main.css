@@ -124,3 +124,24 @@ div.card {
     overflow-y: scroll;
     resize: none;
 }
+
+.add_field_button {
+    border-radius: 4px;
+    padding: 14px 40px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+

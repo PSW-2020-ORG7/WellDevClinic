@@ -54,3 +54,28 @@ function getMedications(id) {
     $("#txtResponse").val("");
     $("#medModal").slideDown("fast");
 }
+
+function showDialog() {
+    $("#modalUrgProcurement").html;
+    $("#modalUrgProcurement").show();
+}
+
+function addInputText() {
+    var max_fields = 10; 
+    var wrapper = $(".input_fields_wrap"); 
+    var add_button = $(".add_field_button"); 
+
+    var x = 1; 
+    $(add_button).click(function (e) { 
+        e.preventDefault();
+        if (x < max_fields) { 
+            x++; 
+            $(wrapper).append('<div><input placeholder="Enter medicine name" type="text" name="mytext[]"/>' +
+                '<input placeholder="Enter quantity" type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); 
+        }
+    });
+
+    $(wrapper).on("click", ".remove_field", function (e) {
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+    })
+}

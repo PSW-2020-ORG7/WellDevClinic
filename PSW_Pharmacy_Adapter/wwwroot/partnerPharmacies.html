@@ -32,6 +32,12 @@
     </div>
 
     <div>
+        <form action="#modalUrgProcurement">
+            <input type="submit" value="📤 Urgent procurement" class="btn btn-warning"/>
+        </form>
+    </div>
+
+    <div>
         <div class="loader"></div>
         <table class="table" id="apiTable" style="display:none">
             <tr><th>Pharmacy name</th><th>API key</th><th>Url</th><th></th><th></th></tr>
@@ -49,9 +55,11 @@
                     <h4>
                         Ask for: &nbsp;&nbsp;
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" 
-                                    id="btnMed" data-toggle="dropdown" aria-haspopup="true" 
-                                    aria-expanded="false">All medications</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                    id="btnMed" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                All medications
+                            </button>
                             <div class="dropdown-menu">
                                 <div id="viewMedication"></div>
                             </div>
@@ -89,6 +97,26 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                         <button type="button" id="btnYes" class="btn btn-primary">Yes</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalUrgProcurement" id="modalUrgProcurement">
+        <div class="d-flex justify-content-center" tabindex="-1">
+            <div class="card" style="width: 550px; height: 500px;">
+                <div class="card-body">
+                    <span class="close">&times;</span>
+                    <h4>Urgent producement</h4>
+                    <br>
+                    <div class="input_fields_wrap">
+                        <button class="add_field_button" onclick="addInputText()">Add More Fields</button>
+                        <div>
+                            <input placeholder="Enter medicine name" type="text" name="mytext[]">
+                            <input placeholder="Enter quantity" type="text" name="mytext[]">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg">Send</button>
                 </div>
             </div>
         </div>
