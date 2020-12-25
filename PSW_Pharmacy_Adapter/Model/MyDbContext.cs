@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PSW_Pharmacy_Adapter.Model.Pharmacy;
 using System;
 
 namespace PSW_Pharmacy_Adapter.Model
@@ -7,7 +8,7 @@ namespace PSW_Pharmacy_Adapter.Model
     {
         public DbSet<Api> ApiKeys { get; set; }
         public DbSet<ActionAndBenefit> ActionsAndBenefits { get; set; }
-
+        public DbSet<TenderOffer> TenderOffers { get; set; }
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
@@ -30,7 +31,7 @@ namespace PSW_Pharmacy_Adapter.Model
                 new ActionAndBenefit(6, "PH1", "Cheap sedatives!", DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1), ActionStatus.accepted)
                );
 
-           
+
         }
     }
 }
