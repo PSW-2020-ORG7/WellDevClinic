@@ -101,6 +101,7 @@ namespace Service
         public List<ExaminationDTO> Search(BusinessDayDTO businessDayDTO)
         {
             TimeSpan difference = businessDayDTO.Period.StartDate - DateTime.Now;   //da se ne izabere datum pre danasnjeg
+            SetPriority(businessDayDTO.Priority);
             if(difference.Days < 0){
                 /*if(businessDayDTO.PatientScheduling)
                 {
@@ -252,5 +253,20 @@ namespace Service
             return retVal;
         }
 
+        public void SetPriority(PriorityType priority)
+        {
+            if (priority == PriorityType.Doctor)
+            {
+                this._searchPeriods = new DoctorPrioritySearch();
+            }
+            else if (priority == PriorityType.Date)
+            {
+                this._searchPeriods = new DatePrioritySearch();
+            }
+            else
+            {
+                this._searchPeriods = new NoPrioritySearch();
+            }
+        }
     }
 }

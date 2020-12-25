@@ -7,6 +7,7 @@ using bolnica.Model.Adapters;
 using bolnica.Model.dtos;
 using bolnica.Service;
 using Microsoft.AspNetCore.Mvc;
+using Model.Dto;
 using Model.PatientSecretary;
 using Model.Users;
 using WellDevCore.Model.Dto;
@@ -19,10 +20,12 @@ namespace InterlayerController.Controllers
     public class ExaminationController : ControllerBase
     {
         private readonly IExaminationController _examinationController;
+        private readonly IBusinessDayController _businessDayController;
 
-        public ExaminationController(IExaminationController examinationController)
+        public ExaminationController(IExaminationController examinationController, IBusinessDayController businessDayController)
         {
             _examinationController = examinationController;
+            _businessDayController = businessDayController;
         }
 
         [HttpGet]
@@ -104,10 +107,23 @@ namespace InterlayerController.Controllers
 
         [HttpPost]
         [Route("newExamination")]
-        public Examination NewExamination([FromBody] ExaminationIdsDTO examination) 
+        public Examination NewExamination([FromBody] ExaminationDTO examination) 
         {
-            Examination retVal = _examinationController.NewExamination(examination.DoctorId, examination.Period, examination.PatientId);
+            Examination retVal = _examinationController.NewExamination(examination.Doctor.Id, examination.Period, examination.Patient.Id);
+            List<Period> peridos = new List<Period>();
+            peridos.Add(examination.Period);
+            BusinessDay day = _businessDayController.GetExactDay(examination.Doctor, examination.Period.StartDate);
+            _businessDayController.MarkAsOccupied(peridos, day);
             return retVal;
         }
+
+        /*[HttpPost]
+        [Route("newExamination")]
+        public Examination NewExamination([FromBody] ExaminationIdsDTO examination)
+        {
+            Examination retVal = _examinationController.NewExamination(examination.DoctorId, examination.Period, examination.PatientId);
+           
+            return retVal;
+        }*/
     }
 }

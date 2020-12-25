@@ -36,7 +36,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         {
             Api a = _keyService.AddPharmacy(api);
             if (a != null)
-                return Ok(a);
+                return StatusCode(201, a);
             return BadRequest();
         }
 
