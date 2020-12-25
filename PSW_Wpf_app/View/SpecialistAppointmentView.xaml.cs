@@ -42,26 +42,74 @@ namespace PSW_Wpf_app.View
                 DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
                 Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
 
-
+                PriorityType priority = PriorityType.NoPriority;
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
-                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period);
+                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
                 businessDayDTO.PatientScheduling = true;
-                scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
+                List<ExaminationDTO> exams = await WpfClient.FindTerms(businessDayDTO);
 
+                //nova prazna lista koju cemo bajnovati na datagrid
+                List<ExaminationDTO> final = new List<ExaminationDTO>();
+                //prolazimo krooz sve termine
+                foreach (ExaminationDTO item in exams)
+                {
+                    //zato sto u terminu imas roomId
+                    // Room room = await WpfClient.GetRoomById(item.Room.Id);
+                    if (item.Room.Equipment_inventory.Find(x => x.Equipment.Name == ((Equipment)EquipmentBox.SelectedItem).Name) != null)
+                    {
+                        final.Add(item);
+                    }
+
+
+                }
+                if (final.Count == 0)
+                {
+                    MessageBox.Show("There is no selected equipment in this room. Choose a priority!!");
+
+                }
+                scheduleExaminationsGrid.ItemsSource = final;
             }
             else if (PriorityBox.SelectedIndex == 1)
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
 
+                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
+                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+
+                PriorityType priority = PriorityType.Doctor;
+                Period period = new Period();
+                period.StartDate = DateTime.Parse(Picker.Text);
+                period.EndDate = DateTime.Parse(Picker2.Text);
+                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
+                businessDayDTO.PatientScheduling = true;
+                scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
+              
             }
-            else
+            else if (PriorityBox.SelectedIndex == 2)
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
 
+                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
+                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+
+                PriorityType priority = PriorityType.Date;
+                Period period = new Period();
+                period.StartDate = DateTime.Parse(Picker.Text);
+                period.EndDate = DateTime.Parse(Picker2.Text);
+                BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
+                businessDayDTO.PatientScheduling = true;
+                scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
+
             }
+             else
+             {
+                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
+                     return;
+
+             }
         }
 
 

@@ -1,5 +1,7 @@
-﻿using Model.Director;
+﻿using bolnica.Model.Dto;
+using Model.Director;
 using Model.Doctor;
+using Model.Dto;
 using Model.PatientSecretary;
 using Model.Users;
 using Moq;
@@ -15,6 +17,49 @@ namespace UnitTests.Graphic_Editor_Tests
 {
    public class ExaminationTests
     {
+
+        private static IBusinessDayRepository CreateBusinessDayRepository()
+        {
+            var stubRepository = new Mock<IBusinessDayRepository>();
+            List<BusinessDay> businessDays = new List<BusinessDay>();
+
+            Doctor doctor = new Doctor() { Id = 1, FirstName = "ivan", LastName = "ivanovic", };
+
+            DateTime start = new DateTime(2020, 12, 27, 8, 0, 0);
+            DateTime end = new DateTime(2020, 12, 28, 8, 30, 0);
+            Period period = new Period(start, end);
+            Room room = new Room();
+            List<Period> periods = new List<Period>();
+            periods.Add(period);
+
+            BusinessDay businessDay = new BusinessDay(909, period, doctor, room, periods);
+
+            businessDays.Add(businessDay);
+            stubRepository.Setup(r => r.GetAllEager()).Returns(businessDays);
+            return stubRepository.Object;
+        }
+
+       
+        private static IDoctorRepository CreateDoctorRepository()
+        {
+            var stubRepository = new Mock<IDoctorRepository>();
+
+            Doctor doctor = new Doctor(1, "ivan", "ivanovic");
+            DateTime start = new DateTime(2020, 12, 27, 8, 0, 0);
+            DateTime end = new DateTime(2020, 12, 28, 8, 30, 0);
+            Room room = new Room();
+            Period period = new Period(start, end);
+            List<Period> periods = new List<Period>();
+            periods.Add(period);
+
+            BusinessDay businessDay = new BusinessDay(909, period, doctor, room, periods);
+
+            List<BusinessDay> businessDays = new List<BusinessDay>();
+            businessDays.Add(businessDay);
+            doctor.BusinessDay = businessDays;
+            stubRepository.Setup(r => r.GetEager(1)).Returns(doctor);
+            return stubRepository.Object;
+        }
 
         [Fact]
         public void GetAllDoctorsExist()
@@ -82,6 +127,39 @@ namespace UnitTests.Graphic_Editor_Tests
             returnedDoctor.ShouldBeNull();
         }
 
+
+        [Fact]
+        public void Get_business_days()
+        {
+            BusinessDayService service = new BusinessDayService((IBusinessDayRepository)CreateBusinessDayRepository(), new DoctorService(CreateDoctorRepository()));
+            List<BusinessDay> result = (List<BusinessDay>)service.GetAll();
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Get_terms()
+        {
+
+
+            var doctorBusinessDayRepository = CreateBusinessDayRepository();
+            var doctorRepository = CreateDoctorRepository();
+
+            List<BusinessDay> businessDays = new List<BusinessDay>();
+
+            DoctorService doc = new DoctorService(doctorRepository);
+            BusinessDayService service = new BusinessDayService(doctorBusinessDayRepository, doc);
+            Doctor doctor = new Doctor(1, "ivan", "ivanovic");
+
+            DateTime start = new DateTime(2020, 12, 27, 8, 0, 0);
+            DateTime end = new DateTime(2020, 12, 28, 8 ,30, 0);
+            Period period = new Period(start, end);
+
+            PriorityType priority = PriorityType.NoPriority;
+            BusinessDayDTO businessDay = new BusinessDayDTO(doctor, period, priority);
+            List<ExaminationDTO> result = service.Search(businessDay);
+            result.ShouldNotBeEmpty();
+         
+        }
 
     }
 }
