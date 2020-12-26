@@ -117,6 +117,14 @@ namespace PSW_Wpf_app.Client
         }
     }
 
+
+    public class Speciality
+    {
+        public String Name { get; set; }
+        public long Id { get; set; }
+        public Speciality() { }
+    }
+
     public class Room
     {
         public long Id { get; set; }
@@ -214,6 +222,17 @@ namespace PSW_Wpf_app.Client
 
             return doctors;
         }
+
+        public static async Task<List<Speciality>> GetAllSpeciality()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/speciality");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Speciality> specs = JsonConvert.DeserializeObject<List<Speciality>>(responseBody);
+
+            return specs;
+        }
+
 
 
         public static async Task<List<ExaminationDTO>> FindTerms(BusinessDayDTO businessDTO)

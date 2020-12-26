@@ -123,6 +123,11 @@ namespace PSW_Wpf_app
             appointment.Show();
         }
 
+        private void SpecialistAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            SpecialistAppointmentView view = new SpecialistAppointmentView();
+            view.ShowDialog();
+        }
     }
 
 }
