@@ -1,4 +1,5 @@
 ﻿using Moq;
+using PSW_Pharmacy_Adapter;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service;
@@ -34,6 +35,8 @@ namespace UnitTests.Pharmacy_Adapter_Tests
 
             notEqual.ShouldNotBeNull();
         }
+
+        
 
         public List<Medication> CreateMedicationList()
         {
