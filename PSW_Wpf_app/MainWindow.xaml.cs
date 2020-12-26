@@ -123,6 +123,11 @@ namespace PSW_Wpf_app
             appointment.Show();
         }
 
+        private void EmergencyAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            EmergencyAppointmentView emergencyAppointmentView = new EmergencyAppointmentView();
+            emergencyAppointmentView.Show();
+        }
     }
 
 }
