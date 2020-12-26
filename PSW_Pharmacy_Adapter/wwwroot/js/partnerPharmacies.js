@@ -56,12 +56,12 @@ function getMedications(id) {
 }
 
 function showDialog() {
-    $("#modalUrgProcurement").html;
+    $("#modalUrgProcurement").html();
     $("#modalUrgProcurement").show();
 }
 
 function addInputText() {
-    var max_fields = 10; 
+    var max_fields = 5; 
     var wrapper = $(".input_fields_wrap"); 
     var add_button = $(".add_field_button"); 
 
@@ -69,13 +69,13 @@ function addInputText() {
     $(add_button).click(function (e) { 
         e.preventDefault();
         if (x < max_fields) { 
-            x++; 
-            $(wrapper).append('<div><input placeholder="Enter medicine name" type="text" name="mytext[]"/>' +
-                '<input placeholder="Enter quantity" type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); 
+            ++x; 
+            $(wrapper).append('<div><input placeholder="Enter medicine name" type="text" name="medicineName[]"/>' +
+                '<input placeholder="Enter quantity" type="text" name="quantity[]"/><a href="#" class="remove_field">Remove</a></div>'); 
         }
     });
 
     $(wrapper).on("click", ".remove_field", function (e) {
-        e.preventDefault(); $(this).parent('div').remove(); x--;
+        e.preventDefault(); $(this).parent('div').remove(); --x;
     })
 }
