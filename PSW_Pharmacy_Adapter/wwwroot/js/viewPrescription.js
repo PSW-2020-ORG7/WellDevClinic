@@ -3,7 +3,7 @@
 $(document).ready(function () {
 	$.ajax({
 		method: "GET",
-		url: "../api/prescription",
+		url: "../api/prescription/all",
 		contentType: "application/json",
 		success: function (data) {
 			allPrescriptions = data;
@@ -27,13 +27,13 @@ function viewAllPrescriptions(prescriptions) {
 		content += '<tr><td float="right">Id:</td><td>';
 		content += pre.id;
 		content += '</td></tr>';
-		//content += '<tr><td>Patient name:</td>';
-		//content += '<td>' + pre.currentPatient.name + '</td></tr>';
+		content += '<tr><td>Patient:</td>';
+		content += '<td>' + pre.patFirstName + ' ' + pre.patLastName + '</td></tr>';
 		content += '<tr><td float="right">Start date:</td><td>';
-		content += ISOtoShort(new Date(pre.period.startDate));
+		content += ISOtoShort(new Date(pre.timePeriod.startDate));
 		content += '</td></tr>';
 		content += '<tr><td float="right">End date:</td><td>';
-		content += ISOtoShort(new Date(pre.period.endDate));
+		content += ISOtoShort(new Date(pre.timePeriod.endDate));
 		content += '</td></tr>';
 		if (pre.medication != null) {
 			content += '<tr><td float="right">Prescription medicines:</td>';
@@ -46,11 +46,11 @@ function viewAllPrescriptions(prescriptions) {
 		content += '<tr><td colspan="2">';
 
 		generateQR(pre);
-		content += '<img src="images/qrCodes/pre' + pre.id + 'qr.png"/>';
+		content += '<img src="images/qrCodes/pre' + pre.id + 'qr.png" style="width:170px"/>';
 		content += '</td></tr>';
 		content += '<tr></tr>';
 		content += '<tr><td colspan="2">'
-		content += '<button type="button" class="btn btn-info" onclick="sendToPharmacies(\'' + pre.id + '\')" id="' + pre.id + '" data-toggle="modal" data-target="#exampleModalCenter1">';
+		content += '<button type="button" class="btn btn-info" onclick="sendToPharmacies(\'' + pre.id + '\')" id="' + pre.id + '" data-toggle="modal" data-target="#sendModal">';
 		content += 'Send it to pharmacy</button > ';
 		content += '</td><td>';
 		content += '<button type="button" class="btn btn-light" style="font-size:22px;color:red" onclick="generatePDF(' + pre.id + ')"><i class="fa fa-file-pdf-o"></i></button>';
@@ -75,13 +75,16 @@ function sortCards(sort, order) {
 		let minIdx = i;
 		for (let j = i + 1; j < allPrescriptions.length; j++) {
 			if (sort == "patName") {
-				if (allPrescriptions[minIdx].currentPatient.name.toLowerCase() > allPrescriptions[j].currentPatient.name.toLowerCase())
+				if (allPrescriptions[minIdx].patFirstName.toLowerCase() > allPrescriptions[j].patFirstName.toLowerCase())
+					minIdx = j;
+			} else if (sort == "patLastName") {
+				if (allPrescriptions[minIdx].patLastName.toLowerCase() > allPrescriptions[j].patLastName.toLowerCase())
 					minIdx = j;
 			} else if (sort == "start") {
-				if (allPrescriptions[minIdx].startDate > allPrescriptions[j].startDate)
+				if (allPrescriptions[minIdx].timePeriod.startDate > allPrescriptions[j].timePeriod.startDate)
 					minIdx = j;
 			} else if (sort == "expire") {
-				if (allPrescriptions[minIdx].endDate > allPrescriptions[j].endDate)
+				if (allPrescriptions[minIdx].timePeriod.endDate > allPrescriptions[j].timePeriod.endDate)
 					minIdx = j;
 			} else if (sort == "list") {
 				if (allPrescriptions[minIdx].id > allPrescriptions[j].id)
@@ -107,9 +110,9 @@ function filter() {
 	}
 
 	for (let pre of allPrescriptions) {
-		if (startDate && pre.startDate < startDate)
+		if (startDate && pre.timePeriod.startDate < startDate)
 			continue;
-		if (endDate && pre.endDate > endDate)
+		if (endDate && pre.timePeriod.endDate > endDate)
 			continue;
 		filtered.push(pre);
 	}
@@ -117,36 +120,68 @@ function filter() {
 }
 
 function sendToPharmacies(id) {
-	var patientName1 = "Marko Markovic";
-	var jmbg1 = 123456789;
-	var startTime1 = "2020-12-20";
-	var endTime1 = "2020-12-30";
-	var medicines1 = [];
-	//var medicines = { data.medicines.name: "Fiat", model: "500", color: "white" };
-	//["Brufen", "Bromazepam", "Andol"];
 	$.ajax({
 		method: "GET",
 		url: "../api/prescription/" + id,
 		contentType: "application/json",
 		success: function (pre) {
-			console.log(pre);
-			$.post({
+			$.ajax({
+				method: "POST",
 				url: "../api/sftp/sendPrescription",
-				contentType: "aplication/json",
-				dataType: "aplication/json",
-				data: JSON.stringify({ patientName: patientName1, jmbg: jmbg1, startTime: startTime1, endTime: endTime1, medicines: medicines1 }),
-				success: function (data) {
-					//location.href = "../index.html";
+				contentType: "application/json",
+				data: JSON.stringify({
+					PatientName: pre.patFirstName + " " + pre.patLastName,
+					Jmbg: pre.patJmbg,
+					StartTime: pre.timePeriod.startDate,
+					Medicines: pre.medications
+				}),
+				success: function () {
+					$("#sendMessage").text(" File is succesfully sent. ");
 					$("#sentAction").show();
 				},
-				error: function (message) {
+				error: function (e) {
+					if (e.status == 503) {
+						$("#sendMessage").text(e.responseText);
+						$("#sentAction").show();
+                    }
 				}
 			});
 		},
 	});
-
-	
 }
+
+function generateQR(pre) {
+	$.ajax({
+		url: 'images/qrCodes/pre' + pre.id + 'qr.png',
+		type: 'HEAD',
+		error: function () {
+			$.ajax({
+				method: "POST",
+				url: "../api/qrcode/eprescription",
+				dataType: "applocation/json",
+				contentType: "application/json",
+				data: JSON.stringify({
+					Id: pre.id,
+					TimePeriod: {
+						StartDate: pre.timePeriod.startDate,
+						EndDate: pre.timePeriod.endDate,
+						Id: pre.timePeriod.id
+					},
+					Medications: pre.medications,
+					PatJmbg: pre.patJmbg,
+					PatFirstName: pre.patFirstName,
+					PatLastName: pre.patLastName,
+                })
+			});
+		},
+	});
+}
+
+
+function generatePDF(id) {
+	alert(id);
+}
+
 
 function ISOtoShort(date) {
 	let day = date.getDate();
@@ -159,23 +194,4 @@ function ISOtoShort(date) {
 		month = '0' + month;
 
 	return String(day + '-' + month + '-' + year);
-}
-
-function generatePDF(id) {
-	alert(id);
-}
-
-function generateQR(pre) {
-	$.ajax({
-		url: 'images/qrCodes/pre' + pre.id + 'qr.png',
-		type: 'HEAD',
-		error: function () {
-			let qrString = String(pre.id) + String(pre.period.startDate) + String(pre.period.endDate); // TODO: Prosledjivati objekat
-			$.ajax({
-				method: "GET",
-				url: "../api/qrcode/" + qrString,
-				contentType: "application/json",
-			});
-		},
-	});
 }

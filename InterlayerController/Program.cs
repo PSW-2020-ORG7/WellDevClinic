@@ -17,13 +17,13 @@ namespace InterlayerController
             CreateHostBuilder(args).Build().Run();
         }
 
-        private static int calculatePort()
+        private static int CalculatePort()
         {
-            var port = System.Environment.GetEnvironmentVariable("PORT");
+            var port = Environment.GetEnvironmentVariable("PORT");
             if (port == null)
                 return 51393;
             else
-                return Int32.Parse(System.Environment.GetEnvironmentVariable("PORT"));
+                return int.Parse(Environment.GetEnvironmentVariable("PORT"));
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -32,7 +32,7 @@ namespace InterlayerController
                 {
                     webBuilder.ConfigureKestrel(serverOptions =>
                     {
-                        serverOptions.ListenAnyIP(calculatePort());
+                        serverOptions.ListenAnyIP(CalculatePort());
                     })
                     .UseStartup<Startup>();
 

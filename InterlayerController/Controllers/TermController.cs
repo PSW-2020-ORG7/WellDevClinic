@@ -1,13 +1,8 @@
 ﻿using bolnica.Controller;
 using bolnica.Model.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Dto;
-using Model.PatientSecretary;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InterlayerController.Controllers
 {

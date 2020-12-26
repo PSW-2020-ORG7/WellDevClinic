@@ -206,14 +206,20 @@ namespace Service
             return result;
         }
 
-        public Examination NewExamination(long doctorId, String period, long patientId)
+        public Examination NewExamination(long doctorId, Period period, long patientId)
+        {
+            Examination examination = _upcomingRepository.Save(doctorId, period, patientId);
+            return examination;
+        }
+
+        /*public Examination NewExamination(long doctorId, String period, long patientId)
         {
             String[] dateTimes = period.Split("S");
             DateTime start = DateTime.Parse(dateTimes[0]);
             DateTime end = DateTime.Parse(dateTimes[1]);
-            Examination examination = _upcomingRepository.Save(doctorId, new Period(start,end),patientId);
+            Examination examination = _upcomingRepository.Save(doctorId, new Period(start, end), patientId);
             return examination;
-        }
+        }*/
 
         public List<Examination> GetUpcomingExaminationsByUser(User user)
         {

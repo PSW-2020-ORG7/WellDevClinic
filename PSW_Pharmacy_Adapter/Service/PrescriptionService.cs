@@ -18,8 +18,8 @@ namespace PSW_Pharmacy_Adapter.Service
 
         public async Task<List<Prescription>> GetAllPrescriptions()
             => JsonConvert.DeserializeObject<List<Prescription>>(
-                           (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/prescription"))
-                           .Content.ReadAsStringAsync().Result);
+                             (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/prescription/all"))
+                             .Content.ReadAsStringAsync().Result);
 
         public async Task<Prescription> GetPrescription(long id)
             => JsonConvert.DeserializeObject<Prescription>(

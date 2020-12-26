@@ -1,52 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using bolnica.Controller;
-using Microsoft.AspNetCore.Http;
+using bolnica.Model.Adapters;
 using Microsoft.AspNetCore.Mvc;
 using Model.PatientSecretary;
+using WellDevCore.Model.dtos;
 
-namespace InterlayerController.Controllers
+namespace InterlayerController.Controllers      //TODO A1: Ucitati samo lekove recepta iz examinationa!!!
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PrescriptionController : ControllerBase
     {
-        private IPrescriptionController _prescriptionController;
+        private readonly IPrescriptionController _prescriptionController;
+        private readonly IExaminationController _examinationController;
 
-        public PrescriptionController(IPrescriptionController prescriptionController)
+        public PrescriptionController(IPrescriptionController prescriptionController, IExaminationController examinationController)
         {
             _prescriptionController = prescriptionController;
+            _examinationController = examinationController;
         }
 
         [HttpGet]
         [Route("{id?}")]
-        public Prescription GetPrescription(long id)
+        public PatientPrescriptionDTO GetPrescription(long id)
         {
-            Prescription result = (Prescription)_prescriptionController.Get(id);
-            foreach (Drug d in result.Drug)
-                if (d.Alternative != null)
-                    foreach (Drug alter in d.Alternative)
-                        alter.Alternative = null;
-            return result;
+            foreach (Examination e in _examinationController.GetAllPrevious())
+                if (e.Prescription.Id == id)
+                {
+                    foreach (Drug d in e.Prescription.Drug)
+                        if (d.Alternative != null)
+                            foreach (Drug alter in d.Alternative)
+                                alter.Alternative = null;
+                    return PrescriptionAdapter.ExaminationToPatientPrescriptionDto(e);
+                }
+            return null;
         }
 
         /// <summary>
-        ///calls GetAll() method from class PrescriptionController 
-        ///so it can get all prescriptions from database
+        ///calls GetAll() method from class ExaminationController 
+        ///so it can get all prescriptions with patient who got the prescription from database
         /// </summary>
         /// <returns>status 200 OK response with a list of prescriptions</returns>
         [HttpGet]
-        public IEnumerable<Prescription> GetAllPrescription()
+        [Route("all")]
+        public IEnumerable<PatientPrescriptionDTO> GetAllPrescription()
         {
-            List<Prescription> result = (List<Prescription>)_prescriptionController.GetAll();
-            foreach (Prescription p in result)  
-                foreach (Drug d in p.Drug)
+            List<PatientPrescriptionDTO> prescriptions = new List<PatientPrescriptionDTO>();
+            foreach(Examination e in _examinationController.GetAllPrevious())
+            {
+                foreach (Drug d in e.Prescription.Drug)
                     if (d.Alternative != null)
                         foreach (Drug alter in d.Alternative)
                             alter.Alternative = null;
-            return result;
+                prescriptions.Add(PrescriptionAdapter.ExaminationToPatientPrescriptionDto(e));
+            }
+                
+            return prescriptions;
         }
     }
 }
