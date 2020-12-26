@@ -11,6 +11,26 @@
             }
         },
     });
+
+    $("#btnUrgent").click(function (event) {
+        event.preventDefault();
+        $("#modalUrgProcurement").slideDown("fast");
+    });
+
+    $(".add_field_button").click(function (e) {
+        e.preventDefault();
+        if ($(".input_fields_wrap").children().length < 5) {
+            $(".input_fields_wrap").append('<div><input placeholder="Enter medicine name" type="text" name="medicineName[]"/> ' +
+                                                '<input placeholder="Enter amount" type="number" name="quantity[]"/> ' +
+                                                '<button class="btn btn-outline-danger remove_field">&times;</button>' +
+                                           '</div>');
+        }
+    });
+
+    $(".input_fields_wrap").on('click', '.remove_field', function (e) {
+        e.preventDefault();
+        $(this).parent('div').remove();
+    });
 });
 
 function viewApis(apiDb) {
@@ -23,7 +43,7 @@ function viewApis(apiDb) {
         content += api.url;
         content += '</td>';
         content += '<td><button class="btn btn-info"';
-        content += ' onclick="getMedications(\'' + api.nameOfPharmacy + '\')"> Medication stock</button> ';
+        content += ' onclick="getMedications(\'' + api.nameOfPharmacy + '\')">Medication stock</button> ';
         content += '</td><td>';
         content += '<button class="btn btn-outline-danger" data-toggle="modal" data-target="#deletePharmacyModal"';
         content += ' onclick="deleteEntry(\'' + api.nameOfPharmacy + '\')"> &times; </button> ';
@@ -53,29 +73,4 @@ function getMedications(id) {
     $("#phName").html(id);
     $("#txtResponse").val("");
     $("#medModal").slideDown("fast");
-}
-
-function showDialog() {
-    $("#modalUrgProcurement").html();
-    $("#modalUrgProcurement").show();
-}
-
-function addInputText() {
-    var max_fields = 5; 
-    var wrapper = $(".input_fields_wrap"); 
-    var add_button = $(".add_field_button"); 
-
-    var x = 1; 
-    $(add_button).click(function (e) { 
-        e.preventDefault();
-        if (x < max_fields) { 
-            ++x; 
-            $(wrapper).append('<div><input placeholder="Enter medicine name" type="text" name="medicineName[]"/>' +
-                '<input placeholder="Enter quantity" type="text" name="quantity[]"/><a href="#" class="remove_field">Remove</a></div>'); 
-        }
-    });
-
-    $(wrapper).on("click", ".remove_field", function (e) {
-        e.preventDefault(); $(this).parent('div').remove(); --x;
-    })
 }

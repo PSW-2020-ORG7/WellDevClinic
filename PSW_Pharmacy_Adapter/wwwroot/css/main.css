@@ -92,7 +92,7 @@ div.card {
 }
 
 /* Modal box */
-.modalMed {
+.modalCustom {
     display: none;
     width: 100%;
     height: 100%;
@@ -125,16 +125,17 @@ div.card {
     resize: none;
 }
 
+/* custom button */
 .add_field_button {
     border-radius: 4px;
     padding: 4px 40px;
     transition-duration: 0.4s;
 }
 
-.add_field_button:hover{
-    background-color: #808080;
-    color: white;
-}
+    .add_field_button:hover{
+        background-color: #808080;
+        color: white;
+    }
 
 input[type=text] {
     width: 40%;

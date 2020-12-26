@@ -9,8 +9,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/table.css" />
-    <script type="text/javascript" src="js/viewMedicationStock.js"></script>
+    <link rel="stylesheet" href="css/partnerPharmacies.css" />
+    <script type="text/javascript" src="js/pharmacyMedications.js"></script>
     <script type="text/javascript" src="js/partnerPharmacies.js"></script>
 
 
@@ -27,51 +27,49 @@
 
     <div>
         <form action="pharmacyRegistration.html">
-            <input type="submit" value="💊  Add new pharmacy" class="btn btn-outline-warning" />
+            <input type="submit" value="💊 Add new pharmacy" class="btn btn-outline-warning expand"/>
         </form>
     </div>
 
     <div>
-        <form action="#modalUrgProcurement">
-            <input type="submit" value="📤 Urgent procurement" onclick="urgProcurement()" class="btn btn-warning"/>
+        <form>
+            <input id="btnUrgent" type="submit" value="📤 Urgent procurement" class="btn btn-warning expand"/>
         </form>
     </div>
 
     <div>
         <div class="loader"></div>
         <table class="table" id="apiTable" style="display:none">
-            <tr><th>Pharmacy name</th><th>API key</th><th>Url</th><th></th><th></th></tr>
+            <tr><th>Pharmacy name</th>
+            <th>API key</th>
+            <th>Url</th>
+            <th id="btnPhStock"></th>
+            <th id="btnDelPh"></th></tr>
         </table>
     </div>
 
-    <div class="modalMed" id="medModal">
-        <div class="d-flex justify-content-center">
-            <div class="card" style="width: 550px; height: 500px;">
-                <div class="card-body">
-                    <span class="close">&times;</span>
-                    <h1 class="card-title"><span id="phName"></span> medication stock</h1>
-                    <br>
-                    <br>
-                    <h4>
-                        Ask for: &nbsp;&nbsp;
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle"
-                                    id="btnMed" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                All medications
-                            </button>
-                            <div class="dropdown-menu">
-                                <div id="viewMedication"></div>
-                            </div>
-                        </div>
-                        &nbsp;&nbsp;
-                        <button type="button" class="btn btn-secondary" id="btnSendMedication" data-toggle="modal" data-target="#medRequestModal">Send</button>
-                    </h4>
-                    <br>
-                    <h4> Response: </h4>
-                    <h5><textarea class="form-control" id="txtResponse" name="Text1" cols="40" rows="9" readonly></textarea></h5>
+    <div class="modalCustom" id="medModal">
+        <div class="modalContent">
+            <span class="close">&times;</span>
+            <h1><span id="phName"></span> medication stock</h1>
+            <br>
+            <h4>Ask for: &nbsp;
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle"
+                            id="btnMed" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                        All medications
+                    </button>
+                    <div class="dropdown-menu" id="viewMedication">
+                    </div>
                 </div>
-            </div>
+                &nbsp;
+                <button type="button" class="btn btn-secondary" id="btnSendMedication"
+                        data-toggle="modal" data-target="#medRequestModal">Send</button>
+            </h4>
+            <br>
+            <h4> Response: </h4>
+            <h5><textarea class="form-control" id="txtResponse" name="Text1" cols="40" rows="9" readonly></textarea></h5>
         </div>
     </div>
 
@@ -92,7 +90,7 @@
         <div class="modal fade" id="deletePharmacyModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-body" id="writeMessage"> Do you want to end partnership with <span id="nameToDelete"></span>? </div>
+                    <div class="modal-body" id="writeMessage"> Do you want to end partnership with <span id="nameToDelete"></span>?</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                         <button type="button" id="btnYes" class="btn btn-primary">Yes</button>
@@ -102,23 +100,19 @@
         </div>
     </div>
 
-    <div class="modalUrgProcurement" id="modalUrgProcurement">
-        <div class="d-flex justify-content-center" tabindex="-1">
-            <div class="card" style="width: 550px; height: 500px;">
-                <div class="card-body">
-                    <span class="close">&times;</span>
-                    <h4>Urgent producement</h4>
-                    <br>
-                    <div class="input_fields_wrap">
-                        <button class="add_field_button" onclick="addInputText()">Add More Fields</button>
-                        <div>
-                            <input placeholder="Enter medicine name" type="text" name="mytext[]">
-                            <input placeholder="Enter quantity" type="text" name="mytext[]">
-                        </div>
-                    </div>
-                    <button class="add_field_button">Send</button>
+    <div class="modalCustom" id="modalUrgProcurement">
+            <div class="modalContent">
+            <span class="close">&times;</span>
+            <h4>Urgent procurement</h4>
+            <br>
+            <div class="input_fields_wrap">
+                <div>
+                    <input placeholder="Enter medicine name" type="text" name="medicineName[]">
+                    <input placeholder="Enter amount" type="number" name="quantity[]">
                 </div>
             </div>
+            <button class="add_field_button">Add More Fields</button>
+            <button class="add_field_button">Send</button>
         </div>
     </div>
 </body>
