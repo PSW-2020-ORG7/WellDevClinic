@@ -23,13 +23,12 @@ namespace InterlayerController.Controllers
         /// <returns>status 200 OK response with a list of drugs</returns>
         [HttpGet]
         public IEnumerable<Drug> GetAllDrug()
-        {
-            List<Drug> result = (List<Drug>)_drugController.GetAll();
-           /* foreach (Drug d in result)
-                if (d.Alternative != null)
-                    foreach (Drug alter in d.Alternative)
-                        alter.Alternative = null;*/
-            return result;
-        }
+            => (List<Drug>)_drugController.GetAll();
+
+        [HttpGet]
+        [Route("{id?}")]
+        public Drug GetDrug(long id)
+            => _drugController.Get(id);
+
     }
 }
