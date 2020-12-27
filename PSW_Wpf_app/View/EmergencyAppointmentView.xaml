@@ -19,7 +19,7 @@
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="12,99,0,0" Text="Choose equipment:" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="254"/>
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="10,146,0,0" Text="Enter patient jmg:" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="254"/>
         <TextBlock HorizontalAlignment="Left" Height="44" Margin="10,10,0,0" Text="Emergency appointment" FontSize="26" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="348"/>
-        <ComboBox HorizontalAlignment="Left" Height="30" Margin="266,102,0,0" VerticalAlignment="Top" Width="224" ItemsSource ="{Binding Path=Equipments,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"/>
+        <ComboBox Name="equip" HorizontalAlignment="Left" Height="30" Margin="266,102,0,0" VerticalAlignment="Top" Width="224" ItemsSource ="{Binding Path=Equipments,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"/>
         <TextBox HorizontalAlignment="Left" Height="30" Margin="266,146,0,0" Name="jmbg" TextWrapping="Wrap" VerticalAlignment="Top" Width="224"/>
         <Button  FontSize="12" Content="Search" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Left" Height="32" Margin="495,146,0,0" VerticalAlignment="Top" Width="68" Click="Search_Click">
 

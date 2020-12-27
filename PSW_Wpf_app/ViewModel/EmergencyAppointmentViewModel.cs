@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows;
 
 namespace PSW_Wpf_app.ViewModel
 {
@@ -35,10 +36,9 @@ namespace PSW_Wpf_app.ViewModel
                 OnPropertyChanged("Examinations");
             }
         }
-        public EmergencyAppointmentViewModel(int selectedType)
+        public EmergencyAppointmentViewModel(int selectedType, Equipment equipment)
         {
-            //LoadEquipments();
-            LoadTerms(selectedType);
+            LoadTerms(selectedType, equipment);
         }
 
         public EmergencyAppointmentViewModel()
@@ -51,7 +51,7 @@ namespace PSW_Wpf_app.ViewModel
             Equipments = new BindingList<Equipment>(await WpfClient.GetAllEquipment());
         }
 
-        private async void LoadTerms(int selectedType)
+        private async void LoadTerms(int selectedType, Equipment equipment)
         {
             List<Doctor> doctors = new List<Doctor>(await WpfClient.GetAllDoctors());
             List<Doctor> generalPractice = new List<Doctor>();
@@ -95,12 +95,12 @@ namespace PSW_Wpf_app.ViewModel
                 allTerms.AddRange(terms);
             }
 
-            //BindingList<ExaminationDTO> examinations = new BindingList<ExaminationDTO>();
+            List<ExaminationDTO> validTerms = findValidRooms(equipment, allTerms);
+
             ExaminationDTO exam = new ExaminationDTO();
             DateTime min = period.EndDate;
-            foreach (ExaminationDTO ex in allTerms)
+            foreach (ExaminationDTO ex in validTerms)
             {
-
                 if (ex.Period.StartDate.TimeOfDay >= period.StartDate.TimeOfDay && ex.Period.EndDate.TimeOfDay <= period.EndDate.TimeOfDay)
                 {
                     if (min.TimeOfDay >= ex.Period.StartDate.TimeOfDay)
@@ -110,9 +110,29 @@ namespace PSW_Wpf_app.ViewModel
                     }
                 }
             }
+            if(exam == null)
+            {
+                MessageBox.Show("There are no free terms!");
+            }
             Examinations.Add(exam);
         }
 
+        private List<ExaminationDTO> findValidRooms(Equipment equipment, List<ExaminationDTO> allTerms)
+        {
+            List<ExaminationDTO> examinations = new List<ExaminationDTO>();
+            foreach (ExaminationDTO term in allTerms)
+            {
+                if (term.Room.Equipment_inventory.Find(x => x.Equipment.Name == (equipment.Name)) != null)
+                {
+                    examinations.Add(term);
+                }
+            }
+            if (examinations.Count == 0)
+            {
+                MessageBox.Show("There is no selected equipment in any of rooms in hospital!");
+            }
+            return examinations;
+        }
     }
     
 }

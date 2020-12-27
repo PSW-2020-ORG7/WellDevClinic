@@ -48,7 +48,9 @@ namespace PSW_Wpf_app.View
         private void Search_Term_Click(object sender, RoutedEventArgs e)
         {
             int selected = apptype.SelectedIndex;
-            context = new EmergencyAppointmentViewModel(apptype.SelectedIndex);
+            Equipment equipment = (Equipment)equip.SelectedItem;
+            
+            context = new EmergencyAppointmentViewModel(apptype.SelectedIndex, equipment);
             emergencyData.ItemsSource = context.Examinations;
 
         }
