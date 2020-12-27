@@ -133,6 +133,8 @@ namespace PSW_Wpf_app.ViewModel
             }
             return examinations;
         }
+
+       
     }
     
 }
