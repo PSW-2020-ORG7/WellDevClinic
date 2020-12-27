@@ -1,6 +1,8 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +20,12 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class EmergencyAppointmentView : Window
     {
+        EmergencyAppointmentViewModel context;
         public EmergencyAppointmentView()
         {
             InitializeComponent();
             
-          
+
         }
         private async void Search_Click(object sender, RoutedEventArgs e)
         {
@@ -41,5 +44,19 @@ namespace PSW_Wpf_app.View
             }
             
         }
+        
+        private void Search_Term_Click(object sender, RoutedEventArgs e)
+        {
+            int selected = apptype.SelectedIndex;
+            context = new EmergencyAppointmentViewModel(apptype.SelectedIndex);
+            emergencyData.ItemsSource = context.Examinations;
+
+        }
+
+        private void Schedule_Term_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

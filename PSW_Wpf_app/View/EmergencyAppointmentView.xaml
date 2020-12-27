@@ -6,12 +6,12 @@
         xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel"
         xmlns:local="clr-namespace:PSW_Wpf_app.View"
         mc:Ignorable="d"
-        Title="EmergencyAppointmentView" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+        Title="EmergencyAppointmentView" Height="700" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <viewmodel:EmergencyAppointmentViewModel x:Key="vm"></viewmodel:EmergencyAppointmentViewModel>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
-        <ComboBox HorizontalAlignment="Left" Height="30" Margin="266,56,0,0" VerticalAlignment="Top" Width="224">
+        <ComboBox Name="apptype" HorizontalAlignment="Left" Height="30" Margin="266,56,0,0" VerticalAlignment="Top" Width="224">
             <ComboBoxItem>General practice</ComboBoxItem>
             <ComboBoxItem>Specialist</ComboBoxItem>
         </ComboBox>
@@ -21,8 +21,8 @@
         <TextBlock HorizontalAlignment="Left" Height="44" Margin="10,10,0,0" Text="Emergency appointment" FontSize="26" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="348"/>
         <ComboBox HorizontalAlignment="Left" Height="30" Margin="266,102,0,0" VerticalAlignment="Top" Width="224" ItemsSource ="{Binding Path=Equipments,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"/>
         <TextBox HorizontalAlignment="Left" Height="30" Margin="266,146,0,0" Name="jmbg" TextWrapping="Wrap" VerticalAlignment="Top" Width="224"/>
-        <Button  Content="Search" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Left" Height="32" Margin="495,146,0,0" VerticalAlignment="Top" Width="55" Click="Search_Click">
-            
+        <Button  FontSize="12" Content="Search" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Left" Height="32" Margin="495,146,0,0" VerticalAlignment="Top" Width="68" Click="Search_Click">
+
 
         </Button>
 
@@ -37,13 +37,20 @@
             <TextBlock HorizontalAlignment="Left" Height="32" Margin="10,96,0,0" Text="Phone:" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"/>
             <TextBox HorizontalAlignment="Left" Height="28" Margin="80,96,0,0" Name="phone" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
             <TextBlock HorizontalAlignment="Left" Height="32" Margin="616,54,0,0" Text="New patient?" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"/>
-            <Button Content="Register" HorizontalAlignment="Left" Height="32" Margin="616,92,0,0" VerticalAlignment="Top" Width="104"/>
+            <Button  FontSize="12" Content="Register" HorizontalAlignment="Left" Height="32" Margin="616,92,0,0" VerticalAlignment="Top" Width="104"/>
             <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" Height="156" Margin="581,0,0,0" VerticalAlignment="Center" Width="3"/>
         </Grid>
-
-
-
-
+        <Button  FontSize="12"  Content="Search term" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Center" Height="32" Margin="0,379,0,0" VerticalAlignment="Top" Width="188" Click="Search_Term_Click"/>
+        <DataGrid x:Name="emergencyData" HorizontalAlignment="Left" BorderBrush="CadetBlue" BorderThickness="3" Height="156" Margin="15,425,0,0" VerticalAlignment="Top" Width="760" AutoGenerateColumns="False"
+			CanUserAddRows="False"
+			SelectionMode="Extended" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
+                <DataGridTextColumn Header="Room" Width="*" Binding="{Binding Room.Id}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button  Content="Schedule" FontSize="12" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Left" Height="32" Margin="587,604,0,0" VerticalAlignment="Top" Width="188" Click="Schedule_Term_Click"/>
 
     </Grid>
 </Window>
