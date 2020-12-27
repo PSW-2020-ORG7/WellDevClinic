@@ -1,0 +1,93 @@
+﻿<Window x:Class="PSW_Wpf_app.View.SpecialistAppointmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSW_Wpf_app.View"
+        xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel"
+
+        mc:Ignorable="d"
+        Title="SpecialistAppointmentView" Height="550" Width="786">
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="289*"/>
+            <ColumnDefinition Width="104*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel  Orientation="Vertical" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" Width="790">
+
+                <TextBlock Name="ChoosePatient" Text="Choose a patient:" FontSize="19"  Margin="10" Width="150" Height="30"/>
+                <ComboBox  Width="140" Height="25" x:Name="PatientForExaminations" ItemsSource ="{Binding Patients, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Username" Margin="50,0,0,0"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Width="790">
+                <TextBlock Name="ChooseSpeciality" Text="Choose a speciality:" FontSize="19"  Margin="10" Width="195" Height="30"/>
+                <ComboBox  Width="140" Height="25" x:Name="specs" SelectionChanged="OnChangeSpeciality" DisplayMemberPath="Name" ItemsSource ="{Binding Path=Specialities,  UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                <TextBlock Name="ChooseDoctor" Text="Choose a doctor:" FontSize="19"  Margin="20,0,0,0" Width="148" Height="30"/>
+                <ComboBox  Width="140" Height="25" Name="DoctorsForExaminations" ItemsSource ="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Margin="50,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Width="790">
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text=" Priority"  FontSize="19" Margin="10" Width="150"></TextBlock>
+                <ComboBox Margin="50,7,0,7" Name="PriorityBox"  Width="251" SelectedIndex="0">
+                    <ComboBoxItem>No priority</ComboBoxItem>
+                    <ComboBoxItem>Doctor priority</ComboBoxItem>
+                    <ComboBoxItem>Period priority</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel x:Name="DatePicker" Orientation="Horizontal">
+                <TextBlock Name="ChooseDate" Text=" Select a date:" FontSize="19" Margin="10" Width="150"/>
+                <DatePicker Name="Picker"   Width="200" FirstDayOfWeek="Monday" Margin="50,7,0,7"/>
+                <DatePicker Name="Picker2"   Width="200" FirstDayOfWeek="Monday" Margin="20,7,0,7"/>
+            </StackPanel>
+
+            <StackPanel x:Name="Equipment" Orientation="Horizontal">
+                <TextBlock Name="ChooseEquipment"  Text="Select equipment:" FontSize="19" Margin="10" Width="196"/>
+                <ComboBox Margin="4,0,0,0"  Width="200" Height="30" SelectedIndex="0" x:Name="EquipmentBox" ItemsSource ="{Binding Path=Equipments, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name">
+                </ComboBox>
+            </StackPanel>
+            <StackPanel>
+                <Button Width="83" Content="Search" Click="SearchPeriods_Click" Margin="-30,0,0,0"/>
+            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                    <Border Height="232">
+                        <DataGrid Margin="0,15,0,45" FontSize="14" BorderThickness="1" x:Name="scheduleExaminationsGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Width="786" >
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="BorderThickness" Value="0.5"/>
+                                </Style>
+                            </DataGrid.CellStyle>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Binding="{Binding Doctor.FirstName}" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn x:Name="ColumnDateForSchedule" Header="Date and Time"  Binding="{Binding Period.StartDate}" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn x:Name="ColumnOrdinationForSchedule" Header="Ordination" Binding="{Binding Room.Id}" Width="*"></DataGridTextColumn>
+                           
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </ScrollViewer>
+            </Grid>
+            <Button x:Name="Schedule" Content="Schedule"   Width="90" Click="Schedule_Click" Margin="670,-30,0,0">
+                <Button.ToolTip>
+                    <ToolTip x:Name="ToolTipSchedule"  Content = "Schedule the selected date" BorderThickness="2" BorderBrush="Gray"/>
+                </Button.ToolTip>
+            </Button>
+            <TextBlock Name="ErrorSchedule"  Opacity="0" FontSize="15" HorizontalAlignment="Right"  Margin="0,0,10,-5" Foreground="#FFE01F0C"></TextBlock>
+
+
+        </StackPanel>
+
+    </Grid>
+</Window>

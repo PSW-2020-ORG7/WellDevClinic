@@ -22,11 +22,17 @@
                 <ComboBox HorizontalAlignment="Center" Height="29" Margin="0,90,0,0" VerticalAlignment="Top" Width="181"  ItemsSource="{Binding Path=FloorsCount}" Name="floorC"/>
                 <Button Content="Apply" HorizontalAlignment="Center" Height="48" Margin="0,134,0,0" VerticalAlignment="Top" Width="180" FontSize="28" FontFamily="Segoe UI Semibold" Click="Button_Click"/>
                 <TextBox Name="SearchBuilding" HorizontalAlignment="Left" Height="24" Margin="10,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" PreviewTextInput="ValidationTextBox"/>
-                <Button  FontFamily="Segoe UI Semibold" Content="Search" HorizontalAlignment="Center" Height="35" Margin="0,264,0,0" VerticalAlignment="Top" Width="180" Click="Search"/>
+                <Button  FontFamily="Segoe UI Semibold" Content="Search" HorizontalAlignment="Center" Height="35" Margin="0,255,0,0" VerticalAlignment="Top" Width="180" Click="Search"/>
                 <TextBlock HorizontalAlignment="Left" Height="24" Margin="8,195,0,0" TextWrapping="Wrap" Text="Enter room name or type:" FontSize="16" VerticalAlignment="Top" Width="188"/>
-                <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Left" Height="35" Margin="10,316,0,0" VerticalAlignment="Top" Width="181" Click="Button_Equipment_Drugs"/>
-                <Button Content="Schedule appointment" x:Name="Appointment" HorizontalAlignment="Left" Height="35" Margin="10,364,0,0" VerticalAlignment="Top" Width="181" Click="Button_Appointment"/>
+
+                
                 <Button Content="Emergency appointment" x:Name="EmergencyAppointment" HorizontalAlignment="Left" Height="35" Margin="10,427,0,0" VerticalAlignment="Top" Width="181" Click="EmergencyAppointment_Click" />
+
+                <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Center" Height="35" Margin="0,301,0,0" VerticalAlignment="Top" Width="181" Click="Button_Equipment_Drugs"/>
+                <Button Content="Schedule appointment" x:Name="Appointment" HorizontalAlignment="Center" Height="35" Margin="0,341,0,0" VerticalAlignment="Top" Width="181" Click="Button_Appointment"/>
+                <Button Content="Schedule specialist&#xA;    appointment" x:Name="SpecialistAppointment" HorizontalAlignment="Center" Height="41" Margin="0,381,0,0" VerticalAlignment="Top" Width="180" Click="SpecialistAppointment_Click"/>
+
+
             </Grid>
             <Button Content="HOME" FontSize="12" FontFamily="Segoe UI Semibold"  HorizontalAlignment="Left" Height="28" Margin="10,16,0,0" VerticalAlignment="Top" Width="73" Click="Button_Click_HOME">
 
