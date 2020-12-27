@@ -83,5 +83,14 @@ namespace InterlayerController.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("patientJmbg/{jmbg?}")]
+        public Patient GetPatientByJmbg(string jmbg)
+        {
+            Patient patient = (Patient)_patientController.GetPatientByJMBG(jmbg);
+
+            return patient;
+        }
+
     }
 }

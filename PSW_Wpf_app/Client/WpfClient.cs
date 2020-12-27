@@ -153,7 +153,7 @@ namespace PSW_Wpf_app.Client
         }
     }
 
-    public class User
+    public class User:Person
     {
         public String Username { get; set; }
         public String Password { get; set; }
@@ -161,9 +161,19 @@ namespace PSW_Wpf_app.Client
         public long Id { get; set; }
 
     }
-    
 
-    public class  Patient:User
+    public abstract class Person
+    {
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public String Jmbg { get; set; }
+        public String Email { get; set; }
+        public String Phone { get; set; }
+        public long Id { get; set; }
+    }
+
+
+        public class  Patient:User
     {
         public virtual PatientFile patientFile { get; set; }
         public Boolean Guest = false;
@@ -265,7 +275,7 @@ namespace PSW_Wpf_app.Client
 
             return patients;
         }
-
+        
         public static async Task<Room> GetRoomById(long id)
         {
             HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/" + id);
@@ -274,6 +284,16 @@ namespace PSW_Wpf_app.Client
             Room room = JsonConvert.DeserializeObject<Room>(responseBody);
 
             return room;
+        }
+
+        public static async Task<Patient> GetPatientByJmbg(string jmbg)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/patient/patientJmbg/" + jmbg);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Patient patient = JsonConvert.DeserializeObject<Patient>(responseBody);
+
+            return patient;
         }
 
     }
