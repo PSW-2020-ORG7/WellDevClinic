@@ -3,6 +3,7 @@ using bolnica.Model;
 using bolnica.Repository;
 using bolnica.Service;
 using Controller;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +11,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Service;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace InterlayerController
 {
@@ -31,6 +35,21 @@ namespace InterlayerController
         public void ConfigureServices(IServiceCollection services)
 
         {
+
+              services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+              .AddJwtBearer(options => {
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuer = true,
+                      ValidateAudience = true,
+                      ValidateLifetime = true,
+                      ValidateIssuerSigningKey = true,
+                      ValidIssuer = Configuration["Jwt:Issuer"],
+                      ValidAudience = Configuration["Jwt:Audience"],
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                  };
+              });
+
             //System.Threading.Thread.Sleep(25000);
             services.AddMvc().AddNewtonsoftJson(options=> options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -148,6 +167,8 @@ namespace InterlayerController
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

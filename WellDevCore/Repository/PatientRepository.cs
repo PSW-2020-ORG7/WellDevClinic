@@ -131,6 +131,12 @@ namespace Repository
 
         public User GetUserByUsername(string username)
         {
+            User result = myDbContext.Patient.FirstOrDefault(patient => patient.Username.Equals(username));
+            return result;
+        }
+
+        /*public User GetUserByUsername(string username)
+        {
             List<Patient> patients = GetAllEager().ToList();
             foreach (Patient patient in patients)
             {
@@ -140,7 +146,7 @@ namespace Repository
                 }
             }
             return null;
-        }
+        }*/
 
         
     }
