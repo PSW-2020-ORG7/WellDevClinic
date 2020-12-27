@@ -1,3 +1,23 @@
+var userType = "";
+function authorize() {
+	let token = sessionStorage.getItem("token");
+	let payload = parseJwt(token);
+	userType = payload["type"];
+	if (userType != "Patient") {
+		alert("You are not authorized for this page!!!");
+		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+	}
+}
+function parseJwt(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+
+	return JSON.parse(jsonPayload);
+};
+
 function addPrviousExamination(examination, i) {
 	tr = $('<tr id="tr"></tr>');
 	let row = $('<th scope="row">' + i + '</th>');
@@ -44,6 +64,7 @@ function addUpcomingExamination(examination, i) {
 $(document).ready(function () {
     $.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/examination/1',
+		headers: { "Authorization": userType },
 		success: function (list) {
 			i = 1;
 			for (let examination of list) {
@@ -57,6 +78,7 @@ $(document).ready(function () {
 
     $.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/examination/upcoming/1',
+		headers: { "Authorization": userType },
 		success: function (list) {
 			i = 1;
 			for (let examination of list) {
@@ -72,6 +94,7 @@ $(document).ready(function () {
 		var id = $(this).attr('id');
 		$.ajax({
 			url: window.location.protocol + "//" + window.location.host + "/api/examination/canceled/" + id,
+			headers: { "Authorization": userType },
 			type: 'PUT',
 			success: function () {
 				alert("Appointment canceled successfully");

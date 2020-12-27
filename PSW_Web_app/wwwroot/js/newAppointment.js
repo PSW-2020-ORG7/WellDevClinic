@@ -1,4 +1,22 @@
+function authorize() {
+	let token = sessionStorage.getItem("token");
+	let payload = parseJwt(token);
+	userType = payload["type"];
+	if (userType != "Patient") {
+		alert("You are not authorized for this page!!!");
+		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+	}
+}
 
+function parseJwt(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+
+	return JSON.parse(jsonPayload);
+};
 //jQuery time
 var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
@@ -29,6 +47,7 @@ $(".next").click(function () {
 		if (fieldSetCounter == 2) {
 			$.ajax({
 				url: window.location.protocol + "//" + window.location.host + "/api/doctor/" + date.val() + '/' + doctors.val(),
+				headers: { "Authorization": userType },
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
@@ -58,6 +77,7 @@ $(".next").click(function () {
 		if (fieldSetCounter == 1) {
 			$.ajax({
 				url: window.location.protocol + "//" + window.location.host + "/api/doctor/" + speciality.val(),
+				headers: { "Authorization": userType },
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
@@ -100,7 +120,7 @@ $(".next").click(function () {
 	}
 
 });
-
+var userType = "";
 $(document).ready(function () {
 	//var today = new Date().toISOString().split('T')[0];
 	//document.getElementsByName("calendar")[0].setAttribute('min', today);
@@ -121,6 +141,7 @@ $(document).ready(function () {
 
 	$.ajax({
 		url: window.location.protocol + "//" + window.location.host + "/api/speciality",
+		headers: { "Authorization": userType },
 		type: 'GET',
 		success: function (data) {
 			console.log(data);
@@ -180,6 +201,7 @@ form.submit(function (event) {
 	var data2 = { doctorId: parseInt(doctors.val(),10), period: appointments.val() }
 	$.ajax({
 		url: window.location.protocol + "//" + window.location.host + "/api/examination/newExamination",
+		headers: { "Authorization": userType },
 		type: 'POST',
 		data: JSON.stringify(data2),
 		contentType: "application/json; charset=utf-8",

@@ -1,6 +1,4 @@
-
 $(document).ready(function () {
-
     let form = $("#registrationForm");
     form.submit(function (event) {
 
@@ -9,7 +7,6 @@ $(document).ready(function () {
         $(".warning").remove();
         var divs = document.getElementsByClassName("form-group");
         console.log(divs);
-
 
         let name = $("#nameInput"); //document.getElementById('nameInput'); 
         let middleName = $("#middleNameInput"); //document.getElementById('middleNameInput');

@@ -8,9 +8,8 @@ function parseJwt (token) {
     return JSON.parse(jsonPayload);
 };
 
-
 $(document).ready(function () {
-
+    sessionStorage.setItem("token", "");
     let form = $("#login-form");
     form.submit(function (event) {
 
@@ -33,10 +32,12 @@ $(document).ready(function () {
                 let payload = parseJwt(data);
                 let userType = payload["type"];
                 console.log(userType);
-                //window.location.replace(window.location.protocol + "//" + window.location.host + "/html/feedback.html");
-                console.log(payload)
-
-
+                if (userType == "Patient") {
+                    window.location.replace(window.location.protocol + "//" + window.location.host + "/html/homePage.html");
+                } else {
+                    window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+                }
+                console.log(payload);
             }
         })
     })

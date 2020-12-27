@@ -89,38 +89,6 @@ namespace InterlayerController
             services.AddScoped<IUserController, UserController>();
             services.AddScoped<IDirectorController, DirectorContoller>();
 
-            services.AddScoped<IExaminationController, AuthorityExaminationDecorator>();
-            services.AddScoped<IDoctorController, AuthorityDoctorDecorator>();
-            //services.AddScoped<IAddressController, Autho>();
-            services.AddScoped<IArticleController, AuthorityArticleDecorator>();
-            services.AddScoped<IBusinessDayController, AuthorityBusinessDayDecorator>();
-            services.AddScoped<IDiagnosisController, AuthorityDiagnosisDecorator>();
-            services.AddScoped<IDoctorGradeController, AuthorityDoctorGradeDecorator>();
-            services.AddScoped<IDrugController, AuthorityDrugDecorator>();
-            services.AddScoped<IEquipmentController, AuthorityEquipmentDecorator>();
-            services.AddScoped<IFeedbackController, AuthorityFeedbackDecorator>();
-            services.AddScoped<IHospitalizationController, AuthorityHospitalizationDecorator>();
-            services.AddScoped<IIngredientController, AuthorityIngredientDecorator>();
-            //services.AddScoped<INotificationController, Aut>();
-            services.AddScoped<IOperationController, AuthorityOperationDecorator>();
-            services.AddScoped<IPatientFileController, AuthorityPatientFileDecorator>();
-            //services.AddScoped<IPatientNotificationController, Aut>();
-            services.AddScoped<IPatientController, AuthorityPatientDecorator>();
-            services.AddScoped<IPrescriptionController, AuthorityPrescriptionDecorator>();
-            services.AddScoped<IReferralController, AuthorityRefferalDecorator>();
-            services.AddScoped<IRenovationController, AuthorityRenovationDecoratorcs>();
-            services.AddScoped<IReportController, AuthorityReportDecorator>();
-            services.AddScoped<IRoomController, AuthorityRoomDecorator>();
-            services.AddScoped<IRoomTypeController, AuthorityRoomTypeDecorator>();
-            services.AddScoped<ISecretaryController, AuthoritySecretaryDecorator>();
-            services.AddScoped<ISpecialityController, AuthoritySpecialityDecorator>();
-            //services.AddScoped<IStateController, Autho>();
-            services.AddScoped<ISymptomController, AuthoritySympthomDecorator>();
-            services.AddScoped<ITherapyController, AuthorityTherapyDecorator>();
-            //services.AddScoped<ITownController, >();
-            //services.AddScoped<IUserController, Authority>();
-            services.AddScoped<IDirectorController, AuthorityDirectorDecorator>();
-
             services.AddScoped<IExaminationService, ExaminationService>();
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IAddressService, AddressService>();

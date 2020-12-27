@@ -1,4 +1,25 @@
-﻿function addSurvey(survey) {
+﻿function authorize() {
+    let token = sessionStorage.getItem("token");
+    let payload = parseJwt(token);
+    userType = payload["type"];
+    if (userType != "Secretary") {
+        alert("You are not authorized for this page!!!");
+        window.location.replace(window.location.protocol + "//" + window.location.host + "/html/homePage.html");
+    }
+}
+
+var userType = "";
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+
+function addSurvey(survey) {
     let tr_medical = $('<tr></tr>');
     let tr_doctor = $('<tr></tr>');
     let tr_hospital = $('<tr></tr>');
@@ -64,12 +85,10 @@
     $('#table_hospital tbody').append(tr_hospital);
 }
 
-
-
 $(document).ready(function () {
-
     $.get({
         url: window.location.protocol + "//" + window.location.host + '/api/survey',
+        headers: { "Authorization": userType },
         success: function (surveys) {
             for (let survey of surveys) {
                 addSurvey(survey);
@@ -84,7 +103,7 @@ $(document).ready(function () {
 
     $('#quit').click(function (event) {
         var origin = window.location.origin;
-        window.location.href = origin + "/html/feedback.html"
+        window.location.href = origin + "/html/viewFeedbackAdmin.html"
     });
 
 });

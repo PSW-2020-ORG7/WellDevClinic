@@ -24,47 +24,59 @@ namespace PSW_Web_app.Controllers
 
         static readonly HttpClient client = new HttpClient();
         [HttpPost]
-        public async Task<DoctorGrade> SaveSurvey([FromBody] DoctorGrade survey)
+        public async Task<IActionResult> SaveSurvey([FromBody] DoctorGrade survey)
         {
+            string token = Request.Headers["Authorization"];
+            if (!token.Equals("Patient"))
+                return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(survey, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(communicationLink + "/api/survey", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             DoctorGrade result = JsonConvert.DeserializeObject<DoctorGrade>(responseBody);
-            return result;
+            return Ok(result);
         }
 
        
         [HttpGet]
-        public async Task<List<DoctorGradeDTO>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
+            string token = Request.Headers["Authorization"];
+            if (!token.Equals("Secretary"))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/survey");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<DoctorGradeDTO> result = JsonConvert.DeserializeObject<List<DoctorGradeDTO>>(responseBody);
-            return result;
+            return Ok(result);
         }
 
       
         [HttpGet]
         [Route("{doctor?}")]
-        public async Task<List<DoctorGradeDTO>> GetByDoctor(string doctor)
+        public async Task<IActionResult> GetByDoctor(string doctor)
         {
+            string token = Request.Headers["Authorization"];
+            if (!token.Equals("Secretary"))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/survey/" + doctor);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<DoctorGradeDTO> result = JsonConvert.DeserializeObject<List<DoctorGradeDTO>>(responseBody);
-            return result;
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("doctor_average")]
-        public async Task<List<GradeDTO>> GetAverageGradeDoctor([FromBody] List<DoctorGrade> surveys)
+        public async Task<IActionResult> GetAverageGradeDoctor([FromBody] List<DoctorGrade> surveys)
         {
+            string token = Request.Headers["Authorization"];
+            if (!token.Equals("Secretary"))
+                return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(surveys, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(communicationLink + "/api/survey/doctor_average", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             List<GradeDTO> result = JsonConvert.DeserializeObject<List<GradeDTO>>(responseBody);
-            return result;
+            return Ok(result);
         }
 
     }

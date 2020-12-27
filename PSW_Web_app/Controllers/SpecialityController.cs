@@ -18,13 +18,16 @@ namespace PSW_Web_app.Controllers
         static readonly HttpClient client = new HttpClient();
 
         [HttpGet]
-        public async Task<List<Speciality>> GetAllSpeciality()
+        public async Task<IActionResult> GetAllSpeciality()
         {
+            string token = Request.Headers["Authorization"];
+            if (!token.Equals("Patient"))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink  + "/api/speciality");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Speciality> result = (List<Speciality>)JsonConvert.DeserializeObject<List<Speciality>>(responseBody);
-            return result;
+            return Ok(result);
         }
     }
 }

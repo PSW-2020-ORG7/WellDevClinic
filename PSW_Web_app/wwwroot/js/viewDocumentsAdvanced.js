@@ -1,4 +1,24 @@
-﻿var examinations = [];
+﻿function authorize() {
+	let token = sessionStorage.getItem("token");
+	let payload = parseJwt(token);
+	userType = payload["type"];
+	if (userType != "Patient") {
+		alert("You are not authorized for this page!!!");
+		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+	}
+}
+
+var userType = "";
+function parseJwt(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+
+	return JSON.parse(jsonPayload);
+};
+var examinations = [];
 var copyExaminations = [];
 
 function CheckDoctor(name, examination) {
@@ -12,8 +32,6 @@ function CheckDoctor(name, examination) {
 function CheckDateAdvanced(date, date2, examination) {
 	if (date == "" || date2 == "")
 		return false;
-	//console.log(date);
-	//console.log(date2);
 	console.log(examination.date);
 	var exam_date = new Date(examination.date);
 	console.log("exam datum u date formatu");
@@ -187,6 +205,7 @@ $(document).ready(function () {
 	validDate()
 	$.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/examination/getByUser/1',
+		headers: { "Authorization": userType },
 		success: function (list) {
 			deleteTable();
 			i = 1;

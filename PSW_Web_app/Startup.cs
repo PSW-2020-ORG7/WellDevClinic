@@ -28,7 +28,8 @@ namespace PSW_Web_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-// System.Threading.Thread.Sleep(70000);
+            // System.Threading.Thread.Sleep(70000);
+
             services.AddMvc();
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
@@ -116,6 +117,9 @@ namespace PSW_Web_app
                 endpoints.MapControllers();
             });
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
         }
 
         private string CreateConnectionStringFromEnvironment()
