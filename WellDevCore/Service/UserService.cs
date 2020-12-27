@@ -4,6 +4,7 @@ using Model.Users;
 using Repository;
 using System;
 using System.Collections.Generic;
+using WellDevCore.Model.Users;
 
 namespace bolnica.Service
 {
@@ -73,14 +74,24 @@ namespace bolnica.Service
         {
             User user = null;
 
-            if ((user = _patientService.GetUserByUsername(username)) != null)
-                return user;
+            if ((user = _patientService.GetUserByUsername(username)) != null) {
+                Patient patient = (Patient)_patientService.GetUserByUsername(username);
+                if (!patient.Blocked)
+                    user.Type = UserType.Patient;
+            }       
             else if ((user = _secretaryService.GetUserByUsername(username)) != null)
-                return user;
+            {
+                user.Type = UserType.Secretary;
+            }
+
             else if ((user = _directorService.GetUserByUsername(username)) != null)
-                return user;
+            {
+                user.Type = UserType.Director;
+            }
             else if ((user = _doctorService.GetUserByUsername(username)) != null)
-                return user;
+            {
+                user.Type = UserType.Doctor;
+            }
             
             return user;
         }

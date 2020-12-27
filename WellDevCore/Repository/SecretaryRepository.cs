@@ -72,7 +72,7 @@ namespace Repository
             return secretary;
         }
 
-        public User GetUserByUsername(string username)
+        /*public User GetUserByUsername(string username)
         {
             List<Secretary> entities = this.GetAllEager().ToList();
             foreach(Secretary entity in entities)
@@ -81,6 +81,12 @@ namespace Repository
                     return entity;
             }
             return null;
+        }*/
+
+        public User GetUserByUsername(string username)
+        {
+            User result = myDbContext.Secretary.FirstOrDefault(secretary => secretary.Username.Equals(username));
+            return result;
         }
 
         public Secretary Save(Secretary entity)
