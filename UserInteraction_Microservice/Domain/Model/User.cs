@@ -16,7 +16,7 @@ namespace UserInteraction_Microservice.Domain.Model
         public long Id { get; set; }
         public String Username { get; set; }
         public String Password { get; set; }
-        public UserType UserType { get; set; }
+        public virtual UserType UserType { get; set; }
 
         public User(long id, String jmbg, String firstName, String lastName, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address, string username, string password, UserType userType)
         {

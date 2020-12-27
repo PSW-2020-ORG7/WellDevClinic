@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UserInteraction_Microservice.ApplicationServices.Abstract;
+using UserInteraction_Microservice.Domain;
 using UserInteraction_Microservice.Domain.Model;
 using UserInteraction_Microservice.Repository.Abstract;
 
-namespace UserInteraction_Microservice.ApplicationServices
+namespace UserInteraction_Microservice.Repository
 {
-    public class DirectorAppService : IDirectorAppService
+    public class DirectorRepository : IDirectorRepository
     {
-        private readonly IDirectorRepository _directorRepository;
-
-        public DirectorAppService(IDirectorRepository directorRepository)
+        private readonly MyDbContext _myDbContext;
+        public DirectorRepository(MyDbContext myDbContext)
         {
-            _directorRepository = directorRepository;
+            _myDbContext = myDbContext;
         }
-
         public void Delete(Director entity)
         {
             throw new NotImplementedException();
@@ -38,7 +36,10 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public Director Save(Director entity)
         {
-            return _directorRepository.Save(entity);
+            _myDbContext.Director.Add(entity);
+            _myDbContext.SaveChanges();
+            return entity;
+
         }
     }
 }

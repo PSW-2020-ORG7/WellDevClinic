@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
+using UserInteraction_Microservice.Domain.DomainServices;
 using UserInteraction_Microservice.Domain.Model;
 
 namespace UserInteraction_Microservice.ApplicationServices
 {
     public class UserAppService : IUserAppService
     {
+        private readonly IUserDomainService _userDomainService;
 
-        public UserAppService() { }
+        public UserAppService(IUserDomainService userDomainService) 
+        {
+            _userDomainService = userDomainService;
+        }
 
         public void Delete(User entity)
         {
@@ -33,7 +38,7 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public User Save(User entity)
         {
-            throw new NotImplementedException();
+            return _userDomainService.Save(entity);
         }
     }
 }

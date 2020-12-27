@@ -6,8 +6,8 @@ namespace UserInteraction_Microservice.Domain.Model
 {
     public class Patient : User
     {
-        public Boolean Guest = false;
-        public Boolean Blocked = false;
+        public Boolean Guest { get; set; } = false; 
+        public Boolean Blocked { get; set; } = false;
 
         public Patient(long id, String jmbg, String firstName, String lastName, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address, string username, string password, UserType userType, bool guest, bool blocked)
         {

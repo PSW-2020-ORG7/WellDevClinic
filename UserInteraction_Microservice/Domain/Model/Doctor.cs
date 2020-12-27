@@ -6,8 +6,10 @@ namespace UserInteraction_Microservice.Domain.Model
 {
     public class Doctor : User
     {
-        public Speciality Speciality { get; set; }
-        public DoctorGrade DoctorGrade { get; set; }
+        public virtual Speciality Speciality { get; set; }
+        public virtual DoctorGrade DoctorGrade { get; set; }
+
+        public Doctor() { }
 
         public Doctor(long id, String jmbg, String firstName, String lastName, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address, string username, string password, UserType userType, Speciality speciality, DoctorGrade doctorGrade)
         {
