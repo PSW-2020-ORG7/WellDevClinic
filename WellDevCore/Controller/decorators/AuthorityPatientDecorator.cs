@@ -28,6 +28,8 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["Save"] = new List<string>() {"Patient", "Secretary"};
             AuthorizedUsers["GetPatientByMail"] = new List<string>() { "Patient" };
             AuthorizedUsers["GetPatientByUsername"] = new List<string>() { "Patient" };
+            AuthorizedUsers["GetBlockedPatients"] = new List<string>() { "Director" };
+            AuthorizedUsers["GetPatientsForBlocking"] = new List<string>() { "Director" };
         }
 
         public Patient ClaimAccount(Patient patient)

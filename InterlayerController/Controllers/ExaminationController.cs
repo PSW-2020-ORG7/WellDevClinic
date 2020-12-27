@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using bolnica.Controller;
+using bolnica.Controller.decorators;
 using bolnica.Model.Adapters;
 using bolnica.Model.dtos;
 using bolnica.Service;
@@ -21,6 +22,8 @@ namespace InterlayerController.Controllers
     {
         private readonly IExaminationController _examinationController;
         private readonly IBusinessDayController _businessDayController;
+        //private AuthorityExaminationDecorator _examinationController;
+        //private AuthorityBusinessDayDecorator _businessDayController;
 
         public ExaminationController(IExaminationController examinationController, IBusinessDayController businessDayController)
         {
@@ -65,6 +68,7 @@ namespace InterlayerController.Controllers
         [Route("{id?}")]
         public List<ExaminationDto> GetFinishedExaminationsByUser(long id)
         {
+            //WellDevCore.Controller.Role.role = "Admin";
             List<ExaminationDto> resultDto = new List<ExaminationDto>();
             List<Examination> result = (List<Examination>)_examinationController.GetFinishedExaminationsByUser(id);
             foreach (Examination examination in result)

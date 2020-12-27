@@ -10,7 +10,7 @@ namespace bolnica.Controller.decorators
     public class AuthorityArticleDecorator : IArticleController
     {
         private IArticleController ArticleController;
-        private String Role;
+        public String Role;
         private Dictionary<String, List<String>> AuthorizedUsers;
         public AuthorityArticleDecorator(IArticleController articleController, string role)
         {
@@ -22,6 +22,11 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["Get"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" };
             AuthorizedUsers["GetAll"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" };
             AuthorizedUsers["Save"] = new List<String>() { "Doctor" };
+        }
+
+        public void SetRole(String role)
+        {
+            Role = role;
         }
 
         public void Delete(Article entity)

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/homePage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+    </style>
+    <title></title>
+</head>
+<body>
+
+    <div class="topnav">
+        <a href="homePage.html"><img src="house.png"></a>
+        <a href="viewPatientFile.html">View chart</a>
+        <a href="viewExaminations.html">View examinations</a>
+        <a href="viewDocuments.html">View documents</a>
+        <a href="createFeedback.html">Leave feedback</a>
+        <a href="viewFeedbackUser.html">View feedback</a>
+        <a href="#" style="float:right">Log out</a>
+    </div>
+    <h1>Welcome to your home page</h1>
+    <br />
+    <br />
+    <h3>Here are some of useful articles for you to check out (click on the picture to go to the article) </h3>
+    <div class="w3-display-container">
+        <img class="mySlides" src="4.png" onclick="link('4.png')">
+        <img class="mySlides" src="1.jpg" onclick="link('1.jpg')">
+        <img class="mySlides" src="food.jpg" onclick="link('food.jpg')">
+        <img class="mySlides" src="First-Aid.jpg" onclick="link('First-Aid.jpg')">
+        <div class="w3-center w3-display-bottommiddle" style="width: 90%;">
+            <div class="w3-left"><img src="left.png" onclick="plusDivs(-1)" style="width:50px; height: 50px "></div>
+            <div class="w3-right"><img src="right.png" onclick="plusDivs(1)" style="width:50px; height: 50px "></div>
+        </div>
+        <div class="w3-center w3-display-bottommiddle" style="width: 90%;">
+            <span class="w3-badge demo w3-border" onclick="currentDiv(1)"></span>
+            <span class="w3-badge demo w3-border" onclick="currentDiv(2)"></span>
+            <span class="w3-badge demo w3-border" onclick="currentDiv(3)"></span>
+            <span class="w3-badge demo w3-border" onclick="currentDiv(4)"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="leftcolumn">
+            <div class="card">
+                <h2 style="text-align:center">Happy holidays</h2>
+                <h5>Holiday season, 2020</h5>
+                <div><img src="holiday.jpg" style="width: 90%; height: 300px" /></div>
+                <p>Happy holidays!</p>
+                <p>Warmest wishes for a happy holiday season and a wonderful New Year. With lots of love.</p>
+                <br />
+            </div>
+        </div>
+
+        <div class="rightcolumn">
+            <div class="card">
+                <h2 style="text-align:center">Pregnancy course</h2>
+                <h5>Pregnancy course, 5th January 2021</h5>
+                <div><img src="pregnant.jpg" style="width: 90%; height: 300px" /></div>
+                <p>Help for future mothers!</p>
+                <p>Dear future moms, we are here to help you get ready for the most important task of your life.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function link(img) {
+            if (img == "food.jpg") {
+                window.open("https://www.maydensupport.co.uk/blog-42/10-tips-on-maintaining-a-healthy-diet")
+            }
+            else if (img == "4.png") {
+                window.open("https://safety4sea.com/covid-19-be-safe-smart-and-kind/")
+            }
+            else if (img == "1.jpg") {
+                window.open("https://www.redcross.org/about-us/news-and-events/news/2020/coronavirus-safety-and-readiness-tips-for-you.html")
+            }
+            else if (img == "First-Aid.jpg") {
+                window.open("https://www.healthline.com/health/first-aid")
+            }
+        }
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-white", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " w3-white";
+        }
+
+    </script>
+</body>
+</html>

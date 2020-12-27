@@ -11,7 +11,7 @@ namespace bolnica.Controller.decorators
     public class AuthorityExaminationDecorator : IExaminationController
     {
         private IExaminationController ExaminationController;
-        private String Role;
+        public String Role { get; set; }
         private Dictionary<String, List<String>> AuthorizedUsers;
 
         public AuthorityExaminationDecorator(IExaminationController examinationController, string role)
@@ -25,7 +25,8 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["GetAll"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetAllPrevious"] = new List<String>() { "Doctor", "Patient", "Secretary" };
             AuthorizedUsers["GetExaminationsByFilter"] = new List<String>() { "Secretary" };
-            AuthorizedUsers["GetFinishedExaminationsByUser"] = new List<String>() { "Doctor" };
+            //AuthorizedUsers["GetFinishedExaminationsByUser"] = new List<String>() { "Doctor" };
+            AuthorizedUsers["GetFinishedExaminationsByUser"] = new List<String>() { "Patient" };
             AuthorizedUsers["GetUpcomingExaminationsByUser"] = new List<String>() { "Patient", "Doctor", "Director" };
             AuthorizedUsers["Save"] = new List<String>() { "Patient", "Secretary", "Doctor" };
             AuthorizedUsers["SaveFinishedExamination"] = new List<String>() { "Doctor" };
@@ -90,7 +91,10 @@ namespace bolnica.Controller.decorators
 
         public List<Examination> GetFinishedExaminationsByUser(long id)
         {
-            throw new NotImplementedException();
+            if (AuthorizedUsers["GetFinishedExaminationsByUser"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.GetFinishedExaminationsByUser(id);
+            else
+                return null;
         }
 
         public Examination GetPrevious(long id)
