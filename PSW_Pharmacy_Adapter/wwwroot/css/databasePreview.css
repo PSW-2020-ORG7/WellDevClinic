@@ -7,13 +7,6 @@ div.card {
     display: inline-block;
 }
 
-/* Card containter*/
-#viewAction {
-    padding-left: 5%;
-    padding-right: 5%;
-    margin: 5px;
-}
-
 /* Favourite mark */
 .star {
     float:right;

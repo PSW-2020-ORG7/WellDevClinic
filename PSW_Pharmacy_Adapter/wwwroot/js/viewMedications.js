@@ -20,10 +20,9 @@ $(document).ready(function () {
 function viewAllMedications(meds) {
 	$("#viewMedication").empty();
 	for (let med of meds) {
-		let content = '<div class="card" id="' + med.id + '">';
+		let content = '<div class="card">';
 		content += '<div class="card-body">';
-		content += '<div class="data">';
-		content += '<table style="margin:10px">';
+		content += '<table>';
 		content += '<tr><td float="right">Id:</td><td>';
 		content += med.id;
 		content += '</td></tr>';
@@ -34,8 +33,8 @@ function viewAllMedications(meds) {
 		content += med.amount;
 		content += '</td></tr>';
 		content += '</table>';
-		content += '</div></div></div>';
-		content += '</div>';
+		content += '<button class="btn btn-info" onClick="findMedicine(\'' + med.id + '\')">Check availability</button>';
+		content += '</div></div>';
 		$("#viewMedication").append(content);
 	}
 }
@@ -87,4 +86,35 @@ function filter() {
 		filter.push(med);
 	}
 	viewAllMedications(filter);
+}
+
+function findMedicine(id) {
+	$.ajax({
+		method: "GET",
+		url: "../api/medication/" + id,
+		contentType: "application/json",
+		success: function (med) {
+			$.ajax({
+				method: "POST",
+				url: "../api/medication/findMedPh",
+				contentType: "application/json",
+				dataType: "application/json",
+				data: JSON.stringify({
+					Id: med.id,
+					Name: med.name,
+					Amount: med.amount,
+					Approved: med.approved,
+					Ingredients: med.ingredients,
+					Alternative: med.alternative,
+				}),
+				success: function (pharmacies) {
+					for (let ph of pharmacies)
+						alert("Pharmaciy: " + ph);
+				},
+				error: function (e) {
+					alert("No pharmacy responded to request!");
+                }
+			});
+		},
+	});
 }

@@ -10,7 +10,7 @@
 
 *{
     margin:0;
-    padding:0;
+    padding:1px;
 }
 
 .wrapper{
@@ -92,7 +92,7 @@ div.card {
 }
 
 /* Modal box */
-.modalMed {
+.modalCustom {
     display: none;
     width: 100%;
     height: 100%;
@@ -124,3 +124,26 @@ div.card {
     overflow-y: scroll;
     resize: none;
 }
+
+/* custom button */
+.add_field_button {
+    border-radius: 4px;
+    padding: 4px 40px;
+    transition-duration: 0.4s;
+}
+
+    .add_field_button:hover{
+        background-color: #808080;
+        color: white;
+    }
+
+input[type=text] {
+    width: 40%;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+

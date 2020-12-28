@@ -52,7 +52,7 @@ namespace PSW_Pharmacy_Adapter.Service
                 file.WriteLine(prescription.PatientName);
                 file.WriteLine(prescription.Jmbg);
                 file.WriteLine(prescription.StartTime.ToShortDateString());
-                foreach (MedicineDto m in prescription.Medicines)
+                foreach (MedicationDto m in prescription.Medicines)
                     file.WriteLine(m.Name + ":" + m.Amount);
                 file.WriteLine("*");
             }

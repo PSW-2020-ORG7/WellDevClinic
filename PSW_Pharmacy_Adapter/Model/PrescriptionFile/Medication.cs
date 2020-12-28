@@ -5,8 +5,8 @@ namespace PSW_Pharmacy_Adapter.Model
     public class Medication
     {
 
-        public string Name { get; set; }
         public long Id { get; set; }
+        public string Name { get; set; }
         public int Amount { get; set; }
         public bool Approved { get; set; }
         public virtual List<Ingredient> Ingredients { get; set; }
