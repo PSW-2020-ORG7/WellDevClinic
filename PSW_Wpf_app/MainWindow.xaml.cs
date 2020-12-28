@@ -33,7 +33,7 @@ namespace PSW_Wpf_app
 
         public MainWindow(string role)
         {
-            
+
             InitializeComponent();
             user = role;
             if (role == "patient")
@@ -112,7 +112,7 @@ namespace PSW_Wpf_app
 
         private void Button_Equipment_Drugs(object sender, RoutedEventArgs e)
         {
-            
+
             EquipmentAndDrugsView equipmentDrugsView = new EquipmentAndDrugsView();
             equipmentDrugsView.Show();
         }
@@ -123,6 +123,18 @@ namespace PSW_Wpf_app
             appointment.Show();
         }
 
-    }
 
+        private void EmergencyAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            EmergencyAppointmentView emergencyAppointmentView = new EmergencyAppointmentView();
+            emergencyAppointmentView.Show();
+        }
+            private void SpecialistAppointment_Click(object sender, RoutedEventArgs e)
+            {
+                SpecialistAppointmentView view = new SpecialistAppointmentView();
+                view.ShowDialog();
+
+            }
+        }
+    
 }

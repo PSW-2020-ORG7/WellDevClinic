@@ -67,6 +67,9 @@ namespace bolnica.Model
                     .HasValue<Doctor>(2)
                     .HasValue<Secretary>(3)
                     .HasValue<Director>(4);
+
+            modelBuilder.HasDefaultSchema("newmydb");
+
         }
 
     }

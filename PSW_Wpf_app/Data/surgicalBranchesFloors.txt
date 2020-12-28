@@ -25,7 +25,7 @@ door,10,40,6,407,92,0,Surgical,0,
 waitingRoom,watingRoom1,60,60,402,144,0,Surgical,0,
 restroom,F_restroom,75,60,314,38,0,Surgical,0,
 waitingRoom,watingRoom2,60,60,290,303,0,Surgical,0,
-room,preoperative,73,200,241,121,1,Surgical,901,WorkingTime:24h,equipments-801:masks:2:802:xray:3,drugs-112:Brufen:1
+room,preoperative,73,200,241,121,1,Surgical,904,WorkingTime:24h,equipments-801:masks:5,drugs-112:Brufen:1
 room,operating_room,222,83,92,38,1,Surgical,901,WorkingTime:24,,drugs-112:Brufen:1:512:Aspirin:1
 room,operating_room,149,83,92,121,1,Surgical,901,WorkingTime:24,equipments-801:masks:2:802:xray:3,drugs-112:Brufen:1
 room,operating_room,149,117,92,204,1,Surgical,901,WorkingTime:24,equipments-801:masks:2:802:xray:3,drugs-112:Brufen:1

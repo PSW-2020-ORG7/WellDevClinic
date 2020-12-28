@@ -3,6 +3,7 @@ using bolnica.Model;
 using bolnica.Repository;
 using bolnica.Service;
 using Controller;
+using EventSourcing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,7 @@ namespace InterlayerController
             services.AddMvc().AddNewtonsoftJson(options=> options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<MyDbContext>(opts =>
-                    opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                    opts.UseMySql(CreateConnectionStringFromEnvironmentDefault(),
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
             services.AddScoped<IExaminationController, ExaminationController>();
             services.AddScoped<IDoctorController, DoctorController>();
@@ -101,7 +102,6 @@ namespace InterlayerController
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDirectorService, DirectorService>();
 
-
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IBusinessDayRepository, BusinessDayRepository>();
@@ -131,8 +131,15 @@ namespace InterlayerController
             services.AddScoped<ISymptomRepository, SymptomRepository>();
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             services.AddScoped<ITownRepository, TownRepository>();
+
+            services.AddDbContext<EventDbContext>(opts =>
+                    opts.UseMySql(CreateConnectionStringFromEnvironmentEventLogs(),
+                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+            
+            services.AddScoped<IEventLogEntryService, EventLogEntryService>();
+            services.AddScoped<IEventLogEntryRepository, EventLogEntryRepository>();
         }
-    
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
@@ -166,11 +173,21 @@ namespace InterlayerController
 
             }
         }
-        private string CreateConnectionStringFromEnvironment()
+        private string CreateConnectionStringFromEnvironmentDefault()
         {
             string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
             string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
             string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "newmydb";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            return $"server={server};port={port};database={database};user={user};password={password};";
+        }
+
+        private string CreateConnectionStringFromEnvironmentEventLogs()
+        {
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "eventlogs";
             string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
             string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
             return $"server={server};port={port};database={database};user={user};password={password};";
