@@ -23,11 +23,11 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [HttpPost]
         [Route("add")]
-        public IActionResult AddOffer([FromBody]TenderOffer offer)
+        public IActionResult AddOffer(TenderOffer offer)
         {
             TenderOffer tenderOffer = _keyService.AddOffer(offer);
             if (tenderOffer != null)
-                return StatusCode(201, tenderOffer);
+                return Ok(tenderOffer);
             return BadRequest();
         }
     }
