@@ -40,7 +40,8 @@ namespace PSW_Wpf_app.Client
         public string Email;
         public string Phone;
         public DateTime DateOfBirth;
-        
+        public virtual Speciality Specialty { get; set; }
+
         public string Username;
         public string Password;
         
@@ -114,6 +115,9 @@ namespace PSW_Wpf_app.Client
             Doctor = doctor;
             Period = period;
             Patient = patient;
+        }
+        public ExaminationDTO()
+        {
         }
     }
 
@@ -294,6 +298,16 @@ namespace PSW_Wpf_app.Client
             Patient patient = JsonConvert.DeserializeObject<Patient>(responseBody);
 
             return patient;
+        }
+
+        public static async Task<List<Doctor>> GetAllDoctors()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/doctor/getAll");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Doctor> doctor = JsonConvert.DeserializeObject<List<Doctor>>(responseBody);
+
+            return doctor;
         }
 
     }
