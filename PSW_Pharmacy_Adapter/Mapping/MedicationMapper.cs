@@ -9,7 +9,7 @@ namespace PSW_Pharmacy_Adapter.Mapping
 {
     public static class MedicationMapper
     {
-        public static Medication MapMedication(MedicineDto medicineDto)
+        public static Medication MapMedication(MedicationDto medicineDto)
             => new Medication
             {
                 Id = medicineDto.Id,
@@ -17,7 +17,7 @@ namespace PSW_Pharmacy_Adapter.Mapping
                 Amount = medicineDto.Amount,
                 Approved = true,
                 Ingredients = MapIngredient(medicineDto.Ingredients),
-                Alternative = MapAlternative(medicineDto.ReplacementMedicines),
+                Alternative = MapAlternative(medicineDto.Alternative),
             };
 
         public static List<Ingredient> MapIngredient(List<String> ingredientsString) {
