@@ -44,6 +44,7 @@ namespace PSW_Pharmacy_Adapter
 
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
             services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
+            services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
             services.AddHttpClient();
         }
 
