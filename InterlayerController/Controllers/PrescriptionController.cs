@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.PatientSecretary;
 using WellDevCore.Model.dtos;
 
-namespace InterlayerController.Controllers      //TODO A1: Ucitati samo lekove recepta iz examinationa!!!
+namespace InterlayerController.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,13 +26,7 @@ namespace InterlayerController.Controllers      //TODO A1: Ucitati samo lekove r
         {
             foreach (Examination e in _examinationController.GetAllPrevious())
                 if (e.Prescription.Id == id)
-                {
-                    foreach (Drug d in e.Prescription.Drug)
-                        if (d.Alternative != null)
-                            foreach (Drug alter in d.Alternative)
-                                alter.Alternative = null;
                     return PrescriptionAdapter.ExaminationToPatientPrescriptionDto(e);
-                }
             return null;
         }
 
@@ -47,14 +41,7 @@ namespace InterlayerController.Controllers      //TODO A1: Ucitati samo lekove r
         {
             List<PatientPrescriptionDTO> prescriptions = new List<PatientPrescriptionDTO>();
             foreach(Examination e in _examinationController.GetAllPrevious())
-            {
-                foreach (Drug d in e.Prescription.Drug)
-                    if (d.Alternative != null)
-                        foreach (Drug alter in d.Alternative)
-                            alter.Alternative = null;
                 prescriptions.Add(PrescriptionAdapter.ExaminationToPatientPrescriptionDto(e));
-            }
-                
             return prescriptions;
         }
     }

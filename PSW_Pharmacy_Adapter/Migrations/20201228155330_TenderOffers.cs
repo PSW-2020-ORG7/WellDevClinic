@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PSW_Pharmacy_Adapter.Migrations
 {
-    public partial class TenderOffer : Migration
+    public partial class TenderOffers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,13 +55,15 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 name: "Ingredient",
                 columns: table => new
                 {
-                    Name = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     MedicationId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredient", x => x.Name);
+                    table.PrimaryKey("PK_Ingredient", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Ingredient_Medication_MedicationId",
                         column: x => x.MedicationId,
