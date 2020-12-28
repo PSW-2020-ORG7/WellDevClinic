@@ -2,6 +2,7 @@
     $("#btnAddOffer").click(function () {
         let name = $("#txtPharmacy").val();
         let price = $("#txtPrice").val();
+        let id = $("#txtId").val();
 
 
         let valid = true;
@@ -25,10 +26,11 @@
 
         if (valid) {
             var jsonApi = JSON.stringify({
-                PharmacyName: name,
-                Price: Number(price),
-                Medications: [],
-                Message: ""
+                PharmacyName : name,
+                Price : Number(price),
+                Id : Number(id),
+                Medications : [],
+                Message : ""
             });
         }
 
