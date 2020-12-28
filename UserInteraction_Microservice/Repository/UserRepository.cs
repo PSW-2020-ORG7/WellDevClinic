@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UserInteraction_Microservice.ApplicationServices.Abstract;
+using UserInteraction_Microservice.Domain;
 using UserInteraction_Microservice.Domain.Model;
+using UserInteraction_Microservice.Repository.Abstract;
 
-namespace UserInteraction_Microservice.Domain.DomainServices
+namespace UserInteraction_Microservice.Repository
 {
-    public class UserDomainService : IUserDomainService
+    public class UserRepository : IUserRepository
     {
-        private readonly IDoctorAppService _doctorAppService;
-        private readonly IDirectorAppService _directorAppService;
-        private readonly ISecretaryAppService _secretaryAppService;
-        private readonly IPatientAppService _patientAppService;
+        private readonly MyDbContext dbContext;
 
-        public UserDomainService(IDirectorAppService directorAppService)
+        public UserRepository(MyDbContext dbContext)
         {
-            _directorAppService = directorAppService;
+            this.dbContext = dbContext;
         }
 
         public void Delete(User entity)
@@ -40,7 +38,11 @@ namespace UserInteraction_Microservice.Domain.DomainServices
 
         public User Save(User entity)
         {
-            throw new NotImplementedException();
+            dbContext.Person.Add(entity.Person);
+            dbContext.UserDetails.Add(entity.UserDetails);
+            dbContext.UserLogIn.Add(entity.UserLogIn);
+            dbContext.SaveChanges();
+            return entity;
         }
     }
 }

@@ -4,16 +4,17 @@ using System.Text;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.DomainServices;
 using UserInteraction_Microservice.Domain.Model;
+using UserInteraction_Microservice.Repository.Abstract;
 
 namespace UserInteraction_Microservice.ApplicationServices
 {
     public class UserAppService : IUserAppService
     {
-        private readonly IUserDomainService _userDomainService;
+        private readonly IUserRepository _userRepository;
 
-        public UserAppService(IUserDomainService userDomainService) 
+        public UserAppService(IUserRepository userRepository) 
         {
-            _userDomainService = userDomainService;
+            _userRepository = userRepository;
         }
 
         public void Delete(User entity)
@@ -31,14 +32,14 @@ namespace UserInteraction_Microservice.ApplicationServices
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<long> GetAll()
         {
             throw new NotImplementedException();
         }
 
         public User Save(User entity)
         {
-            return _userDomainService.Save(entity);
+            return _userRepository.Save(entity);
         }
     }
 }

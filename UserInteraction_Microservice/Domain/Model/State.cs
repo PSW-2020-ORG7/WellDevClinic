@@ -9,7 +9,11 @@ namespace UserInteraction_Microservice.Domain.Model
         public String Name { get; set; }
         public String Code { get; set; }
 
-        private List<Town> town;
+        public virtual List<Town> town { get; set; }
+
+        public State()
+        {
+        }
 
         public State(long id, String name, String code)
         {

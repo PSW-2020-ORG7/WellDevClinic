@@ -6,7 +6,12 @@ using UserInteraction_Microservice.Domain.Model;
 
 namespace UserInteraction_Microservice.Domain.DomainServices
 {
-    public interface IUserDomainService : ICRUD<User, long>
+    public interface IUserDomainService 
     {
+        User Get(long id);
+        IEnumerable<long> GetAll();
+        User Save(User entity);
+        void Delete(User entity);
+        void Edit(User entity);
     }
 }

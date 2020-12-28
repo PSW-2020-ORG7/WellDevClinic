@@ -2,6 +2,7 @@
 {
     public class DoctorGradeQuestion
     {
+        public long Id { get; set; }
         public double Grade { get; set; }
         public string Question { get; set; }
         public DoctorGradeQuestion()

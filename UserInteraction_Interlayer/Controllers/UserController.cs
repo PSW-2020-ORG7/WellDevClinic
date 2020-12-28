@@ -12,19 +12,23 @@ namespace UserInteraction_Interlayer.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserAppService _userAppService;
+        private readonly IDirectorAppService _directorAppService;
 
-        public UserController(IUserAppService userAppService)
+        public UserController(IDirectorAppService directorAppService)
         {
-            _userAppService = userAppService;
+            _directorAppService = directorAppService;
+               
         }
 
         [HttpGet]
         public Boolean Registration()
         {
-            User director = new Director(0, "2229999123", "Pera", "Peric", new DateTime(), "021321231", "Paja", "", "Musko", "blabla@gmail.com", "", null, "pera", "pera", UserType.Director);
-            if (_userAppService.Save(director) != null)
-                return true;
+            Person person = new Person(0, "Pera", "Peric", "213123123123");
+            UserDetails userDetails = new UserDetails(0, new DateTime(), "2131233", "Paja", "", "Musko", "sadas@gmail.com", "", null);
+            UserLogIn userLogIn = new UserLogIn(0, "pera", "pera", UserType.Director);
+            User user = new User(person, userDetails, userLogIn);
+            Director director = new Director(0, user);
+            _directorAppService.Save(director);
             return false;
         }
     }

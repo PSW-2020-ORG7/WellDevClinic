@@ -5,8 +5,9 @@ using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
-    public class UserDetails : Person
+    public class UserDetails : IIdentifiable<long>
     {
+        public long Id { get; set; }
         public DateTime DateOfBirth { get; set; }
         public String Phone { get; set; }
         public String MiddleName { get; set; }
@@ -16,15 +17,9 @@ namespace UserInteraction_Microservice.Domain.Model
         public String Image { get; set; }
         public virtual Address Address { get; set; }
 
-        public UserDetails()
+        public UserDetails(long id, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address)
         {
-        }
-
-        public UserDetails(String jmbg, String firstName, String lastName,DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address)
-        {
-            Jmbg = jmbg;
-            FirstName = firstName;
-            LastName = LastName;
+            Id = id;
             DateOfBirth = dateOfBirth;
             Phone = phone;
             MiddleName = middleName;
@@ -33,6 +28,20 @@ namespace UserInteraction_Microservice.Domain.Model
             Email = email;
             Image = image;
             Address = address;
+        }
+
+        public UserDetails()
+        {
+        }
+
+        public long GetId()
+        {
+            return Id;
+        }
+
+        public void SetId(long id)
+        {
+            Id = id;
         }
     }
 

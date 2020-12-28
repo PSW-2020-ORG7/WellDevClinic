@@ -11,6 +11,10 @@ namespace UserInteraction_Microservice.Domain.Model
         public virtual List<DoctorGradeQuestion> DoctorGradeQuestions { get; set; }
         public virtual List<DoctorGradeQuestion> AverageGrade { get; set; }
 
+        public DoctorGrade()
+        {
+        }
+
         public DoctorGrade(long id, int numberOfGrades)
         {
             Id = id;

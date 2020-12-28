@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
-    public class Doctor : User
+    public class Doctor : IIdentifiable<long>
     {
+        public long Id { get; set; }
         public virtual Speciality Speciality { get; set; }
         public virtual DoctorGrade DoctorGrade { get; set; }
 
-        public Doctor() { }
+        public virtual User User { get; set; }
 
-        public Doctor(long id, String jmbg, String firstName, String lastName, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address, string username, string password, UserType userType, Speciality speciality, DoctorGrade doctorGrade)
+        public Doctor(long id, Speciality speciality, DoctorGrade doctorGrade, User user)
         {
             Id = id;
-            Username = username;
-            Password = password;
-            UserType = userType;
-            Jmbg = jmbg;
-            FirstName = firstName;
-            LastName = lastName;
-            DateOfBirth = dateOfBirth;
-            Phone = phone;
-            MiddleName = middleName;
-            Race = race;
-            Gender = gender;
-            Email = email;
-            Image = image;
-            Address = address;
             Speciality = speciality;
             DoctorGrade = doctorGrade;
+            User = user;
         }
 
+        public Doctor() { }
+
+        public long GetId()
+        {
+            return Id;
+        }
+
+        public void SetId(long id)
+        {
+            Id = id;
+        }
     }
 }

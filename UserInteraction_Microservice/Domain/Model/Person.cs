@@ -4,8 +4,9 @@ using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
-    public class Person 
+    public class Person : IIdentifiable<long>
     {
+        public long Id { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
         public String Jmbg  { get; set; }
@@ -18,8 +19,9 @@ namespace UserInteraction_Microservice.Domain.Model
             }
         }
 
-        public Person( String FirstName, String LastName, String Jmbg)
+        public Person(long id, String FirstName, String LastName, String Jmbg)
         {
+            this.Id = id;
             this.FirstName = FirstName;
             this.LastName = LastName;
             this.Jmbg = Jmbg;
@@ -27,5 +29,14 @@ namespace UserInteraction_Microservice.Domain.Model
 
         public Person() { }
 
+        public long GetId()
+        {
+            return Id;
+        }
+
+        public void SetId(long id)
+        {
+            Id = id;
+        }
     }
 }

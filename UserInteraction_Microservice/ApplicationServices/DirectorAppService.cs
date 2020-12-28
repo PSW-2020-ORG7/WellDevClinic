@@ -10,10 +10,12 @@ namespace UserInteraction_Microservice.ApplicationServices
     public class DirectorAppService : IDirectorAppService
     {
         private readonly IDirectorRepository _directorRepository;
+        private readonly IUserAppService _userAppService;
 
-        public DirectorAppService(IDirectorRepository directorRepository)
+        public DirectorAppService(IDirectorRepository directorRepository, IUserAppService userAppService)
         {
             _directorRepository = directorRepository;
+            _userAppService = userAppService;
         }
 
         public void Delete(Director entity)
@@ -38,6 +40,7 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public Director Save(Director entity)
         {
+            _userAppService.Save(entity.User);
             return _directorRepository.Save(entity);
         }
     }

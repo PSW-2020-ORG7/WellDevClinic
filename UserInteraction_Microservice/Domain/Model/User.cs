@@ -4,49 +4,23 @@ using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
-    public enum UserType
-    {
-        Patient,
-        Doctor,
-        Secretary,
-        Director
-    }
-    public class User : UserDetails, IIdentifiable<long>
-    {
+  
+    public class User
+    { 
         public long Id { get; set; }
-        public String Username { get; set; }
-        public String Password { get; set; }
-        public virtual UserType UserType { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual UserDetails UserDetails { get; set; }
+        public virtual UserLogIn UserLogIn { get; set; }
 
-        public User(long id, String jmbg, String firstName, String lastName, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address, string username, string password, UserType userType)
+        public User(Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
-            Id = id;
-            UserType = userType;
-            Username = username;
-            Password = password;
-            Jmbg = jmbg;
-            FirstName = firstName;
-            LastName = lastName;
-            DateOfBirth = dateOfBirth;
-            Phone = phone;
-            MiddleName = middleName;
-            Race = race;
-            Gender = gender;
-            Email = email;
-            Image = image;
-            Address = address;
+            Person = person;
+            UserDetails = userDetails;
+            UserLogIn = userLogIn;
         }
 
-        public User() { }
-
-        public long GetId()
+        public User()
         {
-            return this.Id;
-        }
-
-        public void SetId(long id)
-        {
-            this.Id = id;
         }
     }
 }
