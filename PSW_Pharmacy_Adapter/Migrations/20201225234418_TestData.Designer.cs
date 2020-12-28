@@ -9,7 +9,7 @@ using PSW_Pharmacy_Adapter.Model;
 namespace PSW_Pharmacy_Adapter.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201214131542_TestData")]
+    [Migration("20201225234418_TestData")]
     partial class TestData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,55 +48,55 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         new
                         {
                             Id = 1L,
-                            EndDate = new DateTime(2020, 12, 29, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(3210),
+                            EndDate = new DateTime(2021, 1, 10, 0, 44, 17, 339, DateTimeKind.Local).AddTicks(5074),
                             MessageAboutAction = "Andol on sale! 50% off!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 4, 14, 15, 41, 796, DateTimeKind.Local).AddTicks(6068),
+                            StartDate = new DateTime(2020, 12, 16, 0, 44, 17, 334, DateTimeKind.Local).AddTicks(7457),
                             Status = 1
                         },
                         new
                         {
                             Id = 2L,
-                            EndDate = new DateTime(2021, 1, 13, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6497),
+                            EndDate = new DateTime(2021, 1, 25, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3070),
                             MessageAboutAction = "Cheap bromazepam on huge quantities!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 19, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6479),
+                            StartDate = new DateTime(2020, 12, 31, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3038),
                             Status = 0
                         },
                         new
                         {
                             Id = 3L,
-                            EndDate = new DateTime(2020, 12, 21, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6558),
+                            EndDate = new DateTime(2021, 1, 2, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3173),
                             MessageAboutAction = "Aspirin C for free!!",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 15, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6554),
+                            StartDate = new DateTime(2020, 12, 27, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3168),
                             Status = 0
                         },
                         new
                         {
                             Id = 4L,
-                            EndDate = new DateTime(2021, 1, 5, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6565),
+                            EndDate = new DateTime(2021, 1, 17, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3181),
                             MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 16, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6562),
+                            StartDate = new DateTime(2020, 12, 28, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3178),
                             Status = 2
                         },
                         new
                         {
                             Id = 5L,
-                            EndDate = new DateTime(2020, 12, 29, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6571),
+                            EndDate = new DateTime(2021, 1, 10, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3190),
                             MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
                             PharmacyName = "PH2",
-                            StartDate = new DateTime(2020, 12, 14, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6568),
+                            StartDate = new DateTime(2020, 12, 26, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3186),
                             Status = 2
                         },
                         new
                         {
                             Id = 6L,
-                            EndDate = new DateTime(2020, 12, 13, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6577),
+                            EndDate = new DateTime(2020, 12, 25, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3198),
                             MessageAboutAction = "Cheap sedatives!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 4, 14, 15, 41, 798, DateTimeKind.Local).AddTicks(6574),
+                            StartDate = new DateTime(2020, 12, 16, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3194),
                             Status = 1
                         });
                 });
@@ -141,6 +141,92 @@ namespace PSW_Pharmacy_Adapter.Migrations
                             ApiKey = "HgT8-n47E-bE41-2gt5",
                             Url = "http://localhost:4200/Ph4"
                         });
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<long?>("MedicationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Name");
+
+                    b.HasIndex("MedicationId");
+
+                    b.ToTable("Ingredient");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Medication", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<long?>("MedicationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<long?>("TenderOfferId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicationId");
+
+                    b.HasIndex("TenderOfferId");
+
+                    b.ToTable("Medication");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Pharmacy.TenderOffer", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TenderOffers");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>
+                {
+                    b.HasOne("PSW_Pharmacy_Adapter.Model.Medication", null)
+                        .WithMany("Ingredients")
+                        .HasForeignKey("MedicationId");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Medication", b =>
+                {
+                    b.HasOne("PSW_Pharmacy_Adapter.Model.Medication", null)
+                        .WithMany("Alternative")
+                        .HasForeignKey("MedicationId");
+
+                    b.HasOne("PSW_Pharmacy_Adapter.Model.Pharmacy.TenderOffer", null)
+                        .WithMany("Medications")
+                        .HasForeignKey("TenderOfferId");
                 });
 #pragma warning restore 612, 618
         }
