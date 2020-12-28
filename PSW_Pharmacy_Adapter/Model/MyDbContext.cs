@@ -9,6 +9,7 @@ namespace PSW_Pharmacy_Adapter.Model
         public DbSet<Api> ApiKeys { get; set; }
         public DbSet<ActionAndBenefit> ActionsAndBenefits { get; set; }
         public DbSet<TenderOffer> TenderOffers { get; set; }
+        public DbSet<Tender> Tender { get; set; }
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
