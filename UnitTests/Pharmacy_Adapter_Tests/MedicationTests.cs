@@ -61,12 +61,12 @@ namespace UnitTests.Pharmacy_Adapter_Tests
         public List<Ingredient> GetIngredients()
             => new List<Ingredient>()
             {
-                new Ingredient("O2", 10),
-                new Ingredient("H5", 10),
-                new Ingredient("M1", 10),
-                new Ingredient("L8", 10),
-                new Ingredient("K8", 10),
-                new Ingredient("U7", 10),
+                new Ingredient(1, "O2", 10),
+                new Ingredient(2, "H5", 10),
+                new Ingredient(3, "M1", 10),
+                new Ingredient(4, "L8", 10),
+                new Ingredient(5, "K8", 10),
+                new Ingredient(6, "U7", 10),
             };
     }
 }
