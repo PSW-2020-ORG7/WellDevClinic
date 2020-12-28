@@ -13,5 +13,6 @@ namespace UserInteraction_Microservice.Domain.DomainServices
         User Save(User entity);
         void Delete(User entity);
         void Edit(User entity);
+
     }
 }

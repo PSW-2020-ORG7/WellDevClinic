@@ -28,6 +28,16 @@ namespace UserInteraction_Microservice.ApplicationServices
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Secretary> GetAllEager()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Secretary GetEager(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Secretary Save(Secretary entity)
         {
             throw new NotImplementedException();

@@ -28,6 +28,16 @@ namespace UserInteraction_Microservice.ApplicationServices
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Patient> GetAllEager()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Patient GetEager(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Patient Save(Patient entity)
         {
             throw new NotImplementedException();

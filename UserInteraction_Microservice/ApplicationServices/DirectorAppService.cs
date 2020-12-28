@@ -30,7 +30,7 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public Director Get(long id)
         {
-            throw new NotImplementedException();
+            return _directorRepository.Get(id);
         }
 
         public IEnumerable<Director> GetAll()
@@ -38,9 +38,19 @@ namespace UserInteraction_Microservice.ApplicationServices
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Director> GetAllEager()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Director GetEager(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Director Save(Director entity)
         {
-            _userAppService.Save(entity.User);
+          //  _userAppService.Save(entity.User);
             return _directorRepository.Save(entity);
         }
     }

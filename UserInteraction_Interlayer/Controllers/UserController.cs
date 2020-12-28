@@ -31,5 +31,14 @@ namespace UserInteraction_Interlayer.Controllers
             _directorAppService.Save(director);
             return false;
         }
+
+        [HttpGet]
+        [Route("{id?}")]
+
+        public Director GetDirector(long id)
+        {
+           return  _directorAppService.Get(id);
+
+        }
     }
 }

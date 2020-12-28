@@ -16,5 +16,9 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
         E Save(E entity);
         void Delete(E entity);
         void Edit(E entity);
+
+        E GetEager(ID id);
+
+        IEnumerable<E> GetAllEager();
     }
 }
