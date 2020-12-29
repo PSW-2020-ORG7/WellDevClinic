@@ -147,3 +147,22 @@ input[type=text] {
     box-sizing: border-box;
 }
 
+/* Custom table */
+.customTable table {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.customTable th {
+    background: #333;
+    color: #fff;
+}
+
+.customTable td {
+    padding: 5px;
+}
+
+.customTable tr {
+    background: whitesmoke;
+}
+

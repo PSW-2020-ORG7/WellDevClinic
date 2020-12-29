@@ -20,18 +20,19 @@ namespace PSW_Pharmacy_Adapter.Mapping
                 Alternative = MapAlternative(medicineDto.Alternative),
             };
 
-        public static List<Ingredient> MapIngredient(List<String> ingredientsString) {
+        public static List<Ingredient> MapIngredient(List<string> ingredientsString) {
             List<Ingredient> ingredients = new List<Ingredient>();
             Ingredient ingredient = new Ingredient();
-            foreach(String ingredientString in ingredientsString){
-                ingredient.Name = ingredientString;
-                ingredient.Quantity = 1;
-                ingredients.Add(ingredient);
-            }
+            if(ingredientsString != null)
+                foreach(string ingredientString in ingredientsString){
+                    ingredient.Name = ingredientString;
+                    ingredient.Quantity = 1;
+                    ingredients.Add(ingredient);
+                }
             return ingredients;
         }
 
-        public static List<Medication> MapAlternative(List<String> medicineList) {
+        public static List<Medication> MapAlternative(List<string> medicineList) {
             List<Medication> medications = new List<Medication>();
             return medications;
         }

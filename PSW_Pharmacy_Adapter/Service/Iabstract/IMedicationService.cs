@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PSW_Pharmacy_Adapter.Dto;
 using PSW_Pharmacy_Adapter.Model;
 
 namespace PSW_Pharmacy_Adapter.Service.Iabstract
@@ -8,7 +9,9 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
     {
         public Task<List<Medication>> GetAllHospitalMedications();
         public Task<Medication> GetHospitalMedication(long id);
-        public Task<List<string>> GetPharmacyByMedicineAsync(Medication med);
-        public List<Medication> GetUnsyncedMedications(string pharmacyName);
+        public Task<List<MedicationDto>> GetAllPharmacyMedications(string pharmacyName);
+        public Task<MedicationDto> GetPharmacyMedication(string pharmacyName, string medName);
+        public Task<List<PharmacyMedicationDto>> GetPharmacyByMedicineAsync(Medication med);
+        public Task<List<Medication>> GetUnsyncedMedicationsAsync(string pharmacyName);
     }
 }

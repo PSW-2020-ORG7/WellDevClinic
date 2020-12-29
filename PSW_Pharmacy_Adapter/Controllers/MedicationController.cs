@@ -33,6 +33,6 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [HttpGet]
         [Route("check/{id?}")]
         public IActionResult CheckStrucutre(string id)
-            => Ok(_medicationService.GetUnsyncedMedications(id));
+            => Ok(_medicationService.GetUnsyncedMedicationsAsync(id));
     }
 }

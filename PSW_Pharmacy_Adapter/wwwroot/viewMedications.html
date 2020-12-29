@@ -45,8 +45,8 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><input type="number" id="amountFrom"/></td>
-                        <td><input type="number" id="amountTo"/></td>
+                        <td><input type="number" min="0" id="amountFrom" /></td>
+                        <td><input type="number" min="0" id="amountTo" /></td>
                         <td><input type="button" class="btn btn-primary" onclick="filter()" value="Submit"/></td>
                     </tr>
                 </table>
@@ -54,8 +54,44 @@
         </div>
     </div>
 
-    <div class="loader"></div>
-    <div id="viewMedication"></div>
+    <div>
+        <div class="loader"></div>
+        <div class="modalCustom" id="medAvailability" style="display:none">
+            <div class="modalContent">
+            <span class="close">&times;</span>
+            <h4 id="txtMedName"></h4>
+            <br>
+            <table border="1" id="medTableData" class="customTable" width="100%">
+                <thead>
+                    <tr>
+                        <th>Medicine name</th>
+                        <th>Amount</th>
+                        <th>Price/piece(RSD)</th>
+                        <th>Pharmacy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br />
+            <form>
+                <h4>
+                <select id="phName">
+                    <option selected disabled>Select pharmacy..</option>
+                </select>
+                &nbsp;&nbsp;
+                <span>Amount:</span>
+                <input type="number" min="1" max="0" id="amountToBuy" />
+                <br/>
+                <input type="button" class="btn btn-outline-warning" style="width:100%; margin-top:15px" value="Purchase!" />
+                </h4>
+            </form>
+            
+            </div>
+        </div>
+
+        <div id="viewMedication"></div>
+    </div>
 
 </body>
 </html>

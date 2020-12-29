@@ -14,7 +14,11 @@ $(document).ready(function () {
 
 	$(".btnFilter").click(function () {
 		$("#divFilterTable").slideToggle();
-	})
+	});
+
+	$(".close").click(function () {
+		$(".modalCustom").hide(200);
+	});
 });
 
 function viewAllMedications(meds) {
@@ -88,17 +92,16 @@ function filter() {
 	viewAllMedications(filter);
 }
 
-function findMedicine(id) {
+function findMedicine(name) {
 	$.ajax({
 		method: "GET",
-		url: "../api/medication/" + id,
+		url: "../api/medication/" + name,
 		contentType: "application/json",
 		success: function (med) {
 			$.ajax({
 				method: "POST",
 				url: "../api/medication/findMedPh",
 				contentType: "application/json",
-				dataType: "application/json",
 				data: JSON.stringify({
 					Id: med.id,
 					Name: med.name,
@@ -108,8 +111,9 @@ function findMedicine(id) {
 					Alternative: med.alternative,
 				}),
 				success: function (pharmacies) {
-					for (let ph of pharmacies)
-						alert("Pharmaciy: " + ph);
+					showResultTable(pharmacies);
+					$("#medAvailability").slideToggle("fast");
+
 				},
 				error: function (e) {
 					alert("No pharmacy responded to request!");
@@ -117,4 +121,24 @@ function findMedicine(id) {
 			});
 		},
 	});
+}
+
+
+function showResultTable(pharmacies) {
+	$("#txtMedName").text(pharmacies[0].medicine.name);
+	$("#medTableData").find('tbody').empty();
+	for (let ph of pharmacies) {
+		let content = '<tr>';
+		content += '<td>' + ph.medicine.name + '</td>';
+		content += '<td>' + ph.medicine.amount + '</td>';
+		content += '<td>' + ph.price + '</td>';
+		content += '<td>' + ph.phName + '</td>';
+		content += '</tr>';
+
+		$("#medTableData").find('tbody').append(content);
+
+		$("#phName").append('<option value="' + ph.phName + '">' + ph.phName + '</option>');
+		if ($('#amountToBuy').attr('max') < Number(ph.medicine.amount))
+			$('#amountToBuy').attr('max', ph.medicine.amount);
+    }
 }
