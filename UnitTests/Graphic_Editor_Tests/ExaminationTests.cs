@@ -25,8 +25,8 @@ namespace UnitTests.Graphic_Editor_Tests
 
             Doctor doctor = new Doctor() { Id = 1, FirstName = "ivan", LastName = "ivanovic", };
 
-            DateTime start = new DateTime(2020, 12, 27, 8, 0, 0);
-            DateTime end = new DateTime(2020, 12, 28, 8, 30, 0);
+            DateTime start = DateTime.Now;
+            DateTime end = start.AddDays(1);
             Period period = new Period(start, end);
             Room room = new Room();
             List<Period> periods = new List<Period>();
@@ -45,8 +45,8 @@ namespace UnitTests.Graphic_Editor_Tests
             var stubRepository = new Mock<IDoctorRepository>();
 
             Doctor doctor = new Doctor(1, "ivan", "ivanovic");
-            DateTime start = new DateTime(2020, 12, 27, 8, 0, 0);
-            DateTime end = new DateTime(2020, 12, 28, 8, 30, 0);
+            DateTime start = DateTime.Now;
+            DateTime end = start.AddDays(1);
             Room room = new Room();
             Period period = new Period(start, end);
             List<Period> periods = new List<Period>();
@@ -150,8 +150,8 @@ namespace UnitTests.Graphic_Editor_Tests
             BusinessDayService service = new BusinessDayService(doctorBusinessDayRepository, doc);
             Doctor doctor = new Doctor(1, "ivan", "ivanovic");
 
-            DateTime start = new DateTime(2020, 12, 27, 8, 0, 0);
-            DateTime end = new DateTime(2020, 12, 28, 8 ,30, 0);
+            DateTime start = DateTime.Now.AddMinutes(5);
+            DateTime end = start.AddDays(1);
             Period period = new Period(start, end);
 
             PriorityType priority = PriorityType.NoPriority;
