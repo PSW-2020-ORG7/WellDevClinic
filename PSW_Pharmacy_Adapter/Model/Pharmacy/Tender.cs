@@ -21,5 +21,10 @@ namespace PSW_Pharmacy_Adapter.Model.Pharmacy
             StartDate = startDate;
             EndDate = endDate;
         }
+
+        public Tender(long? id)
+        {
+            Id = id;
+        }
     }
 }

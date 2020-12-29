@@ -73,33 +73,36 @@
 function viewAllTenders(tenders) {
     $("#viewTender").empty();
     for (let ten of tenders) {
-        var content = '<div class="card" id="' + ten.id + '">';
+        var content = '<div class="card" style="width:350px">';
         content += '<div class="card-body">';
-        content += '<div class="data">';
-        content += '<table style="margin:10px">';
-        content += '<tr><td float="right">Id:</td><td>';
+        content += '<div class="data"> <h4 class="card-subtitle mb-2 text-muted">ID: '
         content += ten.id;
-        content += '</td></tr>';
+        content += '</h4>';
+        content += '<h5><table style="margin:10px">';
         if (ten.medications != null) {
-            content += '<tr><td float="right">Hospital need:</td>';
-            content += '<td>';
-            for (let med of ten.medications)
-                content += med.name + ', <br/>';
-            content += '</td>';
+            content += '<h4>Hospital need:<h4>';
+            
+            for (let med of ten.medications) {
+                content += '<tr><td float="right">';
+                content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
+            }
         }
-        content += '</tr>';
-        content += '<tr><td float="right">Start date:</td><td>';
+        content += '</table></h5><hr color="#FFFF33"> <table>';
+        content += '<tr style="color: gray"><td float="right" >Start date:</td><td>';
         content += ISOtoShort(new Date(ten.startDate));
         content += '</td></tr>';
-        content += '<tr><td float="right">End date:</td><td>';
+        content += '<tr style="color: gray"><td float="right">End date:</td><td>';
         content += ISOtoShort(new Date(ten.endDate));
         content += '</td></tr>';
-        content += '<tr><td colspan="2">'
-        content += '<button type="button" class="btn btn-info" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
-        content += 'Make offer</button > ';
+        content += '</table><br>';
+        content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
+        content += 'Make offer</button >';
+        /*content += '<tr><td colspan="2">'
+        content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
+        content += 'Send offer</button >';
         content += '</td>';
         content += '</tr> ';
-        content += '</table>';
+        content += '</table>';*/
         content += '</div></div></div>';
         $("#viewTender").append(content);
     }
@@ -112,7 +115,6 @@ function makeOffer(tenderId) {
     $(".close").click(function () {
         $(".modalCustom").hide(200);
     })
-
 
         $("#btnAddOffer").click(function () {
         let name = $("#txtName").val();
@@ -127,7 +129,8 @@ function makeOffer(tenderId) {
             Price: Number(price),
             Id: Number(id),
             Medications: [],
-            Message: message
+            Message: message,
+            TenderId: Number(tender)
         });
 
         $.ajax({

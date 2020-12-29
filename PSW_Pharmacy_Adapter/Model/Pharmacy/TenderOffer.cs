@@ -12,17 +12,18 @@ namespace PSW_Pharmacy_Adapter.Model.Pharmacy
         public double Price { get; set; }
         public string Message { get; set; }
 
+        public long TenderId { get; set; }
+
         public TenderOffer() { }
 
-        public TenderOffer(long id, string pharmacyName, List<Medication> medications, double price, string message)
+        public TenderOffer(long? id, string pharmacyName, List<Medication> medications, double price, string message, long tender)
         {
             Id = id;
             PharmacyName = pharmacyName;
             Medications = medications;
             Price = price;
             Message = message;
+            TenderId = tender;
         }
-
-
     }
 }

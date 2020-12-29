@@ -23,7 +23,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [HttpPost]
         [Route("add")]
-        public IActionResult AddOffer(TenderOffer offer)
+        public IActionResult AddOffer([FromBody] TenderOffer offer)
         {
             TenderOffer tenderOffer = _keyService.AddOffer(offer);
             if (tenderOffer != null)
