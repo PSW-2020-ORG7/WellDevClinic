@@ -28,6 +28,15 @@ namespace PSW_Pharmacy_Adapter.Controllers
                 return Ok(tenders);
             return BadRequest();
         }
+        [HttpPost]
+        [Route("add")]
+        public IActionResult AddTender([FromBody] Tender tender)
+        {
+            Tender newTender = _tenderService.AddTender(tender);
+            if (newTender != null)
+                return Ok(newTender);
+            return BadRequest();
+        }
 
     }
 }

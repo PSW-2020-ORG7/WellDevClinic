@@ -15,6 +15,9 @@ namespace PSW_Pharmacy_Adapter.Service
             _tenderRepo = tenderRepository;
         }
 
+        public Tender AddTender(Tender tender)
+            => _tenderRepo.Save(tender);
+
         public List<Tender> GetAllTenders()
             => (List<Tender>)_tenderRepo.GetAll();
 

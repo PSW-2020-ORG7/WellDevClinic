@@ -10,6 +10,32 @@
         },
     });
 
+    $("#btnAddTender").click(function () {
+        $("#modalAddTender").slideDown("fast");
+    });
+
+    $(".close").click(function () {
+        $(".modalCustom").hide(200);
+    })
+
+    /*$.ajax({
+        method: "POST",
+        url: "../api/tender/add",
+        contentType: "application/json",
+        data: jsonApi,
+        success: function (data) {
+            if (data) {
+                $('#message').html('Succesfully added to database.');
+                $("#regAction").show();
+            }
+        },
+        error: function (e) {
+            $("#message").empty();
+            $('#message').html('Already exists.');
+            $("#regAction").show();
+        }
+    })*/
+
 
     /*$("#btnAddOffer").click(function () {
         let name = $("#txtPharmacy").val();
@@ -110,11 +136,8 @@ function viewAllTenders(tenders) {
 
 
 
-function makeOffer(tenderId) {
+function makeOffer(tender) {
     $("#modalTender").slideDown("fast");
-    $(".close").click(function () {
-        $(".modalCustom").hide(200);
-    })
 
         $("#btnAddOffer").click(function () {
         let name = $("#txtName").val();

@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/tenderOffers.js"></script>
+    <link rel="stylesheet" href="css/partnerPharmacies.css" />
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -22,6 +23,32 @@
         <a href="viewMedications.html">Medication stock</a>
         <a href="viewPrescriptions.html">All prescriptions</a>
         <a href="tenderOffers.html" class="active">Tender offers</a>
+    </div>
+    <div>
+        <button id="btnAddTender" type="submit" class="btn btn-info expand">📜 Add tender</button>
+    </div>
+
+    <div class="modalCustom" id="modalAddTender">
+        <div class="modalContent">
+            <span class="close">&times;</span>
+                <h4><center>Add new tender</center></h4>
+                <table>
+                    <tr><td>ID:&nbsp;</td><td><input type="number" id="txtId" min="1" max="6" /><td></tr>
+                    <tr><td>Start date:&nbsp;</td><td><input type="date" id="dateStart"><td></tr>
+                    <tr><td>End date:&nbsp;</td><td><input type="date" id="dateEnd"><td></tr>
+                    <tr></tr>
+                    <tr>
+                        <td colspan="2">
+                            <center>
+                                <button type="button" class="btn btn-secondary" id="btnAddTender"
+                                        data-toggle="modal" data-target="#exampleModalCenter1">
+                                    Add tender
+                                </button>
+                            </center>
+                        <td>
+                    </tr>
+                </table>
+        </div>
     </div>
     <!--
         <div class="login-page">
@@ -47,10 +74,10 @@
 
             <h5>
                 <!--
-        <table>
-        <tr><td>Tender ID:</td><input type="text" id="txtTenderId" disabled/></tr>
-    </table>
-    -->
+                    <table>
+                    <tr><td>Tender ID:</td><input type="text" id="txtTenderId" disabled/></tr>
+                </table>
+                -->
                 <br>
                 <table>
                     <tr><td colspan="2"><h4>Pharmacy infos:</h4></td></tr>

@@ -6,5 +6,6 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
     public interface ITenderService
     {
         public List<Tender> GetAllTenders();
+        public Tender AddTender(Tender tender);
     }
 }
