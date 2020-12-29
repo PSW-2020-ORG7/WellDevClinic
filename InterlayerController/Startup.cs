@@ -4,6 +4,8 @@ using bolnica.Repository;
 using bolnica.Service;
 using Controller;
 using EventSourcing;
+using EventSourcing.Repository;
+using EventSourcing.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -135,9 +137,9 @@ namespace InterlayerController
             services.AddDbContext<EventDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironmentEventLogs(),
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
-            
-            services.AddScoped<IEventLogEntryService, EventLogEntryService>();
-            services.AddScoped<IEventLogEntryRepository, EventLogEntryRepository>();
+
+            services.AddScoped<IDomainEventService, DomainEventService>();
+            services.AddScoped<IDomainEventRepository, DomainEventRepository>();
         }
 
 

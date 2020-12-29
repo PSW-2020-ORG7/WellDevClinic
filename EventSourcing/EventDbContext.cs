@@ -8,35 +8,37 @@ namespace EventSourcing
 {
     public class EventDbContext : DbContext
     {
-        public DbSet<EventLogEntry> Events { get; set; }
+        //public DbSet<EventLogEntry> Events { get; set; }
+        public DbSet<FeedbackSubmittedEvent> feedbackSubmittedEvents { get; set; }
+
 
         public EventDbContext(DbContextOptions<EventDbContext> options) : base(options) { }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EventLogEntry>(ConfigureIntegrationEventLogEntry);
+            //modelBuilder.Entity<EventLogEntry>(ConfigureIntegrationEventLogEntry);
 
-            modelBuilder.HasDefaultSchema("eventlogs");
+            //modelBuilder.HasDefaultSchema("eventlogs");
         }
 
-        private void ConfigureIntegrationEventLogEntry(EntityTypeBuilder<EventLogEntry> builder)
-        {
-            builder.ToTable("EventLogs");
+        //private void ConfigureIntegrationEventLogEntry(EntityTypeBuilder<EventLogEntry> builder)
+        //{
+        //    builder.ToTable("EventLogs");
 
-            builder.HasKey(e => e.EventId);
+        //    builder.HasKey(e => e.EventId);
 
-            builder.Property(e => e.EventId)
-                .IsRequired();
+        //    builder.Property(e => e.EventId)
+        //        .IsRequired();
 
-            builder.Property(e => e.Content)
-                .IsRequired();
+        //    builder.Property(e => e.Content)
+        //        .IsRequired();
 
-            builder.Property(e => e.CreationTime)
-                .IsRequired();
+        //    builder.Property(e => e.CreationTime)
+        //        .IsRequired();
 
-            builder.Property(e => e.EventTypeName)
-                .IsRequired();
-        }
+        //    builder.Property(e => e.EventTypeName)
+        //        .IsRequired();
+        //}
     }
 }

@@ -9,18 +9,15 @@ namespace EventSourcing
 {
     public abstract class DomainEvent
     {
-        [JsonConstructor]
         public DomainEvent()
         {
             Id = Guid.NewGuid();
             TimeStamp = DateTime.UtcNow;
         }
 
-        [JsonProperty]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
-        [JsonProperty]
-        public DateTime TimeStamp { get; private set; }
+        public DateTime TimeStamp { get; set; }
 
 
     }

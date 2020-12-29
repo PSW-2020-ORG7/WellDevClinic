@@ -30,6 +30,5 @@ namespace bolnica
             return new EventDbContext(builder.Options);
         }
 
-
     }
 }

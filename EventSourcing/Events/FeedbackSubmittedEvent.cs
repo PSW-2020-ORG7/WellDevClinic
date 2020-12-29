@@ -10,7 +10,7 @@ namespace EventSourcing
 
         public String Content { get; private set; }
 
-        public FeedbackSubmittedEvent(long FeedbackId, String Content)
+        public FeedbackSubmittedEvent(long FeedbackId, String Content) : base()
         {
             this.FeedbackId = FeedbackId;
             this.Content = Content;
