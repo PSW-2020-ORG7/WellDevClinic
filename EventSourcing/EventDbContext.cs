@@ -17,28 +17,7 @@ namespace EventSourcing
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<EventLogEntry>(ConfigureIntegrationEventLogEntry);
-
-            //modelBuilder.HasDefaultSchema("eventlogs");
         }
 
-        //private void ConfigureIntegrationEventLogEntry(EntityTypeBuilder<EventLogEntry> builder)
-        //{
-        //    builder.ToTable("EventLogs");
-
-        //    builder.HasKey(e => e.EventId);
-
-        //    builder.Property(e => e.EventId)
-        //        .IsRequired();
-
-        //    builder.Property(e => e.Content)
-        //        .IsRequired();
-
-        //    builder.Property(e => e.CreationTime)
-        //        .IsRequired();
-
-        //    builder.Property(e => e.EventTypeName)
-        //        .IsRequired();
-        //}
     }
 }

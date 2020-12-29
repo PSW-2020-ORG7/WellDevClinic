@@ -187,11 +187,11 @@ namespace InterlayerController
 
         private string CreateConnectionStringFromEnvironmentEventLogs()
         {
-            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
-            string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
-            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "eventlogs";
-            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
-            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST_EVENTS") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT_EVENTS") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA_EVENTS") ?? "eventlogs";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME_EVENTS") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD_EVENTS") ?? "root";
             return $"server={server};port={port};database={database};user={user};password={password};";
         }
     }

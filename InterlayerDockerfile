@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["InterlayerController/InterlayerController.csproj", "InterlayerController/"]
 COPY ["WellDevCore/WellDevCore.csproj", "WellDevCore/"]
+COPY ["EventSourcing/EventSourcing.csproj", "EventSourcing/"]
 RUN dotnet restore "InterlayerController/InterlayerController.csproj"
 COPY . .
 WORKDIR "/src/InterlayerController"
