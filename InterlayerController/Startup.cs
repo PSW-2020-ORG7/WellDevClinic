@@ -144,7 +144,7 @@ namespace InterlayerController
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db, EventDbContext event_db)
         {
             //System.Threading.Thread.Sleep(25000);
             if (env.IsDevelopment())
@@ -153,6 +153,7 @@ namespace InterlayerController
             }
 
             db.Database.EnsureCreated();
+            event_db.Database.EnsureCreated();
 
             app.UseRouting();
 
