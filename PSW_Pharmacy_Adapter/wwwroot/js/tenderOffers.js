@@ -14,7 +14,7 @@
         let name = $("#txtPharmacy").val();
         let price = $("#txtPrice").val();
         let id = $("#txtId").val();
-
+        let message = $("#txtMessage").val();
 
         let valid = true;
 
@@ -40,8 +40,8 @@
                 PharmacyName : name,
                 Price : Number(price),
                 Id : Number(id),
-                Medications : [],
-                Message : ""
+                Medications: [],
+                Message: message
             });
         }
 
@@ -54,11 +54,14 @@
             success: function (data) {
                 if (data) {
                     $('#message').html('Succesfully added to database.');
+                    $("#regAction").show();
                 }
+                //alert("Uspeo sam");
+                //console.log(data);
             },
             error: function (e) {
                 $("#message").empty();
-                $('#message').html('Error.');
+                $('#message').html('Already exists.');
                 $("#regAction").show();
             }
         })

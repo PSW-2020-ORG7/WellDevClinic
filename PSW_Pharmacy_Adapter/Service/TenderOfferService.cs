@@ -14,8 +14,6 @@ namespace PSW_Pharmacy_Adapter.Service
             _tenderRepo = tenderOfferRepository;
         }
         public TenderOffer AddOffer(TenderOffer offer)
-        {
-            throw new NotImplementedException();
-        }
+            => _tenderRepo.Save(offer);
     }
 }
