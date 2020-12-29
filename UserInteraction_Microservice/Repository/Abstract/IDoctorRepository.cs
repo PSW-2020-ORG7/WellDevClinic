@@ -6,7 +6,7 @@ using UserInteraction_Microservice.Domain.Model;
 
 namespace UserInteraction_Microservice.Repository.Abstract
 {
-    public interface IDoctorRepository : ICRUD<Doctor, long>
+    public interface IDoctorRepository : ICRUD<Doctor, long>, IGetEager<Doctor, long>
     {
         public Doctor GetUserByCredentials(String username, String password);
     }

@@ -62,16 +62,6 @@ namespace UserInteraction_Microservice.Repository
              ).ToList();
         }
 
-        public IEnumerable<Feedback> GetAllEager()
-        {
-            return _myDbContext.Feedback.ToList();
-        }
-
-        public Feedback GetEager(long id)
-        {
-            return _myDbContext.Feedback.FirstOrDefault(f => f.Id == id);
-        }
-
         public Feedback Save(Feedback entity)
         {
             _myDbContext.Feedback.Add(entity);

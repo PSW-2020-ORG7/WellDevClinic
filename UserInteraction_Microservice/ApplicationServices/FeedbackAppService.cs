@@ -36,16 +36,6 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _feedbackRepository.GetAll();
         }
 
-        public IEnumerable<Feedback> GetAllEager()
-        {
-            return _feedbackRepository.GetAllEager();
-        }
-
-        public Feedback GetEager(long id)
-        {
-            return _feedbackRepository.GetEager(id);
-        }
-
         public Feedback Save(Feedback entity)
         {
             return _feedbackRepository.Save(entity);
