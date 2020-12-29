@@ -8,6 +8,7 @@ namespace UserInteraction_Microservice.ApplicationServices
 {
     public class PatientAppService : IPatientAppService
     {
+        
         public void Delete(Patient entity)
         {
             throw new NotImplementedException();

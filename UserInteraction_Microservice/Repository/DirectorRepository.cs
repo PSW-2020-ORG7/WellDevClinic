@@ -31,15 +31,15 @@ namespace UserInteraction_Microservice.Repository
 
         public Director Get(long id)
         {
-            var director = _myDbContext.Director.Select(d =>
+            return _myDbContext.Director.Select(d =>
                 new Director()
                 {
                     Id = d.Id,
                     User = new User(d.Id, d.User.Person, null, null)
                 }
 
-            ).Where(d => d.Id == id); 
-            return director.First();
+            ).Where(d => d.Id == id).First();
+            
         }
 
         public IEnumerable<Director> GetAll()

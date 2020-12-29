@@ -3,44 +3,52 @@ using System.Collections.Generic;
 using System.Text;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;
+using UserInteraction_Microservice.Repository.Abstract;
 
 namespace UserInteraction_Microservice.ApplicationServices
 {
     public class SecretaryAppService : ISecretaryAppService
     {
+        private readonly ISecretaryRepository _secretaryRepository;
+
+        public SecretaryAppService(ISecretaryRepository secretaryRepository)
+        {
+            _secretaryRepository = secretaryRepository;
+        }
+
         public void Delete(Secretary entity)
         {
-            throw new NotImplementedException();
+            _secretaryRepository.Delete(entity);
         }
 
         public void Edit(Secretary entity)
         {
-            throw new NotImplementedException();
+            _secretaryRepository.Edit(entity);
         }
 
         public Secretary Get(long id)
         {
-            throw new NotImplementedException();
+            return _secretaryRepository.Get(id);
         }
 
         public IEnumerable<Secretary> GetAll()
         {
-            throw new NotImplementedException();
+            return _secretaryRepository.GetAll();    
         }
 
         public IEnumerable<Secretary> GetAllEager()
         {
-            throw new NotImplementedException();
+            return _secretaryRepository.GetAllEager();
         }
 
         public Secretary GetEager(long id)
         {
-            throw new NotImplementedException();
+            return _secretaryRepository.GetEager(id);
         }
 
         public Secretary Save(Secretary entity)
         {
-            throw new NotImplementedException();
+            return _secretaryRepository.Save(entity);
         }
     }
 }

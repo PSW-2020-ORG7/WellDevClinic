@@ -3,46 +3,52 @@ using System.Collections.Generic;
 using System.Text;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;
+using UserInteraction_Microservice.Repository.Abstract;
 
 namespace UserInteraction_Microservice.ApplicationServices
 {
     public class DoctorAppService : IDoctorAppService
     {
-        
+        private readonly IDoctorRepository _doctorRepository;
+
+        public DoctorAppService(IDoctorRepository doctorRepository)
+        {
+            _doctorRepository = doctorRepository;
+        }
 
         public void Delete(Doctor entity)
         {
-            throw new NotImplementedException();
+            _doctorRepository.Delete(entity);
         }
 
         public void Edit(Doctor entity)
         {
-            throw new NotImplementedException();
+            _doctorRepository.Edit(entity);
         }
 
         public Doctor Get(long id)
         {
-            throw new NotImplementedException();
+            return _doctorRepository.Get(id);
         }
 
         public IEnumerable<Doctor> GetAll()
         {
-            throw new NotImplementedException();
+            return _doctorRepository.GetAll();
         }
 
         public IEnumerable<Doctor> GetAllEager()
         {
-            throw new NotImplementedException();
+            return _doctorRepository.GetAllEager();
         }
 
         public Doctor GetEager(long id)
         {
-            throw new NotImplementedException();
+            return _doctorRepository.GetEager(id);
         }
 
         public Doctor Save(Doctor entity)
         {
-            throw new NotImplementedException();
+            return _doctorRepository.Save(entity);
         }
     }
 }
