@@ -4,10 +4,9 @@ using System.Text;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;
 
-namespace UserInteraction_Microservice.ApplicationServices.Abstract
+namespace UserInteraction_Microservice.Repository.Abstract
 {
-    public interface IDirectorAppService : ICRUD<Director, long>
+    public interface IArticleRepository : ICRUD<Article,long>
     {
-        public Director LogIn(String username, String password);
     }
 }

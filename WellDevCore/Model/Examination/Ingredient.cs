@@ -9,7 +9,7 @@ namespace Model.PatientSecretary
    {
       public string Name { get; set; }
       public int Quantity { get; set; }
-        
+      public long Id { get; set; }
 
         public Ingredient() { }
         public Ingredient(long id, string name, int quantity)
@@ -30,7 +30,7 @@ namespace Model.PatientSecretary
             Id = id;
         }
 
-        public long Id { get; set; }
+
 
         public long GetId() => Id;
 

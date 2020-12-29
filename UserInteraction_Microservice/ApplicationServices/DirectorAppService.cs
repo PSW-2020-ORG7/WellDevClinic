@@ -37,16 +37,6 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _directorRepository.GetAll().ToList();
         }
 
-        public IEnumerable<Director> GetAllEager()
-        {
-            return _directorRepository.GetAllEager();
-        }
-
-        public Director GetEager(long id)
-        {
-            return _directorRepository.GetEager(id);
-        }
-
         public Director LogIn(string username, string password)
         {
             return _directorRepository.GetUserByCredentials(username, password);
