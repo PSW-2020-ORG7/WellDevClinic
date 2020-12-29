@@ -6,7 +6,7 @@ door,door1,9,99,10,155,0,Pediatrics,
 door,door2,99,9,296,10,0,Pediatrics,
 door,door3,9,99,636,155,0,Pediatrics,
 waitingRoom,waitingRoom1,89,45,50,40,0,Pediatrics,
-room,baby_room,97,76,177,10,0,Pediatrics,901,WORKING_TIME:24h,equipments-801:masks:2,drugs-112:Brufen:1
+room,baby_room,97,76,177,10,0,Pediatrics,902,WORKING_TIME:24h,equipments-801:masks:2,drugs-112:Brufen:1
 restroom,WcF,54,46,450,10,0,Pediatrics,
 restroom,WcM,54,46,502,10,0,Pediatrics,
 stairs,stairs,89,83,556,10,0,Pediatrics,
@@ -39,7 +39,7 @@ door,door5,26,4,449,52,1,Pediatrics,
 door,door6,26,4,507,52,1,Pediatrics,
 door,door7,4,18,588,118,1,Pediatrics,
 room,neonatal,142,93,10,173,1,Pediatrics,901,WORKING_TIME:24h,equipments-801:masks:2:802:xray:3,drugs-112:Brufen:1:512:Aspirin:1
-room,neurology,142,94,10,266,1,Pediatrics,901,WORKING_TIME:24h,equipments-801:masks:2:802:xray:3,drugs-112:Brufen:1:512:Aspirin:1
+room,neurology,142,94,10,266,1,Pediatrics,903,WORKING_TIME:24h,equipments-802:xray:3,drugs-112:Brufen:1:512:Aspirin:1
 room,rehabilitation,142,100,10,360,1,Pediatrics,901,WORKING_TIME:24h,equipments-801:masks:2,drugs-112:Brufen:1
 door,door8,4,43,148,201,1,Pediatrics,
 door,door9,4,43,148,295,1,Pediatrics,
