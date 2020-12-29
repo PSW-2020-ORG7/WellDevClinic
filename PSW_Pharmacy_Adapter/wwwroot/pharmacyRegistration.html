@@ -11,20 +11,30 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/index.css" />
 
 </head>
 <body>
+    <div class="topnav">
+        <label>Clinic Hello!</label>
+        <a href="index.html">Home</a>
+        <a href="partnerPharmacies.html" class="active">Partner Pharmacies</a>
+        <a href="actionsAndBenefits.html">Actions & Benefits</a>
+        <a href="viewMedications.html">Medication stock</a>
+        <a href="viewPrescriptions.html">All prescriptions</a>
+    </div>
     <div class="login-page">
         <div class="form">
             <form class="register-form">
-                <label id="invalidName" class="valid">Required field!</label>
-                <input type="text" placeholder="Name" id="txtName" />
-                <label id="invalidApi" class="valid">Required field!</label>
-                <input type="text" placeholder="Api key" id="txtApi">
-                <label id="invalidUrl" class="valid">Required field!</label>
-                <input type="text" placeholder="Url" id="txtUrl">
+                <h5>Pharmacy registration</h5>
+                <input type="text" class="input-text" placeholder="Enter pharmacy name" id="txtName" />
+                <label id="invalidName" class="valid">Required field!</label><br/>
+                <input type="text" placeholder="Enter api key" id="txtApi">
+                <label id="invalidApi" class="valid">Required field!</label><br/>
+                <input type="text" placeholder="Enter pharmacy url" id="txtUrl">
+                <label id="invalidUrl" class="valid">Required field!</label><br/>
                 <button id="btnAddPharmacy" type="button" data-toggle="modal" data-target="#exampleModalCenter1">Add pharmacy</button>
-                <a href="http://localhost:4200" target="_blank">Visit partner pharmacy site</a>
             </form>
         </div>
     </div>

@@ -137,8 +137,7 @@ div.card {
         color: white;
     }
 
-input[type=text] {
-    width: 40%;
+input[type=text], input[type=number] {
     border-radius: 4px;
     padding: 4px 10px;
     margin: 8px 0;
@@ -147,15 +146,17 @@ input[type=text] {
     box-sizing: border-box;
 }
 
+
 /* Custom table */
 .customTable table {
     width: 100%;
-    margin-top: 30px;
+    margin-bottom: 5px;
 }
 
 .customTable th {
     background: #333;
     color: #fff;
+    height: 30px;
 }
 
 .customTable td {
@@ -164,5 +165,6 @@ input[type=text] {
 
 .customTable tr {
     background: whitesmoke;
+    border: none;
 }
 
