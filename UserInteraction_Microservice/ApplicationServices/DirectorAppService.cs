@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;
@@ -10,22 +11,20 @@ namespace UserInteraction_Microservice.ApplicationServices
     public class DirectorAppService : IDirectorAppService
     {
         private readonly IDirectorRepository _directorRepository;
-        private readonly IUserAppService _userAppService;
 
-        public DirectorAppService(IDirectorRepository directorRepository, IUserAppService userAppService)
+        public DirectorAppService(IDirectorRepository directorRepository)
         {
             _directorRepository = directorRepository;
-            _userAppService = userAppService;
         }
 
         public void Delete(Director entity)
         {
-            throw new NotImplementedException();
+            _directorRepository.Delete(entity);
         }
 
         public void Edit(Director entity)
         {
-            throw new NotImplementedException();
+            _directorRepository.Edit(entity);
         }
 
         public Director Get(long id)
@@ -35,22 +34,21 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public IEnumerable<Director> GetAll()
         {
-            throw new NotImplementedException();
+            return _directorRepository.GetAll().ToList();
         }
 
         public IEnumerable<Director> GetAllEager()
         {
-            throw new NotImplementedException();
+            return _directorRepository.GetAllEager();
         }
 
         public Director GetEager(long id)
         {
-            throw new NotImplementedException();
+            return _directorRepository.GetEager(id);
         }
 
         public Director Save(Director entity)
         {
-          //  _userAppService.Save(entity.User);
             return _directorRepository.Save(entity);
         }
     }

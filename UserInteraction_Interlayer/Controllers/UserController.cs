@@ -37,8 +37,12 @@ namespace UserInteraction_Interlayer.Controllers
 
         public Director GetDirector(long id)
         {
-           return  _directorAppService.Get(id);
-
+           // List<Director> directors = _directorAppService.GetAll().ToList();
+      
+           Director director =  _directorAppService.Get(id);
+            director.User.Person.FirstName = "Mika";
+            _directorAppService.Edit(director);
+            return director;
         }
     }
 }

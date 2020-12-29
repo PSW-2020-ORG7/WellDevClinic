@@ -31,10 +31,13 @@ namespace UserInteraction_Microservice.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-          /*  modelBuilder.Entity<Doctor>().Property(p => p.User.Id).HasColumnName("UserId");
-            modelBuilder.Entity<Patient>().Property(p => p.User.Id).HasColumnName("UserId");
-            modelBuilder.Entity<Director>().Property(p => p.User.Id).HasColumnName("UserId");
-            modelBuilder.Entity<Secretary>().Property(p => p.User.Id).HasColumnName("UserId");*/
+            /*  modelBuilder.Entity<Doctor>().Property(p => p.User.Id).HasColumnName("UserId");
+              modelBuilder.Entity<Patient>().Property(p => p.User.Id).HasColumnName("UserId");
+              modelBuilder.Entity<Director>().Property(p => p.User.Id).HasColumnName("UserId");
+              modelBuilder.Entity<Secretary>().Property(p => p.User.Id).HasColumnName("UserId");*/
+            modelBuilder.Entity<UserLogIn>(entity => {
+                entity.HasIndex(e => e.Username).IsUnique();
+            });
 
         }
     }

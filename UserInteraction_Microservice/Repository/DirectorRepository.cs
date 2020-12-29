@@ -19,41 +19,49 @@ namespace UserInteraction_Microservice.Repository
         }
         public void Delete(Director entity)
         {
-            throw new NotImplementedException();
+            _myDbContext.Remove(entity);
+            _myDbContext.SaveChanges();
         }
 
         public void Edit(Director entity)
         {
-            throw new NotImplementedException();
+            _myDbContext.Director.Update(entity);
+            _myDbContext.SaveChanges();
         }
 
         public Director Get(long id)
         {
-            // Director director = _myDbContext.Director.FirstOrDefault(director => director.Id == id);
             var director = _myDbContext.Director.Select(d =>
                 new Director()
                 {
                     Id = d.Id,
-                    User = new User(d.User.Person, null, null)
+                    User = new User(d.Id, d.User.Person, null, null)
                 }
 
-            ); ;
+            ).Where(d => d.Id == id); 
             return director.First();
         }
 
         public IEnumerable<Director> GetAll()
         {
-            throw new NotImplementedException();
+            return _myDbContext.Director.Select(d =>
+                new Director()
+                {
+                    Id = d.Id,
+                    User = new User(d.Id,d.User.Person, null, null)
+                }
+            ).ToList();
         }
 
         public IEnumerable<Director> GetAllEager()
         {
-            throw new NotImplementedException();
+            return _myDbContext.Director.ToList();
         }
 
         public Director GetEager(long id)
         {
-            throw new NotImplementedException();
+            return  _myDbContext.Director.FirstOrDefault(director => director.Id == id);
+             
         }
 
         public Director Save(Director entity)

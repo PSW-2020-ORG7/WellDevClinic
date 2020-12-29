@@ -12,6 +12,14 @@ namespace UserInteraction_Microservice.Domain.Model
         public virtual UserDetails UserDetails { get; set; }
         public virtual UserLogIn UserLogIn { get; set; }
 
+        public User(long id, Person person, UserDetails userDetails, UserLogIn userLogIn)
+        {
+            Id = id;
+            Person = person;
+            UserDetails = userDetails;
+            UserLogIn = userLogIn;
+        }
+
         public User(Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
             Person = person;
