@@ -9,8 +9,8 @@ namespace PSW_Pharmacy_Adapter.Model.Pharmacy
         [Key]
         public long? Id { get; set; }
         public virtual List<Medication> Medications { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public Tender() { }
 
@@ -18,8 +18,8 @@ namespace PSW_Pharmacy_Adapter.Model.Pharmacy
         {
             Id = id;
             Medications = medications;
-            this.startDate = startDate;
-            this.endDate = endDate;
+            StartDate = startDate;
+            EndDate = endDate;
         }
     }
 }

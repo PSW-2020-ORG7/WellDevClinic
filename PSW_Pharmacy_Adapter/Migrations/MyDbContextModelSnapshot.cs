@@ -46,56 +46,55 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         new
                         {
                             Id = 1L,
-
-                            EndDate = new DateTime(2021, 1, 12, 16, 54, 23, 539, DateTimeKind.Local).AddTicks(8159),
+                            EndDate = new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(4239),
                             MessageAboutAction = "Andol on sale! 50% off!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 18, 16, 54, 23, 535, DateTimeKind.Local).AddTicks(2299),
+                            StartDate = new DateTime(2020, 12, 18, 22, 1, 58, 53, DateTimeKind.Local).AddTicks(1455),
                             Status = 1
                         },
                         new
                         {
                             Id = 2L,
-                            EndDate = new DateTime(2021, 1, 27, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5124),
+                            EndDate = new DateTime(2021, 1, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9745),
                             MessageAboutAction = "Cheap bromazepam on huge quantities!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2021, 1, 2, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5087),
+                            StartDate = new DateTime(2021, 1, 2, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9707),
                             Status = 0
                         },
                         new
                         {
                             Id = 3L,
-                            EndDate = new DateTime(2021, 1, 4, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5224),
+                            EndDate = new DateTime(2021, 1, 4, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9840),
                             MessageAboutAction = "Aspirin C for free!!",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 29, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5219),
+                            StartDate = new DateTime(2020, 12, 29, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9836),
                             Status = 0
                         },
                         new
                         {
                             Id = 4L,
-                            EndDate = new DateTime(2021, 1, 19, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5232),
+                            EndDate = new DateTime(2021, 1, 19, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9849),
                             MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 30, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5229),
+                            StartDate = new DateTime(2020, 12, 30, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9845),
                             Status = 2
                         },
                         new
                         {
                             Id = 5L,
-                            EndDate = new DateTime(2021, 1, 12, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5240),
+                            EndDate = new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9856),
                             MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
                             PharmacyName = "PH2",
-                            StartDate = new DateTime(2020, 12, 28, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5236),
+                            StartDate = new DateTime(2020, 12, 28, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9852),
                             Status = 2
                         },
                         new
                         {
                             Id = 6L,
-                            EndDate = new DateTime(2020, 12, 27, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5247),
+                            EndDate = new DateTime(2020, 12, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9863),
                             MessageAboutAction = "Cheap sedatives!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 18, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5244),
+                            StartDate = new DateTime(2020, 12, 18, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9859),
                             Status = 1
                         });
                 });
@@ -205,10 +204,10 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("endDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("startDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");

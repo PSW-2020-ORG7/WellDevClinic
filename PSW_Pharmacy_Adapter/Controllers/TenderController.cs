@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PSW_Pharmacy_Adapter.Model.Pharmacy;
+using PSW_Pharmacy_Adapter.Service.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -11,5 +13,21 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [ApiController]
     public class TenderController : ControllerBase
     {
+        private readonly ITenderService _tenderService;
+
+        public TenderController(ITenderService tenderSevice)
+        {
+            _tenderService = tenderSevice;
+        }
+
+        [HttpGet]
+        public IActionResult GetAllTenders()
+        {
+            List<Tender> tenders = _tenderService.GetAllTenders();
+            if (tenders != null)
+                return Ok(tenders);
+            return BadRequest();
+        }
+
     }
 }

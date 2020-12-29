@@ -9,7 +9,7 @@ using PSW_Pharmacy_Adapter.Model;
 namespace PSW_Pharmacy_Adapter.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201228145158_Tender")]
+    [Migration("20201228210159_Tender")]
     partial class Tender
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,55 +48,55 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         new
                         {
                             Id = 1L,
-                            EndDate = new DateTime(2021, 1, 12, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(415),
+                            EndDate = new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(4239),
                             MessageAboutAction = "Andol on sale! 50% off!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 18, 15, 51, 57, 579, DateTimeKind.Local).AddTicks(1863),
+                            StartDate = new DateTime(2020, 12, 18, 22, 1, 58, 53, DateTimeKind.Local).AddTicks(1455),
                             Status = 1
                         },
                         new
                         {
                             Id = 2L,
-                            EndDate = new DateTime(2021, 1, 27, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5695),
+                            EndDate = new DateTime(2021, 1, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9745),
                             MessageAboutAction = "Cheap bromazepam on huge quantities!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2021, 1, 2, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5659),
+                            StartDate = new DateTime(2021, 1, 2, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9707),
                             Status = 0
                         },
                         new
                         {
                             Id = 3L,
-                            EndDate = new DateTime(2021, 1, 4, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5805),
+                            EndDate = new DateTime(2021, 1, 4, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9840),
                             MessageAboutAction = "Aspirin C for free!!",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 29, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5801),
+                            StartDate = new DateTime(2020, 12, 29, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9836),
                             Status = 0
                         },
                         new
                         {
                             Id = 4L,
-                            EndDate = new DateTime(2021, 1, 19, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5813),
+                            EndDate = new DateTime(2021, 1, 19, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9849),
                             MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2020, 12, 30, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5810),
+                            StartDate = new DateTime(2020, 12, 30, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9845),
                             Status = 2
                         },
                         new
                         {
                             Id = 5L,
-                            EndDate = new DateTime(2021, 1, 12, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5820),
+                            EndDate = new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9856),
                             MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
                             PharmacyName = "PH2",
-                            StartDate = new DateTime(2020, 12, 28, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5817),
+                            StartDate = new DateTime(2020, 12, 28, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9852),
                             Status = 2
                         },
                         new
                         {
                             Id = 6L,
-                            EndDate = new DateTime(2020, 12, 27, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5827),
+                            EndDate = new DateTime(2020, 12, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9863),
                             MessageAboutAction = "Cheap sedatives!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 18, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5824),
+                            StartDate = new DateTime(2020, 12, 18, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9859),
                             Status = 1
                         });
                 });
@@ -145,16 +145,20 @@ namespace PSW_Pharmacy_Adapter.Migrations
 
             modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("MedicationId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
                     b.HasIndex("MedicationId");
 
@@ -202,10 +206,10 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("endDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("startDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");

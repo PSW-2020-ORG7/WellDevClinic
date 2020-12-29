@@ -41,10 +41,12 @@ namespace PSW_Pharmacy_Adapter
             services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddScoped<IQrCodeService, QrCodeService>();
             services.AddScoped<ITenderOfferService, TenderOfferService>();
+            services.AddScoped<ITenderService, TenderService>();
 
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
             services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
             services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddHttpClient();
         }
 

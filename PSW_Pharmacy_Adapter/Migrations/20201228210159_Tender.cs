@@ -19,8 +19,8 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    startDate = table.Column<DateTime>(nullable: false),
-                    endDate = table.Column<DateTime>(nullable: false)
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,42 +32,42 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 12, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(415), new DateTime(2020, 12, 18, 15, 51, 57, 579, DateTimeKind.Local).AddTicks(1863) });
+                values: new object[] { new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(4239), new DateTime(2020, 12, 18, 22, 1, 58, 53, DateTimeKind.Local).AddTicks(1455) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 2L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 27, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5695), new DateTime(2021, 1, 2, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5659) });
+                values: new object[] { new DateTime(2021, 1, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9745), new DateTime(2021, 1, 2, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9707) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 3L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 4, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5805), new DateTime(2020, 12, 29, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5801) });
+                values: new object[] { new DateTime(2021, 1, 4, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9840), new DateTime(2020, 12, 29, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9836) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 4L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 19, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5813), new DateTime(2020, 12, 30, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5810) });
+                values: new object[] { new DateTime(2021, 1, 19, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9849), new DateTime(2020, 12, 30, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9845) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 5L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 12, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5820), new DateTime(2020, 12, 28, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5817) });
+                values: new object[] { new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9856), new DateTime(2020, 12, 28, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9852) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 6L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2020, 12, 27, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5827), new DateTime(2020, 12, 18, 15, 51, 57, 582, DateTimeKind.Local).AddTicks(5824) });
+                values: new object[] { new DateTime(2020, 12, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9863), new DateTime(2020, 12, 18, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9859) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medication_TenderId",
@@ -105,42 +105,42 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 10, 0, 44, 17, 339, DateTimeKind.Local).AddTicks(5074), new DateTime(2020, 12, 16, 0, 44, 17, 334, DateTimeKind.Local).AddTicks(7457) });
+                values: new object[] { new DateTime(2021, 1, 12, 16, 54, 23, 539, DateTimeKind.Local).AddTicks(8159), new DateTime(2020, 12, 18, 16, 54, 23, 535, DateTimeKind.Local).AddTicks(2299) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 2L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 25, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3070), new DateTime(2020, 12, 31, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3038) });
+                values: new object[] { new DateTime(2021, 1, 27, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5124), new DateTime(2021, 1, 2, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5087) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 3L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 2, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3173), new DateTime(2020, 12, 27, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3168) });
+                values: new object[] { new DateTime(2021, 1, 4, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5224), new DateTime(2020, 12, 29, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5219) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 4L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 17, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3181), new DateTime(2020, 12, 28, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3178) });
+                values: new object[] { new DateTime(2021, 1, 19, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5232), new DateTime(2020, 12, 30, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5229) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 5L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2021, 1, 10, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3190), new DateTime(2020, 12, 26, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3186) });
+                values: new object[] { new DateTime(2021, 1, 12, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5240), new DateTime(2020, 12, 28, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5236) });
 
             migrationBuilder.UpdateData(
                 table: "ActionsAndBenefits",
                 keyColumn: "Id",
                 keyValue: 6L,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2020, 12, 25, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3198), new DateTime(2020, 12, 16, 0, 44, 17, 340, DateTimeKind.Local).AddTicks(3194) });
+                values: new object[] { new DateTime(2020, 12, 27, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5247), new DateTime(2020, 12, 18, 16, 54, 23, 540, DateTimeKind.Local).AddTicks(5244) });
         }
     }
 }
