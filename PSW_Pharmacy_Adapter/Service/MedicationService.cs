@@ -74,7 +74,7 @@ namespace PSW_Pharmacy_Adapter.Service
              return CheckIngredientsMatching(GetAllHospitalMedications().Result, phMeds);
         }
 
-        private List<Medication> CheckIngredientsMatching(List<Medication> hospMeds, List<Medication> phMeds)
+        public List<Medication> CheckIngredientsMatching(List<Medication> hospMeds, List<Medication> phMeds)
         {
             List<Medication> changedMeds = new List<Medication>();
             foreach (Medication phMed in phMeds)
