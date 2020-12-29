@@ -47,6 +47,11 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _directorRepository.GetEager(id);
         }
 
+        public Director LogIn(string username, string password)
+        {
+            return _directorRepository.GetUserByCredentials(username, password);
+        }
+
         public Director Save(Director entity)
         {
             return _directorRepository.Save(entity);

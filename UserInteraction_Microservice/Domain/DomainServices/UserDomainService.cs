@@ -13,34 +13,28 @@ namespace UserInteraction_Microservice.Domain.DomainServices
         private readonly ISecretaryAppService _secretaryAppService;
         private readonly IPatientAppService _patientAppService;
 
-        public UserDomainService(IDirectorAppService directorAppService)
+        public UserDomainService(IDirectorAppService directorAppService, IDoctorAppService doctorAppService, ISecretaryAppService secretaryAppService, IPatientAppService patientAppService)
         {
             _directorAppService = directorAppService;
+            _doctorAppService = doctorAppService;
+            _secretaryAppService = secretaryAppService;
+            _patientAppService = patientAppService;
         }
 
-        public void Delete(User entity)
+        public User LogIn(string username, string password)
         {
-            throw new NotImplementedException();
-        }
+            User user;
+            if ((user = _doctorAppService.LogIn(username, password)) != null)
+                return user;
+            else if ((user = _directorAppService.LogIn(username, password)) != null)
+                return user;
+            else if ((user = _secretaryAppService.LogIn(username, password)) != null)
+                return user;
+            else if ((user = _patientAppService.LogIn(username, password)) != null)
+                return user;
 
-        public void Edit(User entity)
-        {
-            throw new NotImplementedException();
-        }
+            return user;
 
-        public User Get(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<long> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Save(User entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

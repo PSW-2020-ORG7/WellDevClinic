@@ -38,7 +38,6 @@ namespace UserInteraction_Interlayer
             services.AddScoped<IDirectorRepository, DirectorRepository>();
             services.AddScoped<IDirectorAppService, DirectorAppService>();
             services.AddScoped<IUserDomainService, UserDomainService>();
-            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)

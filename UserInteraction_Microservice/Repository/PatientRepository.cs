@@ -35,7 +35,7 @@ namespace UserInteraction_Microservice.Repository
                 new Patient()
                 {
                     Id = p.Id,
-                    User = new User(p.Id, p.User.Person, null,null),
+                    Person = p.Person,
                     Blocked = p.Blocked,
                     Guest = p.Guest
                 }
@@ -48,7 +48,7 @@ namespace UserInteraction_Microservice.Repository
                new Patient()
                {
                    Id = p.Id,
-                   User = new User(p.Id, p.User.Person, null, null),
+                   Person = p.Person,
                    Blocked = p.Blocked,
                    Guest = p.Guest
                }
@@ -63,6 +63,19 @@ namespace UserInteraction_Microservice.Repository
         public Patient GetEager(long id)
         {
             return _myDbContext.Patient.FirstOrDefault(p => p.Id == id);
+        }
+
+        public Patient GetUserByCredentials(string username, string password)
+        {
+            return _myDbContext.Patient.Select(p =>
+                new Patient()
+                {
+                    Id = p.Id,
+                    Person = p.Person,
+                    Blocked = p.Blocked,
+                    Guest = p.Guest
+                }
+            ).Where(p => p.UserLogIn.Username.Equals(username) && p.UserLogIn.Password.Equals(password)).First();
         }
 
         public Patient Save(Patient entity)

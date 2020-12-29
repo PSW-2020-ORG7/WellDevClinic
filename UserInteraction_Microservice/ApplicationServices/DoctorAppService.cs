@@ -46,6 +46,11 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _doctorRepository.GetEager(id);
         }
 
+        public Doctor LogIn(string username, string password)
+        {
+            return _doctorRepository.GetUserByCredentials(username, password);
+        }
+
         public Doctor Save(Doctor entity)
         {
             return _doctorRepository.Save(entity);

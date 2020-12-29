@@ -35,7 +35,7 @@ namespace UserInteraction_Microservice.Repository
                 new Secretary()
                 {
                     Id = s.Id,
-                    User = new User(s.Id, s.User.Person, null, null)
+                    Person = s.Person
                 }
             ).Where(s => s.Id == id).First();
         }
@@ -46,7 +46,7 @@ namespace UserInteraction_Microservice.Repository
                 new Secretary()
                 {
                     Id = s.Id,
-                    User = new User(s.Id, s.User.Person, null, null)
+                    Person = s.Person
                 }
             ).ToList();
         }
@@ -59,6 +59,17 @@ namespace UserInteraction_Microservice.Repository
         public Secretary GetEager(long id)
         {
             return _myDbContext.Secretary.FirstOrDefault(s => s.Id == id);
+        }
+
+        public Secretary GetUserByCredentials(string username, string password)
+        {
+            return _myDbContext.Secretary.Select(s =>
+                 new Secretary()
+                 {
+                     Id = s.Id,
+                     Person = s.Person
+                 }
+            ).Where(s => s.UserLogIn.Username.Equals(username) && s.UserLogIn.Password.Equals(password)).First();
         }
 
         public Secretary Save(Secretary entity)

@@ -6,8 +6,7 @@ using UserInteraction_Microservice.Domain.Model;
 
 namespace UserInteraction_Microservice.Repository.Abstract
 {
-    public interface ISecretaryRepository : ICRUD<Secretary, long>
+    public interface IFeedbackRepository : ICRUD<Feedback,long>
     {
-        public Secretary GetUserByCredentials(String username, String password);
     }
 }

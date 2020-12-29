@@ -8,5 +8,6 @@ namespace UserInteraction_Microservice.Repository.Abstract
 {
     public interface IDirectorRepository : ICRUD<Director, long>
     {
+        public Director GetUserByCredentials(String username, String password);
     }
 }

@@ -5,20 +5,23 @@ using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
-    public class Secretary : IIdentifiable<long>
+    public class Secretary : User, IIdentifiable<long>
     {
         public long Id { get; set; }
 
-        public virtual User User { get; set; }
-
-        public Secretary(long id, User user)
+        public Secretary(long id, Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
             Id = id;
-            User = user;
+            UserType = UserType.Secretary;
+            Person = person;
+            UserDetails = userDetails;
+            UserLogIn = userLogIn;
         }
 
         public Secretary()
         {
+            UserType = UserType.Secretary;
+
         }
 
         public long GetId()

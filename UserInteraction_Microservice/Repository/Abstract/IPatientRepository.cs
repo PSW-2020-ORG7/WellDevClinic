@@ -8,5 +8,6 @@ namespace UserInteraction_Microservice.Repository.Abstract
 {
     public interface IPatientRepository : ICRUD<Patient, long>
     {
+        public Patient GetUserByCredentials(String username, String password);
     }
 }

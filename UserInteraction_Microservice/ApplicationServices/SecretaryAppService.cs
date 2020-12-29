@@ -46,6 +46,11 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _secretaryRepository.GetEager(id);
         }
 
+        public Secretary LogIn(string username, string password)
+        {
+            return _secretaryRepository.GetUserByCredentials(username, password);
+        }
+
         public Secretary Save(Secretary entity)
         {
             return _secretaryRepository.Save(entity);

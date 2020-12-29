@@ -10,36 +10,16 @@ namespace UserInteraction_Microservice.ApplicationServices
 {
     public class UserAppService : IUserAppService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserDomainService _domainService;
 
-        public UserAppService(IUserRepository userRepository) 
+        public UserAppService(IUserDomainService domainService)
         {
-            _userRepository = userRepository;
+            _domainService = domainService;
         }
 
-        public void Delete(User entity)
+        public User LogIn(string username, string password)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Get(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<long> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Save(User entity)
-        {
-            return _userRepository.Save(entity);
+            return _domainService.LogIn(username, password);
         }
     }
 }

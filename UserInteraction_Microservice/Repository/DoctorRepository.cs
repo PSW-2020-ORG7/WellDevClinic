@@ -35,7 +35,7 @@ namespace UserInteraction_Microservice.Repository
                 new Doctor()
                 {
                     Id = d.Id,
-                    User = new User(d.Id, d.User.Person, null, null),
+                    Person = d.Person,
                     Speciality = d.Speciality,
                     DoctorGrade = d.DoctorGrade
                 }
@@ -49,7 +49,7 @@ namespace UserInteraction_Microservice.Repository
                 new Doctor()
                 {
                     Id = d.Id,
-                    User = new User(d.Id, d.User.Person, null, null),
+                    Person = d.Person,
                     Speciality = d.Speciality,
                     DoctorGrade = d.DoctorGrade
                 }
@@ -65,6 +65,19 @@ namespace UserInteraction_Microservice.Repository
         public Doctor GetEager(long id)
         {
             return _myDbContext.Doctor.FirstOrDefault(d => d.Id == id);
+        }
+
+        public Doctor GetUserByCredentials(string username, string password)
+        {
+            return _myDbContext.Doctor.Select(d =>
+                    new Doctor()
+                    {
+                        Id = d.Id,
+                        Person = d.Person,
+                        Speciality = d.Speciality,
+                        DoctorGrade = d.DoctorGrade
+                    }
+            ).Where(d => d.UserLogIn.Username.Equals(username) && d.UserLogIn.Password.Equals(password)).First();
         }
 
         public Doctor Save(Doctor entity)

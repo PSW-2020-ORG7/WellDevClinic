@@ -8,5 +8,6 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
 {
     public interface IDirectorAppService : ICRUD<Director, long>
     {
+        public Director LogIn(String username, String password);
     }
 }

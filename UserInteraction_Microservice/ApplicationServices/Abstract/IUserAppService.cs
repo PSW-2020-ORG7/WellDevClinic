@@ -7,10 +7,6 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
 {
     public interface IUserAppService
     {
-        User Get(long id);
-        IEnumerable<long> GetAll();
-        User Save(User entity);
-        void Delete(User entity);
-        void Edit(User entity);
+        public User LogIn(String username, String password);
     }
 }

@@ -8,5 +8,6 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
 {
     public interface IPatientAppService : ICRUD<Patient, long>
     {
+        public Patient LogIn(String username, String password);
     }
 }
