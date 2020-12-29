@@ -6,6 +6,7 @@
         contentType: "application/json",
         success: function (data) {
             viewAllTenders(data);
+            console.log(data);
         },
     });
 
@@ -79,10 +80,10 @@ function viewAllTenders(tenders) {
         content += '<tr><td float="right">Id:</td><td>';
         content += ten.id;
         content += '</td></tr>';
-        if (ten.medication != null) {
+        if (ten.medications != null) {
             content += '<tr><td float="right">Hospital need:</td>';
             content += '<td>';
-            for (let med of ten.medication)
+            for (let med of ten.medications)
                 content += med.name + ', <br/>';
             content += '</td>';
         }
@@ -103,6 +104,52 @@ function viewAllTenders(tenders) {
         $("#viewTender").append(content);
     }
 }
+
+
+
+function makeOffer(tenderId) {
+    $("#modalTender").slideDown("fast");
+    $(".close").click(function () {
+        $(".modalCustom").hide(200);
+    })
+
+
+        $("#btnAddOffer").click(function () {
+        let name = $("#txtName").val();
+        let price = $("#txtPrice").val();
+        let id = $("#txtId").val();
+        let message = $("#txtNote").val();
+
+        let valid = true;
+
+        var jsonApi = JSON.stringify({
+            PharmacyName: name,
+            Price: Number(price),
+            Id: Number(id),
+            Medications: [],
+            Message: message
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "../api/tenderoffer/add",
+            contentType: "application/json",
+            data: jsonApi,
+            success: function (data) {
+                if (data) {
+                    $('#message').html('Succesfully added to database.');
+                    $("#regAction").show();
+                }
+            },
+            error: function (e) {
+                $("#message").empty();
+                $('#message').html('Already exists.');
+                $("#regAction").show();
+            }
+        })
+    })
+}
+
 
 
 function ISOtoShort(date) {

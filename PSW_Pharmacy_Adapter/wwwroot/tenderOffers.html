@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/pharmacyRegistration.css">
+    <link rel="stylesheet" href="css/partnerPharmacies.css" />
 </head>
 <body>
     <div class="topnav">
@@ -42,7 +42,36 @@
 
     <div id="viewTender"></div>
 
+    <div class="modalCustom" id="modalTender">
+        <div class="modalContent">
+            <span class="close">&times;</span>
 
+            <h5>
+                <!--
+        <table>
+        <tr><td>Tender ID:</td><input type="text" id="txtTenderId" disabled/></tr>
+    </table>
+    -->
+                <br>
+                <table>
+                    <tr><td colspan="2"><h4>Pharmacy infos:</h4></td></tr>
+                    <tr><td>Name:&nbsp;</td><td><input type="text" id="txtName" size="50" /><td></tr>
+                    <tr><td>ID:&nbsp;</td><td><input type="number" id="txtId" min="1" max="6" /><td></tr>
+                    <tr><td>Price:&nbsp;</td><td><input type="number" id="txtPrice" min="1" max="6"><td></tr>
+                    <tr><td>Note:&nbsp;</td><td><input type="text" id="txtNote" size="100" /><td></tr>
+                    &nbsp;
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" class="btn btn-secondary" id="btnAddOffer"
+                                    data-toggle="modal" data-target="#exampleModalCenter1">
+                                Send offer
+                            </button>
+                        <td>
+                    </tr>
+                </table>
+            </h5>
+        </div>
+    </div>
 
     <div id="regAction" style="display:none">
         <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
