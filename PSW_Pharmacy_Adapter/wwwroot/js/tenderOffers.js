@@ -93,6 +93,13 @@
             }
         })
     })*/
+    var $form = $('#mc-embedded-subscribe-form')
+    if ($form.length > 0) {
+        $('form input[type="submit"]').bind('click', function (event) {
+            if (event) event.preventDefault()
+            subscribe($form)
+        })
+    }
 })
 
 
@@ -189,4 +196,24 @@ function ISOtoShort(date) {
         month = '0' + month;
 
     return String(day + '-' + month + '-' + year);
+}
+
+function subscribe($form) {
+    $('#mc-embedded-subscribe').val('Sending...');
+    $.ajax({
+        contentType: 'application/json',
+        error: function (err) { alert('Could not connect to the email server. Please try again later.') },
+        success: function (data) {
+            $('#mc-embedded-subscribe').val('subscribe')
+            if (data) {
+                $('#mce-EMAIL').css('borderColor', '#ffffff')
+                $('#subscribe-result').css('color', 'rgb(53, 114, 210)')
+                $('#subscribe-result').html('<p>Thank you for subscribing. We will inform you when new tender is opened.</p>')
+                $('#mce-EMAIL').val('')
+            } else {
+                $('#mce-EMAIL').css('borderColor', '#ff8282')
+                $('#subscribe-result').css('color', '#ff8282')
+            }
+        }
+    })
 }

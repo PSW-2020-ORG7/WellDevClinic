@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/tender.css" />
 </head>
 <body>
     <div class="topnav">
@@ -31,23 +32,23 @@
     <div class="modalCustom" id="modalAddTender">
         <div class="modalContent">
             <span class="close">&times;</span>
-                <h4><center>Add new tender</center></h4>
-                <table>
-                    <tr><td>ID:&nbsp;</td><td><input type="number" id="txtId" min="1" max="6" /><td></tr>
-                    <tr><td>Start date:&nbsp;</td><td><input type="date" id="dateStart"><td></tr>
-                    <tr><td>End date:&nbsp;</td><td><input type="date" id="dateEnd"><td></tr>
-                    <tr></tr>
-                    <tr>
-                        <td colspan="2">
-                            <center>
-                                <button type="button" class="btn btn-secondary" id="btnAddTender"
-                                        data-toggle="modal" data-target="#exampleModalCenter1">
-                                    Add tender
-                                </button>
-                            </center>
-                        <td>
-                    </tr>
-                </table>
+            <h4><center>Add new tender</center></h4>
+            <table>
+                <tr><td>ID:&nbsp;</td><td><input type="number" id="txtId" min="1" max="6" /><td></tr>
+                <tr><td>Start date:&nbsp;</td><td><input type="date" id="dateStart"><td></tr>
+                <tr><td>End date:&nbsp;</td><td><input type="date" id="dateEnd"><td></tr>
+                <tr></tr>
+                <tr>
+                    <td colspan="2">
+                        <center>
+                            <button type="button" class="btn btn-secondary" id="btnAddTender"
+                                    data-toggle="modal" data-target="#exampleModalCenter1">
+                                Add tender
+                            </button>
+                        </center>
+                    <td>
+                </tr>
+            </table>
         </div>
     </div>
     <!--
@@ -67,6 +68,19 @@
     -->
     <br>
     <div id="viewTender"></div>
+
+    <div class="box">
+        <h1>Singup form for tenders notifications</h1>
+        <form id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate">
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="pharmacy@example.com" required>
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input type="text" name="b_e44c1f194bec93e238615469e_f6f826e769" tabindex="-1" value="">
+            </div>
+            <input type="submit" value="subscribe" name="subscribe" id="mc-embedded-subscribe" class="mc-button">
+            <div id="subscribe-result">
+            </div>
+        </form>
+    </div>
 
     <div class="modalCustom" id="modalTender">
         <div class="modalContent">
