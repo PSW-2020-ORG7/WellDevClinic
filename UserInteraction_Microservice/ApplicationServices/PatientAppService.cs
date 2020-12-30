@@ -53,9 +53,29 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _patientRepository.GetAllEager();
         }
 
+        public List<Patient> GetBlockedPatients()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Patient GetEager(long id)
         {
             return _patientRepository.GetEager(id);
+        }
+
+        public Patient GetPatientByJMBG(string jmbg)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Patient LogIn(string username, string password)
