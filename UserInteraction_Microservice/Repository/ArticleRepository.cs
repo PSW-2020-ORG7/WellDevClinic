@@ -37,7 +37,7 @@ namespace UserInteraction_Microservice.Repository
                 Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, null, null), 
                 Topic = a.Topic,
                 Text = a.Text
-            }).Where(a => a.Id == id).First();
+            }).Where(a => a.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Article> GetAll()

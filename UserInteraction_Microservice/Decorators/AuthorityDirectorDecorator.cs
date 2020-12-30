@@ -9,22 +9,24 @@ namespace UserInteraction_Microservice.Decorators
 {
     public class AuthorityDirectorDecorator : IDirectorAppService
     {
-        private IDirectorAppService _directorAppService;
-        private String Role;
-        private Dictionary<String, List<String>> AuthorizedUsers;
+        private readonly IDirectorAppService _directorAppService;
+        private readonly String Role;
+        private readonly Dictionary<String, List<String>> AuthorizedUsers;
 
         public AuthorityDirectorDecorator(IDirectorAppService directorAppService, String role)
         {
             this._directorAppService = directorAppService;
             this.Role = role;
-            AuthorizedUsers = new Dictionary<string, List<string>>();
-            AuthorizedUsers["Delete"] = new List<string>() { "Director" };
-            AuthorizedUsers["Edit"] = new List<string>() { "Director" };
-            AuthorizedUsers["Get"] = new List<string>() { "Director" };
-            AuthorizedUsers["GetAll"] = new List<string>() { "Director" };
-            AuthorizedUsers["Save"] = new List<string>() { "Director" };
-            AuthorizedUsers["GetAllEager"] = new List<string>() { "Director" };
-            AuthorizedUsers["GetEager"] = new List<string>() { "Director" };
+            AuthorizedUsers = new Dictionary<string, List<string>>
+            {
+                ["Delete"] = new List<string>() { "Director" },
+                ["Edit"] = new List<string>() { "Director" },
+                ["Get"] = new List<string>() { "Director" },
+                ["GetAll"] = new List<string>() { "Director" },
+                ["Save"] = new List<string>() { "Director" },
+                ["GetAllEager"] = new List<string>() { "Director" },
+                ["GetEager"] = new List<string>() { "Director" }
+            };
         }
 
         public void Delete(Director entity)

@@ -12,39 +12,23 @@ namespace UserInteraction_Interlayer.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IDirectorAppService _directorAppService;
+        private readonly IUserAppService _userAppService;
 
-        public UserController(IDirectorAppService directorAppService)
+        public UserController(IUserAppService userAppService)
         {
-            _directorAppService = directorAppService;
-               
+            _userAppService = userAppService;
         }
 
         [HttpGet]
-        public Boolean Registration()
+        public User LogIn(string username, string password)
         {
-            /*            Person person = new Person(0, "Pera", "Peric", "213123123123");
-                        UserDetails userDetails = new UserDetails(0, new DateTime(), "2131233", "Paja", "", "Musko", "sadas@gmail.com", "", null);
-                        UserLogIn userLogIn = new UserLogIn(0, "pera", "pera", UserType.Director);
-                        User user = new User(person, userDetails, userLogIn);
-                        Director director = new Director(0, user);
-                        _directorAppService.Save(director);
-                        return false;*/
-            return false;
+            return _userAppService.LogIn("pera", "pera");
         }
 
-        [HttpGet]
-        [Route("{id?}")]
-
-        public Director GetDirector(long id)
+        [HttpPost]
+        public User Registration(User user)
         {
-            // List<Director> directors = _directorAppService.GetAll().ToList();
-
-            /*Director director =  _directorAppService.Get(id);
-             director.User.Person.FirstName = "Mika";
-             _directorAppService.Edit(director);
-             return director;*/
-            return null;
+            return _userAppService.Registration(user);
         }
     }
 }

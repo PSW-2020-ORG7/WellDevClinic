@@ -9,23 +9,25 @@ namespace UserInteraction_Microservice.Decorators
 {
     public class AuthorityDoctorDecorator : IDoctorAppService
     {
-        private IDoctorAppService _doctorAppService;
-        private String Role;
-        private Dictionary<String, List<String>> AuthorizedUsers;
+        private readonly IDoctorAppService _doctorAppService;
+        private readonly String Role;
+        private readonly Dictionary<String, List<String>> AuthorizedUsers;
 
-        public AuthorityDoctorDecorator(IDoctorAppService doctorAppService, String role)
+        public AuthorityDoctorDecorator(IDoctorAppService doctorAppService, string role)
         {
             this._doctorAppService = doctorAppService;
             this.Role = role;
-            AuthorizedUsers = new Dictionary<string, List<string>>();
-            AuthorizedUsers["Delete"] = new List<string>() { "Director" };
-            AuthorizedUsers["Edit"] = new List<string>() { "Director", "Doctor" };
-            AuthorizedUsers["Get"] = new List<string>() { "Director", "Doctor", "Secretary" };
-            AuthorizedUsers["GetAll"] = new List<string>() { "Director", "Doctor", "Secretary" };
-            AuthorizedUsers["GetDoctorsBySpeciality"] = new List<string>() { "Doctor", "Patient" };
-            AuthorizedUsers["Save"] = new List<string>() { "Director" };
-            AuthorizedUsers["GetAllEager"] = new List<string>() { "Director" };
-            AuthorizedUsers["GetEager"] = new List<string>() { "Director", "Secretary", "Doctor" };
+            AuthorizedUsers = new Dictionary<string, List<string>>
+            {
+                ["Delete"] = new List<string>() { "Director" },
+                ["Edit"] = new List<string>() { "Director", "Doctor" },
+                ["Get"] = new List<string>() { "Director", "Doctor", "Secretary" },
+                ["GetAll"] = new List<string>() { "Director", "Doctor", "Secretary" },
+                ["GetDoctorsBySpeciality"] = new List<string>() { "Doctor", "Patient" },
+                ["Save"] = new List<string>() { "Director" },
+                ["GetAllEager"] = new List<string>() { "Director" },
+                ["GetEager"] = new List<string>() { "Director", "Secretary", "Doctor" }
+            };
 
         }
 

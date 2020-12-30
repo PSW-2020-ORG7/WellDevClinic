@@ -9,23 +9,25 @@ namespace UserInteraction_Microservice.Decorators
 {
     public class AuthoritySecretaryDecorator : ISecretaryAppService
     {
-        private ISecretaryAppService _secretaryAppService;
-        private String Role;
-        private Dictionary<String, List<String>> AuthorizedUsers;
+        private readonly ISecretaryAppService _secretaryAppService;
+        private readonly String Role;
+        private readonly Dictionary<String, List<String>> AuthorizedUsers;
 
         public AuthoritySecretaryDecorator(ISecretaryAppService secretaryAppService, String role)
         {
             this._secretaryAppService = secretaryAppService;
             this.Role = role;
-            AuthorizedUsers = new Dictionary<string, List<string>>();
-            AuthorizedUsers["Delete"] = new List<string>() { "Secretary" };
-            AuthorizedUsers["Edit"] = new List<string>() { "Secretary" };
-            AuthorizedUsers["Get"] = new List<string>() { "Secretary" };
-            AuthorizedUsers["GetAll"] = new List<string>() { "Secretary", "Patient" };
-            AuthorizedUsers["Save"] = new List<string>() { "Secretary" };
-            AuthorizedUsers["GetAllEager"] = new List<string>() { "Secretary" };
-            AuthorizedUsers["GetEager"] = new List<string>() { "Secretary" };
-            AuthorizedUsers["LogIn"] = new List<string>() { "Secretary" };
+            AuthorizedUsers = new Dictionary<string, List<string>>
+            {
+                ["Delete"] = new List<string>() { "Secretary" },
+                ["Edit"] = new List<string>() { "Secretary" },
+                ["Get"] = new List<string>() { "Secretary" },
+                ["GetAll"] = new List<string>() { "Secretary", "Patient" },
+                ["Save"] = new List<string>() { "Secretary" },
+                ["GetAllEager"] = new List<string>() { "Secretary" },
+                ["GetEager"] = new List<string>() { "Secretary" },
+                ["LogIn"] = new List<string>() { "Secretary" }
+            };
 
         }
 

@@ -35,7 +35,7 @@ namespace UserInteraction_Microservice.Repository
                     UserType = d.UserType
                 }
 
-            ).Where(d => d.Id == id).First();
+            ).Where(d => d.Id == id).FirstOrDefault();
             
         }
 
@@ -65,15 +65,16 @@ namespace UserInteraction_Microservice.Repository
 
         public Director GetUserByCredentials(string username, string password)
         {
-            return _myDbContext.Director.Select(d =>
-                  new Director()
-                  {
-                      Id = d.Id,
-                      Person = d.Person,
-                      UserType = d.UserType
-
-                  }
-            ).Where(d => d.UserLogIn.Username.Equals(username) && d.UserLogIn.Password.Equals(password)).First();
+            var logIn = _myDbContext.UserLogIn.Where(p => p.Username.Equals(username) && p.Password.Equals(password)).FirstOrDefault();
+            if (logIn != null)
+                return _myDbContext.Director.Select(d =>
+                    new Director()
+                    {
+                        Id = d.Id,
+                        Person = d.Person
+                    }
+                ).Where(d => d.Id == logIn.Id).FirstOrDefault();
+            return null;
         }
 
         public Director Save(Director entity)

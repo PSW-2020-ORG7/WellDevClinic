@@ -39,7 +39,7 @@ namespace UserInteraction_Microservice.Repository
                     UserType = d.UserType
                 }
 
-            ).Where(d => d.Id == id).First();
+            ).Where(d => d.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Doctor> GetAll()
@@ -86,17 +86,19 @@ namespace UserInteraction_Microservice.Repository
 
         public Doctor GetUserByCredentials(string username, string password)
         {
-            return _myDbContext.Doctor.Select(d =>
+            var logIn = _myDbContext.UserLogIn.Where(p => p.Username.Equals(username) && p.Password.Equals(password)).FirstOrDefault();
+            if (logIn != null)
+                return _myDbContext.Doctor.Select(d =>
                     new Doctor()
                     {
                         Id = d.Id,
                         Person = d.Person,
                         Speciality = d.Speciality,
-                        DoctorGrade = d.DoctorGrade,
-                        UserType = d.UserType
-
+                        DoctorGrade = d.DoctorGrade
+                        
                     }
-            ).Where(d => d.UserLogIn.Username.Equals(username) && d.UserLogIn.Password.Equals(password)).First();
+                ).Where(d => d.Id == logIn.Id).FirstOrDefault();
+            return null;
         }
 
         public Doctor Save(Doctor entity)

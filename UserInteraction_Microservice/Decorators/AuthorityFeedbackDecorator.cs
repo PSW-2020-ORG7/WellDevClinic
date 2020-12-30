@@ -10,19 +10,21 @@ namespace UserInteraction_Microservice.Decorators
     public  class AuthorityFeedbackDecorator : IFeedbackAppService
     {
         private readonly IFeedbackAppService _feedbackAppService;
-        private String Role;
-        private Dictionary<String, List<String>> AuthorizedUsers;
+        private readonly String Role;
+        private readonly Dictionary<String, List<String>> AuthorizedUsers;
 
         public AuthorityFeedbackDecorator(IFeedbackAppService feedbackAppService, string role)
         {
             _feedbackAppService = feedbackAppService;
             Role = role;
-            AuthorizedUsers = new Dictionary<string, List<string>>();
-            AuthorizedUsers["Delete"] = new List<String>() { "Director", "Patient" };
-            AuthorizedUsers["Edit"] = new List<String>() { "Patient", "Director" };
-            AuthorizedUsers["Get"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" };
-            AuthorizedUsers["GetAll"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" };
-            AuthorizedUsers["Save"] = new List<String>() { "Patient" };
+            AuthorizedUsers = new Dictionary<string, List<string>>
+            {
+                ["Delete"] = new List<String>() { "Director", "Patient" },
+                ["Edit"] = new List<String>() { "Patient", "Director" },
+                ["Get"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" },
+                ["GetAll"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" },
+                ["Save"] = new List<String>() { "Patient" }
+            };
         }
 
         public void Delete(Feedback entity)

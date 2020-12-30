@@ -37,7 +37,7 @@ namespace UserInteraction_Microservice.Repository
                     UserType = s.UserType
 
                 }
-            ).Where(s => s.Id == id).First();
+            ).Where(s => s.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Secretary> GetAll()
@@ -65,15 +65,16 @@ namespace UserInteraction_Microservice.Repository
 
         public Secretary GetUserByCredentials(string username, string password)
         {
-            return _myDbContext.Secretary.Select(s =>
-                 new Secretary()
-                 {
-                     Id = s.Id,
-                     Person = s.Person,
-                     UserType = s.UserType
-
-                 }
-            ).Where(s => s.UserLogIn.Username.Equals(username) && s.UserLogIn.Password.Equals(password)).First();
+            var logIn = _myDbContext.UserLogIn.Where(p => p.Username.Equals(username) && p.Password.Equals(password)).FirstOrDefault();
+            if (logIn != null)
+                return _myDbContext.Secretary.Select(d =>
+                    new Secretary()
+                    {
+                        Id = d.Id,
+                        Person = d.Person
+                    }
+                ).Where(d => d.Id == logIn.Id).FirstOrDefault();
+            return null;
         }
 
         public Secretary Save(Secretary entity)

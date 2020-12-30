@@ -78,6 +78,11 @@ namespace UserInteraction_Microservice.ApplicationServices
             throw new System.NotImplementedException();
         }
 
+        public DoctorGrade GradeDoctor(DoctorGrade doctorGrade, Doctor doctor)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Patient LogIn(string username, string password)
         {
             return _patientRepository.GetUserByCredentials(username, password);

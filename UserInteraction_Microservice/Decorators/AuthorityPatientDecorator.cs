@@ -9,28 +9,30 @@ namespace UserInteraction_Microservice.Decorators
 {
     public class AuthorityPatientDecorator : IPatientAppService
     {
-        private IPatientAppService _patientAppService;
-        private String Role;
-        private Dictionary<String, List<String>> AuthorizedUsers;
+        private readonly IPatientAppService _patientAppService;
+        private readonly String Role;
+        private readonly Dictionary<String, List<String>> AuthorizedUsers;
 
         public AuthorityPatientDecorator(IPatientAppService patientAppService, String role)
         {
             this._patientAppService = patientAppService;
             this.Role = role;
-            AuthorizedUsers = new Dictionary<string, List<string>>();
-            AuthorizedUsers["ClaimAccount"] = new List<string>() { "Patient" };
-            AuthorizedUsers["Delete"] = new List<string>() { "Patient", "Director" };
-            AuthorizedUsers["Edit"] = new List<string>() { "Patient" };
-            AuthorizedUsers["Get"] = new List<string>() { "Patient", "Secretary", "Doctor" };
-            AuthorizedUsers["GetAll"] = new List<string>() { "Secretary", "Doctor" };
-            AuthorizedUsers["GetPatientByJMBG"] = new List<string>() { "Patient", "Secretary" };
-            AuthorizedUsers["GiveGradeToDoctor"] = new List<string>() { "Patient" };
-            AuthorizedUsers["Save"] = new List<string>() { "Patient", "Secretary" };
-            AuthorizedUsers["GetPatientByMail"] = new List<string>() { "Patient" };
-            AuthorizedUsers["GetPatientByUsername"] = new List<string>() { "Patient" };
-            AuthorizedUsers["GetAllEager"] = new List<string>() { "Secretary" };
-            AuthorizedUsers["GetEager"] = new List<string>() { "Secretary", "Patient" };
-            AuthorizedUsers["GradeDoctor"] = new List<string>() {"Patient" };
+            AuthorizedUsers = new Dictionary<string, List<string>>
+            {
+                ["ClaimAccount"] = new List<string>() { "Patient" },
+                ["Delete"] = new List<string>() { "Patient", "Director" },
+                ["Edit"] = new List<string>() { "Patient" },
+                ["Get"] = new List<string>() { "Patient", "Secretary", "Doctor" },
+                ["GetAll"] = new List<string>() { "Secretary", "Doctor" },
+                ["GetPatientByJMBG"] = new List<string>() { "Patient", "Secretary" },
+                ["GiveGradeToDoctor"] = new List<string>() { "Patient" },
+                ["Save"] = new List<string>() { "Patient", "Secretary" },
+                ["GetPatientByMail"] = new List<string>() { "Patient" },
+                ["GetPatientByUsername"] = new List<string>() { "Patient" },
+                ["GetAllEager"] = new List<string>() { "Secretary" },
+                ["GetEager"] = new List<string>() { "Secretary", "Patient" },
+                ["GradeDoctor"] = new List<string>() { "Patient" }
+            };
 
 
         }

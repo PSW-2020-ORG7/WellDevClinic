@@ -35,10 +35,29 @@ namespace UserInteraction_Interlayer
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
 
+            services.AddScoped<IUserDomainService, UserDomainService>();
             services.AddScoped<IUserAppService, UserAppService>();
+
             services.AddScoped<IDirectorRepository, DirectorRepository>();
             services.AddScoped<IDirectorAppService, DirectorAppService>();
-            services.AddScoped<IUserDomainService, UserDomainService>();
+            
+            services.AddScoped<IDoctorAppService, DoctorAppService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            
+            services.AddScoped<ISecretaryAppService, SecretaryAppService>();
+            services.AddScoped<ISecretaryRepository, SecretaryRepository>();
+            
+            services.AddScoped<IPatientAppService, PatientAppService>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+
+            services.AddScoped<IFeedbackAppService, FeedbackAppService>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+
+            services.AddScoped<IArticleAppService, ArticleAppService>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+
+            services.AddScoped<ISpecialityAppService, SpecialityAppService>();
+            services.AddScoped<ISpecialityRepository, SpecialityRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)

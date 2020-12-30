@@ -35,7 +35,7 @@ namespace UserInteraction_Microservice.Repository
                     Id = s.Id,
                     Name=s.Name
                 }
-                ).Where(s => s.Id == id).First();
+                ).Where(s => s.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Speciality> GetAll()

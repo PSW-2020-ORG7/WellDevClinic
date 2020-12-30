@@ -9,19 +9,21 @@ namespace UserInteraction_Microservice.Decorators
 {
     public class AuthorityArticleDecorator : IArticleAppService
     {
-        private IArticleAppService _articleAppService;
-        private String Role;
-        private Dictionary<String, List<String>> AuthorizedUsers;
+        private readonly IArticleAppService _articleAppService;
+        private readonly String Role;
+        private readonly Dictionary<String, List<String>> AuthorizedUsers;
         public AuthorityArticleDecorator(IArticleAppService articleAppService, string role)
         {
             _articleAppService = articleAppService;
             Role = role;
-            AuthorizedUsers = new Dictionary<string, List<string>>();
-            AuthorizedUsers["Delete"] = new List<String>() { "Director", "Doctor" };
-            AuthorizedUsers["Edit"] = new List<String>() { "Doctor" };
-            AuthorizedUsers["Get"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" };
-            AuthorizedUsers["GetAll"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" };
-            AuthorizedUsers["Save"] = new List<String>() { "Doctor" };
+            AuthorizedUsers = new Dictionary<string, List<string>>
+            {
+                ["Delete"] = new List<String>() { "Director", "Doctor" },
+                ["Edit"] = new List<String>() { "Doctor" },
+                ["Get"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" },
+                ["GetAll"] = new List<String>() { "Director", "Doctor", "Secretary", "Patient" },
+                ["Save"] = new List<String>() { "Doctor" }
+            };
         }
 
         public void Delete(Article entity)
