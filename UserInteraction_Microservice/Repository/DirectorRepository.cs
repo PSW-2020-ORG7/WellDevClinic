@@ -31,7 +31,8 @@ namespace UserInteraction_Microservice.Repository
                 new Director()
                 {
                     Id = d.Id,
-                    Person = d.Person
+                    Person = d.Person,
+                    UserType = d.UserType
                 }
 
             ).Where(d => d.Id == id).First();
@@ -44,7 +45,9 @@ namespace UserInteraction_Microservice.Repository
                 new Director()
                 {
                     Id = d.Id,
-                    Person = d.Person
+                    Person = d.Person,
+                    UserType = d.UserType
+
                 }
             ).ToList();
         }
@@ -66,7 +69,9 @@ namespace UserInteraction_Microservice.Repository
                   new Director()
                   {
                       Id = d.Id,
-                      Person = d.Person
+                      Person = d.Person,
+                      UserType = d.UserType
+
                   }
             ).Where(d => d.UserLogIn.Username.Equals(username) && d.UserLogIn.Password.Equals(password)).First();
         }

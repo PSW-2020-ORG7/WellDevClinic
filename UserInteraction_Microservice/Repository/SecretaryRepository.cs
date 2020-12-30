@@ -33,7 +33,9 @@ namespace UserInteraction_Microservice.Repository
                 new Secretary()
                 {
                     Id = s.Id,
-                    Person = s.Person
+                    Person = s.Person,
+                    UserType = s.UserType
+
                 }
             ).Where(s => s.Id == id).First();
         }
@@ -44,7 +46,9 @@ namespace UserInteraction_Microservice.Repository
                 new Secretary()
                 {
                     Id = s.Id,
-                    Person = s.Person
+                    Person = s.Person,
+                    UserType = s.UserType
+
                 }
             ).ToList();
         }
@@ -65,7 +69,9 @@ namespace UserInteraction_Microservice.Repository
                  new Secretary()
                  {
                      Id = s.Id,
-                     Person = s.Person
+                     Person = s.Person,
+                     UserType = s.UserType
+
                  }
             ).Where(s => s.UserLogIn.Username.Equals(username) && s.UserLogIn.Password.Equals(password)).First();
         }

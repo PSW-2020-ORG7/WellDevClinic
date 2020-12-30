@@ -14,6 +14,20 @@ namespace UserInteraction_Microservice.ApplicationServices
             _patientRepository = patientRepository;
         }
 
+        public Patient ClaimAccount(Patient patient)
+        {
+            try
+            {
+                patient.ClaimAccount();
+                _patientRepository.Edit(patient);
+                return patient;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void Delete(Patient entity)
         {
             _patientRepository.Delete(entity);

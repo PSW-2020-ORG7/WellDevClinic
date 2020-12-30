@@ -29,22 +29,12 @@ namespace UserInteraction_Microservice.Repository
             _myDbContext.SaveChanges();
         }
 
-        public Town Get(long id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Town> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Town> GetAllEager()
         {
             return _myDbContext.Town.ToList();
         }
 
-        public Town GetEager(long id)
+        public Town Get(long id)
         {
             return _myDbContext.Town.FirstOrDefault(d => d.Id == id);
         }

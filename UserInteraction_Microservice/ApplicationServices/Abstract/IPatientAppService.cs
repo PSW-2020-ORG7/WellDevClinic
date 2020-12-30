@@ -6,5 +6,6 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
     public interface IPatientAppService : ICRUD<Patient, long>, IGetEager<Patient, long>
     {
         public Patient LogIn(String username, String password);
+        public Patient ClaimAccount(Patient patient);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;
 using UserInteraction_Microservice.Repository.Abstract;
@@ -52,6 +53,11 @@ namespace UserInteraction_Microservice.ApplicationServices
         public Doctor Save(Doctor entity)
         {
             return _doctorRepository.Save(entity);
+        }
+
+        public IEnumerable<Doctor> GetDoctorsBySpeciality(Speciality speciality)
+        {
+            return _doctorRepository.GetDoctorsBySpeciality(speciality);
         }
     }
 }

@@ -28,42 +28,12 @@ namespace UserInteraction_Microservice.Repository
             _myDbContext.SaveChanges();
         }
 
-        public Address Get(long id)
-        {
-            return _myDbContext.Address.Select(a =>
-            new Address()
-            {
-                Id=a.Id,
-                Street= a.Street,
-                Number=a.Number,
-                FullAddress=a.FullAddress,
-                Town=new Town(a.Town.Id, a.Town.Name,a.Town.PostalNumber,a.Town.State)
-            }
-
-            ).Where(a => a.Id == id).First();
-        }
-
         public IEnumerable<Address> GetAll()
-        {
-            return _myDbContext.Address.Select(a =>
-             new Address()
-             {
-                 Id = a.Id,
-                 Street = a.Street,
-                 Number = a.Number,
-                 FullAddress = a.FullAddress,
-                 Town = new Town(a.Town.Id, a.Town.Name, a.Town.PostalNumber, a.Town.State)
-             }
-
-             ).ToList();
-        }
-
-        public IEnumerable<Address> GetAllEager()
         {
             return _myDbContext.Address.ToList();
         }
 
-        public Address GetEager(long id)
+        public Address Get(long id)
         {
             return _myDbContext.Address.FirstOrDefault(a => a.Id == id);
         }

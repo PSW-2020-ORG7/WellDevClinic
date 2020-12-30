@@ -3,7 +3,7 @@ using UserInteraction_Microservice.Domain.Model;
 
 namespace UserInteraction_Microservice.Repository.Abstract
 {
-    public interface IStateRepository : ICRUD<State, long>, IGetEager<State, long>
+    public interface IStateRepository : ICRUD<State, long>
     {
     }
 }

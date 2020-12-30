@@ -17,5 +17,10 @@ namespace UserInteraction_Microservice.ApplicationServices
         {
             return _domainService.LogIn(username, password);
         }
+
+        public User Registration(User user)
+        {
+            return _domainService.Registration(user);
+        }
     }
 }

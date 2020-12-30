@@ -34,7 +34,7 @@ namespace UserInteraction_Microservice.Repository
             {
                 Id = a.Id,
                 DatePublished = a.DatePublished,
-                Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, a.Doctor.UserDetails, a.Doctor.UserLogIn), //dobavljam sve, srediti jos sta tacno treba
+                Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, null, null), 
                 Topic = a.Topic,
                 Text = a.Text
             }).Where(a => a.Id == id).First();
@@ -47,7 +47,7 @@ namespace UserInteraction_Microservice.Repository
              {
                  Id = a.Id,
                  DatePublished = a.DatePublished,
-                 Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, a.Doctor.UserDetails, a.Doctor.UserLogIn),
+                 Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, null, null),
                  Topic = a.Topic,
                  Text = a.Text
              }).ToList();

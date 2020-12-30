@@ -26,15 +26,29 @@ namespace UserInteraction_Microservice.Domain.DomainServices
             User user;
             if ((user = _doctorAppService.LogIn(username, password)) != null)
                 return user;
-            else if ((user = _directorAppService.LogIn(username, password)) != null)
+            if ((user = _directorAppService.LogIn(username, password)) != null)
                 return user;
-            else if ((user = _secretaryAppService.LogIn(username, password)) != null)
+            if ((user = _secretaryAppService.LogIn(username, password)) != null)
                 return user;
-            else if ((user = _patientAppService.LogIn(username, password)) != null)
+            if ((user = _patientAppService.LogIn(username, password)) != null)
                 return user;
 
             return user;
 
+        }
+
+        public User Registration(User user)
+        {
+            if (user.UserType == UserType.Director)
+                return _directorAppService.Save((Director)user);
+            if (user.UserType == UserType.Doctor)
+                return _doctorAppService.Save((Doctor)user);
+            if (user.UserType == UserType.Patient)
+                return _patientAppService.Save((Patient)user);
+            if (user.UserType == UserType.Secretary)
+                return _secretaryAppService.Save((Secretary)user);
+            
+            return null;
         }
     }
 }

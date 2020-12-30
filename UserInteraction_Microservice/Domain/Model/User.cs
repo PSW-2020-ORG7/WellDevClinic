@@ -18,12 +18,11 @@ namespace UserInteraction_Microservice.Domain.Model
         public virtual UserLogIn UserLogIn { get; set; }
         public virtual UserType UserType { get; set; }
 
-        public User(Person person, UserDetails userDetails, UserLogIn userLogIn, UserType userType)
+        public User(Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
             Person = person;
             UserDetails = userDetails;
             UserLogIn = userLogIn;
-            UserType = UserType;
         }
 
         public User()  { }

@@ -35,7 +35,9 @@ namespace UserInteraction_Microservice.Repository
                     Id = p.Id,
                     Person = p.Person,
                     Blocked = p.Blocked,
-                    Guest = p.Guest
+                    Guest = p.Guest,
+                    UserType = p.UserType
+
                 }
             ).Where(p => p.Id == id).First();
         }
@@ -48,7 +50,9 @@ namespace UserInteraction_Microservice.Repository
                    Id = p.Id,
                    Person = p.Person,
                    Blocked = p.Blocked,
-                   Guest = p.Guest
+                   Guest = p.Guest,
+                   UserType = p.UserType
+
                }
            ).ToList();
         }
@@ -71,7 +75,9 @@ namespace UserInteraction_Microservice.Repository
                     Id = p.Id,
                     Person = p.Person,
                     Blocked = p.Blocked,
-                    Guest = p.Guest
+                    Guest = p.Guest,
+                    UserType = p.UserType
+
                 }
             ).Where(p => p.UserLogIn.Username.Equals(username) && p.UserLogIn.Password.Equals(password)).First();
         }

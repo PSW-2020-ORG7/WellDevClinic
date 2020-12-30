@@ -24,6 +24,14 @@ namespace UserInteraction_Microservice.Domain.Model
             Person = person;
             UserDetails = userDetails;
             UserLogIn = userLogIn;
+
+        }
+
+        public void ClaimAccount()
+        {
+            if (!(!this.UserDetails.Phone.Equals("") && !this.UserDetails.Email.Equals("")))
+                throw new ApplicationException();
+            this.Guest = false;
         }
 
         public long GetId()

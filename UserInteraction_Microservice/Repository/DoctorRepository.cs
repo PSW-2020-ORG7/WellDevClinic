@@ -35,7 +35,8 @@ namespace UserInteraction_Microservice.Repository
                     Id = d.Id,
                     Person = d.Person,
                     Speciality = d.Speciality,
-                    DoctorGrade = d.DoctorGrade
+                    DoctorGrade = d.DoctorGrade,
+                    UserType = d.UserType
                 }
 
             ).Where(d => d.Id == id).First();
@@ -49,7 +50,9 @@ namespace UserInteraction_Microservice.Repository
                     Id = d.Id,
                     Person = d.Person,
                     Speciality = d.Speciality,
-                    DoctorGrade = d.DoctorGrade
+                    DoctorGrade = d.DoctorGrade,
+                    UserType = d.UserType
+
                 }
 
             ).ToList();
@@ -58,6 +61,22 @@ namespace UserInteraction_Microservice.Repository
         public IEnumerable<Doctor> GetAllEager()
         {
             return _myDbContext.Doctor.ToList();
+        }
+
+        public IEnumerable<Doctor> GetDoctorsBySpeciality(Speciality speciality)
+        {
+            return _myDbContext.Doctor.Select(d =>
+              new Doctor()
+              {
+                  Id = d.Id,
+                  Person = d.Person,
+                  Speciality = d.Speciality,
+                  DoctorGrade = d.DoctorGrade,
+                  UserType = d.UserType
+
+              }
+
+          ).Where(d => d.Speciality.Name.Equals(speciality.Name)).ToList();
         }
 
         public Doctor GetEager(long id)
@@ -73,7 +92,9 @@ namespace UserInteraction_Microservice.Repository
                         Id = d.Id,
                         Person = d.Person,
                         Speciality = d.Speciality,
-                        DoctorGrade = d.DoctorGrade
+                        DoctorGrade = d.DoctorGrade,
+                        UserType = d.UserType
+
                     }
             ).Where(d => d.UserLogIn.Username.Equals(username) && d.UserLogIn.Password.Equals(password)).First();
         }

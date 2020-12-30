@@ -34,16 +34,6 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _stateRepository.GetAll();
         }
 
-        public IEnumerable<State> GetAllEager()
-        {
-            return _stateRepository.GetAllEager();
-        }
-
-        public State GetEager(long id)
-        {
-            return _stateRepository.GetEager(id);
-        }
-
         public State Save(State entity)
         {
             return _stateRepository.Save(entity);

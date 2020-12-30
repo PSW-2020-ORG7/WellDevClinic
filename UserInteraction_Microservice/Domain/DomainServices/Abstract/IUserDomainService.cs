@@ -9,6 +9,6 @@ namespace UserInteraction_Microservice.Domain.DomainServices
     public interface IUserDomainService
     {
         public User LogIn(String username, String password);
-
+        public User Registration(User user);
     }
 }

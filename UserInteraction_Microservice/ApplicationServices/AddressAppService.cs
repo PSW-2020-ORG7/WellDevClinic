@@ -34,16 +34,6 @@ namespace UserInteraction_Microservice.ApplicationServices
             return _addressRepository.GetAll();
         }
 
-        public IEnumerable<Address> GetAllEager()
-        {
-            return _addressRepository.GetAllEager();
-        }
-
-        public Address GetEager(long id)
-        {
-            return _addressRepository.GetEager(id);
-        }
-
         public Address Save(Address entity)
         {
             return _addressRepository.Save(entity);
