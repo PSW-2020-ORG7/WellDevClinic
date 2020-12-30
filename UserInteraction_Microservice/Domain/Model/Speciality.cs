@@ -9,7 +9,6 @@ namespace UserInteraction_Microservice.Domain.Model
         public long Id { get;  set; }
         public String Name { get;  set; }
 
-
         public Speciality() { }
 
         public Speciality(String Name)

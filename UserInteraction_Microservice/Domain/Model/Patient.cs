@@ -10,6 +10,10 @@ namespace UserInteraction_Microservice.Domain.Model
         public long Id { get; set; }
         public Boolean Guest { get; set; } = false; 
         public Boolean Blocked { get; set; } = false;
+        public Patient()
+        {
+            UserType = UserType.Patient;
+        }
 
         public Patient(long id, bool guest, bool blocked, Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
@@ -20,11 +24,6 @@ namespace UserInteraction_Microservice.Domain.Model
             Person = person;
             UserDetails = userDetails;
             UserLogIn = userLogIn;
-        }
-
-        public Patient()
-        {
-            UserType = UserType.Patient;
         }
 
         public long GetId()

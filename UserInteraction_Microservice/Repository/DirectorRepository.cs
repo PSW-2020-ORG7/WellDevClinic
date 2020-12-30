@@ -1,9 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UserInteraction_Microservice.Domain;
 using UserInteraction_Microservice.Domain.Model;
 using UserInteraction_Microservice.Repository.Abstract;

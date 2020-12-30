@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;
 using UserInteraction_Microservice.Repository.Abstract;

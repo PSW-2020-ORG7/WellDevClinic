@@ -8,6 +8,10 @@ namespace UserInteraction_Microservice.Domain.Model
     public class Director : User, IIdentifiable<long>
     {
         public long Id { get; set; }
+        public Director()
+        {
+            UserType = UserType.Director;
+        }
 
         public Director(long id, Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
@@ -16,11 +20,6 @@ namespace UserInteraction_Microservice.Domain.Model
             Person = person;
             UserDetails = userDetails;
             UserLogIn = userLogIn;
-        }
-
-        public Director()
-        {
-            UserType = UserType.Director;
         }
 
         public long GetId()

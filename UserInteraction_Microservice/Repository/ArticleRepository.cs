@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UserInteraction_Microservice.Domain;
 using UserInteraction_Microservice.Domain.Model;
 using UserInteraction_Microservice.Repository.Abstract;
 
 namespace UserInteraction_Microservice.Repository
 {
-    class ArticleRepository : IArticleRepository
+    public class ArticleRepository : IArticleRepository
     {
         private readonly MyDbContext _myDbContext;
 
@@ -36,7 +34,7 @@ namespace UserInteraction_Microservice.Repository
             {
                 Id = a.Id,
                 DatePublished = a.DatePublished,
-                Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, a.Doctor.UserDetails, a.Doctor.UserLogIn),
+                Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, a.Doctor.UserDetails, a.Doctor.UserLogIn), //dobavljam sve, srediti jos sta tacno treba
                 Topic = a.Topic,
                 Text = a.Text
             }).Where(a => a.Id == id).First();

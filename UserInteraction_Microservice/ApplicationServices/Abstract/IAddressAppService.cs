@@ -2,7 +2,7 @@
 
 namespace UserInteraction_Microservice.ApplicationServices.Abstract
 {
-    public interface ISpecialityAppService : ICRUD<Speciality, long>
+    public interface IAddressAppService : ICRUD<Address, long>, IGetEager<Address, long>
     {
     }
 }

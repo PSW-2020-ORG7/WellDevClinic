@@ -11,10 +11,7 @@ namespace UserInteraction_Microservice.Domain.Model
         public String Username { get; set; }
         public String Password { get; set; }
        
-
-        public UserLogIn()
-        {
-        }
+        public UserLogIn() {}
 
         public UserLogIn(long id, string username, string password)
         {

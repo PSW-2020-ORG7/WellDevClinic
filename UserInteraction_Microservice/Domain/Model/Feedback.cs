@@ -13,9 +13,7 @@ namespace UserInteraction_Microservice.Domain.Model
         public Boolean Publish { get; set; }
         public Boolean IsAnonymous { get; set; }
 
-        public Feedback()
-        {
-        }
+        public Feedback() {}
 
         public Feedback(long id, Patient patient, string content, bool isPrivate, bool publish, bool isAnonymous)
         {

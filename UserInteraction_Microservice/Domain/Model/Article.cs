@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
@@ -12,9 +10,7 @@ namespace UserInteraction_Microservice.Domain.Model
         public String Topic { get; set; }
         public String Text { get; set; }
 
-        public Article()
-        {
-        }
+        public Article() {}
 
         public Article(long id, DateTime datePublished, Doctor doctor, string topic, string text)
         {

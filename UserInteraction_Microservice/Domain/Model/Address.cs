@@ -10,9 +10,7 @@ namespace UserInteraction_Microservice.Domain.Model
         public String FullAddress { get; set; }
         public virtual Town Town { get; set; }
 
-        public Address()
-        {
-        }
+        public Address() {}
 
         public Address(long id, string street, int number, string fullAddress, Town town)
         {

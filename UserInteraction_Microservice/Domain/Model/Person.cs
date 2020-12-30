@@ -19,6 +19,8 @@ namespace UserInteraction_Microservice.Domain.Model
             }
         }
 
+        public Person() { }
+
         public Person(long id, String FirstName, String LastName, String Jmbg)
         {
             this.Id = id;
@@ -26,8 +28,6 @@ namespace UserInteraction_Microservice.Domain.Model
             this.LastName = LastName;
             this.Jmbg = Jmbg;
         }
-
-        public Person() { }
 
         public long GetId()
         {

@@ -9,6 +9,11 @@ namespace UserInteraction_Microservice.Domain.Model
     {
         public long Id { get; set; }
 
+        public Secretary()
+        {
+            UserType = UserType.Secretary;
+        }
+
         public Secretary(long id, Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
             Id = id;
@@ -16,12 +21,6 @@ namespace UserInteraction_Microservice.Domain.Model
             Person = person;
             UserDetails = userDetails;
             UserLogIn = userLogIn;
-        }
-
-        public Secretary()
-        {
-            UserType = UserType.Secretary;
-
         }
 
         public long GetId()

@@ -6,7 +6,7 @@ using UserInteraction_Microservice.Repository.Abstract;
 
 namespace UserInteraction_Microservice.Repository
 {
-    class SpecialityRepository : ISpecialityRepository
+    public class SpecialityRepository : ISpecialityRepository
     {
         private readonly MyDbContext _myDbContext;
 

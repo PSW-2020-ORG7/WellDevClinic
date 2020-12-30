@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
-using System.Text;
 using UserInteraction_Microservice.Domain;
 using UserInteraction_Microservice.Domain.Model;
 using UserInteraction_Microservice.Repository.Abstract;
 
 namespace UserInteraction_Microservice.Repository
 {
-    class FeedbackRepository : IFeedbackRepository
+    public class FeedbackRepository : IFeedbackRepository
     {
         private readonly MyDbContext _myDbContext;
 

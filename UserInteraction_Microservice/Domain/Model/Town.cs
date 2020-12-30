@@ -11,9 +11,7 @@ namespace UserInteraction_Microservice.Domain.Model
         public virtual State State { get; set; }
         private List<Address> address;
 
-        public Town()
-        {
-        }
+        public Town() {}
 
         public Town(long id, string name, string postalNumber, State state)
         {

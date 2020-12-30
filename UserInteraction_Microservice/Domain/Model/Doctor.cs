@@ -11,6 +11,11 @@ namespace UserInteraction_Microservice.Domain.Model
         public virtual Speciality Speciality { get; set; }
         public virtual DoctorGrade DoctorGrade { get; set; }
 
+        public Doctor()
+        {
+            UserType = UserType.Doctor;
+        }
+
         public Doctor(long id, Speciality speciality, DoctorGrade doctorGrade, Person person, UserDetails userDetails, UserLogIn userLogIn)
         {
             Id = id;
@@ -21,10 +26,6 @@ namespace UserInteraction_Microservice.Domain.Model
             UserDetails = userDetails;
             UserLogIn = userLogIn;
 
-        }
-
-        public Doctor() {
-            UserType = UserType.Doctor;
         }
 
         public long GetId()

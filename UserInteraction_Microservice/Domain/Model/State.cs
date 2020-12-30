@@ -8,19 +8,16 @@ namespace UserInteraction_Microservice.Domain.Model
         public long Id { get; set; }
         public String Name { get; set; }
         public String Code { get; set; }
+        public virtual List<Town> Town { get; set; }
 
-        public virtual List<Town> town { get; set; }
-
-        public State()
-        {
-        }
+        public State() {}
 
         public State(long id, String name, String code)
         {
             Id = id;
             Name = name;
             Code = code;
-            town = new List<Town>();
+            Town = new List<Town>();
         }
 
         public State(long id)
@@ -30,20 +27,20 @@ namespace UserInteraction_Microservice.Domain.Model
 
         public List<Town> GetTown()
         {
-            if (town == null)
-                town = new List<Town>();
-            return town;
+            if (Town == null)
+                Town = new List<Town>();
+            return Town;
         }
 
         public void AddTown(Town newTown)
         {
             if (newTown == null)
                 return;
-            if (this.town == null)
-                this.town = new List<Town>();
-            if (!this.town.Contains(newTown))
+            if (this.Town == null)
+                this.Town = new List<Town>();
+            if (!this.Town.Contains(newTown))
             {
-                this.town.Add(newTown);
+                this.Town.Add(newTown);
                 newTown.SetState(this);
             }
         }
@@ -52,22 +49,22 @@ namespace UserInteraction_Microservice.Domain.Model
         {
             if (oldTown == null)
                 return;
-            if (this.town != null)
-                if (this.town.Contains(oldTown))
+            if (this.Town != null)
+                if (this.Town.Contains(oldTown))
                 {
-                    this.town.Remove(oldTown);
+                    this.Town.Remove(oldTown);
                     oldTown.SetState((State)null);
                 }
         }
 
         public void RemoveAllTown()
         {
-            if (town != null)
+            if (Town != null)
             {
                 List<Town> tmpTown = new List<Town>();
-                foreach (Town oldTown in town)
+                foreach (Town oldTown in Town)
                     tmpTown.Add(oldTown);
-                town.Clear();
+                Town.Clear();
                 foreach (Town oldTown in tmpTown)
                     oldTown.SetState((State)null);
                 tmpTown.Clear();

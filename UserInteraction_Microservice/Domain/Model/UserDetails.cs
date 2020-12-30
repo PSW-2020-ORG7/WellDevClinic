@@ -17,6 +17,8 @@ namespace UserInteraction_Microservice.Domain.Model
         public String Image { get; set; }
         public virtual Address Address { get; set; }
 
+        public UserDetails() { }
+
         public UserDetails(long id, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address)
         {
             Id = id;
@@ -28,10 +30,6 @@ namespace UserInteraction_Microservice.Domain.Model
             Email = email;
             Image = image;
             Address = address;
-        }
-
-        public UserDetails()
-        {
         }
 
         public long GetId()
