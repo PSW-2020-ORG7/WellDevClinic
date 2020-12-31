@@ -22,13 +22,17 @@ namespace InterlayerController.Controllers
         /// </summary>
         /// <returns>status 200 OK response with a list of drugs</returns>
         [HttpGet]
-        public IEnumerable<Drug> GetAllDrug()
+        public IEnumerable<Drug> GetAllDrug()           // TODO A: Vrati samo prihvacene lekove!
             => (List<Drug>)_drugController.GetAll();
 
         [HttpGet]
         [Route("{id?}")]
         public Drug GetDrug(long id)
             => _drugController.Get(id);
+
+        [HttpPut]
+        public Drug Save(Drug d)
+            => _drugController.Save(d);
 
     }
 }

@@ -19,6 +19,30 @@ $(document).ready(function () {
 	$(".close").click(function () {
 		$(".modalCustom").hide(200);
 	});
+
+	$("#purchase").click(function () {
+		let pharmacyName = $("#phName").val();
+		let quantity = Number($("#amountToBuy").val());
+		let med = $("#txtMedName").text();
+
+		$.ajax({
+			method: "GET",
+			url: "../api/medication/orderMedicine",
+			contentType: "application/json",
+			data: {
+				phName: pharmacyName,
+				amount: quantity,
+				medName: med,
+            },
+			success: function (data) {
+				if (data)
+					alert("Medications succesfuly ordered! Expect your package soon.");
+			},
+			error: function (e) {
+				alert("ERROR: " + e.status);
+            }
+        })
+	});
 });
 
 function viewAllMedications(meds) {
@@ -111,6 +135,8 @@ function findMedicine(name) {
 					Alternative: med.alternative,
 				}),
 				success: function (pharmacies) {
+					$("#phName").html("<option selected disabled>Select pharmacy..</option>");
+					$("#amountToBuy").val("");
 					showResultTable(pharmacies);
 					$("#medAvailability").slideToggle("fast");
 
@@ -125,7 +151,7 @@ function findMedicine(name) {
 
 
 function showResultTable(pharmacies) {
-	$("#txtMedName").text(pharmacies[0].medicine.name);
+	$("#txtMedName").text(pharmacies[0].medicine.name.charAt(0).toUpperCase() + pharmacies[0].medicine.name.slice(1));
 	$("#medTableData").find('tbody').empty();
 	for (let ph of pharmacies) {
 		let content = '<tr>';

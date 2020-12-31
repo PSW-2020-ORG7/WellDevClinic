@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Service
@@ -29,26 +30,25 @@ namespace PSW_Pharmacy_Adapter.Service
                            .Content.ReadAsStringAsync().Result);
 
         public async Task<Medication> GetHospitalMedication(long id)
-        => JsonConvert.DeserializeObject<Medication>(
+            => JsonConvert.DeserializeObject<Medication>(
                        (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug/" + id))
                        .Content.ReadAsStringAsync().Result);
 
-        public async Task<List<MedicationDto>> GetAllPharmacyMedications(string pharmacyName) //TODO A: Napraviti na isi metodu
+        public async Task<List<MedicationDto>> GetAllPharmacyMedications(string pharmacyName)
         {
             Api ph = _keyRepo.Get(pharmacyName);
-            return JsonConvert.DeserializeObject<List<MedicationDto>>(
-                           (await _clientFactory.CreateClient().GetAsync(ph.Url + "getAllMedications/" + pharmacyName))
-                           .Content.ReadAsStringAsync().Result);
+            var response = await _clientFactory.CreateClient().GetAsync(ph.Url + "getAllMedications/" + pharmacyName);
+            return JsonConvert.DeserializeObject<List<MedicationDto>>(response.Content.ReadAsStringAsync().Result);
         }
 
-        public async Task<MedicationDto> GetPharmacyMedication(string pharmacyName, string medName) //TODO A: Napraviti na isi metodu
+        public async Task<MedicationDto> GetPharmacyMedication(string pharmacyName, string medName)
         {
             Api ph = _keyRepo.Get(pharmacyName);
-            var response = (await _clientFactory.CreateClient().GetAsync(ph.Url + "checkAvailability/" + medName + "/" + pharmacyName));
+            var response = await _clientFactory.CreateClient().GetAsync(ph.Url + "checkAvailability/" + medName + "/" + pharmacyName);
             return JsonConvert.DeserializeObject<MedicationDto>(response.Content.ReadAsStringAsync().Result);
         }
 
-        public async Task<List<PharmacyMedicationDto>> GetPharmacyByMedicineAsync(Medication med)
+        public async Task<List<PharmacyMedicationDto>> GetPharmacyByMedicationAsync(Medication med)
         {
             List<PharmacyMedicationDto> pharmacies = new List<PharmacyMedicationDto>();
             foreach (Api ph in _keyRepo.GetAll())
@@ -64,6 +64,25 @@ namespace PSW_Pharmacy_Adapter.Service
                     continue;
                 }
             return pharmacies;
+        }
+
+        public async Task<Medication> OrderMedicationAsync(string phName, string medName, int amount)
+        {
+            Api ph = _keyRepo.Get(phName);
+            var response = await _clientFactory.CreateClient().GetAsync(ph.Url + "orderMedicine/" + phName + "?medicineName=" + medName + "&amount=" + amount);
+            MedicationDto boughtMed = JsonConvert.DeserializeObject<MedicationDto>(response.Content.ReadAsStringAsync().Result);
+            if (boughtMed != null)
+            {
+                string jsonString = JsonConvert.SerializeObject(MedicationMapper.MapMedication(boughtMed));
+                using (HttpContent content = new StringContent(jsonString))
+                {
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    response = await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug", content);
+                    return JsonConvert.DeserializeObject<Medication>(response.Content.ReadAsStringAsync().Result);
+                }
+                
+            } 
+            return null;
         }
 
         public async Task<List<Medication>> GetUnsyncedMedicationsAsync(string pharmacyName)

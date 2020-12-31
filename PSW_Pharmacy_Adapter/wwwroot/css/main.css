@@ -13,11 +13,6 @@
     padding:1px;
 }
 
-.wrapper{
-    width:1170px;
-    margin:auto;
-}
-
 
 .welcome-text {
     position: absolute;
@@ -137,7 +132,11 @@ div.card {
         color: white;
     }
 
-input[type=text], input[type=number] {
+.expand {
+    width: 100%;
+}
+
+input[type=text], input[type=number], select {
     border-radius: 4px;
     padding: 4px 10px;
     margin: 8px 0;
@@ -151,6 +150,7 @@ input[type=text], input[type=number] {
 .customTable table {
     width: 100%;
     margin-bottom: 5px;
+    margin-top: 30px;
 }
 
 .customTable th {
@@ -167,4 +167,3 @@ input[type=text], input[type=number] {
     background: whitesmoke;
     border: none;
 }
-

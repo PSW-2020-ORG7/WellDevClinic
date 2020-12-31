@@ -11,7 +11,8 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
         public Task<Medication> GetHospitalMedication(long id);
         public Task<List<MedicationDto>> GetAllPharmacyMedications(string pharmacyName);
         public Task<MedicationDto> GetPharmacyMedication(string pharmacyName, string medName);
-        public Task<List<PharmacyMedicationDto>> GetPharmacyByMedicineAsync(Medication med);
+        public Task<List<PharmacyMedicationDto>> GetPharmacyByMedicationAsync(Medication med);
+        public Task<Medication> OrderMedicationAsync(string phName, string medName, int amount);
         public Task<List<Medication>> GetUnsyncedMedicationsAsync(string pharmacyName);
     }
 }

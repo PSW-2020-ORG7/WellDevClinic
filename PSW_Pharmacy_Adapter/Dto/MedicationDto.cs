@@ -7,10 +7,10 @@ namespace PSW_Pharmacy_Adapter.Dto
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public int Amount { get; set; }
         public List<string> Ingredients { get; set; }
         public List<string> Alternative { get; set; }
         public double Price { get; set; }
-        public int Amount { get; set; }
         
 
         public MedicationDto(){}
