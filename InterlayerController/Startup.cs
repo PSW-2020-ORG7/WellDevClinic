@@ -4,6 +4,8 @@ using bolnica.Repository;
 using bolnica.Service;
 using Controller;
 using EventSourcing;
+using EventSourcing.Repository;
+using EventSourcing.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -135,14 +137,14 @@ namespace InterlayerController
             services.AddDbContext<EventDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironmentEventLogs(),
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
-            
-            services.AddScoped<IEventLogEntryService, EventLogEntryService>();
-            services.AddScoped<IEventLogEntryRepository, EventLogEntryRepository>();
+
+            services.AddScoped<IDomainEventService, DomainEventService>();
+            services.AddScoped<IDomainEventRepository, DomainEventRepository>();
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db, EventDbContext event_db)
         {
             //System.Threading.Thread.Sleep(25000);
             if (env.IsDevelopment())
@@ -151,6 +153,7 @@ namespace InterlayerController
             }
 
             db.Database.EnsureCreated();
+            event_db.Database.EnsureCreated();
 
             app.UseRouting();
 
@@ -185,11 +188,11 @@ namespace InterlayerController
 
         private string CreateConnectionStringFromEnvironmentEventLogs()
         {
-            string server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
-            string port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "3306";
-            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "eventlogs";
-            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
-            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST_EVENTS") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT_EVENTS") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA_EVENTS") ?? "eventlogs";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME_EVENTS") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD_EVENTS") ?? "root";
             return $"server={server};port={port};database={database};user={user};password={password};";
         }
     }

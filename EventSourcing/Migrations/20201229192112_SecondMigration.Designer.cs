@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSourcing.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20201227154352_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20201229192112_SecondMigration")]
+    partial class SecondMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,26 +19,24 @@ namespace EventSourcing.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("EventSourcing.EventLogEntry", b =>
+            modelBuilder.Entity("EventSourcing.FeedbackSubmittedEvent", b =>
                 {
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("CreationTime")
+                    b.Property<long>("FeedbackId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("EventTypeName")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.HasKey("Id");
 
-                    b.HasKey("EventId");
-
-                    b.ToTable("EventLogs");
+                    b.ToTable("feedbackSubmittedEvents");
                 });
 #pragma warning restore 612, 618
         }

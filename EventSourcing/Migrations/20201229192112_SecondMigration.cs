@@ -3,29 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EventSourcing.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class SecondMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "EventLogs",
+                name: "feedbackSubmittedEvents",
                 columns: table => new
                 {
-                    EventId = table.Column<Guid>(nullable: false),
-                    EventTypeName = table.Column<string>(nullable: false),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    Content = table.Column<string>(nullable: false)
+                    Id = table.Column<Guid>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    FeedbackId = table.Column<long>(nullable: false),
+                    Content = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventLogs", x => x.EventId);
+                    table.PrimaryKey("PK_feedbackSubmittedEvents", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EventLogs");
+                name: "feedbackSubmittedEvents");
         }
     }
 }

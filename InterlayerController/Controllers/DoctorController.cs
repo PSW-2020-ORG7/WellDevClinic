@@ -32,6 +32,7 @@ namespace InterlayerController.Controllers
         }
 
         [HttpGet]
+        [Route("getAll")]
         public IEnumerable<Doctor> GetAllDoctors()
         {
 
