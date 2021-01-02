@@ -73,7 +73,7 @@ namespace bolnica.Repository
             Feedback result = myDbContext.Feedback.FirstOrDefault(feedback => feedback.Id == entity.Id);
             if(result == null)
             {
-                myDbContext.Feedback.Add(entity);
+                var e = myDbContext.Feedback.Add(entity);
                 myDbContext.SaveChanges();
                 return entity;
             }

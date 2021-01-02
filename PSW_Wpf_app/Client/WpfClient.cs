@@ -40,7 +40,8 @@ namespace PSW_Wpf_app.Client
         public string Email;
         public string Phone;
         public DateTime DateOfBirth;
-        
+        public virtual Speciality Specialty { get; set; }
+
         public string Username;
         public string Password;
         
@@ -57,17 +58,31 @@ namespace PSW_Wpf_app.Client
 
 
     }
+    public enum PriorityType
+    {
+        NoPriority,
+        Doctor,
+        Date,
 
+    }
     public class BusinessDayDTO
     {
         public long Id { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Period Period { get; set; }
         public Boolean PatientScheduling = false;
+        public PriorityType Priority { get; set; }
         public BusinessDayDTO(Doctor doctor, Period period)
         {
             this.Doctor = doctor;
             this.Period = period;
+        }
+
+        public BusinessDayDTO(Doctor doctor, Period period, PriorityType priority)
+        {
+            this.Doctor = doctor;
+            this.Period = period;
+            this.Priority = priority;
         }
 
         public BusinessDayDTO()
@@ -81,6 +96,10 @@ namespace PSW_Wpf_app.Client
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public Period()
+        {
+        }
     }
 
     public class ExaminationDTO
@@ -89,9 +108,25 @@ namespace PSW_Wpf_app.Client
         public Doctor Doctor { get; set; }
         public Patient Patient { get; set; }
         public Room Room { get; set; }
-        public DateTime StartDate { get; set; }
-         public DateTime EndDate { get; set; }
         public Period Period { get; set; }
+
+        public ExaminationDTO(Doctor doctor, Period period, Patient patient) 
+        {
+            Doctor = doctor;
+            Period = period;
+            Patient = patient;
+        }
+        public ExaminationDTO()
+        {
+        }
+    }
+
+
+    public class Speciality
+    {
+        public String Name { get; set; }
+        public long Id { get; set; }
+        public Speciality() { }
     }
 
     public class Room
@@ -122,7 +157,7 @@ namespace PSW_Wpf_app.Client
         }
     }
 
-    public class User
+    public class User:Person
     {
         public String Username { get; set; }
         public String Password { get; set; }
@@ -130,24 +165,19 @@ namespace PSW_Wpf_app.Client
         public long Id { get; set; }
 
     }
-    public class ExaminationIdsDTO
-    {
-        public long DoctorId { get; set; }
-        public String Period { get; set; }
-        public long PatientId { get; set; }
-        public ExaminationIdsDTO()
-        {
 
-        }
-        public ExaminationIdsDTO(long doctorId, String period, long patientId)
-        {
-            DoctorId = doctorId;
-            Period = period;
-            PatientId = patientId;
-        }
+    public abstract class Person
+    {
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public String Jmbg { get; set; }
+        public String Email { get; set; }
+        public String Phone { get; set; }
+        public long Id { get; set; }
     }
 
-    public class  Patient:User
+
+        public class  Patient:User
     {
         public virtual PatientFile patientFile { get; set; }
         public Boolean Guest = false;
@@ -207,6 +237,17 @@ namespace PSW_Wpf_app.Client
             return doctors;
         }
 
+        public static async Task<List<Speciality>> GetAllSpeciality()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/speciality");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Speciality> specs = JsonConvert.DeserializeObject<List<Speciality>>(responseBody);
+
+            return specs;
+        }
+
+
 
         public static async Task<List<ExaminationDTO>> FindTerms(BusinessDayDTO businessDTO)
         {
@@ -219,7 +260,7 @@ namespace PSW_Wpf_app.Client
 
         }
 
-        public static async Task<Examination> NewExamination(ExaminationIdsDTO examination)
+        public static async Task<Examination> NewExamination(ExaminationDTO examination)
         {
             var content = new StringContent(JsonConvert.SerializeObject(examination));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -238,7 +279,7 @@ namespace PSW_Wpf_app.Client
 
             return patients;
         }
-
+        
         public static async Task<Room> GetRoomById(long id)
         {
             HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/" + id);
@@ -247,6 +288,26 @@ namespace PSW_Wpf_app.Client
             Room room = JsonConvert.DeserializeObject<Room>(responseBody);
 
             return room;
+        }
+
+        public static async Task<Patient> GetPatientByJmbg(string jmbg)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/patient/patientJmbg/" + jmbg);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Patient patient = JsonConvert.DeserializeObject<Patient>(responseBody);
+
+            return patient;
+        }
+
+        public static async Task<List<Doctor>> GetAllDoctors()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/doctor/getAll");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Doctor> doctor = JsonConvert.DeserializeObject<List<Doctor>>(responseBody);
+
+            return doctor;
         }
 
     }

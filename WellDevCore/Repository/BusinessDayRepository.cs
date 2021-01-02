@@ -65,7 +65,7 @@ namespace Repository
 
         public void Edit(BusinessDay entity)
         {
-            throw new NotImplementedException();
+            myDbContext.SaveChanges();
         }
 
         public void Delete(BusinessDay entity)

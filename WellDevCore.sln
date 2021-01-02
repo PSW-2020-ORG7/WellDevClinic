@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInteraction_Microservic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInteraction_Interlayer", "UserInteraction_Interlayer\UserInteraction_Interlayer.csproj", "{EBF39BAF-D54B-49D2-AB19-0C9FB4960FAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "EventSourcing\EventSourcing.csproj", "{EBC69423-052E-4042-AB95-871CE2B36DAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,6 +152,14 @@ Global
 		{EBF39BAF-D54B-49D2-AB19-0C9FB4960FAA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBF39BAF-D54B-49D2-AB19-0C9FB4960FAA}.Release|x86.ActiveCfg = Release|Any CPU
 		{EBF39BAF-D54B-49D2-AB19-0C9FB4960FAA}.Release|x86.Build.0 = Release|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Debug|x86.Build.0 = Debug|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Release|x86.ActiveCfg = Release|Any CPU
+		{EBC69423-052E-4042-AB95-871CE2B36DAF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
