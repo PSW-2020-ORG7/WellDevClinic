@@ -41,7 +41,7 @@ namespace UserInteraction_Microservice.Repository
                 IsAnonymous = f.IsAnonymous
             }
 
-            ).Where(f => f.Id == id).First();
+            ).Where(f => f.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Feedback> GetAll()
