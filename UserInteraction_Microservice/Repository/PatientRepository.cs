@@ -77,7 +77,9 @@ namespace UserInteraction_Microservice.Repository
                         Id = d.Id,
                         Person = d.Person,
                         Blocked = d.Blocked,
-                        Guest = d.Guest
+                        Guest = d.Guest,
+                        UserType = d.UserType
+                         
                     }
                 ).Where(d => d.Id == logIn.Id).FirstOrDefault();
             return null;

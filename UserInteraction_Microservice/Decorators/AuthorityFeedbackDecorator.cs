@@ -10,13 +10,12 @@ namespace UserInteraction_Microservice.Decorators
     public  class AuthorityFeedbackDecorator : IFeedbackAppService
     {
         private readonly IFeedbackAppService _feedbackAppService;
-        private readonly String Role;
+        private String Role { get; set; }
         private readonly Dictionary<String, List<String>> AuthorizedUsers;
 
-        public AuthorityFeedbackDecorator(IFeedbackAppService feedbackAppService, string role)
+        public AuthorityFeedbackDecorator(IFeedbackAppService feedbackAppService)
         {
             _feedbackAppService = feedbackAppService;
-            Role = role;
             AuthorizedUsers = new Dictionary<string, List<string>>
             {
                 ["Delete"] = new List<String>() { "Director", "Patient" },

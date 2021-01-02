@@ -10,13 +10,13 @@ namespace UserInteraction_Microservice.Decorators
     public class AuthoritySecretaryDecorator : ISecretaryAppService
     {
         private readonly ISecretaryAppService _secretaryAppService;
-        private readonly String Role;
+        private String Role { get; set; }
+
         private readonly Dictionary<String, List<String>> AuthorizedUsers;
 
-        public AuthoritySecretaryDecorator(ISecretaryAppService secretaryAppService, String role)
+        public AuthoritySecretaryDecorator(ISecretaryAppService secretaryAppService)
         {
             this._secretaryAppService = secretaryAppService;
-            this.Role = role;
             AuthorizedUsers = new Dictionary<string, List<string>>
             {
                 ["Delete"] = new List<string>() { "Secretary" },

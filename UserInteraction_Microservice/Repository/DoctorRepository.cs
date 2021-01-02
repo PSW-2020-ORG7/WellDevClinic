@@ -94,7 +94,8 @@ namespace UserInteraction_Microservice.Repository
                         Id = d.Id,
                         Person = d.Person,
                         Speciality = d.Speciality,
-                        DoctorGrade = d.DoctorGrade
+                        DoctorGrade = d.DoctorGrade,
+                        UserType = d.UserType
                         
                     }
                 ).Where(d => d.Id == logIn.Id).FirstOrDefault();

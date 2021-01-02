@@ -71,7 +71,8 @@ namespace UserInteraction_Microservice.Repository
                     new Secretary()
                     {
                         Id = d.Id,
-                        Person = d.Person
+                        Person = d.Person,
+                        UserType = d.UserType
                     }
                 ).Where(d => d.Id == logIn.Id).FirstOrDefault();
             return null;

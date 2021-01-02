@@ -10,12 +10,11 @@ namespace UserInteraction_Microservice.Decorators
     public class AuthorityArticleDecorator : IArticleAppService
     {
         private readonly IArticleAppService _articleAppService;
-        private readonly String Role;
+        private String Role { get; set; }
         private readonly Dictionary<String, List<String>> AuthorizedUsers;
-        public AuthorityArticleDecorator(IArticleAppService articleAppService, string role)
+        public AuthorityArticleDecorator(IArticleAppService articleAppService)
         {
             _articleAppService = articleAppService;
-            Role = role;
             AuthorizedUsers = new Dictionary<string, List<string>>
             {
                 ["Delete"] = new List<String>() { "Director", "Doctor" },
