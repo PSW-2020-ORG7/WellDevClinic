@@ -14,6 +14,7 @@ namespace Model.Doctor
 
         public String Text { get; set; }
 
+
         public Referral() { }
 
         public Referral(long id)

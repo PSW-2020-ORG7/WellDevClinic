@@ -22,7 +22,6 @@ namespace Model.Doctor
 
         public string Doctor { get; set; }
 
-        public DoctorGrade() { }
 
         public DoctorGrade(List<GradeDTO> grades, String doctor)
         {
@@ -36,18 +35,6 @@ namespace Model.Doctor
             Id = id;
         }
 
-        public DoctorGrade( long id, int numberOfGrades, Dictionary<string, double> gradesForEachQuestions)
-        {
-            GradesForEachQuestions = gradesForEachQuestions;
-            NumberOfGrades = numberOfGrades;
-            Id = id;
-        }
-
-        public DoctorGrade(int numberOfGrades, Dictionary<string, double> gradesForEachQuestions)
-        {
-            NumberOfGrades = numberOfGrades;
-            GradesForEachQuestions = gradesForEachQuestions;
-        }
 
         public DoctorGrade(long id)
         {
