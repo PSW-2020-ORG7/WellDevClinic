@@ -13,5 +13,14 @@ namespace DrugManipulation_Microservice.Domain
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Drug>(entity => {
+                entity.HasIndex(d=> d.Name).IsUnique();
+            });
+
+        }
+
+
     }
 }

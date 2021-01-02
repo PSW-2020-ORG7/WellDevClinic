@@ -39,6 +39,11 @@ namespace DrugManipulation_Microservice.Repository
             return _myDbContext.Drug.ToList();
         }
 
+        public IEnumerable<Drug> GetNotApprovedDrugs()
+        {
+            return _myDbContext.Drug.Where(d => d.Approved==false).ToList();
+        }
+
         public Drug Save(Drug entity)
         {
             var Drug = _myDbContext.Drug.Add(entity);

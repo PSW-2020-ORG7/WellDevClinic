@@ -40,5 +40,11 @@ namespace DrugManipulation_Microservice.ApplicationServices
         {
             return _drugRepository.Save(entity);
         }
+
+        public List<Drug> GetNotApprovedDrugs()
+        {
+            return _drugRepository.GetNotApprovedDrugs();
+        }
+
     }
 }

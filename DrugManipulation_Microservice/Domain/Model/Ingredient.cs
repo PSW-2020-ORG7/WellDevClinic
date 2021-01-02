@@ -18,12 +18,19 @@ namespace DrugManipulation_Microservice.Domain.Model
             Name = name;
             Quantity = quantity;
         }
-
+        public Ingredient(string name, int quantity)
+        {
+            Quantity = quantity;
+            Name = name;
+        }
+        public Ingredient(long id)
+        {
+            Id = id;
+        }
         public long GetId()
         {
             return Id;
         }
-
         public void SetId(long id)
         {
             Id = id;

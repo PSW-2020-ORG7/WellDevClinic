@@ -23,6 +23,31 @@ namespace DrugManipulation_Microservice.Domain.Model
             Ingredients = ingredients;
             AlternativeDrugs = alternativeDrugs;
         }
+        public Drug(long id, String name, int amount, Boolean approved, List<Ingredient> ingredients)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Amount = amount;
+            this.Approved = approved;
+            this.Ingredients = ingredients;
+        }
+        public Drug(string name, int amount, bool approved, List<Ingredient> ingredients, List<Drug> alternative)
+        {
+            Name = name;
+            Amount = amount;
+            Approved = approved;
+            Ingredients = ingredients;
+            AlternativeDrugs = alternative;
+        }
+        public Drug(long id, String name)
+        {
+            Id = id;
+            Name = name;
+        }
+        public Drug(long id)
+        {
+            Id = id;
+        }
 
         public long GetId()
         {

@@ -8,5 +8,6 @@ namespace DrugManipulation_Microservice.Repository.Abstract
 {
     public interface IDrugRepository : ICRUD<Drug, long>
     {
+        public List<Drug> GetNotApprovedDrugs();
     }
 }
