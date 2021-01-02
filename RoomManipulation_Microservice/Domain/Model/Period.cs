@@ -25,5 +25,12 @@ namespace RoomManipulation_Microservice.Domain.Model
         {
             StartDate = startDate;
         }
+
+        public Boolean ComparePeriod(Period period)
+        {
+            if (DateTime.Compare(period.StartDate.Date, this.StartDate.Date) >= 0 && DateTime.Compare(period.EndDate.Date, this.EndDate.Date) <= 0)
+                return true;
+            return false;
+        }
     }
 }

@@ -50,12 +50,12 @@ namespace UserInteraction_Microservice.Repository
                     UserType = s.UserType
 
                 }
-            ).ToList();
+            ).DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<Secretary> GetAllEager()
         {
-            return _myDbContext.Secretary.ToList();
+            return _myDbContext.Secretary.DefaultIfEmpty().ToList();
         }
 
         public Secretary GetEager(long id)

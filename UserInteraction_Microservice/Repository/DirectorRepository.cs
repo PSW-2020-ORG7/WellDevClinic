@@ -49,12 +49,12 @@ namespace UserInteraction_Microservice.Repository
                     UserType = d.UserType
 
                 }
-            ).ToList();
+            ).DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<Director> GetAllEager()
         {
-            return _myDbContext.Director.ToList();
+            return _myDbContext.Director.DefaultIfEmpty().ToList();
         }
 
         public Director GetEager(long id)

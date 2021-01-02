@@ -54,12 +54,12 @@ namespace UserInteraction_Microservice.Repository
                    UserType = p.UserType
 
                }
-           ).ToList();
+           ).DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<Patient> GetAllEager()
         {
-            return _myDbContext.Patient.ToList();
+            return _myDbContext.Patient.DefaultIfEmpty().ToList();
         }
 
 
@@ -120,7 +120,7 @@ namespace UserInteraction_Microservice.Repository
                         Guest = p.Guest,
                         UserType = p.UserType
                     }
-                ).Where(p => p.Blocked == true).ToList();
+                ).Where(p => p.Blocked == true).DefaultIfEmpty().ToList();
         }
 
         public List<Patient> GetPatientsForBlocking()
@@ -134,7 +134,7 @@ namespace UserInteraction_Microservice.Repository
                       Guest = p.Guest,
                       UserType = p.UserType
                   }
-              ).Where(p => p.Blocked == false).ToList();
+              ).Where(p => p.Blocked == false).DefaultIfEmpty().ToList();
         }
     }
 }

@@ -50,7 +50,7 @@ namespace UserInteraction_Microservice.Repository
                  Doctor = new Doctor(a.Doctor.Id, a.Doctor.Speciality, a.Doctor.DoctorGrade, a.Doctor.Person, null, null),
                  Topic = a.Topic,
                  Text = a.Text
-             }).ToList();
+             }).DefaultIfEmpty().ToList();
         }
 
         public Article Save(Article entity)

@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationServices\Abstract\Abstract\" />
     <Folder Include="Decorators\" />
     <Folder Include="Domain\DomainServices\" />
-    <Folder Include="Repository\Abstract\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
   </ItemGroup>
 
 </Project>

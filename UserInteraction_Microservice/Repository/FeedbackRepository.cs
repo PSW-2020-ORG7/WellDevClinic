@@ -57,7 +57,7 @@ namespace UserInteraction_Microservice.Repository
                  IsAnonymous = f.IsAnonymous
              }
 
-             ).ToList();
+             ).DefaultIfEmpty().ToList();
         }
 
         public Feedback Save(Feedback entity)
