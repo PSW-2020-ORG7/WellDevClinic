@@ -80,9 +80,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Director Save(Director entity)
         {
-            _myDbContext.Director.Add(entity);
+            var Director = _myDbContext.Director.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Director.Entity;
 
         }
     }

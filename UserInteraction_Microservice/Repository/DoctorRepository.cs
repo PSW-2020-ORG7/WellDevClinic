@@ -104,9 +104,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Doctor Save(Doctor entity)
         {
-            _myDbContext.Doctor.Add(entity);
+            var Doctor = _myDbContext.Doctor.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Doctor.Entity;
         }
     }
 }

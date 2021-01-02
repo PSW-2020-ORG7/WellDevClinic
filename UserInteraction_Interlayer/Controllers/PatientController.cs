@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;

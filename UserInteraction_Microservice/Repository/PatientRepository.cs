@@ -62,10 +62,34 @@ namespace UserInteraction_Microservice.Repository
             return _myDbContext.Patient.ToList();
         }
 
+
+        public Patient Save(Patient entity)
+        {
+            var Patient = _myDbContext.Patient.Add(entity);
+            _myDbContext.SaveChanges();
+            return Patient.Entity;
+        }
+
+
         public Patient GetEager(long id)
         {
             return _myDbContext.Patient.FirstOrDefault(p => p.Id == id);
         }
+
+        public Patient GetPatientByJMBG(string jmbg)
+        {
+            return _myDbContext.Patient.Select(p =>
+                    new Patient()
+                    {
+                        Id = p.Id,
+                        Person = p.Person,
+                        Blocked = p.Blocked,
+                        Guest = p.Guest,
+                        UserType = p.UserType
+                    }
+                ).Where(p => p.Person.Jmbg.Equals(jmbg)).FirstOrDefault();
+        }
+
 
         public Patient GetUserByCredentials(string username, string password)
         {
@@ -85,11 +109,32 @@ namespace UserInteraction_Microservice.Repository
             return null;
         }
 
-        public Patient Save(Patient entity)
+        public List<Patient> GetBlockedPatients()
         {
-            _myDbContext.Patient.Add(entity);
-            _myDbContext.SaveChanges();
-            return entity;
+            return _myDbContext.Patient.Select(p =>
+                    new Patient()
+                    {
+                        Id = p.Id,
+                        Person = p.Person,
+                        Blocked = p.Blocked,
+                        Guest = p.Guest,
+                        UserType = p.UserType
+                    }
+                ).Where(p => p.Blocked == true).ToList();
+        }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            return _myDbContext.Patient.Select(p =>
+                  new Patient()
+                  {
+                      Id = p.Id,
+                      Person = p.Person,
+                      Blocked = p.Blocked,
+                      Guest = p.Guest,
+                      UserType = p.UserType
+                  }
+              ).Where(p => p.Blocked == false).ToList();
         }
     }
 }

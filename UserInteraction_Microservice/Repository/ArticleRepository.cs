@@ -55,9 +55,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Article Save(Article entity)
         {
-            _myDbContext.Articles.Add(entity);
+            var Article = _myDbContext.Articles.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Article.Entity;
         }
     }
 }

@@ -80,9 +80,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Secretary Save(Secretary entity)
         {
-            _myDbContext.Secretary.Add(entity);
+            var Secretary = _myDbContext.Secretary.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Secretary.Entity;
         }
     }
 }

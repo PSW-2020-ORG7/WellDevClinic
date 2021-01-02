@@ -40,9 +40,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Address Save(Address entity)
         {
-            _myDbContext.Address.Add(entity);
+            var Address = _myDbContext.Address.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Address.Entity;
         }
     }
 }

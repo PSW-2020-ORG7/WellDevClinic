@@ -41,9 +41,9 @@ namespace UserInteraction_Microservice.Repository
        
         public State Save(State entity)
         {
-            _myDbContext.State.Add(entity);
+            var State = _myDbContext.State.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return State.Entity;
         }
     }
 }

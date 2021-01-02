@@ -51,9 +51,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Speciality Save(Speciality entity)
         {
-            _myDbContext.Speciality.Add(entity);
+            var Speciality = _myDbContext.Speciality.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Speciality.Entity;
         }
     }
 }

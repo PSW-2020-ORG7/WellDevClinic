@@ -41,9 +41,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Town Save(Town entity)
         {
-            _myDbContext.Town.Add(entity);
+            var Town = _myDbContext.Town.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Town.Entity;
         }
     }
 }

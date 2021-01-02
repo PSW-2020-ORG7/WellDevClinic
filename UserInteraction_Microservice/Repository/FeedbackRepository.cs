@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UserInteraction_Microservice.Domain;
 using UserInteraction_Microservice.Domain.Model;
@@ -61,9 +62,9 @@ namespace UserInteraction_Microservice.Repository
 
         public Feedback Save(Feedback entity)
         {
-            _myDbContext.Feedback.Add(entity);
+            var Feedback = _myDbContext.Feedback.Add(entity);
             _myDbContext.SaveChanges();
-            return entity;
+            return Feedback.Entity;
         }
     }
 }
