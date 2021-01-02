@@ -82,8 +82,8 @@ namespace UnitTests
             Assert.Empty(result);
         }
 
-        [Fact]
-       /* public void GetPatientsForBlockingNotEmpty()
+      /*  [Fact]
+        public void GetPatientsForBlockingNotEmpty()
         {
             ExaminationService examination_service = new ExaminationService(CreateUpcomingRepository(), CreatePreviousRepository());
             PatientService service = new PatientService(CreatePatientRepository(), null, null, examination_service);
