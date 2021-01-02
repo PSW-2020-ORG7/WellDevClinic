@@ -15,12 +15,12 @@ namespace DrugManipulation_Microservice.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Drug>(entity => {
-                entity.HasIndex(d=> d.Name).IsUnique();
+            modelBuilder.Entity<Drug>(entity =>
+            {
+                entity.HasIndex(d => d.Name).IsUnique();
             });
 
         }
-
 
     }
 }

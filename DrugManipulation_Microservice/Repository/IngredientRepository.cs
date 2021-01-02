@@ -36,7 +36,7 @@ namespace DrugManipulation_Microservice.Repository
 
         public IEnumerable<Ingredient> GetAll()
         {
-            return _myDbContext.Ingredient.ToList();
+            return _myDbContext.Ingredient.DefaultIfEmpty().ToList();
         }
 
         public Ingredient Save(Ingredient entity)

@@ -36,12 +36,12 @@ namespace DrugManipulation_Microservice.Repository
 
         public IEnumerable<Drug> GetAll()
         {
-            return _myDbContext.Drug.ToList();
+            return _myDbContext.Drug.DefaultIfEmpty().ToList();
         }
-
+        
         public IEnumerable<Drug> GetNotApprovedDrugs()
         {
-            return _myDbContext.Drug.Where(d => d.Approved==false).ToList();
+            return _myDbContext.Drug.Where(d => d.Approved==false).DefaultIfEmpty().ToList();
         }
 
         public Drug Save(Drug entity)
@@ -50,5 +50,6 @@ namespace DrugManipulation_Microservice.Repository
             _myDbContext.SaveChanges();
             return Drug.Entity;
         }
+
     }
 }

@@ -7,6 +7,6 @@ namespace DrugManipulation_Microservice.ApplicationServices.Abstract
 {
     public interface IDrugAppService : ICRUD<Drug, long>
     {
-        public List<Drug> GetNotApprovedDrugs();
+        public IEnumerable<Drug> GetNotApprovedDrugs();
     }
 }
