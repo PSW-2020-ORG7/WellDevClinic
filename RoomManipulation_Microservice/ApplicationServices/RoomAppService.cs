@@ -1,5 +1,6 @@
 ﻿using RoomManipulation_Microservice.ApplicationServices.Abstract;
 using RoomManipulation_Microservice.Domain.Model;
+using RoomManipulation_Microservice.Repository.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,13 @@ namespace RoomManipulation_Microservice.ApplicationServices
 {
     public class RoomAppService : IRoomAppService
     {
+        private readonly IRoomRepository _roomRepository;
+
+        public RoomAppService(IRoomRepository roomRepository)
+        {
+            _roomRepository = roomRepository;
+        }
+
         public void CheckHospitalizationDurationInRoom()
         {
             throw new NotImplementedException();
@@ -15,7 +23,7 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public void Delete(Room entity)
         {
-            throw new NotImplementedException();
+            _roomRepository.Delete(entity);
         }
 
         public void DeleteEquipmentFromRooms(Equipment equipment)
@@ -30,17 +38,17 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public void Edit(Room entity)
         {
-            throw new NotImplementedException();
+            _roomRepository.Edit(entity);
         }
 
         public Room Get(long id)
         {
-            throw new NotImplementedException();
+            return _roomRepository.Get(id);
         }
 
         public IEnumerable<Room> GetAll()
         {
-            throw new NotImplementedException();
+            return _roomRepository.GetAll();
         }
 
         public IEnumerable<Room> GetRoomsCointainingEquipment(Equipment equipment)
@@ -55,7 +63,7 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public Room Save(Room entity)
         {
-            throw new NotImplementedException();
+            return _roomRepository.Save(entity);
         }
     }
 }

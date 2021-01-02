@@ -25,7 +25,7 @@ namespace RoomManipulation_Microservice.Repository
 
         public void DeleteRenovationByRoom(Room room)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Edit(Renovation entity)

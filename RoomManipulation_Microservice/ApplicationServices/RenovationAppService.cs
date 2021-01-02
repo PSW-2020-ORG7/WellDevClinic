@@ -1,5 +1,6 @@
 ﻿using RoomManipulation_Microservice.ApplicationServices.Abstract;
 using RoomManipulation_Microservice.Domain.Model;
+using RoomManipulation_Microservice.Repository.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +9,16 @@ namespace RoomManipulation_Microservice.ApplicationServices
 {
     public class RenovationAppService : IRenovationAppService
     {
+        private readonly IRenovationRepository _renovationRepository;
+
+        public RenovationAppService(IRenovationRepository renovationRepository)
+        {
+            _renovationRepository = renovationRepository;
+        }
+
         public void Delete(Renovation entity)
         {
-            throw new NotImplementedException();
+            _renovationRepository.Delete(entity);
         }
 
         public void DeleteRenovationByRoom(Room room)
@@ -20,27 +28,27 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public void Edit(Renovation entity)
         {
-            throw new NotImplementedException();
+            _renovationRepository.Edit(entity);
         }
 
         public Renovation Get(long id)
         {
-            throw new NotImplementedException();
+            return _renovationRepository.Get(id);
         }
 
         public IEnumerable<Renovation> GetAll()
         {
-            throw new NotImplementedException();
+            return _renovationRepository.GetAll();
         }
 
         public IEnumerable<Renovation> GetRenovationsByRoomAndPeriod(Room room, Period period)
         {
-            throw new NotImplementedException();
+            return _renovationRepository.GetRenovationsByRoomAndPeriod(room, period);
         }
 
         public Renovation Save(Renovation entity)
         {
-            throw new NotImplementedException();
+            return _renovationRepository.Save(entity);
         }
     }
 }
