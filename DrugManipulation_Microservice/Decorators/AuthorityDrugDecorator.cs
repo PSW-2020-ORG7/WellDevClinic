@@ -51,7 +51,7 @@ namespace DrugManipulation_Microservice.Decorators
                 return _drugAppService.GetAll();
             return null;
         }
-        public List<Drug> GetNotApprovedDrugs()
+        public IEnumerable<Drug> GetNotApprovedDrugs()
         {
             if (AuthorizedUsers["GetNotApprovedDrugs"].SingleOrDefault(any => any.Equals(Role)) != null)
                 return _drugAppService.GetNotApprovedDrugs();

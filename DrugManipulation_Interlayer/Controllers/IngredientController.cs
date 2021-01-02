@@ -22,7 +22,7 @@ namespace DrugManipulation_Interlayer.Controllers
         [HttpGet]
         public List<Ingredient> GetAll()
         {
-            return _ingredientAppService.GetAll().ToList();
+            return _ingredientAppService.GetAll().DefaultIfEmpty().ToList();
         }
 
         [HttpGet]

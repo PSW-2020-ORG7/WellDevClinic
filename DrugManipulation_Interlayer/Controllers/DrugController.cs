@@ -22,7 +22,7 @@ namespace DrugManipulation_Interlayer.Controllers
         [HttpGet]
         public List<Drug> GetAll()
         {
-            return _drugAppService.GetAll().ToList();
+            return _drugAppService.GetAll().DefaultIfEmpty().ToList();
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace DrugManipulation_Interlayer.Controllers
         [Route("getNotApproved")]
         public List<Drug> GetNotApprovedDrugs()
         {
-            return _drugAppService.GetNotApprovedDrugs().ToList();
+            return _drugAppService.GetNotApprovedDrugs().DefaultIfEmpty().ToList();
         }
     }
 }

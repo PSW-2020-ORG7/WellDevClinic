@@ -45,6 +45,5 @@ namespace DrugManipulation_Microservice.ApplicationServices
         {
             return _drugRepository.GetNotApprovedDrugs();
         }
-        
     }
 }
