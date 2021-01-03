@@ -9,6 +9,7 @@ namespace RoomManipulation_Microservice.Repository.Abstract
     public interface IRenovationRepository : ICRUD<Renovation, long>
     {
         public IEnumerable<Renovation> GetRenovationsByRoomAndPeriod(Room room, Period period);
-        public void DeleteRenovationByRoom(Room room);
+        public IEnumerable<Renovation> GetRenovationsByRoom(Room room);
+        void DeleteRange(List<Renovation> renovations);
     }
 }

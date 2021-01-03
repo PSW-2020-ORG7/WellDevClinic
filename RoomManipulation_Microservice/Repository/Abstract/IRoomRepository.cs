@@ -10,5 +10,7 @@ namespace RoomManipulation_Microservice.Repository.Abstract
     {
         public List<Room> GetRoomsByEquipment(Equipment equipment);
         public void DeleteByRange(List<Room> rooms);
+        List<Room> GetRoomsWithFreeSpace();
+        List<Room> GetRoomsByRoomType(RoomType roomType);
     }
 }

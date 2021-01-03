@@ -46,7 +46,29 @@ namespace RoomManipulation_Microservice.Repository
 
         public List<Room> GetRoomsByEquipment(Equipment equipment)
         {
-            return null;
+            IEnumerable<Room> rooms = _myDbContext.Room.ToList().DefaultIfEmpty();
+            List<Room> result = new List<Room>();
+            foreach (Room room in rooms)
+            {
+                foreach (EquipmentStatistic e in room.EquipmentStatistic)
+                {
+                    if (e.Equipment.Id == equipment.Id && e.Equipment.Name == equipment.Name)
+                    {
+                        result.Add(room);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<Room> GetRoomsByRoomType(RoomType roomType)
+        {
+            return _myDbContext.Room.Where(r => r.RoomType.Name == roomType.Name).DefaultIfEmpty().ToList();
+        }
+
+        public List<Room> GetRoomsWithFreeSpace()
+        {
+            return _myDbContext.Room.Where(r => r.MaxNumberOfPatientsForHospitalization > r.CurrentNumberOfPatients).DefaultIfEmpty().ToList();
         }
 
         public Room Save(Room entity)

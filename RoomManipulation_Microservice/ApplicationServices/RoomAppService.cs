@@ -3,6 +3,7 @@ using RoomManipulation_Microservice.Domain.Model;
 using RoomManipulation_Microservice.Repository.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RoomManipulation_Microservice.ApplicationServices
@@ -10,10 +11,12 @@ namespace RoomManipulation_Microservice.ApplicationServices
     public class RoomAppService : IRoomAppService
     {
         private readonly IRoomRepository _roomRepository;
+        private readonly IRenovationAppService _renovationAppService;
 
-        public RoomAppService(IRoomRepository roomRepository)
+        public RoomAppService(IRoomRepository roomRepository, IRenovationAppService renovationAppService)
         {
             _roomRepository = roomRepository;
+            _renovationAppService = renovationAppService;
         }
 
         public void CheckHospitalizationDurationInRoom()
@@ -23,18 +26,26 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public void Delete(Room entity)
         {
+            _renovationAppService.DeleteRenovationByRoom(entity);
             _roomRepository.Delete(entity);
         }
 
         public void DeleteEquipmentFromRooms(Equipment equipment)
         {
-            List<Room> rooms = _roomRepository.GetRoomsByEquipment(equipment);
-            _roomRepository.DeleteByRange(rooms);
+            List<Room> rooms = GetRoomsCointainingEquipment(equipment).ToList();
+            foreach(Room r in rooms)
+            {
+                r.DeleteEquipment(equipment);
+                Edit(r);
+            }
+
         }
 
         public void DeleteRoomsByRoomType(RoomType roomType)
         {
-            throw new NotImplementedException();
+            List<Room> rooms = _roomRepository.GetRoomsByRoomType(roomType);
+            foreach(Room r in rooms)
+                Delete(r);
         }
 
         public void Edit(Room entity)
@@ -54,12 +65,12 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public IEnumerable<Room> GetRoomsCointainingEquipment(Equipment equipment)
         {
-            throw new NotImplementedException();
+            return _roomRepository.GetRoomsByEquipment(equipment);
         }
 
         public List<Room> GetRoomsForHospitalization()
         {
-            throw new NotImplementedException();
+            return _roomRepository.GetRoomsWithFreeSpace();
         }
 
         public Room Save(Room entity)

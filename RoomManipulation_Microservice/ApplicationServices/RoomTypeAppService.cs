@@ -10,14 +10,17 @@ namespace RoomManipulation_Microservice.ApplicationServices
     public class RoomTypeAppService : IRoomTypeAppService
     {
         private readonly IRoomTypeRepository _roomTypeRepository;
+        private readonly IRoomAppService _roomAppService;
 
-        public RoomTypeAppService(IRoomTypeRepository roomTypeRepository)
+        public RoomTypeAppService(IRoomTypeRepository roomTypeRepository, IRoomAppService roomAppService)
         {
             _roomTypeRepository = roomTypeRepository;
+            _roomAppService = roomAppService;
         }
 
         public void Delete(RoomType entity)
         {
+            _roomAppService.DeleteRoomsByRoomType(entity);
             _roomTypeRepository.Delete(entity);
         }
 
@@ -38,7 +41,7 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public RoomType Save(RoomType entity)
         {
-            return _roomTypeRepository.Save(enum);
+            return _roomTypeRepository.Save(entity);
         }
     }
 }

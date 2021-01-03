@@ -3,6 +3,7 @@ using RoomManipulation_Microservice.Domain.Model;
 using RoomManipulation_Microservice.Repository.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RoomManipulation_Microservice.ApplicationServices
@@ -23,7 +24,9 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public void DeleteRenovationByRoom(Room room)
         {
-            throw new NotImplementedException();
+            List<Renovation> renovations = _renovationRepository.GetRenovationsByRoom(room).ToList();
+            if(renovations != null)
+                _renovationRepository.DeleteRange(renovations);
         }
 
         public void Edit(Renovation entity)

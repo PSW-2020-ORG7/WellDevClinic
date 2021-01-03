@@ -23,9 +23,10 @@ namespace RoomManipulation_Microservice.Repository
             _myDbContext.SaveChanges();
         }
 
-        public void DeleteRenovationByRoom(Room room)
+        public void DeleteRange(List<Renovation> renovations)
         {
-            
+            _myDbContext.Renovation.RemoveRange(renovations);
+            _myDbContext.SaveChanges();
         }
 
         public void Edit(Renovation entity)
@@ -42,6 +43,11 @@ namespace RoomManipulation_Microservice.Repository
         public IEnumerable<Renovation> GetAll()
         {
             return _myDbContext.Renovation.DefaultIfEmpty().ToList();
+        }
+
+        public IEnumerable<Renovation> GetRenovationsByRoom(Room room)
+        {
+            return _myDbContext.Renovation.Where(r => r.Room.RoomCode == room.RoomCode).DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<Renovation> GetRenovationsByRoomAndPeriod(Room room, Period period)
