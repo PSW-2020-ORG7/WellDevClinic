@@ -52,6 +52,7 @@ namespace PSW_Wpf_app.View
             Equipment equipment = (Equipment)equip.SelectedItem;
             context = new EmergencyAppointmentViewModel(apptype.SelectedIndex, equipment);
             emergencyData.ItemsSource = context.Examinations;
+            analysisData.ItemsSource = context.ExaminationForDilay;
 
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -177,8 +178,44 @@ namespace PSW_Wpf_app.ViewModel
 
                 }
 
-            }
+                displayDifference.OrderBy(pair => pair.Value);
+                List<KeyValuePair<Examination, double>> myList = displayDifference.ToList();
+                myList.Sort(
+                    delegate (KeyValuePair<Examination, double> pair1,
+                    KeyValuePair<Examination, double> pair2)
+                    {
+                        return pair1.Value.CompareTo(pair2.Value);
+                    });
 
+                int i = 0;
+                foreach (KeyValuePair<Examination, double> d in myList)
+                {
+                    if (i <= 2)
+                        ExaminationForDilay.Add(d.Key);
+                    i++;
+                }
+                int n = 0;
+                foreach (KeyValuePair<Examination, double> d in myList)
+                {
+                    if (n <= 2)
+                        DileyTime.Add(d.Value);
+
+                    n++;
+                }
+                foreach (Examination e in ExaminationForDilay)
+                {
+                    foreach (KeyValuePair<Examination, ExaminationDTO> d in dilayTerm)
+                    {
+                        if (d.Key.Equals(e))
+                        {
+                            if (d.Key.Period.StartDate.Equals(e.Period.StartDate))
+                                DelayedTermExamination.Add(d.Value);
+                        }
+                    }
+                }
+                return;
+            }
+           
             Examinations.Add(examination);
         }
 
