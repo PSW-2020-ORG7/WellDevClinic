@@ -26,5 +26,6 @@ namespace UserInteraction_Interlayer.Controllers
         {
             return _userAppService.Registration(user);
         }
+
     }
 }
