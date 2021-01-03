@@ -32,9 +32,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserInteraction_Interlayer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcing", "EventSourcing\EventSourcing.csproj", "{EBC69423-052E-4042-AB95-871CE2B36DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugManipulation_Microservice", "DrugManipulation_Microservice\DrugManipulation_Microservice.csproj", "{6B7DD666-A259-4C61-935D-AA6737D74B54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugManipulation_Microservice", "DrugManipulation_Microservice\DrugManipulation_Microservice.csproj", "{6B7DD666-A259-4C61-935D-AA6737D74B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugManipulation_Interlayer", "DrugManipulation_Interlayer\DrugManipulation_Interlayer.csproj", "{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugManipulation_Interlayer", "DrugManipulation_Interlayer\DrugManipulation_Interlayer.csproj", "{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchAndSchedule_Microservice", "SearchAndSchedule_Microservice\SearchAndSchedule_Microservice.csproj", "{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +182,14 @@ Global
 		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Release|x86.ActiveCfg = Release|Any CPU
 		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Release|x86.Build.0 = Release|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Debug|x86.Build.0 = Debug|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Release|x86.ActiveCfg = Release|Any CPU
+		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
