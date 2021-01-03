@@ -126,6 +126,57 @@ namespace PSW_Wpf_app.ViewModel
 
                 List<Examination> examinations1 = new List<Examination>();
 
+                foreach (Examination ex in examinations)
+                {
+                    if (selectedType == 0)
+                    {
+                        if (ex.Doctor.Specialty.Name.Equals("general practice"))
+                        {
+                            examinations1.Add(ex);
+                        }
+                    }
+                    else
+                    {
+                        if (!ex.Doctor.Specialty.Name.Equals("general practice"))
+                        {
+                            examinations1.Add(ex);
+                        }
+                    }
+
+                }
+
+                List<ExaminationDTO> terms = new List<ExaminationDTO>();
+
+                foreach (Examination ex in examinations1)
+                {
+                    BusinessDayDTO businessDayDTO = new BusinessDayDTO(ex.Doctor, ex.Period, PriorityType.NoPriority);
+                    businessDayDTO.PatientScheduling = true;
+                    List<ExaminationDTO> termsFound = await WpfClient.FindTerms(businessDayDTO);
+                    terms = checkTime(termsFound);
+                    if (terms.Count == 0)
+                    {
+                        termsFound = await WpfClient.FindTerms(businessDayDTO);
+                        terms = checkTime(termsFound);
+                    }
+
+
+                    if (terms.Count == 0)
+                        continue;
+
+                    allTerms.AddRange(terms);
+                    dilayTerm[ex] = terms[0];
+                }
+
+
+                Dictionary<Examination, double> displayDifference = new Dictionary<Examination, double>();
+                foreach (KeyValuePair<Examination, ExaminationDTO> d in dilayTerm)
+                {
+
+                    TimeSpan difference = d.Value.Period.StartDate - d.Key.Period.StartDate;
+                    displayDifference[d.Key] = difference.TotalMinutes;
+
+                }
+
             }
 
             Examinations.Add(examination);
