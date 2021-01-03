@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/databasePreview.css" />
+    <link rel="stylesheet" href="css/viewMedications.css" />
 
 </head>
 <body>
@@ -48,7 +49,7 @@
                     <tr>
                         <td><input type="number" min="0" id="amountFrom" /></td>
                         <td><input type="number" min="0" id="amountTo" /></td>
-                        <td><input type="button" class="btn btn-primary" onclick="filter()" value="Submit"/></td>
+                        <td><input type="button" class="btn btn-primary" onclick="filter()" value="Submit" /></td>
                     </tr>
                 </table>
             </form>
@@ -56,39 +57,59 @@
     </div>
 
     <div>
-        <div class="loader"></div>
-        <div class="modalCustom" id="medAvailability" style="display:none">
+        <div class="loader" id="pageLoader"></div>
+        <div class="modalCustom" id="medAvailability">
             <div class="modalContent">
-            <span class="close">&times;</span>
-            <h4 id="txtMedName"></h4>
-            <br>
-            <table border="1" id="medTableData" class="customTable" width="100%">
-                <thead>
-                    <tr>
-                        <th>Medicine name</th>
-                        <th>Amount</th>
-                        <th>Price/piece(RSD)</th>
-                        <th>Pharmacy</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <form>
-                <h5>
-                <select id="phName" style="width:50%; margin-top:10px; border: 1px solid #ccc">
-                    <option selected disabled>Select pharmacy..</option>
-                </select>
-                <br/>
-                <input type="number" min="1" max="0" id="amountToBuy" placeholder="Enter amount" style="width:50%"/>
-                <br/>
-                <input type="button" class="btn btn-info" style="width:100%; margin-top:15px" value="Purchase" id="purchase"/>
-                </h5>
-            </form>
+                <span class="close">&times;</span>
+                <h4 id="txtMedName"></h4>
+                <br>
+                <table border="1" id="medTableData" class="customTable" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Medicine name</th>
+                            <th>Amount</th>
+                            <th>Price/piece(RSD)</th>
+                            <th>Pharmacy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <form>
+                    <h5>
+                        <select id="phName" style="width:50%; margin-top:10px; border: 1px solid #ccc">
+                            <option selected disabled>Select pharmacy..</option>
+                        </select>
+                        <label id="invalidPharmacy" class="valid">Select pharmacy!</label>
+                        <br />
+                        <input type="number" min="1" max="0" id="amountToBuy" placeholder="Enter amount" style="width:50%" />
+                        <label id="invalidAmount" class="valid">Input correct amount to buy!</label>
+                        <br />
+                        <input type="button" class="btn btn-info expand" style="margin-top:15px" value="Purchase" id="purchase" />
+                    </h5>
+                </form>
             </div>
         </div>
 
         <div id="viewMedication"></div>
+    </div>
+
+    <div id="responseLoad">
+        <div class="loader"></div>
+        <h4 class="responseInfo">Proccessing request. Please wait.</h4>
+    </div>
+
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="message"></div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

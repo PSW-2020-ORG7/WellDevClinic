@@ -80,7 +80,6 @@ namespace PSW_Pharmacy_Adapter.Service
                     response = await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug", content);
                     return JsonConvert.DeserializeObject<Medication>(response.Content.ReadAsStringAsync().Result);
                 }
-                
             } 
             return null;
         }

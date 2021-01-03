@@ -49,7 +49,7 @@ div.card {
     .topnav label {
         font-weight:bold;
     }
-    .topnav a, label{
+    .topnav a, .topnav label{
         float: left;
         color: #b5b5b5;
         text-align: center;
@@ -136,7 +136,7 @@ div.card {
     width: 100%;
 }
 
-input[type=text], input[type=number], select {
+input[type=text], input[type=number], input[type=date], select {
     border-radius: 4px;
     padding: 4px 10px;
     margin: 8px 0;

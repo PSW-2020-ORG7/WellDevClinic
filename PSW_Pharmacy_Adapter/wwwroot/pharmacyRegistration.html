@@ -29,18 +29,18 @@
             <form class="register-form">
                 <h5>Pharmacy registration</h5>
                 <input type="text" class="input-text" placeholder="Enter pharmacy name" id="txtName" />
-                <label id="invalidName" class="valid">Required field!</label><br/>
+                <label id="invalidName" class="valid">Required field!</label>
                 <input type="text" placeholder="Enter api key" id="txtApi">
-                <label id="invalidApi" class="valid">Required field!</label><br/>
+                <label id="invalidApi" class="valid">Required field!</label>
                 <input type="text" placeholder="Enter pharmacy url" id="txtUrl">
-                <label id="invalidUrl" class="valid">Required field!</label><br/>
-                <button id="btnAddPharmacy" type="button" data-toggle="modal" data-target="#exampleModalCenter1">Add pharmacy</button>
+                <label id="invalidUrl" class="valid">Required field!</label>
+                <button id="btnAddPharmacy" type="button">Add pharmacy</button>
             </form>
         </div>
     </div>
 
     <div id="regAction" style="display:none">
-        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="regActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body" id="message"> </div>
