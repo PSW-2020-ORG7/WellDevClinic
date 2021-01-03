@@ -13,6 +13,8 @@ namespace RoomManipulation_Microservice.Domain
         public DbSet<Renovation> Renovation { get; set; }
         public DbSet<RoomType> RoomType { get; set; }
         public DbSet<EquipmentStatistic> EquipmentStatistic { get; set; }
+
+        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }

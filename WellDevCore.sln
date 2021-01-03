@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserInteraction_Interlayer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcing", "EventSourcing\EventSourcing.csproj", "{EBC69423-052E-4042-AB95-871CE2B36DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomManipulation_Microservice", "RoomManipulation_Microservice\RoomManipulation_Microservice.csproj", "{A076C7A4-9CFB-4CB3-9A2C-5EBEEDFD0700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomManipulation_Microservice", "RoomManipulation_Microservice\RoomManipulation_Microservice.csproj", "{A076C7A4-9CFB-4CB3-9A2C-5EBEEDFD0700}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomManipulation_Interlayer", "RoomManipulation_Interlayer\RoomManipulation_Interlayer.csproj", "{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -170,6 +172,14 @@ Global
 		{A076C7A4-9CFB-4CB3-9A2C-5EBEEDFD0700}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A076C7A4-9CFB-4CB3-9A2C-5EBEEDFD0700}.Release|x86.ActiveCfg = Release|Any CPU
 		{A076C7A4-9CFB-4CB3-9A2C-5EBEEDFD0700}.Release|x86.Build.0 = Release|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Debug|x86.Build.0 = Debug|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Release|x86.ActiveCfg = Release|Any CPU
+		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

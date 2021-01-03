@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace RoomManipulation_Microservice.Domain.Model
@@ -19,9 +20,9 @@ namespace RoomManipulation_Microservice.Domain.Model
     public class Renovation : IIdentifiable<long>
     {
         public long Id { get; set; }
-        public Period Period { get; set; }
+        public virtual Period Period { get; set; }
         public String Description { get; set; }
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
         public RenovationStatus RenovationStatus { get; set; }
 
         public Renovation(long id, Period period, string description, Room room, RenovationStatus renovationStatus)
