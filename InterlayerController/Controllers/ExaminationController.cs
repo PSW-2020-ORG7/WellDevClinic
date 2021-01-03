@@ -134,5 +134,13 @@ namespace InterlayerController.Controllers
 
             return result;
         }
+
+        [HttpPut]
+        [Route("changePatient")]
+        public void EditExamination(Examination examination)
+        {
+            _examinationController.Edit(examination);
+
+        }
     }
 }

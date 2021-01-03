@@ -32,6 +32,8 @@ namespace bolnica.Repository
 
         public void Edit(Examination entity)
         {
+            Examination examination = GetEager(entity.Id);
+            examination.Patient = entity.Patient;
             myDbContext.SaveChanges();
         }
 

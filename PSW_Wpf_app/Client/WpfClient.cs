@@ -319,6 +319,16 @@ namespace PSW_Wpf_app.Client
             return examinations;
         }
 
+        public static async void EditExamination(Examination examination)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(examination));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:51393/api/examination/changePatient", content);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+           
+        }
+
     }
 }
 
