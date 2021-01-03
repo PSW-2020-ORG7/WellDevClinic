@@ -10,14 +10,16 @@ namespace RoomManipulation_Microservice.ApplicationServices
     public class EquipmentAppService : IEquipmentAppService
     {
         private readonly IEquipmentRepository _equipmentRepository;
-
-        public EquipmentAppService(IEquipmentRepository equipmentRepository)
+        private readonly IRoomAppService _roomAppService;
+        public EquipmentAppService(IEquipmentRepository equipmentRepository, IRoomAppService roomAppService)
         {
             _equipmentRepository = equipmentRepository;
+            _roomAppService = roomAppService;
         }
 
         public void Delete(Equipment entity)
         {
+            _roomAppService.DeleteEquipmentFromRooms(entity);
             _equipmentRepository.Delete(entity);
         }
 

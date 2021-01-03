@@ -8,5 +8,7 @@ namespace RoomManipulation_Microservice.Repository.Abstract
 {
     public interface IRoomRepository : ICRUD<Room, long>
     {
+        public List<Room> GetRoomsByEquipment(Equipment equipment);
+        public void DeleteByRange(List<Room> rooms);
     }
 }

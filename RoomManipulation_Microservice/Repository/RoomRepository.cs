@@ -23,6 +23,11 @@ namespace RoomManipulation_Microservice.Repository
             _myDbContext.SaveChanges();
         }
 
+        public void DeleteByRange(List<Room> rooms)
+        {
+            _myDbContext.Room.RemoveRange(rooms);
+        }
+
         public void Edit(Room entity)
         {
             _myDbContext.Room.Update(entity);
@@ -37,6 +42,11 @@ namespace RoomManipulation_Microservice.Repository
         public IEnumerable<Room> GetAll()
         {
             return _myDbContext.Room.DefaultIfEmpty().ToList();
+        }
+
+        public List<Room> GetRoomsByEquipment(Equipment equipment)
+        {
+            return null;
         }
 
         public Room Save(Room entity)

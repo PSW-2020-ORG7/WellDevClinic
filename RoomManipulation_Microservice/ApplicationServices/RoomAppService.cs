@@ -28,7 +28,8 @@ namespace RoomManipulation_Microservice.ApplicationServices
 
         public void DeleteEquipmentFromRooms(Equipment equipment)
         {
-            throw new NotImplementedException();
+            List<Room> rooms = _roomRepository.GetRoomsByEquipment(equipment);
+            _roomRepository.DeleteByRange(rooms);
         }
 
         public void DeleteRoomsByRoomType(RoomType roomType)
