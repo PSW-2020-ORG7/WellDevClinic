@@ -11,5 +11,6 @@ namespace bolnica.Repository
    {
       List<Examination> GetUpcomingExaminationsByUser(User user);
         Examination Save(long doctorId, Period period, long patientId);
-   }
+        List<Examination> GetAllUpcomingExaminations();
+    }
 }

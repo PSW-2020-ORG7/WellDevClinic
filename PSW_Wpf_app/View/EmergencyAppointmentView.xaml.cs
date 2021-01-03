@@ -68,5 +68,28 @@ namespace PSW_Wpf_app.View
             }
         }
 
+        private void Analysis_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(" Appointment Analysis\n\n" +
+
+                "If there are no free terms software will automatically call appointment analysis.\n" +
+                "It's implemented to set emergency appointment as priority.\n" +
+                "It will return 3 best options. You can choose one of them and delay \n" +
+                "scheduled appointment for later and instead of it we will set emergency appointment.\n" +
+                "Given options are sorted from good to less good,\n" +
+                "based on rescheduling delayed appointment.\n" +
+                "");
+        }
+
+        private void Solution_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private async void Schedule_And_Dilay_Term_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
     }
 }

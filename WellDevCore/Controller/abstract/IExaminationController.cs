@@ -21,6 +21,7 @@ namespace bolnica.Controller
         Examination NewExamination(long DoctorId, Period Period, long PatientId);
         void EditPrevious(Examination entity);
         Examination GetPrevious(long id);
+        List<Examination> GetAllUpcomingExaminations();
 
     }
 }

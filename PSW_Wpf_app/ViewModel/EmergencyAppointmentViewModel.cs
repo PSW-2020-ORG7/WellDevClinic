@@ -11,6 +11,46 @@ namespace PSW_Wpf_app.ViewModel
     {
         private BindingList<Equipment> equipments = new BindingList<Equipment>();
         private BindingList<ExaminationDTO> examinations = new BindingList<ExaminationDTO>();
+        private BindingList<Examination> examinationForDilay = new BindingList<Examination>();
+        private List<double> dileyTime = new List<double>();
+        private List<ExaminationDTO> delayedTermExamination = new List<ExaminationDTO>();
+
+        public List<ExaminationDTO> DelayedTermExamination
+        {
+            get
+            {
+                return delayedTermExamination;
+            }
+            set
+            {
+                delayedTermExamination = value;
+                OnPropertyChanged("DelayedTermExamination");
+            }
+        }
+        public List<double> DileyTime
+        {
+            get
+            {
+                return dileyTime;
+            }
+            set
+            {
+                dileyTime = value;
+                OnPropertyChanged("DileyTime");
+            }
+        }
+        public BindingList<Examination> ExaminationForDilay
+        {
+            get
+            {
+                return examinationForDilay;
+            }
+            set
+            {
+                examinationForDilay = value;
+                OnPropertyChanged("ExaminationForDilay");
+            }
+        }
 
         public BindingList<Equipment> Equipments
         {
@@ -76,10 +116,34 @@ namespace PSW_Wpf_app.ViewModel
             List<ExaminationDTO> validTerms = findValidRooms(equipment, allTerms);
             ExaminationDTO examination = findEmergencyTerm(validTerms, period);
 
-            if (examination == null)
-                MessageBox.Show("There are no free terms!");
+
+            if (examination.Period == null)
+            {
+                MessageBox.Show("There are no free terms! We will run the analysis! ");
+
+                List<Examination> examinations = await WpfClient.GetAllUpcomingExaminations();
+                Dictionary<Examination, ExaminationDTO> dilayTerm = new Dictionary<Examination, ExaminationDTO>();
+
+                List<Examination> examinations1 = new List<Examination>();
+
+            }
 
             Examinations.Add(examination);
+        }
+
+        private List<ExaminationDTO> checkTime(List<ExaminationDTO> termsFound)
+        {
+            List<ExaminationDTO> terms = new List<ExaminationDTO>();
+            foreach (ExaminationDTO t in termsFound)
+            {
+                if (t.Period.EndDate >= DateTime.Now)
+                {
+                    terms.Add(t);
+                }
+
+
+            }
+            return terms;
         }
 
         private ExaminationDTO findEmergencyTerm(List<ExaminationDTO> validTerms, Period period)
