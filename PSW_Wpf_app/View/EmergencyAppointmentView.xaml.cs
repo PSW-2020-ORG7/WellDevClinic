@@ -84,7 +84,13 @@ namespace PSW_Wpf_app.View
 
         private void Solution_Click(object sender, RoutedEventArgs e)
         {
-           
+            int izbor = analysisData.SelectedIndex;
+            List<double> minutes = context.DileyTime;
+            List<ExaminationDTO> proba = context.DelayedTermExamination;
+
+            AppointmentAnalysisView appointmentAnalisys = new AppointmentAnalysisView(minutes[analysisData.SelectedIndex], proba[analysisData.SelectedIndex]);
+
+            appointmentAnalisys.Show();
         }
 
         private async void Schedule_And_Dilay_Term_Click(object sender, RoutedEventArgs e)
