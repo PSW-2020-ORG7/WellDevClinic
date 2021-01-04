@@ -135,6 +135,12 @@ namespace PSW_Wpf_app
                 view.ShowDialog();
 
             }
+
+        private void RelocationAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            RelocationEquipmentView view = new RelocationEquipmentView();
+            view.Show();
         }
+    }
     
 }
