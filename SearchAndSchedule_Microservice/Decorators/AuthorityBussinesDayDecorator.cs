@@ -38,32 +38,32 @@ namespace SearchAndSchedule_Microservice.Decorators
              };
 
         }
-        public void Delete(BussinesDay entity)
+        public void Delete(BusinessDay entity)
         {
             if (AuthorizedUsers["Delete"].SingleOrDefault(any => any.Equals(Role)) != null)
                 _bussinesDayAppService.Delete(entity);
         }
 
-        public void Edit(BussinesDay entity)
+        public void Edit(BusinessDay entity)
         {
             if (AuthorizedUsers["Edit"].SingleOrDefault(any => any.Equals(Role)) != null)
                 _bussinesDayAppService.Edit(entity);
         }
 
-        public BussinesDay Get(long id)
+        public BusinessDay Get(long id)
         {
             if (AuthorizedUsers["Get"].SingleOrDefault(any => any.Equals(Role)) != null)
                 return _bussinesDayAppService.Get(id);
             return null;
         }
 
-        public IEnumerable<BussinesDay> GetAll()
+        public IEnumerable<BusinessDay> GetAll()
         {
             if (AuthorizedUsers["GetAll"].SingleOrDefault(any => any.Equals(Role)) != null)
                 return _bussinesDayAppService.GetAll();
             return null;
         }
-        public BussinesDay Save(BussinesDay entity)
+        public BusinessDay Save(BusinessDay entity)
         {
             if (AuthorizedUsers["Save"].SingleOrDefault(any => any.Equals(Role)) != null)
                 return _bussinesDayAppService.Save(entity);

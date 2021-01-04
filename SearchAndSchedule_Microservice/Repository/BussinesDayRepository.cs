@@ -17,29 +17,50 @@ namespace SearchAndSchedule_Microservice.Repository
             _myDbContext = myDbContext;
         }
 
-        public void Delete(BussinesDay entity)
+        public void Delete(BusinessDay entity)
         {
             _myDbContext.BussinesDay.Remove(entity);
             _myDbContext.SaveChanges();
         }
 
-        public void Edit(BussinesDay entity)
+        public void DeleteRange(List<BusinessDay> businessDays)
+        {
+            _myDbContext.BussinesDay.RemoveRange(businessDays);
+            _myDbContext.SaveChanges();
+        }
+
+        public void Edit(BusinessDay entity)
         {
             _myDbContext.BussinesDay.Update(entity);
             _myDbContext.SaveChanges();
         }
 
-        public BussinesDay Get(long id)
+        public BusinessDay Get(long id)
         {
             return _myDbContext.BussinesDay.FirstOrDefault(b => b.Id == id);
         }
 
-        public IEnumerable<BussinesDay> GetAll()
+        public IEnumerable<BusinessDay> GetAll()
         {
             return _myDbContext.BussinesDay.DefaultIfEmpty().ToList();
         }
 
-        public BussinesDay Save(BussinesDay entity)
+        public IEnumerable<BusinessDay> GetBusinessDaysByDoctor(Doctor doctor)
+        {
+            return _myDbContext.BussinesDay.Where(b => b.Doctor.Id == doctor.Id).ToList().DefaultIfEmpty();
+        }
+
+        public IEnumerable<BusinessDay> GetBusinessDaysByRoom(Room room)
+        {
+            return _myDbContext.BussinesDay.Where(b => b.Room.Id == room.Id).ToList().DefaultIfEmpty();
+        }
+
+        public BusinessDay GetExactDay(Doctor doctor, DateTime date)
+        {
+            return _myDbContext.BussinesDay.FirstOrDefault(b => b.Doctor.Id == doctor.Id && b.Shift.StartDate.Date == date.Date);
+        }
+
+        public BusinessDay Save(BusinessDay entity)
         {
             var BussinesDay = _myDbContext.BussinesDay.Add(entity);
             _myDbContext.SaveChanges();

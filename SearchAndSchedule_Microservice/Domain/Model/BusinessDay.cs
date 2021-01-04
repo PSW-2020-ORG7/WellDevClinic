@@ -4,32 +4,32 @@ using System.Text;
 
 namespace SearchAndSchedule_Microservice.Domain.Model
 {
-    public class BussinesDay : IIdentifiable<long>
+    public class BusinessDay : IIdentifiable<long>
     {
         public long Id { get; set; }
         public virtual Period Shift { get; set; }
         public virtual List<Period> ScheduledPeriods { get; set; }
-        public virtual Doctor doctor { get; set; }
-        public virtual Room room { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        public virtual Room Room { get; set; }
 
-        public BussinesDay() { }
-        public BussinesDay(long id, Period shift, List<Period> scheduledPeriods, Doctor doctor, Room room)
+        public BusinessDay() { }
+        public BusinessDay(long id, Period shift, List<Period> scheduledPeriods, Doctor doctor, Room room)
         {
             Id = id;
             Shift = shift;
             ScheduledPeriods = scheduledPeriods;
-            this.doctor = doctor;
-            this.room = room;
+            this.Doctor = doctor;
+            this.Room = room;
         }
 
-        public BussinesDay(Period shift, Doctor doctor, Room room, List<Period> scheduledPeriods)
+        public BusinessDay(Period shift, Doctor doctor, Room room, List<Period> scheduledPeriods)
         {
             Shift = shift;
             ScheduledPeriods = scheduledPeriods;
-            this.doctor = doctor;
-            this.room = room;
+            this.Doctor = doctor;
+            this.Room = room;
         }
-        public BussinesDay(long id)
+        public BusinessDay(long id)
         {
             Id = id;
         }

@@ -9,7 +9,7 @@ namespace SearchAndSchedule_Microservice.Domain
     public class MyDbContext : DbContext
     {
 
-        public DbSet<BussinesDay> BussinesDay { get; set; }
+        public DbSet<BusinessDay> BussinesDay { get; set; }
         public DbSet<Examination> Examination { get; set; }
 
 
@@ -20,6 +20,9 @@ namespace SearchAndSchedule_Microservice.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BusinessDay>().OwnsOne(b => b.Shift);
+            modelBuilder.Entity<Examination>().OwnsOne(e => e.Period);
+            modelBuilder.Entity<BusinessDay>().OwnsMany(b => b.ScheduledPeriods);
         }
 
     }
