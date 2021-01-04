@@ -17,6 +17,7 @@ namespace RoomManipulation_Microservice.Domain
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Renovation>().OwnsOne(r => r.Period);
         }
     }
 }

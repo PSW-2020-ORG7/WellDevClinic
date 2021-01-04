@@ -26,7 +26,7 @@ namespace RoomManipulation_Interlayer.Controllers
         }
 
         [HttpGet]
-        [Route("{id?]")]
+        [Route("{id?}")]
         public Renovation Get(long id)
         {
             return _renovationAppService.Get(id);
@@ -45,11 +45,13 @@ namespace RoomManipulation_Interlayer.Controllers
             _renovationAppService.DeleteRenovationByRoom(room);
         }
 
-        [HttpPost]
+/*        
+ *    TODO: Napraviti DTO objekat u ovom interleyeru koji ce da sadrzi room i period kako bi se slao kao parametar 
+ *        [HttpPost]
         [Route("GetRenovationsByRoomAndPeriod")]
         public void GetRenovationsByRoomAndPeriod(Room room, Period period)
         {
             _renovationAppService.GetRenovationsByRoomAndPeriod(room, period);
-        }
+        }*/
     }
 }

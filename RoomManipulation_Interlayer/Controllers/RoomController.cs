@@ -26,7 +26,7 @@ namespace RoomManipulation_Interlayer.Controllers
         }
 
         [HttpGet]
-        [Route("{id?]")]
+        [Route("{id?}")]
         public Room Get(long id)
         {
             return _roomAppService.Get(id);

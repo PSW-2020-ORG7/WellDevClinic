@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace RoomManipulation_Microservice.Domain.Model
-{
+{   
     public class Room : IIdentifiable<long>
     {
         public long Id { get; set; }

@@ -47,8 +47,14 @@ namespace RoomManipulation_Interlayer
             {
                 app.UseDeveloperExceptionPage();
             }
-            db.Database.EnsureCreated();
-
+            try
+            {
+                var script = db.Database.GenerateCreateScript();
+                db.Database.ExecuteSqlRaw(script);
+            }catch
+            {
+                Console.WriteLine("Tables already exist!");
+            }
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
