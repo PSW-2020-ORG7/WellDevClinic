@@ -35,7 +35,7 @@ namespace UserInteraction_Microservice.Repository
 
         public IEnumerable<State> GetAll()
         {
-            return _myDbContext.State.ToList();
+            return _myDbContext.State.DefaultIfEmpty().ToList();
         }
 
        
