@@ -8,15 +8,16 @@ using System.Linq;
 
 namespace SearchAndSchedule_Microservice.ApplicationServices
 {
-    public class BussinesDayAppService : IBussinesDayAppService
+    public class BusinessDayAppService : IBussinesDayAppService
     {
         private readonly IBussinesDayRepository _bussinesDayRepository;
-        private readonly ISearchPeriods _searchPeriods;
+        private  ISearchPeriods SearchPeriods { get; set; }
         public static double durationOfExamination = 30;
 
-        public BussinesDayAppService(IBussinesDayRepository bussinesDayRepository)
+        public BusinessDayAppService(IBussinesDayRepository bussinesDayRepository)
         {
             _bussinesDayRepository = bussinesDayRepository;
+            SearchPeriods = new NoPrioritySearch();
         }
 
         public BusinessDay Save(BusinessDay entity)
@@ -99,25 +100,59 @@ namespace SearchAndSchedule_Microservice.ApplicationServices
             Edit(businessDay);
         }
 
-
         public BusinessDay GetExactDay(Doctor doctor, DateTime date)
         {
             return _bussinesDayRepository.GetExactDay(doctor, date);
         }
 
-        public bool IsExaminationPossible(Examination examination)
+
+
+        public bool IsExaminationPossible(UpcomingExamination examination)
         {
-            throw new NotImplementedException();
+            SearchPeriods = new NoPrioritySearch();
+            List<ExaminationDTO> examinations = Search(new BusinessDayDTO(examination.Doctor, examination.Period));
+            foreach (ExaminationDTO exam in examinations)
+            {
+                if (exam.Period.StartDate == examination.Period.StartDate)
+                    return true;
+            }
+            return false;
         }
 
-        public List<Examination> Search(BusinessDayDTO businessDayDTO)
+        public List<ExaminationDTO> Search(BusinessDayDTO businessDayDTO)
         {
-            throw new NotImplementedException();
+            TimeSpan difference = businessDayDTO.Period.StartDate - DateTime.Now;   //da se ne izabere datum pre danasnjeg
+            SetPriority(businessDayDTO.Priority);
+            if (difference.Days < 0)
+            {
+                /*if(businessDayDTO.PatientScheduling)
+                {
+                    if(_searchPeriods.GetType() != typeof(NoPrioritySearch))
+                        businessDayDTO.Period.StartDate = businessDayDTO.Period.StartDate.AddDays(Double.Parse(ConfigurationSettings.AppSettings["scheduleRestriction"]));
+                    else
+                        return null;
+                }*/
+                return null;
+            }
+            businessDayDTO.Doctor.BussinesDays = GetBusinessDaysByDoctor(businessDayDTO.Doctor);           // uzima odredjenog doktora
+            List<BusinessDay> businessDayCollection = _bussinesDayRepository.GetAll().ToList();    // uzima sve buduce businessDay
+            return SearchPeriods.Search(businessDayDTO, businessDayCollection);
         }
 
         public void SetPriority(PriorityType priority)
         {
-            throw new NotImplementedException();
+            if (priority == PriorityType.Doctor)
+            {
+                this.SearchPeriods = new DoctorPrioritySearch();
+            }
+            else if (priority == PriorityType.Date)
+            {
+                this.SearchPeriods = new DatePrioritySearch();
+            }
+            else
+            {
+                this.SearchPeriods = new NoPrioritySearch();
+            }
         }
     }
 }

@@ -17,29 +17,39 @@ namespace SearchAndSchedule_Microservice.Repository
             _myDbContext = myDbContext;
         }
 
-        public void Delete(Examination entity)
+        public void Delete(UpcomingExamination entity)
         {
             _myDbContext.Examination.Remove(entity);
             _myDbContext.SaveChanges();
         }
 
-        public void Edit(Examination entity)
+        public void Edit(UpcomingExamination entity)
         {
             _myDbContext.Examination.Update(entity);
             _myDbContext.SaveChanges();
         }
 
-        public Examination Get(long id)
+        public UpcomingExamination Get(long id)
         {
              return _myDbContext.Examination.FirstOrDefault(e => e.Id == id);
         }
 
-        public IEnumerable<Examination> GetAll()
+        public IEnumerable<UpcomingExamination> GetAll()
         {
             return _myDbContext.Examination.DefaultIfEmpty().ToList();
         }
 
-        public Examination Save(Examination entity)
+        public IEnumerable<UpcomingExamination> GetUpcomingExaminationsByDoctor(Doctor doctor)
+        {
+            return _myDbContext.Examination.Where(e => e.Doctor.Id == doctor.Id).ToList().DefaultIfEmpty();
+        }
+
+        public IEnumerable<UpcomingExamination> GetUpcomingExaminationsByPatient(Patient patient)
+        {
+            return _myDbContext.Examination.Where(e => e.Patient.Id == patient.Id).ToList().DefaultIfEmpty();
+        }
+
+        public UpcomingExamination Save(UpcomingExamination entity)
         {
             var Examination = _myDbContext.Examination.Add(entity);
             _myDbContext.SaveChanges();

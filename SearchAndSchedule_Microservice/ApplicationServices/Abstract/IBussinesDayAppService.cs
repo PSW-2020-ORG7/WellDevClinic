@@ -9,7 +9,7 @@ namespace SearchAndSchedule_Microservice.ApplicationServices.Abstract
 {
     public interface  IBussinesDayAppService : ICRUD<BusinessDay, long>
     {
-        List<Examination> Search(BusinessDayDTO businessDayDTO);
+        List<ExaminationDTO> Search(BusinessDayDTO businessDayDTO);
 
         void MarkAsOccupied(List<Period> period, BusinessDay businessDay);
         BusinessDay GetExactDay(Doctor doctor, DateTime date);
@@ -17,7 +17,7 @@ namespace SearchAndSchedule_Microservice.ApplicationServices.Abstract
         void DeleteBusinessDayByRoom(Room room);
         void FreePeriod(BusinessDay businessDay, List<DateTime> period);
         Boolean ChangeDoctorShift(BusinessDay newShift);
-        Boolean IsExaminationPossible(Examination examination);
+        Boolean IsExaminationPossible(UpcomingExamination examination);
         void SetPriority(PriorityType priority);
     }
 }

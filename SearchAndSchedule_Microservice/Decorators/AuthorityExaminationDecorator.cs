@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SearchAndSchedule_Microservice.Decorators
 {
-    public class AuthorityExaminationDecorator
+    public class AuthorityExaminationDecorator : IExaminationAppService
     {
         private readonly IExaminationAppService _examinationAppService;
         private String Role { get; set; }
@@ -24,48 +24,71 @@ namespace SearchAndSchedule_Microservice.Decorators
                 ["Get"] = new List<string>() { "Doctor", "Patient", "Secretary" },
                 ["GetAll"] = new List<string>() { "Patient", "Secretary", "Doctor" },
                 ["Save"] = new List<string>() { "Patient", "Secretary", "Doctor" },
-
-
-            /*
-            AuthorizedUsers["GetAllPrevious"] = new List<String>() { "Doctor", "Patient", "Secretary" };
-            AuthorizedUsers["GetExaminationsByFilter"] = new List<String>() { "Secretary" };
-            AuthorizedUsers["GetFinishedExaminationsByUser"] = new List<String>() { "Doctor" };
-            AuthorizedUsers["GetUpcomingExaminationsByUser"] = new List<String>() { "Patient", "Doctor", "Director" };
-            AuthorizedUsers["SaveFinishedExamination"] = new List<String>() { "Doctor" };
-            */
+                ["GetUpcomingExaminationsByDoctor"] = new List<string>() { "Patient", "Secretary", "Doctor" },
+                ["GetUpcomingExaminationsByPatient"] = new List<string>() { "Patient", "Secretary", "Doctor" },
+                ["GetExaminationRoom"] = new List<string>() { "Patient", "Secretary", "Doctor" },
+                ["GetUpcomingExaminationsByRoomAndPeriod"] = new List<string>() { "Patient", "Secretary", "Doctor" }
              };
 
         }
-        public void Delete(Examination entity)
+        public void Delete(UpcomingExamination entity)
         {
             if (AuthorizedUsers["Delete"].SingleOrDefault(x => x == Role) != null)
                 _examinationAppService.Delete(entity);
         }
 
-        public void Edit(Examination entity)
+        public void Edit(UpcomingExamination entity)
         {
             if (AuthorizedUsers["Edit"].SingleOrDefault(x => x == Role) != null)
                 _examinationAppService.Edit(entity);
         }
 
-        public Examination Get(long id)
+        public UpcomingExamination Get(long id)
         {
             if (AuthorizedUsers["Get"].SingleOrDefault(x => x == Role) != null)
                 return _examinationAppService.Get(id);
             return null;
         }
 
-        public IEnumerable<Examination> GetAll()
+        public IEnumerable<UpcomingExamination> GetAll()
         {
             if (AuthorizedUsers["GetAll"].SingleOrDefault(x => x == Role) != null)
                 return _examinationAppService.GetAll();
             return null;
         }
 
-        public Examination Save(Examination entity)
+        public UpcomingExamination Save(UpcomingExamination entity)
         {
             if (AuthorizedUsers["Save"].SingleOrDefault(x => x == Role) != null)
                 return _examinationAppService.Save(entity);
+            return null;
+        }
+
+        public List<UpcomingExamination> GetUpcomingExaminationsByDoctor(Doctor doctor)
+        {
+            if (AuthorizedUsers["GetUpcomingExaminationsByDoctor"].SingleOrDefault(x => x == Role) != null)
+                return _examinationAppService.GetUpcomingExaminationsByDoctor(doctor);
+            return null;
+        }
+
+        public List<UpcomingExamination> GetUpcomingExaminationsByPatient(Patient patient)
+        {
+            if (AuthorizedUsers["GetUpcomingExaminationsByPatient"].SingleOrDefault(x => x == Role) != null)
+                return _examinationAppService.GetUpcomingExaminationsByPatient(patient);
+            return null;
+        }
+
+        public Room GetExaminationRoom(UpcomingExamination examination)
+        {
+            if (AuthorizedUsers["GetExaminationRoom"].SingleOrDefault(x => x == Role) != null)
+                return _examinationAppService.GetExaminationRoom(examination);
+            return null;
+        }
+
+        public List<UpcomingExamination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
+        {
+            if (AuthorizedUsers["GetExGetUpcomingExaminationsByRoomAndPeriodaminationRoom"].SingleOrDefault(x => x == Role) != null)
+                return _examinationAppService.GetUpcomingExaminationsByRoomAndPeriod(room, period);
             return null;
         }
     }

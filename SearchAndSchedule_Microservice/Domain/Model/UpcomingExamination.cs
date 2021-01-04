@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SearchAndSchedule_Microservice.Domain.Model
 {
-    public class Examination : IIdentifiable<long>
+    public class UpcomingExamination : IIdentifiable<long>
     {
         public long Id { get; set; }
         public virtual Patient Patient { get; set; }
@@ -13,8 +13,8 @@ namespace SearchAndSchedule_Microservice.Domain.Model
         public Boolean Canceled { get; set; }
         public DateTime CanceledDate { get; set; }
 
-        public Examination() { }
-        public Examination(long id, Patient patient, Doctor doctor, Period period, bool canceled, DateTime canceledDate)
+        public UpcomingExamination() { }
+        public UpcomingExamination(long id, Patient patient, Doctor doctor, Period period, bool canceled, DateTime canceledDate)
         {
             Id = id;
             Patient = patient;
