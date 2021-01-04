@@ -9,7 +9,7 @@ namespace bolnica.Controller.decorators
 {
     public class AuthorityArticleDecorator : IArticleController
     {
-        private IArticleController ArticleController;
+        private readonly IArticleController ArticleController;
         private String Role;
         private Dictionary<String, List<String>> AuthorizedUsers;
         public AuthorityArticleDecorator(IArticleController articleController, string role)

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using bolnica.Controller;
 using bolnica.Model.Users;
 using bolnica.Service;
+using EventSourcing;
+using EventSourcing.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InterlayerController.Controllers
@@ -15,10 +17,12 @@ namespace InterlayerController.Controllers
     {
 
         private readonly IFeedbackController _feedbackController;
+        private readonly IDomainEventService _domainEventService;
 
-        public FeedbackController(IFeedbackController feedbackController)
+        public FeedbackController(IFeedbackController feedbackController, IDomainEventService domainEventService)
         {
             _feedbackController = feedbackController;
+            _domainEventService = domainEventService;
         }
 
         /// <summary>
@@ -54,7 +58,10 @@ namespace InterlayerController.Controllers
         [HttpPost]
         public Feedback LeaveFeedback([FromBody] Feedback feedback)
         {
-            return _feedbackController.Save(feedback);
+            var ret = _feedbackController.Save(feedback);
+            var @event = new FeedbackSubmittedEvent(feedback.Id, feedback.Content);
+            _domainEventService.Save(@event);
+            return ret;
         }
 
 
