@@ -29,6 +29,8 @@ namespace bolnica.Controller.decorators
             AuthorizedUsers["GetUpcomingExaminationsByUser"] = new List<String>() { "Patient", "Doctor", "Director" };
             AuthorizedUsers["Save"] = new List<String>() { "Patient", "Secretary", "Doctor" };
             AuthorizedUsers["SaveFinishedExamination"] = new List<String>() { "Doctor" };
+            AuthorizedUsers["GeAllUpcomingExaminations"] = new List<String>() { "Secretary" };
+
         }
 
         public void Delete(Examination entity)
@@ -130,5 +132,14 @@ namespace bolnica.Controller.decorators
             else
                 return null;
         }
+
+        public List<Examination> GetAllUpcomingExaminations()
+        {
+            if (AuthorizedUsers["GeAllUpcomingExaminations"].SingleOrDefault(x => x == Role) != null)
+                return ExaminationController.GetAllUpcomingExaminations();
+            else
+                return null;
+        }
+
     }
 }

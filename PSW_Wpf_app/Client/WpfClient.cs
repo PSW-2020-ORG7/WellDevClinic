@@ -150,16 +150,17 @@ namespace PSW_Wpf_app.Client
         public int Id { get; set; }
     }
 
-        public class Examination
+    public class Examination
     {
         public long Id { get; set; }
         public User User { get; set; }
         public Doctor Doctor { get; set; }
         public Period Period { get; set; }
+        public Patient Patient { get; set; }
 
-        public Examination(User patient, Doctor doctor, Period period)
+        public Examination(Patient patient, Doctor doctor, Period period)
         {
-            User = patient;
+            Patient = patient;
             Doctor = doctor;
             Period = period;
         }
@@ -185,7 +186,7 @@ namespace PSW_Wpf_app.Client
     }
 
 
-        public class  Patient:User
+    public class  Patient:User
     {
         public virtual PatientFile patientFile { get; set; }
         public Boolean Guest = false;
@@ -202,9 +203,7 @@ namespace PSW_Wpf_app.Client
 
     public class PatientFile
     {
-      
         public virtual List<Examination> Examination { get; set; }
-      
         public long Id { get; set; }
     }
 
@@ -336,6 +335,25 @@ namespace PSW_Wpf_app.Client
             List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(responseBody);
 
             return rooms;
+
+        public static async Task<List<Examination>> GetAllUpcomingExaminations()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAllUpcoming");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Examination> examinations = JsonConvert.DeserializeObject<List<Examination>>(responseBody);
+
+            return examinations;
+        }
+
+        public static async void EditExamination(Examination examination)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(examination));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:51393/api/examination/changePatient", content);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+           
         }
 
     }

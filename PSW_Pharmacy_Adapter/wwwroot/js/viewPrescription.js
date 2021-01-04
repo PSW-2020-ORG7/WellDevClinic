@@ -57,7 +57,6 @@ function viewAllPrescriptions(prescriptions) {
 		content += '</td></tr> ';
 		content += '</table>';
 		content += '</div></div></div>';
-		content += '</div>';
 		$("#viewPrescription").append(content);
 	}
 }

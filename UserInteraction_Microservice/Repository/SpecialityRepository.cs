@@ -46,7 +46,7 @@ namespace UserInteraction_Microservice.Repository
                    Id = s.Id,
                    Name = s.Name
                }
-               ).ToList();
+               ).DefaultIfEmpty().ToList();
         }
 
         public Speciality Save(Speciality entity)

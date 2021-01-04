@@ -6,7 +6,7 @@
         xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel"
         xmlns:local="clr-namespace:PSW_Wpf_app.View"
         mc:Ignorable="d"
-        Title="EmergencyAppointmentView" Height="700" Width="800" WindowStartupLocation="CenterScreen">
+        Title="EmergencyAppointmentView" Height="800" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <viewmodel:EmergencyAppointmentViewModel x:Key="vm"></viewmodel:EmergencyAppointmentViewModel>
     </Window.Resources>
@@ -45,12 +45,34 @@
 			CanUserAddRows="False"
 			SelectionMode="Extended" >
             <DataGrid.Columns>
+
                 <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
-                <DataGridTextColumn Header="Room" Width="*" Binding="{Binding Room.Id}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button  Content="Schedule" FontSize="12" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Left" Height="32" Margin="587,604,0,0" VerticalAlignment="Top" Width="188" Click="Schedule_Term_Click"/>
+                <DataGridTextColumn x:Name="room"  Header="Ordination"  Width="*" Binding="{Binding Room.Id}"/>
 
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <Button  Content="Schedule" FontSize="12" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Left" Height="32" Margin="802,549,0,0" VerticalAlignment="Top" Width="87" Click="Schedule_Term_Click"/>
+        <Button  Content="What is appointment analysis?"  FontSize="12"  Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Height="36" Margin="664,14,0,0" VerticalAlignment="Top" Width="225" Click="Analysis_Click"/>
+        <DataGrid x:Name="analysisData" HorizontalAlignment="Left" BorderBrush="CadetBlue" BorderThickness="3" Height="156" Margin="15,603,0,0" VerticalAlignment="Top" Width="760" AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            SelectionMode="Extended" >
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding Patient.FirstName}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
+                <DataGridTemplateColumn Header="Appointment info" x:Name="info1" Width="*"  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="190" Content="analysis diley" Click="Solution_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <Button  Content="Dilay" FontSize="12" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Left" Height="32" Margin="802,727,0,0" VerticalAlignment="Top" Width="87" Click="Schedule_And_Dilay_Term_Click"/>
     </Grid>
 </Window>

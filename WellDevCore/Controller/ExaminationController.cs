@@ -98,5 +98,9 @@ namespace bolnica.Controller
             return _examinationService.GetFinishedExaminationsByUser(user);
 
         }
+        public List<Examination> GetAllUpcomingExaminations()
+        {
+            return _examinationService.GetAllUpcomingExaminations();
+        }
     }
 }
