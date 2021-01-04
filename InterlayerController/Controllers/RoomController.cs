@@ -14,10 +14,14 @@ namespace InterlayerController.Controllers
     public class RoomController : ControllerBase
     {
         private IRoomController _roomController;
+        private IEquipmentController _equipmentController;
 
-        public RoomController(IRoomController roomController)
+
+        public RoomController(IRoomController roomController, IEquipmentController equipmentController)
         {
             _roomController = roomController;
+            _equipmentController = equipmentController;
+
         }
 
         /// <summary>
@@ -33,5 +37,25 @@ namespace InterlayerController.Controllers
 
             return result;
         }
+
+
+        [HttpGet]
+        [Route("GetRoomByEquipment/{equipmentId?}")]
+        public List<Room> GetRoomByEquipment(long equipmentId)
+        {
+            Equipment e = _equipmentController.Get(equipmentId);
+            List<Room> result = (List<Room>)_roomController.GetRoomsContainingEquipment(e);
+
+            return result;
+        }
+
+        [HttpGet]
+        //[Route("GetRoomByEquipment/{equipmentId?}")]
+        public List<Room> GetAll()
+        {
+            return (List<Room>)_roomController.GetAll();
+
+        }
+
     }
 }

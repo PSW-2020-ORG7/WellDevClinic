@@ -133,6 +133,14 @@ namespace PSW_Wpf_app.Client
     {
         public long Id { get; set; }
         public virtual List<EquipmentDTO> Equipment_inventory { get; set; }
+        public virtual RoomType RoomType { get; set; }
+
+    }
+    public class RoomType
+    {
+        public string Name { get; set; }
+
+
     }
 
     public class EquipmentDTO
@@ -309,6 +317,25 @@ namespace PSW_Wpf_app.Client
             return doctor;
         }
 
+        public static async Task<List<Room>> GetRoomsByEquipment(long equipmentId)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/GetRoomByEquipment/" + equipmentId);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(responseBody);
+
+            return rooms;
+        }
+
+        public static async Task<List<Room>> GetAllRooms()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(responseBody);
+
+            return rooms;
+        }
         public static async Task<List<Examination>> GetAllUpcomingExaminations()
         {
             HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAllUpcoming");
