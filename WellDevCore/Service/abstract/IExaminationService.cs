@@ -28,7 +28,7 @@ namespace bolnica.Service
         List<DateTime> GetCancelationDatesByPatient(long id);
 
         Examination NewExamination(long DoctorId, Period Period, long PatientId);
-
+        List<Examination> GetAllUpcomingExaminations();
 
     }
 }
