@@ -335,7 +335,7 @@ namespace PSW_Wpf_app.Client
             List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(responseBody);
 
             return rooms;
-
+        }
         public static async Task<List<Examination>> GetAllUpcomingExaminations()
         {
             HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAllUpcoming");
