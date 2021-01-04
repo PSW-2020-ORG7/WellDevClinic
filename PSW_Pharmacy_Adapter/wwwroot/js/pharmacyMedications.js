@@ -6,7 +6,7 @@
     });
 
     $(".close").click(function () {
-        $(".modalMed").hide(200);
+        $(".modalCustom").hide(200);
     });
 });
 

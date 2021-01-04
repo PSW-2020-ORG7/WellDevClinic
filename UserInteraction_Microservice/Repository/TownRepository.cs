@@ -31,7 +31,7 @@ namespace UserInteraction_Microservice.Repository
 
         public IEnumerable<Town> GetAll()
         {
-            return _myDbContext.Town.ToList();
+            return _myDbContext.Town.DefaultIfEmpty().ToList();
         }
 
         public Town Get(long id)

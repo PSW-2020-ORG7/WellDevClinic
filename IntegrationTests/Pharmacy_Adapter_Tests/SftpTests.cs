@@ -48,8 +48,8 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
             => new EPrescriptionDto("Pera Peric",
                         "1245639870123",
                         DateTime.Now,
-                        new List<MedicineDto>() {
-                        new MedicineDto("Brufen", 1L, 15)
+                        new List<MedicationDto>() {
+                        new MedicationDto("Brufen", 1L, 15)
                         });
 
 

@@ -55,12 +55,12 @@ namespace UserInteraction_Microservice.Repository
 
                 }
 
-            ).ToList();
+            ).DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<Doctor> GetAllEager()
         {
-            return _myDbContext.Doctor.ToList();
+            return _myDbContext.Doctor.DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<Doctor> GetDoctorsBySpeciality(Speciality speciality)
@@ -76,7 +76,7 @@ namespace UserInteraction_Microservice.Repository
 
               }
 
-          ).Where(d => d.Speciality.Name.Equals(speciality.Name)).ToList();
+          ).Where(d => d.Speciality.Name.Equals(speciality.Name)).DefaultIfEmpty().ToList();
         }
 
         public Doctor GetEager(long id)

@@ -30,7 +30,7 @@ namespace UserInteraction_Microservice.Repository
 
         public IEnumerable<Address> GetAll()
         {
-            return _myDbContext.Address.ToList();
+            return _myDbContext.Address.DefaultIfEmpty().ToList();
         }
 
         public Address Get(long id)
