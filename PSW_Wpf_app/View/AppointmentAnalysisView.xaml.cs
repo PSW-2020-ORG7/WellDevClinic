@@ -19,7 +19,6 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class AppointmentAnalysisView : Window
     {
-        EmergencyAppointmentViewModel context;
         public AppointmentAnalysisView(double dilayMinutes, ExaminationDTO examination)
         {
             InitializeComponent();
