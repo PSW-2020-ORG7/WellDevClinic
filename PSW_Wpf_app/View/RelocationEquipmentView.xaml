@@ -10,12 +10,12 @@
     <Grid>
         <StackPanel Orientation="Horizontal" Margin="10,27,0,498">
             <TextBlock x:Name="ChooseEquipment" Text="Choose equipment:" FontSize="25"  Width="247" Height="36"/>
-            <ComboBox   Width="182" Height="25" x:Name="equipments" Margin="75,0,0,-10"  />
+            <ComboBox   Width="182" Height="25" x:Name="equipments" Margin="75,0,0,-10" SelectionChanged="equipments_SelectionChanged" ItemsSource ="{Binding Equipments, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"  />
 
         </StackPanel>        <StackPanel Orientation="Horizontal" Margin="10,91,0,424">            <TextBlock x:Name="ChooseRoomFrom" Text="Choose starting room: " FontSize="25"  Width="274" Height="40"/>
-            <ComboBox x:Name="rooms_from"  Height="25" Width="182" Margin="50,0,0,0"/>        </StackPanel>        <StackPanel Orientation="Horizontal" Margin="10,178,0,347">
+            <ComboBox x:Name="rooms_from"  Height="25" Width="182" Margin="50,0,0,0" SelectionChanged="room_from_SelectionChanged"  ItemsSource ="{Binding Room_from, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>        </StackPanel>        <StackPanel Orientation="Horizontal" Margin="10,178,0,347">
             <TextBlock x:Name="ChooseRoomTo" Text="Choose destination room: " FontSize="25"  Width="303" Height="40"/>
-            <ComboBox x:Name="rooms_to" Margin="25,0,0,0"   Height="25" Width="182" />
+            <ComboBox x:Name="rooms_to" Margin="25,0,0,0"   Height="25" Width="182"   ItemsSource ="{Binding Room_to, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>
         </StackPanel>        <StackPanel x:Name="DatePicker" Orientation="Horizontal" Margin="10,274,10,242">
             <TextBlock x:Name="ChooseDate" Text="Select a date:" FontSize="25" Width="150" Height="36"/>
             <DatePicker x:Name="Picker"  Margin="178,-20,0,-20" Width="197" FirstDayOfWeek="Monday" Height="33"/>

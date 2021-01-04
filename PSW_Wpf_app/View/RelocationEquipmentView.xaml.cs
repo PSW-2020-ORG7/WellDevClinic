@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,11 +19,26 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class RelocationEquipmentView : Window
     {
+        RelocationEquipmentViewModel context = new RelocationEquipmentViewModel();
+
         public RelocationEquipmentView()
         {
             InitializeComponent();
+            DataContext = context;
+
         }
 
-   
+        private void equipments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            context.LoadRoomByEquipment(((Equipment)equipments.SelectedItem).Id);
+
+        }
+
+        private void room_from_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Room room_from = (Room)rooms_from.SelectedItem;
+            if (room_from != null)
+                context.LoadRoom(room_from);
+        }
     }
 }
