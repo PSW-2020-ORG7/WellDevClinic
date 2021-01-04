@@ -10,12 +10,7 @@
 
 *{
     margin:0;
-    padding:0;
-}
-
-.wrapper{
-    width:1170px;
-    margin:auto;
+    padding:1px;
 }
 
 
@@ -54,7 +49,7 @@ div.card {
     .topnav label {
         font-weight:bold;
     }
-    .topnav a, label{
+    .topnav a, .topnav label{
         float: left;
         color: #b5b5b5;
         text-align: center;
@@ -92,7 +87,7 @@ div.card {
 }
 
 /* Modal box */
-.modalMed {
+.modalCustom {
     display: none;
     width: 100%;
     height: 100%;
@@ -123,4 +118,52 @@ div.card {
 #txtResponse{
     overflow-y: scroll;
     resize: none;
+}
+
+/* custom button */
+.add_field_button {
+    border-radius: 4px;
+    padding: 4px 40px;
+    transition-duration: 0.4s;
+}
+
+    .add_field_button:hover{
+        background-color: #808080;
+        color: white;
+    }
+
+.expand {
+    width: 100%;
+}
+
+input[type=text], input[type=number], input[type=date], select {
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
+/* Custom table */
+.customTable table {
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 30px;
+}
+
+.customTable th {
+    background: #333;
+    color: #fff;
+    height: 30px;
+}
+
+.customTable td {
+    padding: 5px;
+}
+
+.customTable tr {
+    background: whitesmoke;
+    border: none;
 }
