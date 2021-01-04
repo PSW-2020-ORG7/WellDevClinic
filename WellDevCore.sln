@@ -36,6 +36,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomManipulation_Microservi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomManipulation_Interlayer", "RoomManipulation_Interlayer\RoomManipulation_Interlayer.csproj", "{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugManipulation_Microservice", "DrugManipulation_Microservice\DrugManipulation_Microservice.csproj", "{6B7DD666-A259-4C61-935D-AA6737D74B54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugManipulation_Interlayer", "DrugManipulation_Interlayer\DrugManipulation_Interlayer.csproj", "{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}"
+>>>>>>> develop
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +185,22 @@ Global
 		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Release|x86.ActiveCfg = Release|Any CPU
 		{784E4924-9AB5-4AEC-9DCC-2FF84A391E3A}.Release|x86.Build.0 = Release|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B7DD666-A259-4C61-935D-AA6737D74B54}.Release|x86.Build.0 = Release|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Debug|x86.Build.0 = Debug|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Release|x86.ActiveCfg = Release|Any CPU
+		{B2718050-11FD-4A4E-B5B2-1C8C84ED58E1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
