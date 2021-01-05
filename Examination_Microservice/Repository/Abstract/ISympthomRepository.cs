@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Examination_Microservice.Repository.Abstract
 {
-    public interface ITherapyRepository : ICRUD<Therapy,long>
+    public interface ISympthomRepository : ICRUD<Sympthom,long>
     {
     }
 }
