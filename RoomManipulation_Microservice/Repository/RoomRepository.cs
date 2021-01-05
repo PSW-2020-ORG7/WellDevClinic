@@ -46,7 +46,7 @@ namespace RoomManipulation_Microservice.Repository
 
         public List<Room> GetRoomsByEquipment(Equipment equipment)
         {
-            IEnumerable<Room> rooms = _myDbContext.Room.ToList().DefaultIfEmpty();
+            IEnumerable<Room> rooms = _myDbContext.Room.DefaultIfEmpty().ToList();
             List<Room> result = new List<Room>();
             foreach (Room room in rooms)
             {
