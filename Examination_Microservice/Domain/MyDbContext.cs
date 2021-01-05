@@ -10,6 +10,7 @@ namespace Examination_Microservice.Domain
     public class MyDbContext : DbContext
     {
         public DbSet<Diagnosis> Diagnosis { get; set; }
+        public DbSet<ExaminationDetails> ExaminationDetails { get; set; }
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
