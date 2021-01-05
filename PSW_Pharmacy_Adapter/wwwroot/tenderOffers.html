@@ -26,7 +26,7 @@
         <a href="tenderOffers.html" class="active">Tender offers</a>
     </div>
     <div>
-        <button id="btnAddTender" type="submit" class="btn btn-info expand">📜 Add tender</button>
+        <button id="btnAddTen" type="submit" class="btn btn-info expand">📜 Add tender</button>
     </div>
 
     <div class="modalCustom" id="modalAddTender">
@@ -37,7 +37,19 @@
                 <tr><td>ID:&nbsp;</td><td><input type="number" id="txtId" min="1" max="6" /><td></tr>
                 <tr><td>Start date:&nbsp;</td><td><input type="date" id="dateStart"><td></tr>
                 <tr><td>End date:&nbsp;</td><td><input type="date" id="dateEnd"><td></tr>
-                <tr></tr>
+                <tr><td>Choose medication:</td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                    id="btnMed" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                All medications
+                            </button>
+                            <div class="dropdown-menu" id="viewMedication">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="2">
                         <center>
@@ -70,7 +82,7 @@
     <div id="viewTender"></div>
 
     <div class="box">
-        <h1>Singup form for tenders notifications</h1>
+        <h1>Signup form for tenders notifications</h1>
         <form id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate">
             <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="pharmacy@example.com" required>
             <div style="position: absolute; left: -5000px;" aria-hidden="true">

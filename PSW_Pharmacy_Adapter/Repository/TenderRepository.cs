@@ -42,9 +42,9 @@ namespace PSW_Pharmacy_Adapter.Repository
             Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == ten.Id);
             if (tender == null)
             {
-                _dbContext.Tender.Add(tender);
+                _dbContext.Tender.Add(ten);
                 _dbContext.SaveChanges();
-                return tender;
+                return ten;
             }
             return null;
         }
