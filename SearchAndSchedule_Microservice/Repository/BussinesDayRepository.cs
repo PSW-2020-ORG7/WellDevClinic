@@ -47,12 +47,12 @@ namespace SearchAndSchedule_Microservice.Repository
 
         public IEnumerable<BusinessDay> GetBusinessDaysByDoctor(Doctor doctor)
         {
-            return _myDbContext.BussinesDay.Where(b => b.Doctor.Id == doctor.Id).ToList().DefaultIfEmpty();
+            return _myDbContext.BussinesDay.Where(b => b.Doctor.Id == doctor.Id).DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<BusinessDay> GetBusinessDaysByRoom(Room room)
         {
-            return _myDbContext.BussinesDay.Where(b => b.Room.Id == room.Id).ToList().DefaultIfEmpty();
+            return _myDbContext.BussinesDay.Where(b => b.Room.Id == room.Id).DefaultIfEmpty().ToList();
         }
 
         public BusinessDay GetExactDay(Doctor doctor, DateTime date)

@@ -11,7 +11,7 @@ namespace SearchAndSchedule_Microservice.Domain
 
         public DbSet<BusinessDay> BussinesDay { get; set; }
         public DbSet<UpcomingExamination> Examination { get; set; }
-
+        public DbSet<Operation> Operation { get; set; }
 
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
@@ -22,6 +22,7 @@ namespace SearchAndSchedule_Microservice.Domain
         {
             modelBuilder.Entity<BusinessDay>().OwnsOne(b => b.Shift);
             modelBuilder.Entity<UpcomingExamination>().OwnsOne(e => e.Period);
+            modelBuilder.Entity<Operation>().OwnsOne(e => e.Period);
             modelBuilder.Entity<BusinessDay>().OwnsMany(b => b.ScheduledPeriods);
         }
 

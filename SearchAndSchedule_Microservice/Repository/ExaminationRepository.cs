@@ -41,12 +41,12 @@ namespace SearchAndSchedule_Microservice.Repository
 
         public IEnumerable<UpcomingExamination> GetUpcomingExaminationsByDoctor(Doctor doctor)
         {
-            return _myDbContext.Examination.Where(e => e.Doctor.Id == doctor.Id).ToList().DefaultIfEmpty();
+            return _myDbContext.Examination.Where(e => e.Doctor.Id == doctor.Id).DefaultIfEmpty().ToList();
         }
 
         public IEnumerable<UpcomingExamination> GetUpcomingExaminationsByPatient(Patient patient)
         {
-            return _myDbContext.Examination.Where(e => e.Patient.Id == patient.Id).ToList().DefaultIfEmpty();
+            return _myDbContext.Examination.Where(e => e.Patient.Id == patient.Id).DefaultIfEmpty().ToList();
         }
 
         public UpcomingExamination Save(UpcomingExamination entity)

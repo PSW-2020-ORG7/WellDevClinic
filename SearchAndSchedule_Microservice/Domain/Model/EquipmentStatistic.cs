@@ -8,7 +8,7 @@ namespace SearchAndSchedule_Microservice.Domain.Model
     {
         public long Id { get; set; }
         public int Amount { get; set; }
-        public Equipment Equipment { get; set; }
+        public virtual  Equipment Equipment { get; set; }
 
         public EquipmentStatistic() { }
         public EquipmentStatistic(long id, int amount, Equipment equipment)

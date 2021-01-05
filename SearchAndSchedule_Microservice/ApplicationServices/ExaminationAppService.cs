@@ -73,7 +73,7 @@ namespace SearchAndSchedule_Microservice.ApplicationServices
         public List<UpcomingExamination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
         {
             //Ovo mora da se promeni zove se baza sto puta
-            //Bilo bi dobro da se ne zove GetAll vec samo odredjeni za taj period (tipa metoda GetUpcExamByPeriod) kako bi smanjili broj poziva kod GetExaminationRoom
+            //Bilo bi dobro da se ne zove GetAll u for petlji vec samo odredjeni za taj period (tipa metoda GetUpcExamByPeriod) kako bi smanjili broj poziva kod GetExaminationRoom
             //Ovo je filterska metoda, mozda cak ne bi trebala ni da bude ovde na beku           
             List<UpcomingExamination> examinations = new List<UpcomingExamination>();
             foreach (UpcomingExamination examination in GetAll())
