@@ -1,12 +1,12 @@
-﻿using DrugManipulation_Microservice.Domain;
+﻿using SearchAndSchedule_Microservice.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DrugManipulation_Microservice.ApplicationServices.Abstract
+namespace SearchAndSchedule_Microservice.ApplicationServices.Abstract
 {
     public interface ICRUD<E, ID> where E : IIdentifiable<ID>
-                                  where ID : IComparable
+                             where ID : IComparable
     {
         E Get(ID id);
         IEnumerable<E> GetAll();
