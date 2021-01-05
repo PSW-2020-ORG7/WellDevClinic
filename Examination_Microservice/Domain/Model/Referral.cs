@@ -7,6 +7,19 @@ namespace Examination_Microservice.Domain.Model
     public class Referral : IIdentifiable<long>
     {
         public long Id { get; set; }
+        public String Text { get; set; }
+        public virtual Period Period { get; set; }
+        public virtual Doctor Doctor { get; set; }
+
+        public Referral() { }
+
+        public Referral(long id, string text, Period period, Doctor doctor)
+        {
+            Id = id;
+            Text = text;
+            Period = period;
+            Doctor = doctor;
+        }
 
         public long GetId()
         {

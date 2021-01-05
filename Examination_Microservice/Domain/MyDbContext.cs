@@ -13,6 +13,9 @@ namespace Examination_Microservice.Domain
         public DbSet<ExaminationDetails> ExaminationDetails { get; set; }
         public DbSet<Sympthom> Sympthom { get; set; }
         public DbSet<Therapy> Therapy { get; set; }
+        public DbSet<Referral> Referral { get; set; }
+        public DbSet<Prescription> Prescription { get; set; }
+        public DbSet<PatientFile> PatientFile { get; set; }
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
