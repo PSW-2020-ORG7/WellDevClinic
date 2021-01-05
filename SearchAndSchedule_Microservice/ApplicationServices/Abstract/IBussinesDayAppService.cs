@@ -19,5 +19,6 @@ namespace SearchAndSchedule_Microservice.ApplicationServices.Abstract
         Boolean ChangeDoctorShift(BusinessDay newShift);
         Boolean IsExaminationPossible(UpcomingExamination examination);
         void SetPriority(PriorityType priority);
+        public List<ExaminationDTO> OperationSearch(BusinessDayDTO businessDayDTO, double durationOfOperation);
     }
 }

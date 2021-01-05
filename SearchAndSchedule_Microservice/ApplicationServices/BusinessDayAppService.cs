@@ -25,6 +25,45 @@ namespace SearchAndSchedule_Microservice.ApplicationServices
             return _bussinesDayRepository.Save(entity);
         }
 
+        public List<ExaminationDTO> OperationSearch(BusinessDayDTO businessDayDTO, double durationOfOperation)
+        {
+            List<ExaminationDTO> retVal = new List<ExaminationDTO>();
+            SearchPeriods = new NoPrioritySearch();
+            List<ExaminationDTO> timeSlots = Search(businessDayDTO);
+
+            if (timeSlots == null)
+                return null;
+
+            double MinutesFree = 0;
+            foreach (ExaminationDTO examinationDTO in timeSlots)
+            {
+                if (retVal.Count == 0)
+                {
+                    retVal.Add(examinationDTO);
+                    MinutesFree = MinutesFree + durationOfExamination;
+                }
+                else
+                {
+                    if (retVal.SingleOrDefault(any => any.Period.StartDate.AddMinutes(durationOfExamination) == examinationDTO.Period.StartDate) != null)
+                    {
+                        retVal.Add(examinationDTO);
+                        MinutesFree += durationOfExamination;
+                    }
+                    else
+                    {
+                        retVal.Clear();
+                        retVal.Add(examinationDTO);
+                        MinutesFree = durationOfExamination;
+                    }
+                }
+                if (durationOfOperation == MinutesFree)
+                    break;
+
+            }
+
+            return retVal;
+
+        }
 
         public void Delete(BusinessDay entity)
         {

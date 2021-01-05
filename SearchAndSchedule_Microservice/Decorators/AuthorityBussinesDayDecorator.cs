@@ -32,7 +32,8 @@ namespace SearchAndSchedule_Microservice.Decorators
                 ["MarkAsOccupied"] = new List<string>() { "Doctor", "Patient", "Secretary" },
                 ["Search"] = new List<string>() { "Doctor", "Secretary", "Patient" },
                 ["ChangeDoctorShift"] = new List<string>() { "Director" },
-                ["DeleteBusinessDayByRoom"] = new List<string>() { "Director" }
+                ["DeleteBusinessDayByRoom"] = new List<string>() { "Director" },
+                ["OperationSearch"] = new List<string>() { "Doctor" }
 
             };
 
@@ -126,6 +127,13 @@ namespace SearchAndSchedule_Microservice.Decorators
         public void SetPriority(PriorityType priority)
         {
             _bussinesDayAppService.SetPriority(priority);
+        }
+
+        public List<ExaminationDTO> OperationSearch(BusinessDayDTO businessDayDTO, double durationOfOperation)
+        {
+            if (AuthorizedUsers["OperationSearch"].SingleOrDefault(any => any.Equals(Role)) != null)
+                return _bussinesDayAppService.OperationSearch(businessDayDTO, durationOfOperation);
+            return null;
         }
     }
 }
