@@ -45,5 +45,11 @@ namespace Examination_Microservice.Repository
             _myDbContext.SaveChanges();
             return Hospitalization.Entity;
         }
+
+        public IEnumerable<Hospitalization>  GetHospitalizationByDoctor(Doctor doctor)
+        {
+            return _myDbContext.Hospitalization.Where(h => h.Doctor.Id==doctor.Id).DefaultIfEmpty().ToList();
+        }
+        
     }
 }

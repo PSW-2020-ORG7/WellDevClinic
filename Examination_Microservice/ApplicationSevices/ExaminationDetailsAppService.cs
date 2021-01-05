@@ -47,6 +47,16 @@ namespace Examination_Microservice.ApplicationSevices
 
         }
 
+        public IEnumerable<ExaminationDetails> GetExaminationDetailsByDoctor(Doctor doctor)
+        {
+            return _examinationDetailsRepository.GetExaminationDetailsByDoctor(doctor);
+        }
+
+        public IEnumerable<ExaminationDetails> GetExaminationDetailsByPatient(Patient patient)
+        {
+            return _examinationDetailsRepository.GetExaminationDetailsByPatient(patient);
+        }
+
         public ExaminationDetails Save(ExaminationDetails entity)
         {
             return _examinationDetailsRepository.Save(entity);

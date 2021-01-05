@@ -8,5 +8,7 @@ namespace Examination_Microservice.Repository.Abstract
 {
     public interface IHospitalizationRepository : ICRUD<Hospitalization,long>
     {
+        public IEnumerable<Hospitalization> GetHospitalizationByDoctor(Doctor doctor);
+
     }
 }

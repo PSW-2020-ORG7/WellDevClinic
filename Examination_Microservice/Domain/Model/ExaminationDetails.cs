@@ -12,8 +12,16 @@ namespace Examination_Microservice.Domain.Model
         public virtual Anamnesis Anamnesis { get; set; }
         public virtual Therapy Therapy { get; set; }
         public virtual Sympthom Sympthom { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        public virtual Patient Patient { get; set; }
 
         public ExaminationDetails() { }
+
+        public ExaminationDetails(long id, Diagnosis diagnosis, Prescription prescription, Anamnesis anamnesis, Therapy therapy, Sympthom sympthom, Doctor doctor, Patient patient) : this(id, diagnosis, prescription, anamnesis, therapy, sympthom)
+        {
+            Doctor = doctor;
+            Patient = patient;
+        }
 
         public ExaminationDetails(long id, Diagnosis diagnosis, Prescription prescription, Anamnesis anamnesis, Therapy therapy, Sympthom sympthom)
         {

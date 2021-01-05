@@ -7,5 +7,6 @@ namespace Examination_Microservice.ApplicationSevices.Abstract
 {
     public interface IHospitalizationAppService : ICRUD<Hospitalization,long>
     {
+        public IEnumerable<Hospitalization> GetHospitalizationByDoctor(Doctor doctor);
     }
 }

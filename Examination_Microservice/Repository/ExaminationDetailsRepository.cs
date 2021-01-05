@@ -77,5 +77,15 @@ namespace Examination_Microservice.Repository
             _myDbContext.SaveChanges();
             return ExaminationDetails.Entity;
         }
+
+        public IEnumerable<ExaminationDetails> GetExaminationDetailsByDoctor(Doctor doctor)
+        {
+            return _myDbContext.ExaminationDetails.Where(h => h.Doctor.Id == doctor.Id).DefaultIfEmpty().ToList();
+        }
+
+        public IEnumerable<ExaminationDetails> GetExaminationDetailsByPatient(Patient patient)
+        {
+            return _myDbContext.ExaminationDetails.Where(h => h.Patient.Id == patient.Id).DefaultIfEmpty().ToList();
+        }
     }
 }

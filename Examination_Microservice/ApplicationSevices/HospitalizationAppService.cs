@@ -36,6 +36,11 @@ namespace Examination_Microservice.ApplicationSevices
             return _hospitalizationRepository.GetAll();
         }
 
+        public IEnumerable<Hospitalization> GetHospitalizationByDoctor(Doctor doctor)
+        {
+            return _hospitalizationRepository.GetHospitalizationByDoctor(doctor);
+        }
+
         public Hospitalization Save(Hospitalization entity)
         {
             return _hospitalizationRepository.Save(entity);

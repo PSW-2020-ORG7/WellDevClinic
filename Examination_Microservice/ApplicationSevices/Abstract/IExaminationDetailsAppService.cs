@@ -7,5 +7,8 @@ namespace Examination_Microservice.ApplicationSevices.Abstract
 {
     public interface IExaminationDetailsAppService : ICRUD<ExaminationDetails, long>, IGetEager<ExaminationDetails, long>
     {
+        public IEnumerable<ExaminationDetails> GetExaminationDetailsByDoctor(Doctor doctor);
+        public IEnumerable<ExaminationDetails> GetExaminationDetailsByPatient(Patient patient);
+
     }
 }
