@@ -16,11 +16,12 @@
             <ComboBox x:Name="rooms_from"  Height="25" Width="182" Margin="50,0,0,0" SelectionChanged="room_from_SelectionChanged"  ItemsSource ="{Binding Room_from, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>        </StackPanel>        <StackPanel Orientation="Horizontal" Margin="10,178,0,347">
             <TextBlock x:Name="ChooseRoomTo" Text="Choose destination room: " FontSize="25"  Width="303" Height="40"/>
             <ComboBox x:Name="rooms_to" Margin="25,0,0,0"   Height="25" Width="182"   ItemsSource ="{Binding Room_to, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>
-        </StackPanel>        <StackPanel x:Name="DatePicker" Orientation="Horizontal" Margin="10,274,10,242">
-            <TextBlock x:Name="ChooseDate" Text="Select a date:" FontSize="25" Width="150" Height="36"/>
-            <DatePicker x:Name="Picker"  Margin="178,-20,0,-20" Width="197" FirstDayOfWeek="Monday" Height="33"/>
-            <materialDesign:TimePicker x:Name="startTimePicker" Width="164" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-                                   materialDesign:HintAssist.Hint="" Height="39" Margin="50,0,0,0"/>
+        </StackPanel>        <StackPanel x:Name="DatePicker" Orientation="Horizontal" Margin="10,242,10,141">
 
+            <TextBlock x:Name="ChooseDate" Text="Select a date:" FontSize="25" Width="150" Height="36" Margin="0,-70,0,0"/>
+            <DatePicker x:Name="Picker"  Margin="178,-90,0,-20" Width="197" FirstDayOfWeek="Monday" Height="33"/>
+            <Button Content="Schedule" Click="Schedule_Click" Width="114" Height="27" Margin="0,110,-300,0"/>
+            <materialDesign:TimePicker x:Name="startTimePicker" Width="164" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                   materialDesign:HintAssist.Hint="" Height="39" Margin="50,-70,0,0"/>
         </StackPanel>    </Grid>
 </Window>

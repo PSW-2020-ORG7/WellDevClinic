@@ -40,5 +40,43 @@ namespace PSW_Wpf_app.View
             if (room_from != null)
                 context.LoadRoom(room_from);
         }
+
+        private void Schedule_Click(object sender, RoutedEventArgs e)
+        {
+           // if (times.SelectedItem == null)
+            //{
+                DateTime date = (DateTime)Picker.SelectedDate;
+                DateTime time = (DateTime)startTimePicker.SelectedTime;
+
+
+                DateTime dt = new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, 0);
+                try
+                {
+                    //long x = long.Parse(amount.Text);
+                    //if (x <= 0)
+                      //  throw new Exception();
+                    context.SearchRoomAvailability((rooms_from.SelectedItem as Room).Id, (rooms_to.SelectedItem as Room).Id, dt, (equipments.SelectedItem as Equipment).Name.ToString() /*+ ", " + amount.Text*/);
+
+                }
+                catch
+                {
+                    MessageBox.Show("error SearchRoomAvailability");
+                }
+           // }
+            /*else
+            {
+                DateTime dt = (DateTime)times.SelectedItem;
+
+                try
+                {
+                    context.SearchRoomAvailability((rooms_from.SelectedItem as Room).Id, (rooms_to.SelectedItem as Room).Id, dt, (equipments.SelectedItem as Equipment).Name.ToString()  + ", " + amount.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("error SearchRoomAvailability");
+                }
+            }
+            */
+        }
     }
 }
