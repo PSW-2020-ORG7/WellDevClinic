@@ -156,6 +156,8 @@ function getMedicationStock() {
 
 function viewAllTenders(tenders) {
     $("#viewTender").empty();
+    var neededMedications = {};
+
     for (let ten of tenders) {
         var content = '<div class="card" style="width:350px">';
         content += '<div class="card-body">';
@@ -181,12 +183,6 @@ function viewAllTenders(tenders) {
         content += '</table><br>';
         content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
         content += 'Make offer</button >';
-        /*content += '<tr><td colspan="2">'
-        content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
-        content += 'Send offer</button >';
-        content += '</td>';
-        content += '</tr> ';
-        content += '</table>';*/
         content += '</div></div></div>';
         $("#viewTender").append(content);
     }
@@ -195,11 +191,17 @@ function viewAllTenders(tenders) {
 
 
 function makeOffer(tender) {
+    $("#modalTender").slideDown("fast");
+    $(".close").click(function () {
+        $(".modalCustom").hide(200);
+    })
 
-        $("#btnAddOffer").click(function () {
+    $("#idTender").val(tender);
+
+
+    $("#btnAddOffer").click(function () {
         let name = $("#txtName").val();
         let price = $("#txtPrice").val();
-        let id = $("#txtId").val();
         let message = $("#txtNote").val();
 
         let valid = true;
@@ -207,7 +209,6 @@ function makeOffer(tender) {
         var jsonApi = JSON.stringify({
             PharmacyName: name,
             Price: Number(price),
-            Id: Number(id),
             Medications: [],
             Message: message,
             TenderId: Number(tender)

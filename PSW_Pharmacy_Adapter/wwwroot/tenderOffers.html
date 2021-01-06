@@ -63,21 +63,7 @@
             </table>
         </div>
     </div>
-    <!--
-        <div class="login-page">
-        <div class="form">
-            <form class="register-form">
-                <label id="invalidName" class="valid">Required field!</label>
-                <input type="text" placeholder="Pharmacy name" id="txtPharmacy" />
-                <input type="number" placeholder="Id" id="txtId" />
-                <label id="invalidPrice" class="valid">Required field!</label>
-                <input type="number" placeholder="Price" id="txtPrice" />
-                <input type="text" placeholder="Message" id="txtMessage" />
-                <button id="btnAddOffer" type="button" data-toggle="modal" data-target="#exampleModalCenter1">Add offer</button>
-            </form>
-        </div>
-    </div>
-    -->
+
     <br>
     <div id="viewTender"></div>
 
@@ -99,16 +85,20 @@
             <span class="close">&times;</span>
 
             <h5>
-                <!--
-                    <table>
-                    <tr><td>Tender ID:</td><input type="text" id="txtTenderId" disabled/></tr>
+               
+                <table>
+                    <tr>
+                        <td style="color: gray">ID tender:</td>
+                        <td><input type="text" id="idTender" disabled /></td>
+                        <!-- <tr><td style="color: gray">Hospital need:</td><td></td></tr> -->
+
+                    <div id="addMedication"></div>
                 </table>
-                -->
+               
                 <br>
                 <table>
                     <tr><td colspan="2"><h4>Pharmacy infos:</h4></td></tr>
                     <tr><td>Name:&nbsp;</td><td><input type="text" id="txtName" size="50" /><td></tr>
-                    <tr><td>ID:&nbsp;</td><td><input type="number" id="txtId" min="1" max="6" /><td></tr>
                     <tr><td>Price:&nbsp;</td><td><input type="number" id="txtPrice" min="1" max="6"><td></tr>
                     <tr><td>Note:&nbsp;</td><td><input type="text" id="txtNote" size="100" /><td></tr>
                     &nbsp;
