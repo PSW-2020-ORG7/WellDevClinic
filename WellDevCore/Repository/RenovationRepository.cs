@@ -68,7 +68,9 @@ namespace Repository
 
         public IEnumerable<Renovation> GetEager()
         {
-            throw new NotImplementedException();
+            List<Renovation> result = new List<Renovation>();
+            myDbContext.Renovation.ToList().ForEach(renovation => result.Add(renovation));
+            return result;
         }
 
         public Renovation Get(long id)

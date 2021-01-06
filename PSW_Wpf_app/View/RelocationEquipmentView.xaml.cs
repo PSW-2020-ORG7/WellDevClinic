@@ -1,7 +1,9 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +30,7 @@ namespace PSW_Wpf_app.View
 
         }
 
+
         private void equipments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             context.LoadRoomByEquipment(((Equipment)equipments.SelectedItem).Id);
@@ -41,7 +44,7 @@ namespace PSW_Wpf_app.View
                 context.LoadRoom(room_from);
         }
 
-        private void Schedule_Click(object sender, RoutedEventArgs e)
+        private async void Schedule_Click(object sender, RoutedEventArgs e)
         {
            // if (times.SelectedItem == null)
             //{
@@ -56,9 +59,12 @@ namespace PSW_Wpf_app.View
                     //if (x <= 0)
                       //  throw new Exception();
                     context.SearchRoomAvailability((rooms_from.SelectedItem as Room).Id, (rooms_to.SelectedItem as Room).Id, dt, (equipments.SelectedItem as Equipment).Name.ToString() /*+ ", " + amount.Text*/);
+                // scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
+                   // scheduleRenovationGrid.ItemsSource = await WpfClient.GetAllRenovation();
 
-                }
-                catch
+
+            }
+            catch
                 {
                     MessageBox.Show("error SearchRoomAvailability");
                 }

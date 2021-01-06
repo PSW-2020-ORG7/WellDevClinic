@@ -1,4 +1,5 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace PSW_Wpf_app.ViewModel
         BindingList<Equipment> equipments = new BindingList<Equipment>();
         BindingList<Room> room_from = new BindingList<Room>();
         BindingList<Room> room_to = new BindingList<Room>();
+        BindingList<RelocationEquipmentDTO> renovations = new BindingList<RelocationEquipmentDTO>();
 
 
 
@@ -54,10 +56,63 @@ namespace PSW_Wpf_app.ViewModel
                 OnPropertyChanged("Room_to");
             }
         }
+        public BindingList<RelocationEquipmentDTO> Renovations
+        {
+            get
+            {
+                return renovations;
+            }
+            set
+            {
+                renovations = value;
+                OnPropertyChanged("Renovations");
+            }
+        }
 
         public RelocationEquipmentViewModel()
         {
             LoadEquipments();
+            LoadRenovations();
+
+        }
+
+        private async void LoadRenovations()
+        {
+            List<Renovation> ren = await WpfClient.GetAllRenovation();
+            foreach (Renovation r in ren)
+            {
+                Renovation pair = null;
+                foreach (Renovation r3 in ren)
+                {
+                    try
+                    {
+                        long id = long.Parse(r3.Description);
+                        if (id == r.Id)
+                        {
+                            pair = r3;
+                            break;
+                        }
+                    }
+
+                    catch (Exception e) { continue; }
+
+                }
+                if (pair != null)
+                {
+                    RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
+                    relocation.Room_from = r.Room.RoomType.Name;
+                    relocation.Room_to = pair.Room.RoomType.Name;
+                    relocation.Equip_name = r.Description;
+                    relocation.Date = r.Period.StartDate;
+
+                    renovations.Add(relocation);
+
+
+
+
+                }
+            }
+
         }
 
         private async void LoadEquipments()
@@ -93,8 +148,6 @@ namespace PSW_Wpf_app.ViewModel
         {
             BindingList<Examination> list = new BindingList<Examination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, dateTime));
 
-
-
             if (list.Count == 0) return true;
             foreach (Examination item in list)
             {
@@ -116,34 +169,25 @@ namespace PSW_Wpf_app.ViewModel
                 isFree_to = await LoadExams(room_to_id, dt);
             }
             catch
-            {
-
-            }
+            { }
 
             if (isFree_from && isFree_to)
             {
 
-                //zakazivanje
                 Renovation r1 = new Renovation();
                 r1.Room = await WpfClient.GetRoomById(room_from_id);
-                //new Room() { Id = room_from_id };
                 r1.Period = new Period() { StartDate = dt, EndDate = dt + new TimeSpan(0, 30, 0) };
                 r1.Description = equipment;
 
                 r1 = await WpfClient.Save(r1);
 
 
-                // e1.Patient = new Patient() {
-                // Id = 991 };
-
                 Renovation r2 = new Renovation();
                 r2.Room = await WpfClient.GetRoomById(room_to_id);
-                //new Room() { Id = room_from_id };
                 r2.Period = new Period() { StartDate = dt, EndDate = dt + new TimeSpan(0, 30, 0) };
                 r2.Description = r1.Id.ToString();
-                // e2.Patient = null;
+
                 await WpfClient.Save(r2);
-                // e2.Patient = new Patient() { Id = 991 };
                 List<BusinessDay> buss = await WpfClient.GetAllBusinessDay();
                 Doctor d1 = null;
                 Doctor d2 = null;
@@ -177,11 +221,19 @@ namespace PSW_Wpf_app.ViewModel
                     await WpfClient.MarkAsOccupied(periods, id2);
 
                 MessageBox.Show("You have successfully scheduled equipment relocation!");
+                RelocationEquipmentDTO rel = new RelocationEquipmentDTO();
 
+                rel.Room_from = r1.Room.RoomType.Name;
+                rel.Room_to = r2.Room.RoomType.Name;
+                rel.Equip_name = r1.Description;
+                rel.Date = r1.Period.StartDate;
+
+                renovations.Add(rel);
 
             }
             else
             {
+                MessageBox.Show("Choosen term is busy, please choose an alternative!");
                 if (!isFree_from)
                     RoomId = room_from_id;
                 else

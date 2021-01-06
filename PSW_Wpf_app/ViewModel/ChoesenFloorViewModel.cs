@@ -65,7 +65,7 @@ namespace PSW_Wpf_app.ViewModel
         public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms, string userType)
         {
             user = userType;
-            if (EquipmentAndDrugsViewModel.SelectedEquipment == null && EquipmentAndDrugsViewModel.SelectedDrug == null && SearchResultViewModel.SelectedResult == null)
+            if (RelocationEquipmentViewModel.RoomId == -1 && EquipmentAndDrugsViewModel.SelectedEquipment == null && EquipmentAndDrugsViewModel.SelectedDrug == null && SearchResultViewModel.SelectedResult == null)
             {
                 choosenBuilding = build;
                 choosenFloor = floor;
@@ -182,10 +182,40 @@ namespace PSW_Wpf_app.ViewModel
                 EquipmentAndDrugsViewModel.SelectedDrug = null;
             }
 
+            else if (RelocationEquipmentViewModel.RoomId != -1)
+            {
+                choosenBuilding = build;
+                choosenFloor = floor;
+                floors = getFloor(ChoosenBuilding);
+
+                DrawFloorElement floorDrawer = new DrawFloorElement(canvasFloor);
+
+                bool flag = false;
+                foreach (FloorElement f in floors)
+                {
+                    flag = false;
+                    if (f.Floor.Equals(choosenFloor))
+                    {
+                        if (f.RoomId == RelocationEquipmentViewModel.RoomId)
+                        {
+                            
+                            flag = true;
+
+                        }
+
+                        Shape shape = floorDrawer.DrawElement(f, flag);
+                        shape.MouseDown += openInfo;
+                        canvasFloor.Children.Add(shape);
+                    }
+                }
+                //EquipmentAndDrugsViewModel.SelectedDrug = null;
+            }
+
+
         }
 
 
-            private List<FloorElement> getFloor(object name)
+        private List<FloorElement> getFloor(object name)
             {
                 string pathSurgical = "../../../Data/surgicalBranchesFloors.txt";
                 string pathMedical = "../../../Data/medicalCenter.txt";

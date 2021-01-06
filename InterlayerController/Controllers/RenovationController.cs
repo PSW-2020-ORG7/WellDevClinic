@@ -43,7 +43,13 @@ namespace InterlayerController.Controllers
 
 
         }
+        [HttpGet]
+        public IEnumerable<Renovation> GetAllRenovation()
+        {
+            List<Renovation> result = (List<Renovation>)_renovationController.GetAll();
 
+            return result;
+        }
 
     }
 }

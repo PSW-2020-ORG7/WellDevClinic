@@ -447,6 +447,16 @@ namespace PSW_Wpf_app.Client
             var responseBody = await client.PostAsync("http://localhost:51393/api/renovation/markAsOccupied/" + id, content);
 
         }
+
+        public static async Task<List<Renovation>> GetAllRenovation()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/renovation");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Renovation> renovations = JsonConvert.DeserializeObject<List<Renovation>>(responseBody);
+
+            return renovations;
+        }
     }
 }
 
