@@ -32,7 +32,9 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public IEnumerable<TenderOffer> GetAll()
         {
-            throw new System.NotImplementedException();
+            List<TenderOffer> offers = new List<TenderOffer>();
+            _dbContext.TenderOffers.ToList().ForEach(o => offers.Add(o));
+            return offers;
         }
 
         public TenderOffer Save(TenderOffer offer)
