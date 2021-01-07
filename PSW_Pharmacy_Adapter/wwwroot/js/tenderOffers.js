@@ -180,13 +180,19 @@ function viewAllTenders(tenders) {
         content += '</td></tr>';
         content += '</table><br>';
         content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
-        content += 'Make offer</button >';
+        content += 'Make offer</button >&nbsp;&nbsp;';
+        content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" > ';
+        content += 'View offers</button >';
         content += '</div></div></div>';
         $("#viewTender").append(content);
     }
 }
 
-
+function viewOffers() {
+    /*$("#btnOk").click(function () {
+        window.location.assign(window.location.origin += "/viewTenderOffers.html");
+    });*/
+}
 
 function makeOffer(tender) {
     $("#modalTender").slideDown("fast");
