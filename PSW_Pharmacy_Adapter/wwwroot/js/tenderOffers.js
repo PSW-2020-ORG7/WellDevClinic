@@ -11,7 +11,6 @@
     });
 
     $("#btnAddTender").click(function () {
-        let id = $("#txtId").val();
         //let medicationName = $("#btnMed").text();
         let startDate = $("#dateStart").val();
         let endDate = $("#dateEnd").val();
@@ -27,7 +26,6 @@
         }
 
         var jsonTender = JSON.stringify({
-            Id: Number(id),
             Medications: [],
             StartDate: startDate,
             EndDate: endDate
@@ -159,7 +157,7 @@ function viewAllTenders(tenders) {
     var neededMedications = {};
 
     for (let ten of tenders) {
-        var content = '<div class="card" style="width:350px">';
+        var content = '<div class="card" style="width:350px; display:inline-block">';
         content += '<div class="card-body">';
         content += '<div class="data"> <h4 class="card-subtitle mb-2 text-muted">ID: '
         content += ten.id;
