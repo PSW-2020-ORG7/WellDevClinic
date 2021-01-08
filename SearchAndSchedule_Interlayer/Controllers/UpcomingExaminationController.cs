@@ -45,6 +45,12 @@ namespace SearchAndSchedule_Interlayer.Controllers
             _examinationAppService.Delete(upcomingExamination);
         }
 
+        [HttpGet]
+        [Route("GetPatientsForBlocking")]
+        public List<Patient> GetPatientsForBlocking()
+        {
+           return _examinationAppService.GetPatientsForBlocking();
+        }
 
         [HttpPut]
         [Route("Edit")]

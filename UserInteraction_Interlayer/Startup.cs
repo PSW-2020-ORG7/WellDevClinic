@@ -44,6 +44,9 @@ namespace UserInteraction_Interlayer
             services.AddScoped<IDoctorAppService, DoctorAppService>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             
+            services.AddScoped<IDoctorGradeAppService, DoctorGradeAppService>();
+            services.AddScoped<IDoctorGradeRepository, DoctorGradeRepository>();
+            
             services.AddScoped<ISecretaryAppService, SecretaryAppService>();
             services.AddScoped<ISecretaryRepository, SecretaryRepository>();
             

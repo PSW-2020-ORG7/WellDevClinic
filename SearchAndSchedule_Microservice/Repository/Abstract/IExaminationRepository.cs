@@ -10,5 +10,6 @@ namespace SearchAndSchedule_Microservice.Repository.Abstract
     {
         IEnumerable<UpcomingExamination> GetUpcomingExaminationsByDoctor(Doctor doctor);
         IEnumerable<UpcomingExamination> GetUpcomingExaminationsByPatient(Patient patient);
+        List<UpcomingExamination> GetCanceledExaminations();
     }
 }
