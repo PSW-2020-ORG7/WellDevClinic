@@ -15,12 +15,38 @@ namespace UserInteraction_Microservice.Domain.Model
 
         public UserLogIn(long id, string username, string password)
         {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException();
             Id = id;
             Username = username;
             Password = password;
         }
 
-     
+        public void UpdateUsername(string newUsername)
+        {
+            ValidateUsername(newUsername);
+            Username = newUsername;
+
+        }
+        public void UpdatePassword(string newPassword)
+        {
+            ValidatePassword(newPassword);
+            Password = newPassword;
+        }
+
+        private void ValidateUsername(string newUsername)
+        {
+            if (string.IsNullOrWhiteSpace(newUsername))
+                throw new ArgumentNullException();
+
+        }
+
+        private void ValidatePassword(string newPassword)
+        {
+            if (string.IsNullOrWhiteSpace(newPassword))
+                throw new ArgumentNullException();
+
+        }
         public long GetId()
         {
             return Id;
