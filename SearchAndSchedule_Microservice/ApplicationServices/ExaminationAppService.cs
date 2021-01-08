@@ -60,6 +60,21 @@ namespace SearchAndSchedule_Microservice.ApplicationServices
             return room;
         }
 
+        public List<Patient> GetPatientsForBlocking()
+        {
+            List<UpcomingExamination> canceledExaminations = GetCanceledExaminations();
+            Dictionary<Patient, int> patientCanceledTimes = new Dictionary<Patient, int>();
+            foreach(UpcomingExamination examination in canceledExaminations)
+                patientCanceledTimes[examination.Patient] = patientCanceledTimes[examination.Patient] + 1;
+
+            return patientCanceledTimes.Where(p => p.Value >= 3).Select(p => p.Key).DefaultIfEmpty().ToList();
+        }
+
+        private List<UpcomingExamination> GetCanceledExaminations()
+        {
+            return _examinationRepository.GetCanceledExaminations();
+        }
+
         public List<UpcomingExamination> GetUpcomingExaminationsByDoctor(Doctor doctor)
         {
             return _examinationRepository.GetUpcomingExaminationsByDoctor(doctor).ToList();

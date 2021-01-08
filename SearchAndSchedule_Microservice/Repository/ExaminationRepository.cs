@@ -39,6 +39,11 @@ namespace SearchAndSchedule_Microservice.Repository
             return _myDbContext.Examination.DefaultIfEmpty().ToList();
         }
 
+        public List<UpcomingExamination> GetCanceledExaminations()
+        {
+            return _myDbContext.Examination.Where(e => e.Canceled == true).DefaultIfEmpty().ToList();
+        }
+
         public IEnumerable<UpcomingExamination> GetUpcomingExaminationsByDoctor(Doctor doctor)
         {
             return _myDbContext.Examination.Where(e => e.Doctor.Id == doctor.Id).DefaultIfEmpty().ToList();
