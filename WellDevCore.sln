@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchAndSchedule_Interlaye
 		{E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F} = {E9B718C1-C2F9-423B-ADC3-E5FA00DCCC1F}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examination_Interlayer", "Examination_Interlayer\Examination_Interlayer.csproj", "{510FD896-BB11-4D15-A550-D1BF39CB510D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -233,6 +235,14 @@ Global
 		{BF59442A-EAB4-48E7-881F-CFB14833F88D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF59442A-EAB4-48E7-881F-CFB14833F88D}.Release|x86.ActiveCfg = Release|Any CPU
 		{BF59442A-EAB4-48E7-881F-CFB14833F88D}.Release|x86.Build.0 = Release|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Debug|x86.Build.0 = Debug|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Release|x86.ActiveCfg = Release|Any CPU
+		{510FD896-BB11-4D15-A550-D1BF39CB510D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

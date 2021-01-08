@@ -36,17 +36,6 @@ namespace Examination_Microservice.ApplicationSevices
            return _examinationDetailsRepository.GetAll();
         }
 
-        public IEnumerable<ExaminationDetails> GetAllEager()
-        {
-            return _examinationDetailsRepository.GetAllEager();
-        }
-
-        public ExaminationDetails GetEager(long id)
-        {
-            return _examinationDetailsRepository.GetEager(id);
-
-        }
-
         public IEnumerable<ExaminationDetails> GetExaminationDetailsByDoctor(Doctor doctor)
         {
             return _examinationDetailsRepository.GetExaminationDetailsByDoctor(doctor);

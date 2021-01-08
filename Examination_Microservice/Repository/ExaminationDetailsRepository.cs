@@ -31,44 +31,12 @@ namespace Examination_Microservice.Repository
 
         public ExaminationDetails Get(long id)
         {
-            return _myDbContext.ExaminationDetails.Select(e =>
-               new ExaminationDetails()
-               {
-                   Id = e.Id,
-                   Diagnosis = e.Diagnosis,
-                   Prescription = e.Prescription,
-                   Anamnesis = e.Anamnesis,
-                   Therapy =e.Therapy,
-                   Sympthom = e.Sympthom
-
-               }
-           ).Where(e => e.Id == id).FirstOrDefault();
+            return _myDbContext.ExaminationDetails.FirstOrDefault(e => e.Id == id);
         }
 
         public IEnumerable<ExaminationDetails> GetAll()
         {
-            return _myDbContext.ExaminationDetails.Select(e =>
-               new ExaminationDetails()
-               {
-                   Id = e.Id,
-                   Diagnosis = e.Diagnosis,
-                   Prescription = e.Prescription,
-                   Anamnesis = e.Anamnesis,
-                   Therapy = e.Therapy,
-                   Sympthom = e.Sympthom
-
-               }
-           ).DefaultIfEmpty().ToList();
-        }
-
-        public IEnumerable<ExaminationDetails> GetAllEager()
-        {
             return _myDbContext.ExaminationDetails.DefaultIfEmpty().ToList();
-        }
-
-        public ExaminationDetails GetEager(long id)
-        {
-            return _myDbContext.ExaminationDetails.FirstOrDefault(e => e.Id == id);
         }
 
         public ExaminationDetails Save(ExaminationDetails entity)
