@@ -188,10 +188,8 @@ function viewAllTenders(tenders) {
     }
 }
 
-function viewOffers() {
-    /*$("#btnOk").click(function () {
-        window.location.assign(window.location.origin += "/viewTenderOffers.html");
-    });*/
+function viewOffers(tender) {
+    window.location.assign(window.location.origin += "/viewTenderOffers.html?" + tender);
 }
 
 function makeOffer(tender) {
