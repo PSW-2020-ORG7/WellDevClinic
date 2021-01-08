@@ -9,6 +9,6 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
 
         public List<TenderOffer> GetTenderOffers(long id);
 
-        public void DeleteTenderOffer(long id);
+        public bool DeleteTenderOffer(long id);
     }
 }

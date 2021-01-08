@@ -29,12 +29,9 @@ namespace PSW_Pharmacy_Adapter.Service
                 return offers;
         }
 
-        public void DeleteTenderOffer(long id)
-        {
-            foreach (TenderOffer offer in _tenderRepo.GetAll())
-                if (offer.Id.Equals(id))
-                    _tenderRepo.Delete((long)offer.Id);
-        }
+        public bool DeleteTenderOffer(long id)
+            => _tenderRepo.Delete(id);
+
 
     }
 }

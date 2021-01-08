@@ -55,8 +55,21 @@ function viewAllOffers(offers) {
 function deleteAction(id) {
 	$("#deleteAction").show();
 	$("button#btnYes1").click(function () {
-		//ajax poziv za brisanje
+        $.ajax({
+            method: "DELETE",
+            url: "../api/tenderoffer/delete/" + id,
+            contentType: "application/json",
+            success: function (data) {
+                if (data) {
+                    alert("Successfully deleted");
+                    window.location.reload();
+                }
+            },
+        });
+
 	});
-	
-	
+}
+
+function useAction(id) {
+    // prihvati ponudu, javi apoteci
 }
