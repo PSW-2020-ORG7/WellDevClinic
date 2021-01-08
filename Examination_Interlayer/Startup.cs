@@ -29,18 +29,21 @@ namespace Examination_Interlayer
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
-            
-            services.AddScoped<IHospitalizationAppService, HospitalizationAppService>();
-            services.AddScoped<IHospitalizationRepository, HospitalizationRepository>();
-
-            services.AddScoped<IPatientFileAppService, PatientFileAppService>();
-            services.AddScoped<IPatientFileRepository, PatientFileRepository>();
 
             services.AddScoped<IExaminationDetailsAppService, ExaminationDetailsAppService>();
             services.AddScoped<IExaminationDetailsRepository, ExaminationDetailsRepository>();
 
+            services.AddScoped<IPatientFileAppService, PatientFileAppService>();
+            services.AddScoped<IPatientFileRepository, PatientFileRepository>();
+
+            services.AddScoped<IHospitalizationAppService, HospitalizationAppService>();
+            services.AddScoped<IHospitalizationRepository, HospitalizationRepository>();
+
             services.AddScoped<IReferralAppService, ReferralAppService>();
             services.AddScoped<IReferralRepository, ReferralRepository>();
+            
+            services.AddScoped<ITherapyAppService, TherapyAppService>();
+            services.AddScoped<ITherapyRepository, TherapyRepository>();
             
         }
 
