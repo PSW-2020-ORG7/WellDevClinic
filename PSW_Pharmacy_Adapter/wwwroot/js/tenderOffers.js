@@ -175,47 +175,76 @@ function viewOffers(tender) {
 }
 
 function makeOffer(tender) {
+    $("#viewNeeds").empty();
+
     $("#modalTender").slideDown("fast");
     $(".close").click(function () {
         $(".modalCustom").hide(200);
     })
 
-    $("#idTender").val(tender);
-
-
-    $("#btnAddOffer").click(function () {
-        let name = $("#txtName").val();
-        let price = $("#txtPrice").val();
-        let message = $("#txtNote").val();
-
-        let valid = true;
-
-        var jsonApi = JSON.stringify({
-            PharmacyName: name,
-            Price: Number(price),
-            Medications: [],
-            Message: message,
-            TenderId: Number(tender)
-        });
-
-        $.ajax({
-            method: "POST",
-            url: "../api/tenderoffer/add",
-            contentType: "application/json",
-            data: jsonApi,
-            success: function (data) {
-                if (data) {
-                    $('#message').html('Succesfully added to database.');
-                    $("#regAction").show();
-                }
-            },
-            error: function (e) {
-                $("#message").empty();
-                $('#message').html('Already exists.');
-                $("#regAction").show();
+    $.ajax({
+        method: "GET",
+        url: "../api/tender/" + tender,
+        contentType: "application/json",
+        success: function (data) {
+            console.log(data);
+            var content = '<tr><h4><td style="color: gray">ID tender: ' + data.id + '</td></h4></tr>';
+            for (let ten of data.medications) {
+                content += '<tr><td>' + ten.name + '</td><br>';
+                content += '<td> <input type="number" id="' + ten.name + '" min="0" value="0"/></td></tr>';
             }
-        })
-    })
+            content += '<tr><td>Price:&nbsp;</td><td><input type="number" id="txtPrice" min="1" max="6"><td></tr>';
+            $("#viewNeeds").append(content);
+            $("#idTender").val(data.id);
+
+            $("#btnAddOffer").click(function () {
+                let name = $("#txtName").val();
+                let price = $("#txtPrice").val();
+                let message = $("#txtNote").val();
+                let meds = [];
+
+                for (let ten of data.medications) {
+                    var elemN = ten.name;
+                    var elemA = $("#" + ten.name + "").val();
+                    let med = {
+                        "name": elemN,
+                        "amount": Number(elemA)
+                    };
+                    
+                    meds.push(med);
+                }
+                console.log(meds);
+                
+
+                var jsonApi = JSON.stringify({
+                    PharmacyName: name,
+                    Price: Number(price),
+                    Medications: meds,
+                    Message: message,
+                    TenderId: Number(tender)
+                });
+
+                $.ajax({
+                    method: "POST",
+                    url: "../api/tenderoffer/add",
+                    contentType: "application/json",
+                    data: jsonApi,
+                    success: function (data) {
+                        if (data) {
+                            $('#message').html('Succesfully added to database.');
+                            $("#regAction").show();
+                        }
+                    },
+                    error: function (e) {
+                        $("#message").empty();
+                        $('#message').html('Already exists.');
+                        $("#regAction").show();
+                    }
+                })
+            })
+        },
+    });
+
 }
 
 
