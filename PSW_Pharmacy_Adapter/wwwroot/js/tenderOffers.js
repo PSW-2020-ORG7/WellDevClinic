@@ -122,10 +122,19 @@ function getMedicationStock() {
 
 function viewAllTenders(tenders) {
     $("#viewTender").empty();
-    var neededMedications = {};
+    var now = Date.now();
 
     for (let ten of tenders) {
-        var content = '<div class="card" style="width:350px; display:inline-block">';
+        var content = '<div';
+        var date = new Date(ten.endDate).getTime();
+        var expired = false;
+
+        if (date < now) {
+            content += ' class= "card text-white bg-secondary mb-3" style="width:350px; display:inline-block;">';
+            expired = true;
+        } else {
+            content += ' class="card" style="width:350px; display:inline-block;">';
+        }
         content += '<div class="card-body">';
         content += '<div class="data"> <h4 class="card-subtitle mb-2 text-muted">ID: '
         content += ten.id;
@@ -133,7 +142,7 @@ function viewAllTenders(tenders) {
         content += '<h5><table style="margin:10px">';
         if (ten.medications != null) {
             content += '<h4>Hospital need:<h4>';
-            
+
             for (let med of ten.medications) {
                 content += '<tr><td float="right">';
                 content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
@@ -147,13 +156,19 @@ function viewAllTenders(tenders) {
         content += ISOtoShort(new Date(ten.endDate));
         content += '</td></tr>';
         content += '</table><br>';
-        content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
-        content += 'Make offer</button >&nbsp;&nbsp;';
+        if (expired == true) {
+            content += '<button type="button" class="btn btn-danger btn-lg" onclick="deleteOffer(\'' + ten.id + '\')" data-toggle="modal" data-target="#sendModal">';
+            content += 'Delete tender</button >&nbsp;&nbsp;';
+        } else {
+            content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
+            content += 'Make offer</button >&nbsp;&nbsp;';
+        }
         content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" > ';
         content += 'View offers</button >';
         content += '</div></div></div>';
         $("#viewTender").append(content);
     }
+
 }
 
 function viewOffers(tender) {
