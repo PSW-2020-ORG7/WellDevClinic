@@ -42,5 +42,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
             return BadRequest();
         }
 
+        [HttpPut]
+        [Route("delete/{id?}")]
+        public IActionResult DeleteTenderOffer(long id)
+        {
+            _tenderOfferService.DeleteTenderOffer(id);
+            return Ok();
+        }
+
     }
 }

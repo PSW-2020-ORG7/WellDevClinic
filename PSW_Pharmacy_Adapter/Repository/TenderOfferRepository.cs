@@ -17,7 +17,14 @@ namespace PSW_Pharmacy_Adapter.Repository
 
         public bool Delete(long id)
         {
-            throw new System.NotImplementedException();
+            TenderOffer offer = _dbContext.TenderOffers.SingleOrDefault(offer => offer.Id == id);
+            if (offer != null)
+            {
+                _dbContext.TenderOffers.Remove(offer);
+                _dbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool Exists(long id)
