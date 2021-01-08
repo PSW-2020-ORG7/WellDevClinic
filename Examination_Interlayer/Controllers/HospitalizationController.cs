@@ -37,5 +37,12 @@ namespace Examination_Interlayer.Controllers
         {
             return _hospitalizationAppService.Save(hospitalization);
         }
+
+        [HttpGet]
+        [Route("getByDoctor/{doctor?}")]
+        public List<Hospitalization> GetHospitalizationByDoctor(Doctor doctor)
+        {
+            return _hospitalizationAppService.GetHospitalizationByDoctor(doctor).ToList();
+        }
     }
 }
