@@ -10,8 +10,6 @@ namespace UserInteraction_Microservice.Domain
     {
         public DbSet<Address> Address { get; set; }
         public DbSet<Speciality> Speciality { get; set; }
-        public DbSet<State> State { get; set; }
-        public DbSet<Town> Town { get; set; }
         public DbSet<Person> Person { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<UserLogIn> UserLogIn { get; set; }
@@ -35,6 +33,8 @@ namespace UserInteraction_Microservice.Domain
               modelBuilder.Entity<Patient>().Property(p => p.User.Id).HasColumnName("UserId");
               modelBuilder.Entity<Director>().Property(p => p.User.Id).HasColumnName("UserId");
               modelBuilder.Entity<Secretary>().Property(p => p.User.Id).HasColumnName("UserId");*/
+            modelBuilder.Entity<Address>().OwnsOne(b => b.Town);
+            modelBuilder.Entity<Address>().OwnsOne(b => b.State);
             modelBuilder.Entity<UserLogIn>(entity => {
                 entity.HasIndex(e => e.Username).IsUnique();
             });
