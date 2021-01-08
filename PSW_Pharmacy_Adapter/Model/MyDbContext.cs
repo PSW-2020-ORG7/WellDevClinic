@@ -10,6 +10,7 @@ namespace PSW_Pharmacy_Adapter.Model
         public DbSet<ActionAndBenefit> ActionsAndBenefits { get; set; }
         public DbSet<TenderOffer> TenderOffers { get; set; }
         public DbSet<Tender> Tender { get; set; }
+        public DbSet<PharmacyEmails> Email { get; set; }
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 

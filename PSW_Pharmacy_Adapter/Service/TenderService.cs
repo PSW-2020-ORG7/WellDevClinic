@@ -1,7 +1,6 @@
 ﻿using PSW_Pharmacy_Adapter.Model.Pharmacy;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
-using System;
 using System.Collections.Generic;
 
 namespace PSW_Pharmacy_Adapter.Service
