@@ -21,6 +21,9 @@ namespace PSW_Pharmacy_Adapter.Service
         public List<Tender> GetAllTenders()
             => (List<Tender>)_tenderRepo.GetAll();
 
+        public Tender GetTender(long id)
+            => _tenderRepo.Get(id);
+
         
     }
 }
