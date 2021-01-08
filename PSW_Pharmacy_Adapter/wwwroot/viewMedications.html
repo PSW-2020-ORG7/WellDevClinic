@@ -6,6 +6,7 @@
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/viewMedications.js"></script>
+    <script type="text/javascript" src="js/urgentProcurement.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -57,6 +58,12 @@
     </div>
 
     <div>
+        <form>
+            <input id="btnUrgent" type="submit" value="📤 Urgent procurement" class="btn btn-warning expand" />
+        </form>
+    </div>
+
+    <div>
         <div class="loader" id="pageLoader"></div>
         <div class="modalCustom" id="medAvailability">
             <div class="modalContent">
@@ -97,6 +104,24 @@
     <div id="responseLoad">
         <div class="loader"></div>
         <h4 class="responseInfo">Proccessing request. Please wait.</h4>
+    </div>
+
+    <div class="modalCustom" id="modalUrgProcurement">
+        <div class="modalContent">
+            <span class="close">&times;</span>
+            <h4>Urgent procurement</h4>
+            <br>
+            <div class="input_fields_wrap">
+                <div>
+                    <div class="autocomplete">
+                        <input type="text" name="medicineName" class="ac" placeholder="Enter medicine name"  autocomplete="off" >
+                    </div>
+                    <input type="number" name="quantity" placeholder="Enter amount" />
+                </div>
+            </div>
+            <button class="add_field_button">Add More Fields</button>
+            <button class="btn btn-primary">Send</button>
+        </div>
     </div>
 
     <div id="pageInfo" style="display:none">

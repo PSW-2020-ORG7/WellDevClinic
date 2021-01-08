@@ -9,8 +9,12 @@ $(document).ready(function () {
 			allMedications = data;
 			viewAllMedications(allMedications);
 			$("#pageLoader").css("display", "none");
+			for (let inp of document.getElementsByName('medicineName'))
+				autocomplete(inp, allMedications.map(x => x.name));
         },
 	});
+
+	
 
 	$(".btnFilter").click(function () {
 		$("#divFilterTable").slideToggle();
