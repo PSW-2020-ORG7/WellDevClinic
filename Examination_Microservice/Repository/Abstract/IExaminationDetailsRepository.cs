@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Examination_Microservice.Repository.Abstract
 {
-    public interface IExaminationDetailsRepository : ICRUD<ExaminationDetails,long>, IGetEager<ExaminationDetails,long>
+    public interface IExaminationDetailsRepository : ICRUD<ExaminationDetails,long>
     {
         public IEnumerable<ExaminationDetails> GetExaminationDetailsByDoctor(Doctor doctor);
         public IEnumerable<ExaminationDetails> GetExaminationDetailsByPatient(Patient patient);
