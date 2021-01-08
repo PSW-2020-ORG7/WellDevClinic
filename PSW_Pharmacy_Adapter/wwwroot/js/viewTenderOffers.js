@@ -11,10 +11,6 @@
     });
 
 
-    
-
-    
-
     $.ajax({
         method: "GET",
         url: "../api/tenderoffer/" + window.location.search.slice(1),

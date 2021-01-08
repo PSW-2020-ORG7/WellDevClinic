@@ -37,10 +37,9 @@
     })
 
     $("#btnAddTender").click(function () {
-        //let medicationName = $("#btnMed").text();
+        let medicationName = $("#btnMed").text();
         let startDate = $("#dateStart").val();
         let endDate = $("#dateEnd").val();
-        let list = {"Id":1, "Name":"Brufen"};
 
         if (startDate == "" || endDate == "") {
             alert("Start date and end date can't be empty!")
@@ -52,7 +51,7 @@
         }
 
         var jsonTender = JSON.stringify({
-            Medications: [],
+            Medications: [{"name": medicationName}],
             StartDate: startDate,
             EndDate: endDate
         });
