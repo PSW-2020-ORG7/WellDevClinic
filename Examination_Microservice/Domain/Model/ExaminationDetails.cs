@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Examination_Microservice.Domain.Model
@@ -14,13 +15,16 @@ namespace Examination_Microservice.Domain.Model
         public virtual Sympthom Sympthom { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
+        [NotMapped]
+        public Boolean FilledSurvey { get; set; }
 
         public ExaminationDetails() { }
 
-        public ExaminationDetails(long id, Diagnosis diagnosis, Prescription prescription, Anamnesis anamnesis, Therapy therapy, Sympthom sympthom, Doctor doctor, Patient patient) : this(id, diagnosis, prescription, anamnesis, therapy, sympthom)
+        public ExaminationDetails(long id, Diagnosis diagnosis, Prescription prescription, Anamnesis anamnesis, Therapy therapy, Sympthom sympthom, Doctor doctor, Patient patient, bool filledSurvey) : this(id, diagnosis, prescription, anamnesis, therapy, sympthom)
         {
             Doctor = doctor;
             Patient = patient;
+            FilledSurvey = filledSurvey;
         }
 
         public ExaminationDetails(long id, Diagnosis diagnosis, Prescription prescription, Anamnesis anamnesis, Therapy therapy, Sympthom sympthom)
