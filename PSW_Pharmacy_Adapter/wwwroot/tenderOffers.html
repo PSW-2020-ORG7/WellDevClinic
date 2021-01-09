@@ -29,6 +29,19 @@
         <button id="btnAddTen" type="submit" class="btn btn-info expand">📜 Add tender</button>
     </div>
 
+
+    <div class="modalCustom" id="modalUrgProcurement">
+        <div class="modalContent">
+            <span class="close">&times;</span>
+            <h4>Urgent procurement</h4>
+            <br>
+            
+            <button class="add_field_button">Send</button>
+        </div>
+    </div>
+
+
+
     <div class="modalCustom" id="modalAddTender">
         <div class="modalContent">
             <span class="close">&times;</span>
@@ -36,28 +49,18 @@
             <table>
                 <tr><td>Start date:&nbsp;</td><td><input type="date" id="dateStart"><td></tr>
                 <tr><td>End date:&nbsp;</td><td><input type="date" id="dateEnd"><td></tr>
-                <tr><td>Choose medication:</td>
-                    <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle"
-                                    id="btnMed" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                All medications
-                            </button>
-                            <div class="dropdown-menu" id="viewMedication">
-                            </div>
-                        </div>
-                    </td>
+                <tr>
+                    <div class="input_fields_wrap">
+                    </div>
+                    
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <center>
-                            <button type="button" class="btn btn-secondary" id="btnAddTender"
+                    <td><button class="add_field_button">Add More Fields</button></td>
+                    <td><button type="button" class="btn btn-secondary" id="btnAddTender"
                                     data-toggle="modal" data-target="#exampleModalCenter1">
                                 Add tender
                             </button>
-                        </center>
-                    <td>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -84,9 +87,9 @@
             <span class="close">&times;</span>
 
             <h5>
-               
+
                 <table>
-                        <div id="viewNeeds"></div>
+                    <div id="viewNeeds"></div>
                 </table>
                 <table>
                     <tr><td colspan="2"><h4>Pharmacy infos:</h4></td></tr>

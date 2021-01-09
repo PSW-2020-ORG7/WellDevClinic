@@ -36,8 +36,40 @@
         })
     })
 
+    var br = 0
+    $(".add_field_button").click(function (e) {
+        e.preventDefault();
+        if ($(".input_fields_wrap").children().length < 5) {
+            var contentField = '<div><input placeholder="Enter medicine name" type="text" name="medicineName[]" id="' + br + '"/> ';
+            br += 1;
+            contentField += '<input placeholder="Enter amount" type="number" name="quantity[]" id="' + br + '"/> ';
+            contentField += '<button class="btn btn-outline-danger remove_field">&times;</button>';
+            contentField += '</div>';
+            $(".input_fields_wrap").append(contentField);
+            br += 1;
+        }
+    });
+
+    $(".input_fields_wrap").on('click', '.remove_field', function (e) {
+        e.preventDefault();
+        $(this).parent('div').remove();
+    });
+
+
     $("#btnAddTender").click(function () {
-        let medicationName = $("#btnMed").text();
+        var meds = [];
+        for (i = 0; i < br; i++) {
+            medName = $("#" + i + "").val();
+            i += 1;
+            medAmount = $("#" + i + "").val();
+            var med = {
+                "name": medName,
+                "amount": Number(medAmount)
+            };
+            meds.push(med);
+        }
+        
+        console.log(meds);
         let startDate = $("#dateStart").val();
         let endDate = $("#dateEnd").val();
 
@@ -51,7 +83,7 @@
         }
 
         var jsonTender = JSON.stringify({
-            Medications: [{"name": medicationName}],
+            Medications: meds,
             StartDate: startDate,
             EndDate: endDate
         });
