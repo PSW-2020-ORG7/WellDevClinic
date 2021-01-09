@@ -43,6 +43,7 @@ $(document).ready(function () {
             var data2 = {
                 Username: username.val(), Password: password.val()
             }
+            console.log(data2)
     
             $.ajax({
                 url: window.location.protocol + "//" + window.location.host + "/api/user",
@@ -50,10 +51,16 @@ $(document).ready(function () {
                 data: JSON.stringify(data2),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    console.log(data)
                     sessionStorage.setItem("token", data);
                     let payload = parseJwt(data);
                     let userType = payload["type"];
                     console.log(userType);
+                    if (userType == "Patient") {
+                        window.location.replace(window.location.protocol + "//" + window.location.host + "/html/homePage.html");
+                    } else {
+                        window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+                    }
                     //window.location.replace(window.location.protocol + "//" + window.location.host + "/html/feedback.html");
                     console.log(payload)
                 },

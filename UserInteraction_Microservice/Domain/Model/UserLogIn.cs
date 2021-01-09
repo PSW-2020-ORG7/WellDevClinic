@@ -7,9 +7,9 @@ namespace UserInteraction_Microservice.Domain.Model
    
     public class UserLogIn : IIdentifiable<long>
     {
-        public long Id { get; private set; }
-        public String Username { get; private set; }
-        public String Password { get; private set; }
+        public long Id { get;  set; }
+        public String Username { get;  set; }
+        public String Password { get;  set; }
        
         public UserLogIn() {}
 
