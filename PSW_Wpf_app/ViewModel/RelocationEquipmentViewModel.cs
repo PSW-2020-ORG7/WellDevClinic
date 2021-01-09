@@ -78,11 +78,11 @@ namespace PSW_Wpf_app.ViewModel
 
         private async void LoadRenovations()
         {
-            List<Renovation> ren = await WpfClient.GetAllRenovation();
-            foreach (Renovation r in ren)
+            List<Renovation> renovation = await WpfClient.GetAllRenovation();
+            foreach (Renovation r in renovation)
             {
                 Renovation pair = null;
-                foreach (Renovation r3 in ren)
+                foreach (Renovation r3 in renovation)
                 {
                     try
                     {
@@ -106,9 +106,6 @@ namespace PSW_Wpf_app.ViewModel
                     relocation.Date = r.Period.StartDate;
 
                     renovations.Add(relocation);
-
-
-
 
                 }
             }
@@ -168,8 +165,7 @@ namespace PSW_Wpf_app.ViewModel
                 isFree_from = await LoadExams(room_from_id, dt);
                 isFree_to = await LoadExams(room_to_id, dt);
             }
-            catch
-            { }
+            catch { }
 
             if (isFree_from && isFree_to)
             {
@@ -189,10 +185,9 @@ namespace PSW_Wpf_app.ViewModel
 
                 await WpfClient.Save(r2);
                 List<BusinessDay> buss = await WpfClient.GetAllBusinessDay();
-                Doctor d1 = null;
-                Doctor d2 = null;
-                long id1 = -1;
-                long id2 = -1;
+                Doctor d1, d2 = null;
+                long id1 = -1, id2 = -1;
+                
                 foreach (BusinessDay item in buss)
                 {
 
@@ -221,14 +216,14 @@ namespace PSW_Wpf_app.ViewModel
                     await WpfClient.MarkAsOccupied(periods, id2);
 
                 MessageBox.Show("You have successfully scheduled equipment relocation!");
-                RelocationEquipmentDTO rel = new RelocationEquipmentDTO();
+                RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
 
-                rel.Room_from = r1.Room.RoomType.Name;
-                rel.Room_to = r2.Room.RoomType.Name;
-                rel.Equip_name = r1.Description;
-                rel.Date = r1.Period.StartDate;
+                relocation.Room_from = r1.Room.RoomType.Name;
+                relocation.Room_to = r2.Room.RoomType.Name;
+                relocation.Equip_name = r1.Description;
+                relocation.Date = r1.Period.StartDate;
 
-                renovations.Add(rel);
+                renovations.Add(relocation);
 
             }
             else
@@ -242,10 +237,7 @@ namespace PSW_Wpf_app.ViewModel
             }
 
 
-
         }
-
-
 
     }
 }

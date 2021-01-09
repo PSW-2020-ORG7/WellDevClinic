@@ -208,7 +208,6 @@ namespace PSW_Wpf_app.ViewModel
                         canvasFloor.Children.Add(shape);
                     }
                 }
-                //EquipmentAndDrugsViewModel.SelectedDrug = null;
             }
 
 
