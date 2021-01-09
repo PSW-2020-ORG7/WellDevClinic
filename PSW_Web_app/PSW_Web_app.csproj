@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UserInteraction_Microservice\UserInteraction_Microservice.csproj" />
     <ProjectReference Include="..\WellDevCore\WellDevCore.csproj" />
   </ItemGroup>
 

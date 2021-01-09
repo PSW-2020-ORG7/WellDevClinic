@@ -1,3 +1,4 @@
+
 function parseJwt (token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -7,6 +8,31 @@ function parseJwt (token) {
 
     return JSON.parse(jsonPayload);
 };
+
+function authorize() {
+    token = sessionStorage.getItem("token");
+    let payload = parseJwt(token);
+    userType = payload["type"];
+    if (userType != "Patient") {
+        alert("You are not authorized for this page!!!");
+        window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+    }
+}
+
+var userType = "";
+var token = "";
+$(document).ready(function () {
+    validDate();
+    $.get({
+        url: window.location.protocol + "//" + window.location.host + "/api/doctor/",
+        headers: { "Authorization": token },
+        success: function (doctors) {
+            for (let i = 0; i < doctors.length; i++) {
+                addDoctor(doctors[i])
+            }
+        }
+    });
+
 
 $(document).ready(function () {
     console.log(window.location.protocol + "//" + window.location.host);
@@ -39,7 +65,8 @@ $(document).ready(function () {
                 success: function(data) {
                     $.post({
                         url: window.location.protocol + "//" + window.location.host + "/api/feedback",
-                        data: JSON.stringify({ content: comment.val(), isAnonymous: anonymousBool, isPrivate: privateBool, patient: data}),
+                        data: JSON.stringify({ content: comment.val(), isAnonymous: anonymousBool, isPrivate: privateBool, patient: data }),
+                        headers: { "Authorization": token },
                         success: function () {
                             alert("Uspesno ste poslali komentar")
                         },

@@ -6,9 +6,15 @@
     <link rel="stylesheet" href="css/table.css">
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/viewFeedbackAdmin.js"></script>
+    <script>authorize()</script>
 </head>
 <body>
-
+    <div class="topnav">
+        <a href="viewFeedbackAdmin.html"><img src="house.png"></a>
+        <a href="blockUsers.html">Block users</a>
+        <a href="viewSurvey.html">View survey results</a>
+        <a href="login.html" style="float:right">Log out</a>
+    </div>
     <h1>All feedback</h1>
 
     <div align="center">
@@ -19,21 +25,21 @@
             <option value="published">Published</option>
         </select>
     </div>
-    
-        <table id="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Text</th>
-                    <th>Patient</th>
-                    <th>Private</th>
-                    <th>Published</th>
-                    <th>Publish</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    
+
+    <table id="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Text</th>
+                <th>Patient</th>
+                <th>Private</th>
+                <th>Published</th>
+                <th>Publish</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
 </body>
 </html>

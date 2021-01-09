@@ -114,8 +114,8 @@ namespace UserInteraction_Microservice.ApplicationServices
                     patient.Person.Jmbg = patientId.Person.Jmbg;
                 else if (patientEmail != null)
                     patient.UserDetails.Email = patientEmail.UserDetails.Email;
-                else if (patientUsername != null)
-                    patient.UserLogIn.Username = patientUsername.UserLogIn.Username;
+                /*else if (patientUsername != null)
+                    patient.UserLogIn.Username = patientUsername.UserLogIn.Username;*/
             }
 
             return patient;

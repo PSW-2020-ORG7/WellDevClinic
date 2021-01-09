@@ -52,62 +52,59 @@ namespace UserInteraction_Microservice.ApplicationServices
         public List<DoctorGradeQuestion> GetAverageGrade(DoctorGrade survey)
         {
             List<DoctorGradeQuestion> result = new List<DoctorGradeQuestion>();
-            double staff = 0;
-            double doctor = 0;
-            double hospital = 0;
+            double[] parts = new double[] { 0, 0, 0 };
 
             foreach (DoctorGradeQuestion grade in survey.DoctorGradeQuestions)
             {
                 if (grade.Question.Contains("medical"))
-                    staff += grade.Grade;
+                    parts[0] += grade.Grade;
                 else if (grade.Question.Contains("doctor"))
-                    doctor += grade.Grade;
+                    parts[1] += grade.Grade;
                 else
-                    hospital += grade.Grade;
+                    parts[2] += grade.Grade;
             }
-
-            staff = Math.Round(staff / 4, 2);
-            doctor = Math.Round(doctor / 4, 2);
-            hospital = Math.Round(hospital / 4, 2);
-            result.Add(new DoctorGradeQuestion(staff, "medical"));
-            result.Add(new DoctorGradeQuestion(doctor, "doctor"));
-            result.Add(new DoctorGradeQuestion(hospital, "hospital"));
+            for (int i = 0; i <= 2; i++)
+            {
+                parts[i] = Math.Round(parts[i] / 4, 2);
+            }
+            result.Add(new DoctorGradeQuestion(parts[0], "medical"));
+            result.Add(new DoctorGradeQuestion(parts[1], "doctor"));
+            result.Add(new DoctorGradeQuestion(parts[2], "hospital"));
             return result;
         }
 
         public List<DoctorGradeQuestion> GetAverageGradeDoctor(List<DoctorGrade> surveys)
         {
-            double question1 = 0;
-            double question2 = 0;
-            double question3 = 0;
-            double question4 = 0;
+            double[] questions = new double[] { 0, 0, 0, 0 };
             List<DoctorGradeQuestion> result = new List<DoctorGradeQuestion>();
             foreach (DoctorGrade survey in surveys)
             {
-                foreach (DoctorGradeQuestion grade in survey.DoctorGradeQuestions)
-                {
-                    if (grade.Question.Equals("doctor1"))
-                        question1 += grade.Grade;
-                    else if (grade.Question.Equals("doctor2"))
-                        question2 += grade.Grade;
-                    else if (grade.Question.Equals("doctor3"))
-                        question3 += grade.Grade;
-                    else if (grade.Question.Equals("doctor4"))
-                        question4 += grade.Grade;
-                }
-
+                questions = SumByQuestion(survey.DoctorGradeQuestions, questions);
             }
-            double sum = (question1 + question2 + question3 + question4) / (surveys.Count * 4);
-            question1 = Math.Round(question1 / surveys.Count, 2);
-            question2 = Math.Round(question2 / surveys.Count, 2);
-            question3 = Math.Round(question3 / surveys.Count, 2);
-            question4 = Math.Round(question4 / surveys.Count, 2);
-            result.Add(new DoctorGradeQuestion(question1, "question1"));
-            result.Add(new DoctorGradeQuestion(question2, "question2"));
-            result.Add(new DoctorGradeQuestion(question3, "question3"));
-            result.Add(new DoctorGradeQuestion(question4, "question4"));
+            double sum = (questions[0] + questions[1] + questions[2] + questions[3]) / (surveys.Count * 4);
             result.Add(new DoctorGradeQuestion(sum, "sum"));
+            for (int i = 0; i <= 3; i++)
+            {
+                questions[i] = Math.Round(questions[i] / surveys.Count, 2);
+                result.Add(new DoctorGradeQuestion(questions[i], "question" + i));
+            }
             return result;
+        }
+
+        public double[] SumByQuestion(List<DoctorGradeQuestion> grades, double[] questions)
+        {
+            foreach (DoctorGradeQuestion grade in grades)
+            {
+                if (grade.Question.Equals("doctor1"))
+                    questions[0] += grade.Grade;
+                else if (grade.Question.Equals("doctor2"))
+                    questions[1] += grade.Grade;
+                else if (grade.Question.Equals("doctor3"))
+                    questions[2] += grade.Grade;
+                else if (grade.Question.Equals("doctor4"))
+                    questions[3] += grade.Grade;
+            }
+            return questions;
         }
     }
 }

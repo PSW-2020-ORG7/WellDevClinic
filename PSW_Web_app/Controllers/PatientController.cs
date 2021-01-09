@@ -27,46 +27,54 @@ namespace PSW_Web_app.Controllers
         //povezati sutra obavezno!!
         [HttpGet]
         [Route("patients_for_blocking")]
-        public  async Task<List<PatientDTO>> GetPatientsForBlocking()
+        public  async Task<IActionResult> GetPatientsForBlocking()
         {
+            if (!Authorization.Authorize("Secretary", Request.Headers["Authorization"]))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink +"/api/patient/patients_for_blocking");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<PatientDTO> patients = JsonConvert.DeserializeObject<List<PatientDTO>>(responseBody);
-            return patients;
+            return Ok(patients);
         }
 
         //Examination microservice
         [HttpGet]
         [Route("patientFile/{id?}")]
-        public async Task<PatientDTO> GetPatientByIdDto(long id)
+        public async Task<IActionResult> GetPatientByIdDto(long id)
         {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/patient/patientFile/"+id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             PatientDTO patient = JsonConvert.DeserializeObject<PatientDTO>(responseBody);
-            return patient;
+            return Ok(patient);
         }
 
 
         [HttpGet]
         [Route("blocked_patients")]
-        public  async Task<List<PatientDTO>> GetBlockedPatients()
+        public  async Task<IActionResult> GetBlockedPatients()
         {
+            if (!Authorization.Authorize("Secretary", Request.Headers["Authorization"]))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/patient/blocked_patients");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<PatientDTO> patients = JsonConvert.DeserializeObject<List<PatientDTO>>(responseBody);
-            return patients;
+            return Ok(patients);
         }
 
         [HttpPut]
         [Route("{id?}")]
-        public async void BlockPatient(long id)
+        public async Task<IActionResult> BlockPatient(long id)
         {
+            if (!Authorization.Authorize("Secretary", Request.Headers["Authorization"]))
+                return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(id, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PutAsync(communicationLink + "/api/patient/"+ id ,content);
-
+            return Ok();
         }
 
         [HttpGet]

@@ -1,4 +1,25 @@
-﻿var doctor1_dto = new Object();
+﻿function authorize() {
+	token = sessionStorage.getItem("token");
+	let payload = parseJwt(token);
+	userType = payload["type"];
+	if (userType != "Patient") {
+		alert("You are not authorized for this page!!!");
+		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+	}
+}
+var token = "";
+var userType = "";
+function parseJwt(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+
+	return JSON.parse(jsonPayload);
+};
+
+var doctor1_dto = new Object();
 var doctor2_dto = new Object();
 var doctor3_dto = new Object();
 var doctor4_dto = new Object();
@@ -72,12 +93,14 @@ $(document).ready(function () {
 				
 		$.post({
 			url: window.location.protocol + "//" + window.location.host + "/api/survey",
-			data: JSON.stringify({grades:doctor, doctor:doctor_name}),
+			data: JSON.stringify({ grades: doctor, doctor: doctor_name }),
+			headers: { "Authorization": token },
 			success: function () {
 				alert("You have completed the survey");
 				$.ajax({
 					url: window.location.protocol + "//" + window.location.host + '/api/examination/'+examination_id,
 					type: 'PUT',
+					headers: { "Authorization": token },
 					success: function (data) {
 						var origin = window.location.origin;
 						window.location.href = origin + "/html/viewExaminations.html"
@@ -87,8 +110,6 @@ $(document).ready(function () {
 			},
 			contentType: "application/json; charset=utf-8"
 		})
-		
-	
 	});
 
 	$('#quit').click(function (event) {
