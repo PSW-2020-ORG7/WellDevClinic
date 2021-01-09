@@ -16,6 +16,22 @@ namespace PSW_Wpf_app.ViewModel
         BindingList<Room> room_from = new BindingList<Room>();
         BindingList<Room> room_to = new BindingList<Room>();
         BindingList<RelocationEquipmentDTO> renovations = new BindingList<RelocationEquipmentDTO>();
+        BindingList<DateTime> alternativeDates = new BindingList<DateTime>();
+
+
+        public BindingList<DateTime> AlternativeDates
+        {
+            get
+            {
+                return alternativeDates;
+            }
+            set
+            {
+                alternativeDates = value;
+                OnPropertyChanged("AlternativeDates");
+            }
+        }
+
 
 
 
@@ -234,10 +250,46 @@ namespace PSW_Wpf_app.ViewModel
                 else
                     RoomId = room_to_id;
 
+                GetAlternativeExaminations(room_from_id, room_to_id, new DateTime(dt.Year, dt.Month, dt.Day, 7, 0, 0), new DateTime(dt.Year, dt.Month, dt.Day, 20, 0, 0));
+
+
             }
 
 
         }
+
+        private async void GetAlternativeExaminations(long roomId1, long roomId2, DateTime dateTime1, DateTime dateTime2)
+        {
+            List<DateTime> all = new List<DateTime>();
+
+            for (DateTime dt = dateTime1; dt < dateTime2; dt += new TimeSpan(0, 30, 0))
+            {
+                all.Add(dt);
+            }
+            try
+            {
+                List<Examination> list1 = new List<Examination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId1, dateTime1, dateTime2));
+                List<Examination> list2 = new List<Examination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId2, dateTime1, dateTime2));
+
+                List<DateTime> finale = new List<DateTime>();
+
+                if (list1.Count == 0 && list2.Count == 0)
+                    finale = all;
+                else
+                    foreach (DateTime item in all)
+                    {
+                        if (list1.Find(x => x.Period.StartDate == item) != null)
+                            continue;
+                        if (list2.Find(x => x.Period.StartDate == item) != null)
+                            continue;
+
+                        finale.Add(item);
+                    }
+                AlternativeDates = new BindingList<DateTime>(finale);
+            }
+            catch { MessageBox.Show("Error while loading alternative terms"); }
+        }
+
 
     }
 }

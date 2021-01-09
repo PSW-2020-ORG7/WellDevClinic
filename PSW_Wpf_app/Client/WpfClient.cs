@@ -457,6 +457,16 @@ namespace PSW_Wpf_app.Client
 
             return renovations;
         }
+
+        public static async Task<List<Examination>> GetExaminationsByRoomAndPeriodForAlternative(long roomId, DateTime dateTime1, DateTime dateTime2)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/" + roomId + "/" + dateTime1.ToString() + "/" + dateTime2.ToString());
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Examination> exams = JsonConvert.DeserializeObject<List<Examination>>(responseBody);
+
+            return exams;
+        }
     }
 }
 
