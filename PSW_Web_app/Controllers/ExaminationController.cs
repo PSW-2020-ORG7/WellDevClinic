@@ -42,39 +42,49 @@ namespace PSW_Web_app.Controllers
 
         [HttpPut]
         [Route("{id?}")]
-        public async void FillSurvey(long id)
+        public async Task<IActionResult> FillSurvey(long id)
         {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(id));
             var response = await client.PutAsync(communicationLink + "/api/examination/" + id, content);
+            return Ok();
         }
 
         [HttpPut]
         [Route("canceled/{id?}")]
-        public async void CancelExamination(long id)
+        public async Task<IActionResult> CancelExamination(long id)
         {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(id));
             var response = await client.PutAsync(communicationLink + "/api/examination/canceled/" + id, content);
+            return Ok();
         }
 
         [HttpGet]
         [Route("{id?}")]
-        public async Task<List<ExaminationDto>> GetFinishedExaminationsByUser(long id)
+        public async Task<IActionResult> GetFinishedExaminationsByUser(long id)
         {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/"+id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
-            return result;
+            return Ok(result);
         }
         [HttpGet]
         [Route("upcoming/{id?}")]
-        public async Task<List<ExaminationDto>> GetUpcomingExaminationsByUser(long id)
+        public async Task<IActionResult> GetUpcomingExaminationsByUser(long id)
         {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/upcoming/" + id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
-            return result;
+            return Ok(result);
         }
         /// <summary>
         ///  calls GetFinishedExaminationsByUser(User user) method from class ExaminationService so  
@@ -84,24 +94,28 @@ namespace PSW_Web_app.Controllers
         /// <returns>status 200 OK response with a list of examinations mapped to ExaminationDto</returns>
         [HttpGet]
         [Route("getByUser/{id?}")]
-        public async Task<List<ExaminationDto>> GetFinishedExaminationDocumentsByUser(long id)
+        public async Task<IActionResult> GetFinishedExaminationDocumentsByUser(long id)
         {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/getByUser/" + id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
-            return result;
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("newExamination")]
-        public async Task<Examination> NewExaminationAsync([FromBody] ExaminationIdsDTO examination)
+        public async Task<IActionResult> NewExaminationAsync([FromBody] ExaminationIdsDTO examination)
         {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(examination, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(communicationLink + "/api/examination/newExamination", content);
             string responseBody = await response.Content.ReadAsStringAsync();
             Examination result = JsonConvert.DeserializeObject<Examination>(responseBody);
-            return result;
+            return Ok(result);
         }
     }
 }
