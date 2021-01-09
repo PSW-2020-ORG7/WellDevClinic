@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSW_Pharmacy_Adapter.Model;
 
 namespace PSW_Pharmacy_Adapter.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201228210159_Tender")]
+    partial class Tender
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,55 +48,55 @@ namespace PSW_Pharmacy_Adapter.Migrations
                         new
                         {
                             Id = 1L,
-                            EndDate = new DateTime(2021, 1, 23, 17, 43, 10, 71, DateTimeKind.Local).AddTicks(7798),
+                            EndDate = new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(4239),
                             MessageAboutAction = "Andol on sale! 50% off!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 29, 17, 43, 10, 66, DateTimeKind.Local).AddTicks(7617),
+                            StartDate = new DateTime(2020, 12, 18, 22, 1, 58, 53, DateTimeKind.Local).AddTicks(1455),
                             Status = 1
                         },
                         new
                         {
                             Id = 2L,
-                            EndDate = new DateTime(2021, 2, 7, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(6727),
+                            EndDate = new DateTime(2021, 1, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9745),
                             MessageAboutAction = "Cheap bromazepam on huge quantities!!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2021, 1, 13, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(6664),
+                            StartDate = new DateTime(2021, 1, 2, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9707),
                             Status = 0
                         },
                         new
                         {
                             Id = 3L,
-                            EndDate = new DateTime(2021, 1, 15, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(6944),
+                            EndDate = new DateTime(2021, 1, 4, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9840),
                             MessageAboutAction = "Aspirin C for free!!",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2021, 1, 9, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(6923),
+                            StartDate = new DateTime(2020, 12, 29, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9836),
                             Status = 0
                         },
                         new
                         {
                             Id = 4L,
-                            EndDate = new DateTime(2021, 1, 30, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(6977),
+                            EndDate = new DateTime(2021, 1, 19, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9849),
                             MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
                             PharmacyName = "PH3",
-                            StartDate = new DateTime(2021, 1, 10, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(6962),
+                            StartDate = new DateTime(2020, 12, 30, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9845),
                             Status = 2
                         },
                         new
                         {
                             Id = 5L,
-                            EndDate = new DateTime(2021, 1, 23, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(7006),
+                            EndDate = new DateTime(2021, 1, 12, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9856),
                             MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
                             PharmacyName = "PH2",
-                            StartDate = new DateTime(2021, 1, 8, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(6992),
+                            StartDate = new DateTime(2020, 12, 28, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9852),
                             Status = 2
                         },
                         new
                         {
                             Id = 6L,
-                            EndDate = new DateTime(2021, 1, 7, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(7039),
+                            EndDate = new DateTime(2020, 12, 27, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9863),
                             MessageAboutAction = "Cheap sedatives!",
                             PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 29, 17, 43, 10, 72, DateTimeKind.Local).AddTicks(7023),
+                            StartDate = new DateTime(2020, 12, 18, 22, 1, 58, 56, DateTimeKind.Local).AddTicks(9859),
                             Status = 1
                         });
                 });
@@ -230,26 +232,9 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
-                    b.Property<long>("TenderId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.ToTable("TenderOffers");
-                });
-
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.PharmacyEmails", b =>
-                {
-                    b.Property<long?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Email");
                 });
 
             modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>
