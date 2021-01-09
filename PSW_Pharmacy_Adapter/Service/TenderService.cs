@@ -8,15 +8,19 @@ namespace PSW_Pharmacy_Adapter.Service
     public class TenderService : ITenderService
     {
         private readonly ITenderRepository _tenderRepo;
-
-        public TenderService(ITenderRepository tenderRepository)
+        private readonly IPharmacyEmailsService _emailsService;
+        public TenderService(ITenderRepository tenderRepository, IPharmacyEmailsService pharmacyEmailsService)
         {
             _tenderRepo = tenderRepository;
+            _emailsService = pharmacyEmailsService;
         }
 
         public Tender AddTender(Tender tender)
-            => _tenderRepo.Save(tender);
-
+        {
+            Tender tender1= _tenderRepo.Save(tender);
+            _emailsService.sendEmailToAllEmails();
+            return tender1;
+        }
         public List<Tender> GetAllTenders()
             => (List<Tender>)_tenderRepo.GetAll();
 
