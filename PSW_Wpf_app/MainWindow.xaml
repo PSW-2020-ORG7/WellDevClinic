@@ -26,12 +26,11 @@
                 <TextBlock HorizontalAlignment="Left" Height="24" Margin="8,195,0,0" TextWrapping="Wrap" Text="Enter room name or type:" FontSize="16" VerticalAlignment="Top" Width="188"/>
 
 
-                <Button Content="Emergency appointment" x:Name="EmergencyAppointment" HorizontalAlignment="Left" Height="35" Margin="10,427,0,0" VerticalAlignment="Top" Width="181" Click="EmergencyAppointment_Click" />
-                <Button Content="Relocation appointment" x:Name="RelocationAppointment" Height="35" Width="181" Margin="12,467,6,48" Click="RelocationAppointment_Click">
-                </Button>
-                <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Center" Height="35" Margin="0,301,0,0" VerticalAlignment="Top" Width="181" Click="Button_Equipment_Drugs"/>
-                <Button Content="Schedule appointment" x:Name="Appointment" HorizontalAlignment="Center" Height="35" Margin="0,341,0,0" VerticalAlignment="Top" Width="181" Click="Button_Appointment"/>
-                <Button Content="Schedule specialist&#xA;    appointment" x:Name="SpecialistAppointment" HorizontalAlignment="Center" Height="41" Margin="0,381,0,0" VerticalAlignment="Top" Width="180" Click="SpecialistAppointment_Click"/>
+                <Button Content="Emergency appointment" x:Name="EmergencyAppointment" HorizontalAlignment="Center" Height="35" Margin="0,444,0,0" VerticalAlignment="Top" Width="184" Click="EmergencyAppointment_Click" />
+                <Button Content="Relocation appointment" x:Name="RelocationAppointment" Margin="7,484,7,26" Click="RelocationAppointment_Click"/>
+                <Button Content="Equipment and Drugs" Name="Equipment_Drugs" HorizontalAlignment="Center" Height="35" Margin="0,313,0,0" VerticalAlignment="Top" Width="182" Click="Button_Equipment_Drugs"/>
+                <Button Content="Schedule appointment" x:Name="Appointment" HorizontalAlignment="Center" Height="35" Margin="0,353,0,0" VerticalAlignment="Top" Width="181" Click="Button_Appointment"/>
+                <Button Content="Schedule specialist&#xA;    appointment" x:Name="SpecialistAppointment" HorizontalAlignment="Center" Height="46" Margin="0,393,0,0" VerticalAlignment="Top" Width="180" Click="SpecialistAppointment_Click"/>
 
 
             </Grid>

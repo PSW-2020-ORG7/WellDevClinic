@@ -56,4 +56,4 @@ networks:
   demo:
     name: demo
     driver: bridge
-    external: true
+    external: false

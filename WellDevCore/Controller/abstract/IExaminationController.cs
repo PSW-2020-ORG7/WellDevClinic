@@ -1,4 +1,5 @@
 ﻿using Controller;
+using Model.Director;
 using Model.Dto;
 using Model.PatientSecretary;
 using Model.Users;
@@ -16,6 +17,8 @@ namespace bolnica.Controller
         List<Examination> GetFinishedExaminationsByUser(long id);
         List<Examination> GetUpcomingExaminationsByUser(User user);
         List<Examination> GetFinishedExaminationsByUser(User user);
+        IEnumerable<Examination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period);
+
         List<Examination> GetExaminationsByFilter(ExaminationDTO examinationDTO, Boolean upcomingOnly);
         List<Examination> GetAllPrevious();
         Examination NewExamination(long DoctorId, Period Period, long PatientId);

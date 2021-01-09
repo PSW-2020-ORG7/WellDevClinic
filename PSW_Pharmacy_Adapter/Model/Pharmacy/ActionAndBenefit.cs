@@ -1,6 +1,4 @@
-﻿using PSW_Pharmacy_Adapter.Converter;
-using PSW_Pharmacy_Adapter.Dto;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PSW_Pharmacy_Adapter.Model

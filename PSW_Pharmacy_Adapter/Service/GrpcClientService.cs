@@ -24,7 +24,8 @@ namespace PSW_Pharmacy_Adapter
             => Task.CompletedTask;
 
 
-        public async Task<List<Medication>> GetMedications(string name)
+
+        public async Task<List<Medication>> GetAllMedicationsAmount(string name)
         {
             try
             {
@@ -40,7 +41,7 @@ namespace PSW_Pharmacy_Adapter
             }
         }
 
-        public async Task<int> SendMessage(string medicationName, string pharmacyName)
+        public async Task<int> GetMedicationAmount(string medicationName, string pharmacyName)
         {
             try
             {
@@ -52,6 +53,7 @@ namespace PSW_Pharmacy_Adapter
                 return -408;
             }
         }
+
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
