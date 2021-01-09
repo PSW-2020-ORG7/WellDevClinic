@@ -15,7 +15,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class FeedbackController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62948";
 
         static readonly HttpClient client = new HttpClient();
         [HttpGet]

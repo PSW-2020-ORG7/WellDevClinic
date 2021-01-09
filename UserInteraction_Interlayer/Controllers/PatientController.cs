@@ -7,6 +7,8 @@ using UserInteraction_Microservice.Domain.Model;
 
 namespace UserInteraction_Interlayer.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class PatientController : ControllerBase
     {
         private readonly IPatientAppService _patientAppService;

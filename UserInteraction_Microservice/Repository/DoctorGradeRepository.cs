@@ -40,5 +40,10 @@ namespace UserInteraction_Microservice.Repository
             _myDbContext.SaveChanges();
             return DoctorGrade.Entity;
         }
+
+        public List<DoctorGrade> GetByDoctor(string doctor)
+        {
+            return _myDbContext.DoctorGrade.Where(a => a.Doctor  == doctor).ToList();
+        }
     }
 }

@@ -9,7 +9,7 @@
 		patient = "Anonymous";
 	}
 	else {
-		patient = feedback.patient;
+		patient = feedback.patient.fullName;
 	}
 
 	let user = $('<div class="form-group row"><div class="col-sm-12"><input id="patient" readonly class="form-control-plaintext" value="'+ patient +'"></div></div>');

@@ -10,6 +10,8 @@ namespace UserInteraction_Microservice.Domain.Model
         public long Id { get; set; }
         public Boolean Guest { get; set; } = false; 
         public Boolean Blocked { get; set; } = false;
+        public Boolean Validation { get; set; }
+        public String VerificationToken { get; set; }
         public Patient()
         {
             UserType = UserType.Patient;
@@ -24,6 +26,21 @@ namespace UserInteraction_Microservice.Domain.Model
             Person = person;
             UserDetails = userDetails;
             UserLogIn = userLogIn;
+            Validation = false;
+
+        }
+
+        public Patient(long id, bool guest, bool blocked, Person person, UserDetails userDetails, UserLogIn userLogIn, string verificationToken)
+        {
+            Id = id;
+            Guest = guest;
+            Blocked = blocked;
+            UserType = UserType.Patient;
+            Person = person;
+            UserDetails = userDetails;
+            UserLogIn = userLogIn;
+            Validation = false;
+            VerificationToken = verificationToken;
 
         }
 

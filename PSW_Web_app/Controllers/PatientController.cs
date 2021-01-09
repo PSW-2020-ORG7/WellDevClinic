@@ -21,10 +21,10 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     { 
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62948";
 
         static readonly HttpClient client = new HttpClient();
-
+        //povezati sutra obavezno!!
         [HttpGet]
         [Route("patients_for_blocking")]
         public  async Task<List<PatientDTO>> GetPatientsForBlocking()
@@ -36,9 +36,8 @@ namespace PSW_Web_app.Controllers
             return patients;
         }
 
-
+        //Examination microservice
         [HttpGet]
-
         [Route("patientFile/{id?}")]
         public async Task<PatientDTO> GetPatientByIdDto(long id)
         {
@@ -68,6 +67,17 @@ namespace PSW_Web_app.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(id, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PutAsync(communicationLink + "/api/patient/"+ id ,content);
 
+        }
+
+        [HttpGet]
+        [Route("lazy/{id?}")]
+        public async Task<Patient> GetPatientById(long id)
+        {
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/patient/lazy/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Patient patient = JsonConvert.DeserializeObject<Patient>(responseBody);
+            return patient;
         }
 
     }
