@@ -161,6 +161,19 @@ namespace InterlayerController.Controllers
 
         }
 
+        [HttpGet]
+        [Route("{roomId?}/{dateTime1?}/{dateTime2?}")]
+        public List<Examination> GetExaminationsByRoomAndPeriodForAlternative(long roomId, string dateTime1, string dateTime2)
+        {
+            DateTime dt1 = DateTime.Parse(dateTime1);
+            DateTime dt2 = DateTime.Parse(dateTime2);
+            Period p = new Period();
+            p.StartDate = dt1;
+            p.EndDate = dt2;
+            List<Examination> exams = _examinationController.GetUpcomingExaminationsByRoomAndPeriod(_roomController.Get(roomId), p).ToList();
 
+            return exams;
+
+        }
     }
 }

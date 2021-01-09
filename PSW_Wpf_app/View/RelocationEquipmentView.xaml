@@ -6,29 +6,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSW_Wpf_app.View"
         mc:Ignorable="d"
-        Title="RelocationEquipmentView" Height="650" Width="900">
+        Title="RelocationEquipmentView" Height="750" Width="950">
     <Grid>
-        <StackPanel Orientation="Horizontal" Margin="10,27,0,549">
+        <StackPanel Orientation="Horizontal" Margin="10,27,0,656">
             <TextBlock x:Name="ChooseEquipment" Text="Choose equipment:" FontSize="25"  Width="247" Height="36"/>
             <ComboBox   Width="182" Height="25" x:Name="equipments" Margin="75,0,0,-10" SelectionChanged="equipments_SelectionChanged" ItemsSource ="{Binding Equipments, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"  />
 
-        </StackPanel>        <StackPanel Orientation="Horizontal" Margin="10,109,0,461">            <TextBlock x:Name="ChooseRoomFrom" Text="Choose starting room: " FontSize="25"  Width="274" Height="40"/>
-            <ComboBox x:Name="rooms_from"  Height="25" Width="182" Margin="50,0,0,0" SelectionChanged="room_from_SelectionChanged"  ItemsSource ="{Binding Room_from, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>        </StackPanel>        <StackPanel Orientation="Horizontal" Margin="10,192,0,392">
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10,93,0,578">
+            <TextBlock x:Name="ChooseRoomFrom" Text="Choose starting room: " FontSize="25"  Width="274" Height="40"/>
+            <ComboBox x:Name="rooms_from"  Height="25" Width="182" Margin="50,0,0,0" SelectionChanged="room_from_SelectionChanged"  ItemsSource ="{Binding Room_from, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10,161,0,501">
             <TextBlock x:Name="ChooseRoomTo" Text="Choose destination room: " FontSize="25"  Width="303" Height="40"/>
-            <ComboBox x:Name="rooms_to" Margin="25,0,0,0"   Height="25" Width="182"   ItemsSource ="{Binding Room_to, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>
-        </StackPanel>        <StackPanel x:Name="DatePicker" Orientation="Horizontal" Margin="10,274,10,243">
+            <ComboBox x:Name="rooms_to" Margin="25,0,0,0"   Height="25" Width="182"   ItemsSource ="{Binding Room_to, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>
+
+        </StackPanel>
+        <StackPanel x:Name="DatePicker" Orientation="Horizontal" Margin="10,259,10,367">
 
             <TextBlock x:Name="ChooseDate" Text="Select a date:" FontSize="25" Width="150" Height="36" Margin="0,-70,0,0"/>
-            <DatePicker x:Name="Picker"  Margin="178,-90,0,-20" Width="197" FirstDayOfWeek="Monday" Height="33"/>
+            <DatePicker x:Name="Picker"  Margin="178,-90,0,-20" Width="189" FirstDayOfWeek="Monday" Height="33"/>
             <Button Content="Schedule" Click="Schedule_Click" Width="114" Height="27" Margin="0,50,-300,0"/>
-            <materialDesign:TimePicker x:Name="startTimePicker" Width="164" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-                                   materialDesign:HintAssist.Hint="" Height="39" Margin="50,-70,0,0"/>
-        </StackPanel>        <DataGrid Width="800" Height="200" ItemsSource="{Binding Renovations}" Margin="0,400,0,0" x:Name="scheduleRenovationGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">            <DataGrid.CellStyle>                <Style TargetType="DataGridCell">                    <Setter Property="Margin" Value="0"/>                    <Setter Property="Padding" Value="0"/>                    <Setter Property="BorderThickness" Value="0.5"/>                </Style>            </DataGrid.CellStyle>            <DataGrid.Columns>
+
+            <materialDesign:TimePicker x:Name="startTimePicker" Width="164" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                   materialDesign:HintAssist.Hint="" Height="39" Margin="50,-70,0,0"/>
+
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10,372,20,279">            <TextBlock x:Name="alternative" Text="Alternative date:" FontSize="25" Height="47"/>            <ComboBox x:Name="times" ItemsSource="{Binding AlternativeDates, UpdateSourceTrigger=PropertyChanged}" Height="33" Width="197" Margin="150,0,0,0">
+            </ComboBox>        </StackPanel>
+        <DataGrid Height="200" ItemsSource="{Binding Renovations}" Margin="15,484,15,50" x:Name="scheduleRenovationGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                </Style>
+            </DataGrid.CellStyle>
+
+            <DataGrid.Columns>
                 <DataGridTextColumn  x:Name="ColumnDescription" Header="Equipment" Binding="{Binding Path = Equip_name}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn x:Name="ColumnDate" Header="Date and Time"  Binding="{Binding Path= Date}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn x:Name="ColumnRoom1" Header="Room From" Binding="{Binding Path =Room_from}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn x:Name="ColumnRoom" Header="Room To" Binding="{Binding Path =Room_to}" Width="*"></DataGridTextColumn>
 
 
-            </DataGrid.Columns>        </DataGrid>    </Grid>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </Window>
