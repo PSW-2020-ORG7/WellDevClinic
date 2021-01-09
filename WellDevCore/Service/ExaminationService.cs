@@ -230,5 +230,9 @@ namespace Service
         {
             return _previousRepository.GetFinishedExaminationsByUser(user);
         }
+        public List<Examination> GetAllUpcomingExaminations()
+        {
+            return _upcomingRepository.GetAllUpcomingExaminations();
+        }
     }
 }

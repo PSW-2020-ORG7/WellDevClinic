@@ -17,7 +17,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetHospitalsMedicationStockAsync()
+        public async Task<IActionResult> GetHospitalMedicationStockAsync()
             => Ok(await _medicationService.GetAllHospitalMedications());
 
         [HttpGet]
@@ -28,11 +28,20 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [HttpPost]
         [Route("findMedPh")]
         public async Task<IActionResult> GetPharmacyByMedicineAsync([FromBody]Medication med)
-            => Ok(await _medicationService.GetPharmacyByMedicineAsync(med));
+            => Ok(await _medicationService.GetPharmacyByMedicationAsync(med));
+
+        [HttpGet]
+        [Route("orderMedicine")]
+        public async Task<IActionResult> OrderMedication([FromQuery] string phName, [FromQuery]string medName, [FromQuery]int amount)
+        {
+            if(await _medicationService.OrderMedicationAsync(phName, medName, amount) != null)
+                return Ok();
+            return BadRequest();        // There is no such amount at pharmacy
+        }
 
         [HttpGet]
         [Route("check/{id?}")]
         public IActionResult CheckStrucutre(string id)
-            => Ok(_medicationService.GetUnsyncedMedications(id));
+            => Ok(_medicationService.GetUnsyncedMedicationsAsync(id));
     }
 }

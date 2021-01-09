@@ -47,6 +47,10 @@ services:
       DATABASE_PASSWORD: root
       DATABASE_HOST: mysql
       DATABASE_SCHEMA: newmydb
+      DATABASE_USERNAME_EVENTS: root
+      DATABASE_PASSWORD_EVENTS: root
+      DATABASE_HOST_EVENTS: mysql
+      DATABASE_SCHEMA_EVENTS: eventlogs
     depends_on: 
       - mysql
 

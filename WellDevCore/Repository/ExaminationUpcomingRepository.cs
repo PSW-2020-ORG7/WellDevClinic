@@ -32,6 +32,8 @@ namespace bolnica.Repository
 
         public void Edit(Examination entity)
         {
+            Examination examination = GetEager(entity.Id);
+            examination.Patient = entity.Patient;
             myDbContext.SaveChanges();
         }
 
@@ -109,6 +111,20 @@ namespace bolnica.Repository
             myDbContext.Examination.Add(examination);
             myDbContext.SaveChanges();
             return examination;
+        }
+        public List<Examination> GetAllUpcomingExaminations()
+        {
+            List<Examination> examinations = new List<Examination>();
+            DateTime time = DateTime.Now.AddHours(1);
+
+            foreach (Examination exam in myDbContext.Examination.ToList())
+            {
+                TimeSpan difference = exam.Period.EndDate.TimeOfDay - exam.Period.StartDate.TimeOfDay;
+                if (difference.TotalHours < 1)
+                    if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now.Date) == 0 && (exam.Period.StartDate.TimeOfDay > DateTime.Now.TimeOfDay) && (exam.Period.StartDate.TimeOfDay < time.TimeOfDay))
+                        examinations.Add(exam);
+            }
+            return examinations;
         }
 
     }

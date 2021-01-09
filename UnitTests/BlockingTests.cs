@@ -64,7 +64,7 @@ namespace UnitTests
             stubRepository.Setup(m => m.GetEager()).Returns(patients);
             return stubRepository.Object;
         }
-
+        /*
         [Fact]
         public void GetCancelationDatesNotEmpty()
         {
@@ -81,8 +81,8 @@ namespace UnitTests
             List<DateTime> result = service.GetCancelationDatesByPatient(2);
             Assert.Empty(result);
         }
-
-        [Fact]
+        */
+      /*  [Fact]
         public void GetPatientsForBlockingNotEmpty()
         {
             ExaminationService examination_service = new ExaminationService(CreateUpcomingRepository(), CreatePreviousRepository());
@@ -98,7 +98,7 @@ namespace UnitTests
             PatientService service = new PatientService(CreatePatientRepository(), null, null, examination_service);
             List<Patient> result = service.GetPatientsForBlocking();
             Assert.Empty(result);
-        }
+        }*/
 
     }
 }

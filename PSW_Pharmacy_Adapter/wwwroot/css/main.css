@@ -13,11 +13,6 @@
     padding:1px;
 }
 
-.wrapper{
-    width:1170px;
-    margin:auto;
-}
-
 
 .welcome-text {
     position: absolute;
@@ -54,7 +49,7 @@ div.card {
     .topnav label {
         font-weight:bold;
     }
-    .topnav a, label{
+    .topnav a, .topnav label{
         float: left;
         color: #b5b5b5;
         text-align: center;
@@ -137,8 +132,11 @@ div.card {
         color: white;
     }
 
-input[type=text] {
-    width: 40%;
+.expand {
+    width: 100%;
+}
+
+input[type=text], input[type=number], input[type=date], select {
     border-radius: 4px;
     padding: 4px 10px;
     margin: 8px 0;
@@ -147,3 +145,25 @@ input[type=text] {
     box-sizing: border-box;
 }
 
+
+/* Custom table */
+.customTable table {
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 30px;
+}
+
+.customTable th {
+    background: #333;
+    color: #fff;
+    height: 30px;
+}
+
+.customTable td {
+    padding: 5px;
+}
+
+.customTable tr {
+    background: whitesmoke;
+    border: none;
+}

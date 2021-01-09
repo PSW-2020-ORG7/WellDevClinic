@@ -12,12 +12,15 @@ namespace Repository
    {
         private readonly IIngredientRepository _ingredientRepository;
         private readonly MyDbContext myDbContext;
+        private readonly ISequencer<long> _sequencer;
 
         public DrugRepository(IIngredientRepository ingredientRepository, MyDbContext context)
         {
             _ingredientRepository = ingredientRepository;
 
             myDbContext = context;
+            _sequencer = new LongSequencer();
+            InitializeId();
         }
 
         /*public DrugRepository(ICSVStream<Drug> stream, ISequencer<long> sequencer, IIngredientRepository ingredientRepository)
@@ -104,17 +107,22 @@ namespace Repository
 
         public Drug Save(Drug entity)
         {
-            throw new NotImplementedException();
+            entity.SetId(_sequencer.GenerateId());
+            var Drug = myDbContext.Drug.Add(entity);
+            myDbContext.SaveChanges();
+            return Drug.Entity;
         }
 
         public void Edit(Drug entity)
         {
-            throw new NotImplementedException();
+            myDbContext.Drug.Update(entity);
+            myDbContext.SaveChanges();
         }
 
         public void Delete(Drug entity)
         {
-            throw new NotImplementedException();
+            myDbContext.Drug.Remove(entity);
+            myDbContext.SaveChanges();
         }
 
         public IEnumerable<Drug> GetEager()
@@ -126,5 +134,11 @@ namespace Repository
 
         public Drug Get(long id)
             => myDbContext.Drug.FirstOrDefault(drug => drug.Id == id);
+
+
+        protected void InitializeId() => _sequencer.Initialize(GetMaxId(GetAllEager()));
+
+        private long GetMaxId(IEnumerable<Drug> drugs)
+            => drugs.Count() == 0 ? 0 : drugs.Max(drug => drug.Id);
     }
 }
