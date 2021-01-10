@@ -5,6 +5,7 @@ using System.Text;
 
 namespace SearchAndSchedule_Microservice.Domain.Model
 {
+    [NotMapped]
     public class Speciality : IIdentifiable<long>
     {
         public long Id { get; set; }

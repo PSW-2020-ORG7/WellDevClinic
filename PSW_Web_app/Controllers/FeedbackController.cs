@@ -15,7 +15,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class FeedbackController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62948";
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
         [HttpGet]
@@ -32,7 +32,7 @@ namespace PSW_Web_app.Controllers
         [Route("{id?}")]
         public async Task<IActionResult> GetFeedback(long id)
         {
-            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+            if (!Authorization.Authorize("Secretary", Request.Headers["Authorization"]))
                 return BadRequest();
             HttpResponseMessage response = await client.GetAsync(communicationLink+ "/api/feedback/" + id);
             response.EnsureSuccessStatusCode();
@@ -53,8 +53,6 @@ namespace PSW_Web_app.Controllers
             return Ok(result);
         }
 
-
-      
         [HttpPut]
         public async Task<IActionResult> PublishFeedback(Feedback feedback)
         {
