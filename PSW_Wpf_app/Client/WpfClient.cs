@@ -73,6 +73,8 @@ namespace PSW_Wpf_app.Client
         public virtual Period Period { get; set; }
         public Boolean PatientScheduling = false;
         public PriorityType Priority { get; set; }
+        public long RoomId { get; set; }
+
         public BusinessDayDTO(Doctor doctor, Period period)
         {
             this.Doctor = doctor;
@@ -286,6 +288,16 @@ namespace PSW_Wpf_app.Client
             List<Drug> drugs = JsonConvert.DeserializeObject<List<Drug>>(responseBody);
 
             return drugs;
+        }
+
+        public static async Task<BusinessDayDTO> GetBussinessdayByDoctor(long doctorId)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/term/" + doctorId);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            BusinessDayDTO buss = JsonConvert.DeserializeObject<BusinessDayDTO>(responseBody);
+
+            return buss;
         }
 
         public static async Task<List<DoctorDTO>> GetDoctorsBySpeciality(String speciality)

@@ -34,8 +34,12 @@
 
 
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="10,372,20,279">            <TextBlock x:Name="alternative" Text="Alternative date:" FontSize="25" Height="47"/>            <ComboBox x:Name="times" ItemsSource="{Binding AlternativeDates, UpdateSourceTrigger=PropertyChanged}" Height="33" Width="197" Margin="150,0,0,0">
-            </ComboBox>        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10,372,20,279">
+
+            <TextBlock x:Name="alternative" Text="Alternative date:" FontSize="25" Height="47"/>
+            <ComboBox x:Name="times" ItemsSource="{Binding AlternativeDates, UpdateSourceTrigger=PropertyChanged}" Height="33" Width="197" Margin="150,0,0,0">
+            </ComboBox>
+        </StackPanel>
         <DataGrid Height="200" ItemsSource="{Binding Renovations}" Margin="15,484,15,50" x:Name="scheduleRenovationGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">

@@ -75,6 +75,8 @@ namespace PSW_Wpf_app.View
             }
         }
 
+        public static long RomId = -1;
+
         private async void ScheduleExamination(object sender, RoutedEventArgs e)
         {
             var selectedItem = scheduleExaminationsGrid.SelectedItem;
@@ -104,8 +106,15 @@ namespace PSW_Wpf_app.View
             if (examination != null)
             {
                 MessageBox.Show("Appointment is scheduled!");
+                GetRoomId(doctor.Id);
+
             }
 
+        }
+        private async void GetRoomId(long id)
+        {
+            BusinessDayDTO buss = await WpfClient.GetBussinessdayByDoctor(id);
+            RomId = buss.RoomId;
         }
 
     }
