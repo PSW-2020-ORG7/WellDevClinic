@@ -14,7 +14,6 @@ namespace PSW_Pharmacy_Adapter
             var consumer = new Task(() => CreateHostBuilderForRabbitMQ(args).Build().Run());
             consumer.Start();
             CreateHostBuilder(args).Build().Run();
-            //CreateHostBuilderForGrpc(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilderForRabbitMQ(string[] args) =>
@@ -25,17 +24,6 @@ namespace PSW_Pharmacy_Adapter
                     services.AddHostedService<RabbitMQService>();
                 });
 
-
-        public static IHostBuilder CreateHostBuilderForGrpc(string[] args) =>           //ne  brisi
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddHostedService<GrpcClientService>();
-                })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
 
         private static int calculatePort()
         {
@@ -55,7 +43,6 @@ namespace PSW_Pharmacy_Adapter
                         serverOptions.ListenAnyIP(calculatePort());
                     })
                     .UseStartup<Startup>();
-
                 });
 
     }
