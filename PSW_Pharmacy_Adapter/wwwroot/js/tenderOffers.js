@@ -165,7 +165,7 @@ function viewAllTenders(tenders) {
             var expired = false;
 
             if (date < now) {
-                content += ' class= "card text-white bg-secondary mb-3" style="width:350px; display:inline-block;">';
+                content += ' class= "card text-white bg-dark mb-3" style="width:350px; display:inline-block;">';
                 expired = true;
             } else {
                 content += ' class="card" style="width:350px; display:inline-block;">';
@@ -179,15 +179,15 @@ function viewAllTenders(tenders) {
                 content += '<h4>Hospital need:<h4>';
 
                 for (let med of ten.medications) {
-                    content += '<tr><td float="right">';
+                    content += '<tr style="background: transparent;"><td float="right">';
                     content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
                 }
             }
             content += '</table></h5><hr color="#FFFF33"> <table>';
-            content += '<tr style="color: gray"><td float="right" >Start date:</td><td>';
+            content += '<tr style="color: gray;background: transparent;"><td float="right" >Start date:</td><td>';
             content += ISOtoShort(new Date(ten.startDate));
             content += '</td></tr>';
-            content += '<tr style="color: gray"><td float="right">End date:</td><td>';
+            content += '<tr style="color: gray; background: transparent;"><td float="right">End date:</td><td>';
             content += ISOtoShort(new Date(ten.endDate));
             content += '</td></tr>';
             content += '</table><br>';
@@ -231,7 +231,7 @@ function makeOffer(tender) {
                 content += '<tr><td>' + ten.name + '</td><br>';
                 content += '<td> <input type="number" id="' + ten.name + '" min="0" value="0"/></td></tr>';
             }
-            content += '<tr><td>Price:&nbsp;</td><td><input type="number" id="txtPrice" min="1" max="6"><td></tr>';
+            content += '<tr><td>Price:&nbsp;</td><td><input type="number" id="txtPrice" min="1" max="6">€<td></tr>';
             $("#viewNeeds").append(content);
             $("#idTender").val(data.id);
 
@@ -239,7 +239,6 @@ function makeOffer(tender) {
                 let name = $("#txtName").val();
                 let price = $("#txtPrice").val();
                 let message = $("#txtNote").val();
-                let email = $("#txtEmail").val();
                 let meds = [];
 
                 for (let ten of data.medications) {
@@ -260,8 +259,7 @@ function makeOffer(tender) {
                     Price: Number(price),
                     Medications: meds,
                     Message: message,
-                    TenderId: Number(tender),
-                    Email:email
+                    TenderId: Number(tender)
                 });
 
                 $.ajax({
