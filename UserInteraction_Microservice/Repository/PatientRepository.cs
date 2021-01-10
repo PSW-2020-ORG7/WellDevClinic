@@ -118,7 +118,8 @@ namespace UserInteraction_Microservice.Repository
                         Person = p.Person,
                         Blocked = p.Blocked,
                         Guest = p.Guest,
-                        UserType = p.UserType
+                        UserType = p.UserType,
+                        UserLogIn = new UserLogIn() { Username = p.UserLogIn.Username}
                     }
                 ).Where(p => p.Blocked == true).DefaultIfEmpty().ToList();
         }
@@ -161,6 +162,13 @@ namespace UserInteraction_Microservice.Repository
         {
             Patient result = _myDbContext.Patient.FirstOrDefault(patient => patient.UserLogIn.Username.Equals(username));
             return result;
+        }
+
+        public void Block(long id)
+        {
+            Patient patient = GetEager(id);
+            patient.Blocked = true;
+            Edit(patient);
         }
     }
 }

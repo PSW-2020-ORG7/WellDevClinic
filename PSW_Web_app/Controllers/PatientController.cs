@@ -21,7 +21,8 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     { 
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62948";
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink1 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62044";
 
         static readonly HttpClient client = new HttpClient();
         //povezati sutra obavezno!!
@@ -31,10 +32,10 @@ namespace PSW_Web_app.Controllers
         {
             if (!Authorization.Authorize("Secretary", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink +"/api/patient/patients_for_blocking");
+            HttpResponseMessage response = await client.GetAsync(communicationLink1 + "/api/upcomingexamination/GetPatientsForBlocking");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<PatientDTO> patients = JsonConvert.DeserializeObject<List<PatientDTO>>(responseBody);
+            List<Patient> patients = JsonConvert.DeserializeObject<List<Patient>>(responseBody);
             return Ok(patients);
         }
 
@@ -62,7 +63,7 @@ namespace PSW_Web_app.Controllers
             HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/patient/blocked_patients");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<PatientDTO> patients = JsonConvert.DeserializeObject<List<PatientDTO>>(responseBody);
+            List<Patient> patients = JsonConvert.DeserializeObject<List<Patient>>(responseBody);
             return Ok(patients);
         }
 
@@ -73,7 +74,7 @@ namespace PSW_Web_app.Controllers
             if (!Authorization.Authorize("Secretary", Request.Headers["Authorization"]))
                 return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(id, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PutAsync(communicationLink + "/api/patient/"+ id ,content);
+            var response = await client.PutAsync(communicationLink + "/api/patient/block/"+ id ,content);
             return Ok();
         }
 

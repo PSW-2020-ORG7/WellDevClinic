@@ -93,5 +93,9 @@ namespace UserInteraction_Microservice.ApplicationServices
         {
             return _patientRepository.Save(entity);
         }
+        public void Block(long id)
+        {
+            _patientRepository.Block(id);
+        }
     }
 }

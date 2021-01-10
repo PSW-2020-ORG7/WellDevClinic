@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SearchAndSchedule_Microservice.Domain.Model
 {
     public class Person : IIdentifiable<long>
     {
-
         public long Id { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }

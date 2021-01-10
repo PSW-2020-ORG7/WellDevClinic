@@ -9,6 +9,7 @@ namespace UserInteraction_Microservice.Domain.Model
     {
         public long Id { get; set; }
         public virtual Speciality Speciality { get; set; }
+        [NotMapped]
         public virtual DoctorGrade DoctorGrade { get; set; }
 
         public Doctor()

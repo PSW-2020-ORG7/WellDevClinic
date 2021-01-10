@@ -22,18 +22,17 @@ function parseJwt(token) {
 function addPatient(patient) {
 	let tr = $('<tr></tr>');
 	let tdId = $('<td>' + patient.id + '</td>');
-	let tdName = $('<td>' + patient.fullName + '</td>');
-	let tdUsername = $('<td>' + patient.username + '</td>');
+	let tdName = $('<td>' + patient.person.fullName + '</td>');
 	let tdBlock = $('<td></td>');
 	if (!patient.blocked) {
 		let button = $('<button> Block user </button>');
 		button.attr('class', 'block');
 		tdBlock.append(button);
-		tr.append(tdId).append(tdName).append(tdUsername).append(tdBlock);
+		tr.append(tdId).append(tdName).append(tdBlock);
 		$('#table_for_blocking tbody').append(tr);
 	}
 	else {
-		tr.append(tdId).append(tdName).append(tdUsername);
+		tr.append(tdId).append(tdName);
 		$('#table_blocked tbody').append(tr);
 	}
 }

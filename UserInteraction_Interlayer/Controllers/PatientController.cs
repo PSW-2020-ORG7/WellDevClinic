@@ -46,6 +46,13 @@ namespace UserInteraction_Interlayer.Controllers
         }
 
         [HttpPut]
+        [Route("block/{id?}")]
+        public void Block(long id)
+        {
+            _patientAppService.Block(id);
+        }
+
+        [HttpPut]
         [Route("claimAcc")]
         public Patient ClaimAccount(Patient patient)
         {
@@ -57,6 +64,13 @@ namespace UserInteraction_Interlayer.Controllers
         public Patient GetPatientByJMBG(String jmbg)
         {
             return _patientAppService.GetPatientByJMBG(jmbg);
+        }
+
+        [HttpGet]
+        [Route("blocked_patients")]
+        public List<Patient> GetBlockedPatients()
+        {
+            return _patientAppService.GetBlockedPatients();
         }
     }
 }
