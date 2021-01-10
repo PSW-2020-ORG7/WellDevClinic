@@ -237,7 +237,7 @@ function makeOffer(tender) {
 
                 for (let ten of data.medications) {
                     var elemN = ten.name;
-                    var elemA = $("#" + ten.name + "").val();
+                    var elemA = $("#" + ten.name).val();
                     let med = {
                         "name": elemN,
                         "amount": Number(elemA)

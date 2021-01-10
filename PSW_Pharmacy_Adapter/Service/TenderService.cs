@@ -1,4 +1,5 @@
-﻿using PSW_Pharmacy_Adapter.Model.Pharmacy;
+﻿using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Model.Pharmacy;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace PSW_Pharmacy_Adapter.Service
         public Tender GetTender(long id)
             => _tenderRepo.Get(id);
 
-        
+        public List<Medication> GetTenderMedications(long tenderId)
+            => _tenderRepo.GetMedications(tenderId);
     }
 }

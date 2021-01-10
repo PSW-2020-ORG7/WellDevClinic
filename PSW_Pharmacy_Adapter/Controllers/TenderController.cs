@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Model.Pharmacy;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 
@@ -43,7 +44,17 @@ namespace PSW_Pharmacy_Adapter.Controllers
                 return Ok(tender);
             return BadRequest();
         }
-        
+
+        [HttpGet]
+        [Route("medications/{id?}")]
+        public IActionResult GetTenderMedications(long id)
+        {
+            List<Medication> meds = _tenderService.GetTenderMedications(id);
+            if (meds != null)
+                return Ok(meds);
+            return BadRequest();
+        }
+
 
     }
 }

@@ -52,5 +52,11 @@ namespace PSW_Pharmacy_Adapter.Repository
         {
             throw new System.NotImplementedException();
         }
+
+
+        public List<Medication> GetMedications(long tenderId) {
+            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == tenderId);
+            return tender.Medications;
+        }
     }
 }

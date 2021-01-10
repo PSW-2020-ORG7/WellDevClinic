@@ -22,7 +22,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             MyContextFactory cf = new MyContextFactory();
             TenderOfferRepository tenderRepository = new TenderOfferRepository(cf.CreateDbContext(new string[0]));
-            TenderOffer offer = new TenderOffer(TEST_ID, TEST_PHARMACY_NAME, CreateMedicationList(), TEST_PRICE, TEST_MESSAGE, TEST_TENDER_ID);
+            TenderOffer offer = new TenderOffer(TEST_ID, TEST_PHARMACY_NAME, CreateMedicationList(), TEST_PRICE, TEST_MESSAGE, TEST_TENDER_ID, "proba");
 
             tenderRepository.Save(offer);
             tenderRepository.Delete(TEST_ID);       //rollback
