@@ -32,6 +32,14 @@ namespace PSW_Pharmacy_Adapter.Mapping
             return ingredients;
         }
 
+        public static List<Medication> MapMedicationList(List<MedicationDto> medicationDtos)
+        {
+            List<Medication> medicationDto = new List<Medication>();
+            foreach (MedicationDto medication in medicationDtos)
+                medicationDto.Add(MapMedication(medication));
+            return medicationDto;
+        }
+
         public static List<Medication> MapAlternative(List<string> medicineList) {
             List<Medication> medications = new List<Medication>();
             return medications;

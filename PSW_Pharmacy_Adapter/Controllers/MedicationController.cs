@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PSW_Pharmacy_Adapter.Model;
@@ -27,8 +28,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [HttpPost]
         [Route("findMedPh")]
-        public async Task<IActionResult> GetPharmacyByMedicineAsync([FromBody]Medication med)
-            => Ok(await _medicationService.GetPharmacyByMedicationAsync(med));
+        public async Task<IActionResult> GetPharmacyByMedicationAsync([FromBody]Medication medication)
+            => Ok(await _medicationService.GetPharmacyByMedicationAsync(medication));
+
+        [HttpPost]
+        [Route("findMedsPh")]
+        public async Task<IActionResult> GetPharmacyByMedicationsAsync([FromBody] List<Medication> medications)
+            => Ok(await _medicationService.GetPharmacyByMedicationsAsync(medications));
 
         [HttpGet]
         [Route("orderMedicine")]

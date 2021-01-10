@@ -10,7 +10,7 @@
             $(".input_fields_wrap").append('<div><div class="autocomplete">' +
                 '<input type = "text" name = "medicineName" placeholder = "Enter medicine name" class= "ac" /> ' +
                 '</div>' +
-				'<input placeholder="Enter amount" type="number" name="quantity[]"/> ' +
+				'<input placeholder="Enter amount" type="number" name="quantity"/> ' +
 				'<button class="btn btn-outline-danger remove_field">&times;</button>' +
                 '</div>');
             for (let inp of document.getElementsByName('medicineName'))
@@ -23,6 +23,30 @@
 		$(this).parent('div').remove();
 	});
 });
+
+function findMedicines() {
+    $("#responseLoad").show();
+    let medicinesToBuy = [];
+    $("input[name='medicineName']").each(function (i, el) {
+        let med = {
+            "name": $(el).val(),
+            "amount": Number(document.getElementsByName('quantity')[i].value)
+        }
+        medicinesToBuy.push(med); 
+    });
+
+    $.ajax({
+        method: "POST",
+        url: "../api/medication/findMedsPh",
+        contentType: "application/json",
+        data: JSON.stringify(medicinesToBuy),
+        success: function (med) {
+            $("#responseLoad").hide();
+            alert("eve ga");
+        }
+    });
+        
+}
 
 function autocomplete(inp, arr) {
     var currentFocus;
@@ -37,7 +61,7 @@ function autocomplete(inp, arr) {
         a.setAttribute("class", "autocomplete-items");
 
         this.parentNode.appendChild(a);
-        for (i = 0; i < arr.length; i++) {
+        for (let i = 0; i < arr.length; i++) {
             if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 b = document.createElement("DIV");
                 b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
@@ -81,13 +105,13 @@ function autocomplete(inp, arr) {
     }
 
     function removeActive(x) {
-        for (var i = 0; i < x.length; i++)
+        for (let i = 0; i < x.length; i++)
             x[i].classList.remove("autocomplete-active");
     }
 
     function closeAllLists(elmnt) {
         var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++)
+        for (let i = 0; i < x.length; i++)
             if (elmnt != x[i] && elmnt != inp)
                 x[i].parentNode.removeChild(x[i]);
     }
