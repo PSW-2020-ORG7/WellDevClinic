@@ -1,6 +1,7 @@
-body{
+body {
     background-color: #bde2da;
 }
+
 th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -12,20 +13,19 @@ tr {
     text-align: center;
 }
 
-.firstTd{
-    width:150px
+.firstTd {
+    width: 150px
 }
 
 
-h1,h2 {
+h1, h2 {
     text-align: center;
     color: #009999;
 }
 
-table#tableP, table#tableU{
+table#tableP, table#tableU {
     width: 70%;
     border-collapse: collapse;
-    
     margin-left: auto;
     margin-right: auto;
 }
@@ -36,6 +36,7 @@ div {
     vertical-align: middle;
     padding: 3px;
 }
+
 #tableP .button, #tableU .buttonCancel {
     background-color: #bde2da;
     border: none;
@@ -46,8 +47,30 @@ div {
     font-size: 10px;
     font-weight: bold;
     height: 100%;
-  
 }
-#tableP .button:hover, #tableU .button:hover {
-    background-color: #78c4b6;
+
+    #tableP .button:hover, #tableU .button:hover {
+        background-color: #78c4b6;
+    }
+
+/* Style the top navigation bar */
+.topnav {
+    overflow: hidden;
+    background-color: #009999;
 }
+
+    /* Style the topnav links */
+    .topnav a {
+        float: left;
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+        /* Change color on hover */
+        .topnav a:hover {
+            background-color: #ddd;
+            color: #009999;
+        }

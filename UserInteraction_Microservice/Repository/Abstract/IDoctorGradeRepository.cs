@@ -8,5 +8,6 @@ namespace UserInteraction_Microservice.Repository.Abstract
 {
     public interface IDoctorGradeRepository :ICRUD<DoctorGrade,long>
     {
+        List<DoctorGrade> GetByDoctor(string doctor);
     }
 }

@@ -37,7 +37,7 @@ namespace UserInteraction_Interlayer.Controllers
         }
 
         [HttpPut]
-        public void PublishFeedback(Feedback feedback)
+        public void PublishFeedback([FromBody] Feedback feedback)
         {
             _feedbackAppService.Edit(feedback);
         }

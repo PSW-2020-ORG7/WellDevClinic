@@ -1,23 +1,26 @@
-
-#star_registration_label{
-    color: red;
-    display:inline;
+body {
+    background-color: #bde2da;
 }
 
-#label_registration{
+#star_registration_label {
+    color: red;
+    display: inline;
+}
+
+#label_registration {
     margin-left: 50px;
     font-weight: bold;
 }
 
-.form-control{
-    width:50%;
+.form-control {
+    width: 50%;
     margin-left: 50px;
 }
 
-#info_img{
+#info_img {
     width: 25px;
     height: 25px;
-    display:inline;
+    display: inline;
     margin: 5px
 }
 
@@ -30,15 +33,14 @@
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-   
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
-  }
+}
 
 .tltip_id:hover .tooltiptext {
     visibility: visible;
-  }
+}
 
 .tltip_dateOfBirth .tooltiptextDOB {
     visibility: hidden;
@@ -49,24 +51,22 @@
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-   
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
-  }
+}
 
-  .tltip_dateOfBirth:hover .tooltiptextDOB {
+.tltip_dateOfBirth:hover .tooltiptextDOB {
     visibility: visible;
-  }
+}
 
 
-.input_with_info{
+.input_with_info {
     width: 768px;
 }
 
-.warning{
+.warning {
     margin-left: 50px;
     font-style: italic;
     color: red;
 }
-

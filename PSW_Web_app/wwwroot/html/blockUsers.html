@@ -6,8 +6,15 @@
     <link rel="stylesheet" href="css/table.css">
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/blockUsers.js"></script>
+    <script>authorize()</script>
 </head>
 <body>
+    <div class="topnav">
+        <a href="viewFeedbackAdmin.html"><img src="house.png"></a>
+        <a href="blockUsers.html">Block users</a>
+        <a href="viewSurvey.html">View survey results</a>
+        <a href="login.html" style="float:right">Log out</a>
+    </div>
     <h1>Blocking users</h1>
     <br />
     <br />
@@ -17,7 +24,6 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">FullName</th>
-                <th scope="col">Username</th>
                 <th scope="col">Block</th>
             </tr>
         </thead>
@@ -32,7 +38,6 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">FullName</th>
-                <th scope="col">Username</th>
             </tr>
         </thead>
         <tbody>

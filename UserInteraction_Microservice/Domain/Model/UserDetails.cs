@@ -7,19 +7,20 @@ namespace UserInteraction_Microservice.Domain.Model
 {
     public class UserDetails : IIdentifiable<long>
     {
-        public long Id { get; private set; }
-        public DateTime DateOfBirth { get; private set; }
-        public String Phone { get; private set; }
-        public String MiddleName { get; private set; }
-        public String Race { get; private set; }
-        public String Gender { get; private set; }
-        public String Email { get; private set; }
-        public String Image { get; private set; }
-        public virtual Address Address { get; private set; }
+        public long Id { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public String Phone { get; set; }
+        public String MiddleName { get; set; }
+        public String Race { get; set; }
+        public String Gender { get; set; }
+        public String Email { get; set; }
+        public String Image { get; set; }
+        public String BloodType { get; set; }
+        public virtual Address Address { get; set; }
 
         public UserDetails() { }
 
-        public UserDetails(long id, DateTime dateOfBirth, string phone, string middleName, string race, string gender, string email, string image, Address address)
+        public UserDetails(long id, DateTime dateOfBirth, string phone, string middleName, string race, string gender,string bloodtype, string email, string image, Address address)
         {
             if (string.IsNullOrWhiteSpace(phone) || dateOfBirth == null || string.IsNullOrWhiteSpace(middleName) || string.IsNullOrWhiteSpace(race)
                 || string.IsNullOrWhiteSpace(gender) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(image) || address == null)
@@ -31,6 +32,7 @@ namespace UserInteraction_Microservice.Domain.Model
             MiddleName = middleName;
             Race = race;
             Gender = gender;
+            BloodType = bloodtype;
             Email = email;
             Image = image;
             Address = address;

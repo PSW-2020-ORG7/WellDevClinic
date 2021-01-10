@@ -193,5 +193,6 @@ namespace SearchAndSchedule_Microservice.ApplicationServices
                 this.SearchPeriods = new NoPrioritySearch();
             }
         }
+
     }
 }

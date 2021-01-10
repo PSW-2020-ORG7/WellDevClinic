@@ -356,10 +356,10 @@ $(document).ready(function () {
 
                     //let address1 = new Object({ Id: 0, Street: address.val(), Number: null, FullAddress: null, Town: town })
                     var start = new Date();
-                    var data2 = {
-                         FirstName: name.val(), MiddleName: middleName.val(), LastName: surname.val(), Jmbg: jmbg.val(), Email: email.val(), Phone: phone.val(), DateOfBirth: date
-                        , Username: username.val(), Password: password.val(), Address: address1, Gender: genderVal, Race: raceVal,BloodType: bloodVal, validation: false, Image: base64
-                    }
+                    var person = { FirstName: name.val(), LastName: surname.val(), Jmbg: jmbg.val()}
+                    var userDetails = { MiddleName: middleName.val(), Phone: phone.val(), Race: raceVal, BloodType: bloodVal, Image: base64, Email: email.val(), Gender: genderVal, DateOfBirth: date, Address: address1 }
+                    var userLogin = { Username: username.val(), Password: password.val() }
+                    var data2 = {  Person : person, UserDetails : userDetails, UserLogin : userLogin }
                     $.ajax({
                         url: window.location.protocol + "//" + window.location.host + "/api/registration",
                         type: 'POST',
