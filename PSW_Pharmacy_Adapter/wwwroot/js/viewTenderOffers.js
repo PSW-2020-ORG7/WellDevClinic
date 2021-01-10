@@ -1,10 +1,13 @@
-﻿$(document).ready(function () {
+﻿var currTender;
+var winner;
+$(document).ready(function () {
     var countDownDate;
     $.ajax({
         method: "GET",
         url: "../api/tender/" + window.location.search.slice(1),
         contentType: "application/json",
         success: function (data) {
+            currTender = data;
             console.log(data);
             viewTender(data)
         },
@@ -18,8 +21,13 @@
         success: function (data) {
             console.log(data);
             viewAllOffers(data)
+            if (currTender.endDate < new Date()) {
+                $("#winner").text(winner.pharmacyName);
+                $("#expired").show();
+            }
         },
     });
+
 
 })
 
@@ -86,8 +94,15 @@ function viewAllOffers(offers) {
     $("#viewTenderOffers").empty();
 
     for (let offer of offers) {
-        var content = '<div class="card" style="width:350px; display:inline-block">';
-        content += '<div class="card-body">';
+        
+        var content = '<div class="card" style="width:350px; display:inline-block ';
+
+        if (offer.id == currTender.offerWinner)
+        {
+            winner = offer;
+            content += '; border: 2px solid red';
+        }
+        content += '"><div class="card-body">';
         content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
         content += offer.id;
         content += '<br>' + offer.pharmacyName;
@@ -118,6 +133,7 @@ function viewAllOffers(offers) {
     
 }
 
+
 function deleteAction(id) {
 	$("#deleteAction").show();
 	$("button#btnYes1").click(function () {
@@ -138,4 +154,15 @@ function deleteAction(id) {
 
 function useAction(id) {
     // prihvati ponudu, javi apoteci
+    $.ajax({
+        method: "PUT",
+        url: "../api/tender/winner/" + id,
+        contentType: "application/json",
+        success: function (data) {
+            if (data) {
+                alert("Accepted");
+                window.location.reload();
+            }
+        },
+    });
 }
