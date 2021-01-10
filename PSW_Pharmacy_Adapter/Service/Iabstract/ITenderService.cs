@@ -10,6 +10,7 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
         public Tender AddTender(Tender tender);
         public Tender GetTender(long id);
         public List<Medication> GetTenderMedications(long id);
+		public Tender UpdateWinner(long idWinner);
         public Tender DeleteTender(long id);
     }
 }

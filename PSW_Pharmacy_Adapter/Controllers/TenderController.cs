@@ -34,6 +34,16 @@ namespace PSW_Pharmacy_Adapter.Controllers
                 return Ok(newTender);
             return BadRequest();
         }
+		
+		[HttpPut]
+        [Route("winner/{id?}")]
+        public IActionResult UpdateStatus(long idWinner)
+        {
+            Tender tender = _tenderService.UpdateWinner(idWinner);
+            if (tender != null)
+                return Ok(tender);
+            return BadRequest();
+        }
 
         [HttpGet]
         [Route("{id?}")]

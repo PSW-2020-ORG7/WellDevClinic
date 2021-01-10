@@ -8,5 +8,6 @@ namespace PSW_Pharmacy_Adapter.Repository.Iabstract
     {
         public List<Medication> GetMedications(long id);
         public Tender DeleteTender(long id);
+		public Tender UpdateWinner(long idWinner);
     }
 }

@@ -65,6 +65,20 @@ namespace PSW_Pharmacy_Adapter.Repository
             Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == tenderId);
             return tender.Medications;
         }
+		
+		public Tender UpdateWinner(long idWinner)
+        {
+            TenderOffer offer= _dbContext.TenderOffers.SingleOrDefault(o => o.Id == idWinner);
+            Tender tender1 = _dbContext.Tender.SingleOrDefault(t => t.Id == offer.TenderId);
+            tender1.OfferWinner = idWinner;
+            if (tender1 != null)
+            {
+                _dbContext.Tender.Update(tender1);
+                _dbContext.SaveChanges();
+                return tender1;
+            }
+            return null;
+        }
 
         public Tender DeleteTender(long id) {
             Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == id);
