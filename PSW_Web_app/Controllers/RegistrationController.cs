@@ -16,7 +16,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62948";
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
        
