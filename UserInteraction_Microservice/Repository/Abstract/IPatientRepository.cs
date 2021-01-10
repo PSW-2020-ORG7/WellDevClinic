@@ -11,5 +11,10 @@ namespace UserInteraction_Microservice.Repository.Abstract
         Patient GetPatientByJMBG(string jmbg);
         List<Patient> GetBlockedPatients();
         List<Patient> GetPatientsForBlocking();
+        Patient GetPatientToken(string token);
+        Patient GetPatientByMail(string email);
+        Patient GetPatientByUsername(string username);
+        public void Block(long id);
+
     }
 }

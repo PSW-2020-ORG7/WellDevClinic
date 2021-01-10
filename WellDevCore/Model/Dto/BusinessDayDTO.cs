@@ -21,6 +21,8 @@ namespace bolnica.Model.Dto
         public virtual Period Period { get; set; }
         public  Boolean PatientScheduling = false;
         public PriorityType Priority { get; set; }
+        public long RoomId { get; set; }
+
         public BusinessDayDTO(Doctor doctor, Period period)
         {
             this.Doctor = doctor;

@@ -20,7 +20,7 @@ $(document).ready(function () {
 function viewAllPrescriptions(prescriptions) {
 	$("#viewPrescription").empty();
 	for (let pre of prescriptions) {
-		var content = '<div class="card" id="' + pre.id + '">';
+		var content = '<div class="card">';
 		content += '<div class="card-body">';
 		content += '<div class="data">';
 		content += '<table style="margin:10px">';

@@ -18,7 +18,7 @@ namespace UnitTests
         {
             var stubRepositoryPrevious = new Mock<IExaminationPreviousRepository>();
             List<Examination> previous = new List<Examination>();
-            previous.Add(new Examination(3, new Patient(2, "Andjela", "Petrovic"), false, DateTime.Parse("08/15/2020 07:22:16")));
+            previous.Add(new Examination(3, new Patient(2, "Andjela", "Petrovic"), false, new DateTime(2021,1,2,0,0,0,0)));
             stubRepositoryPrevious.Setup(m => m.GetAllEager()).Returns(previous);
 
             return stubRepositoryPrevious.Object;
@@ -28,9 +28,9 @@ namespace UnitTests
         {
             var stubRepositoryUpcoming = new Mock<IExaminationUpcomingRepository>();
             List<Examination> upcoming = new List<Examination>();
-            upcoming.Add(new Examination(1, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/01/2020 07:22:16")));
-            upcoming.Add(new Examination(2, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/02/2020 07:22:16")));
-            upcoming.Add(new Examination(4, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/03/2020 07:22:16")));
+            upcoming.Add(new Examination(1, new Patient(1, "Marjana", "Zalar"), true, new DateTime(2021, 1, 2, 0, 0, 0, 0)));
+            upcoming.Add(new Examination(2, new Patient(1, "Marjana", "Zalar"), true, new DateTime(2021, 1, 2, 0, 0, 0, 0)));
+            upcoming.Add(new Examination(4, new Patient(1, "Marjana", "Zalar"), true, new DateTime(2021, 2, 2, 0, 0, 0, 0)));
             stubRepositoryUpcoming.Setup(m => m.GetAllEager()).Returns(upcoming);
 
             return stubRepositoryUpcoming.Object;
@@ -40,19 +40,10 @@ namespace UnitTests
         {
             var stubRepositoryUpcoming = new Mock<IExaminationUpcomingRepository>();
             List<Examination> upcoming = new List<Examination>();
-            upcoming.Add(new Examination(1, new Patient(1, "Marjana", "Zalar"), true, DateTime.Parse("12/01/2020 07:22:16")));
+            upcoming.Add(new Examination(1, new Patient(1, "Marjana", "Zalar"), true, new DateTime(2020, 1, 2, 0, 0, 0, 0)));
             stubRepositoryUpcoming.Setup(m => m.GetAllEager()).Returns(upcoming);
 
             return stubRepositoryUpcoming.Object;
-        }
-
-        private static List<DateTime> CreateDateTimeList()
-        {
-            List<DateTime> dates = new List<DateTime>();
-            dates.Add(DateTime.Parse("08/18/2020 07:22:16"));
-            dates.Add(DateTime.Parse("08/15/2020 07:22:16"));
-            dates.Add(DateTime.Parse("10/18/2020 07:22:16"));
-            return dates;
         }
 
         private static IPatientRepository CreatePatientRepository()
@@ -64,7 +55,7 @@ namespace UnitTests
             stubRepository.Setup(m => m.GetEager()).Returns(patients);
             return stubRepository.Object;
         }
-        /*
+        
         [Fact]
         public void GetCancelationDatesNotEmpty()
         {
@@ -81,8 +72,8 @@ namespace UnitTests
             List<DateTime> result = service.GetCancelationDatesByPatient(2);
             Assert.Empty(result);
         }
-        */
-      /*  [Fact]
+        
+        [Fact]
         public void GetPatientsForBlockingNotEmpty()
         {
             ExaminationService examination_service = new ExaminationService(CreateUpcomingRepository(), CreatePreviousRepository());
@@ -98,7 +89,7 @@ namespace UnitTests
             PatientService service = new PatientService(CreatePatientRepository(), null, null, examination_service);
             List<Patient> result = service.GetPatientsForBlocking();
             Assert.Empty(result);
-        }*/
+        }
 
     }
 }

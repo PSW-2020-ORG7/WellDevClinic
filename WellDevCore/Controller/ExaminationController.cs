@@ -1,5 +1,6 @@
 using bolnica.Controller;
 using bolnica.Service;
+using Model.Director;
 using Model.Dto;
 using Model.PatientSecretary;
 using Model.Users;
@@ -33,6 +34,11 @@ namespace bolnica.Controller
         public IEnumerable<Examination> GetAll()
         {
             return _examinationService.GetAll();
+        }
+
+        public IEnumerable<Examination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
+        {
+            return _examinationService.GetUpcomingExaminationsByRoomAndPeriod(room, period);
         }
 
         public List<Examination> GetAllPrevious()

@@ -91,5 +91,10 @@ namespace SearchAndSchedule_Microservice.Decorators
                 return _examinationAppService.GetUpcomingExaminationsByRoomAndPeriod(room, period);
             return null;
         }
+
+        public List<Patient> GetPatientsForBlocking()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

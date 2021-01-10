@@ -1,4 +1,24 @@
+function authorize() {
+	token = sessionStorage.getItem("token");
+	let payload = parseJwt(token);
+	userType = payload["type"];
+	if (userType != "Patient") {
+		alert("You are not authorized for this page!!!");
+		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+	}
+}
+var userType = "";
+var token = "";
 
+function parseJwt(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+
+	return JSON.parse(jsonPayload);
+};
 //jQuery time
 var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
@@ -30,6 +50,7 @@ $(".next").click(function () {
 			$.ajax({
 				url: window.location.protocol + "//" + window.location.host + "/api/doctor/" + date.val() + '/' + doctors.val(),
 				type: 'GET',
+				headers: { "Authorization": token },
 				success: function (data) {
 					console.log(data);
 					console.log("TERMINI");
@@ -59,6 +80,7 @@ $(".next").click(function () {
 			$.ajax({
 				url: window.location.protocol + "//" + window.location.host + "/api/doctor/" + speciality.val(),
 				type: 'GET',
+				headers: { "Authorization": token },
 				success: function (data) {
 					console.log(data);
 					for (var i = 0; i < data.length; i++) {
@@ -122,6 +144,7 @@ $(document).ready(function () {
 	$.ajax({
 		url: window.location.protocol + "//" + window.location.host + "/api/speciality",
 		type: 'GET',
+		headers: { "Authorization": token },
 		success: function (data) {
 			console.log(data);
 			for (var i = 0; i < data.length; i++) {
@@ -183,6 +206,7 @@ form.submit(function (event) {
 		type: 'POST',
 		data: JSON.stringify(data2),
 		contentType: "application/json; charset=utf-8",
+		headers: { "Authorization": token },
 		success: function (data) {
 			console.log(data);
 		}

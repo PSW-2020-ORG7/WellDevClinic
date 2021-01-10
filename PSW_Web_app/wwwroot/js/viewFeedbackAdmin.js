@@ -1,4 +1,23 @@
-﻿
+﻿function authorize() {
+	token = sessionStorage.getItem("token");
+	let payload = parseJwt(token);
+	userType = payload["type"];
+	if (userType != "Secretary") {
+		alert("You are not authorized for this page!!!");
+		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/homePage.html");
+	}
+}
+var token = "";
+var userType = "";
+function parseJwt(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+
+	return JSON.parse(jsonPayload);
+};
 function addFeedback(feedback) {
 	let tr = $('<tr></tr>');
 	let tdId = $('<td>' + feedback.id + '</td>');
@@ -8,7 +27,7 @@ function addFeedback(feedback) {
 		tdPatient = $('<td>Anonymous</td>');
 	}
 	else
-		tdPatient = $('<td>' + feedback.patient + '</td>');
+		tdPatient = $('<td>' + feedback.patient.fullName + '</td>');
 
 	let tdPrivate;
 	if (feedback.isPrivate == true) {
@@ -64,6 +83,7 @@ $(document).ready(function () {
 
 	$.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/feedback/' + code1,
+		headers: { "Authorization": token },
 		success: function (feedback) {
 
 			if (code1 == "") {
@@ -78,6 +98,7 @@ $(document).ready(function () {
 					type: 'PUT',
 					data: JSON.stringify({ id: feedback.id, patient: feedback.patient, content: feedback.content, isPrivate: feedback.isPrivate, isAnonymous: feedback.isAnonymous, publish: true }),
 					contentType: "application/json; charset=utf-8",
+					headers: { "Authorization": token },
 					success: function (data) {
 						window.location.href = window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html";
 					},
@@ -93,6 +114,7 @@ $(document).ready(function () {
 		var filter = $("#filter").val();
 		$.get({
 			url: window.location.protocol + "//" + window.location.host + '/api/feedback',
+			headers: { "Authorization": token },
 			success: function (feedback) {
 				for (let f of feedback) {
 					if (filter == "all") {

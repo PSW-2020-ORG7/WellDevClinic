@@ -10,6 +10,7 @@ namespace SearchAndSchedule_Microservice.Domain.Model
         public long Id { get; set; }
         public virtual Speciality Speciality { get; set; }
         public virtual Person Person { get; set; }
+        [NotMapped]
         public virtual DoctorGrade DoctorGrade { get; set; }
         [NotMapped]
         public virtual List<BusinessDay> BussinesDays { get; set; }
