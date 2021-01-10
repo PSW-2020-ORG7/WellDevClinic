@@ -467,6 +467,16 @@ namespace PSW_Wpf_app.Client
 
             return exams;
         }
+
+        public static async Task<Patient> SavePatient(Patient patient)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(patient));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:51393/api/patient/savePatient/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            Patient result = JsonConvert.DeserializeObject<Patient>(value);
+            return result;
+        }
     }
 }
 

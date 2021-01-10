@@ -1,4 +1,6 @@
 ﻿using bolnica.Model.Dto;
+using bolnica.Repository;
+using bolnica.Service;
 using Model.Director;
 using Model.Doctor;
 using Model.Dto;
@@ -10,7 +12,6 @@ using Service;
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace UnitTests.Graphic_Editor_Tests
@@ -39,7 +40,24 @@ namespace UnitTests.Graphic_Editor_Tests
             return stubRepository.Object;
         }
 
-       
+        private static IExaminationPreviousRepository CreateStubRepositoryExaminationPrevious()
+        {
+            var stubRepository = new Mock<IExaminationPreviousRepository>();
+
+
+            Patient patient = new Patient(1, "Pera", "Peric");
+            Doctor doctor = new Doctor(2, "Eva", "Evic");
+            DateTime start = new DateTime(2021, 1, 1);
+            DateTime end = new DateTime(2021, 1, 2);
+            Period period = new Period(start, end);
+            Examination examination = new Examination(1, patient, doctor, period);
+
+
+
+            return stubRepository.Object;
+        }
+
+
         private static IDoctorRepository CreateDoctorRepository()
         {
             var stubRepository = new Mock<IDoctorRepository>();
@@ -58,6 +76,43 @@ namespace UnitTests.Graphic_Editor_Tests
             businessDays.Add(businessDay);
             doctor.BusinessDay = businessDays;
             stubRepository.Setup(r => r.GetEager(1)).Returns(doctor);
+            return stubRepository.Object;
+        }
+
+        static Period period;
+        private static IExaminationUpcomingRepository CreateStubRepositoryExaminationUpcoming()
+        {
+            var stubRepository = new Mock<IExaminationUpcomingRepository>();
+
+            Patient patient = new Patient(7, "Ana", "Ivanovic");
+            Doctor doctor = new Doctor(1, "ivan", "ivanovic");
+            DateTime start = new DateTime(2021, 1, 10);
+            DateTime end = new DateTime(2021, 1, 11);
+
+            period = new Period(start, end);
+            Examination examination = new Examination(1, patient, doctor, period);
+
+            stubRepository.Setup(r => r.Save(doctor.Id, period, patient.Id)).Returns(examination);
+
+            return stubRepository.Object;
+        }
+
+        private static IExaminationUpcomingRepository CreateStubRepositoryExaminationUpcoming2()
+        {
+            var stubRepository = new Mock<IExaminationUpcomingRepository>();
+            var examinations = new List<Examination>();
+
+            Patient patient = new Patient(7, "Ana", "Ivanovic");
+            Doctor doctor = new Doctor(1, "ivan", "ivanovic");
+            DateTime start = DateTime.Now;
+            DateTime end = start.AddDays(1);
+            Period period = new Period(start, end);
+            Examination examination1 = new Examination(1, patient, doctor, period);
+
+            examinations.Add(examination1);
+
+
+            stubRepository.Setup(r => r.GetAllEager()).Returns(examinations);
             return stubRepository.Object;
         }
 
@@ -158,7 +213,51 @@ namespace UnitTests.Graphic_Editor_Tests
             BusinessDayDTO businessDay = new BusinessDayDTO(doctor, period, priority);
             List<ExaminationDTO> result = service.Search(businessDay);
             result.ShouldNotBeEmpty();
-         
+
+        }
+
+        [Fact]
+        public void Getting_all_upcoming_examinations()
+        {
+            ExaminationService examinationService = new ExaminationService(CreateStubRepositoryExaminationUpcoming2(), null);
+
+            List<Examination> returnedExaminations = (List<Examination>)examinationService.GetAll();
+
+            returnedExaminations.ShouldNotBeEmpty();
+        }
+
+        [Fact]
+        public void New_Examination()
+        {
+            var upcomingRepository = CreateStubRepositoryExaminationUpcoming();
+            var previousRepository = CreateStubRepositoryExaminationPrevious();
+
+            ExaminationService service = new ExaminationService(upcomingRepository, previousRepository);
+
+            Patient patient = new Patient(7, "Ana", "Ivanovic");
+            Doctor doctor = new Doctor(1, "ivan", "ivanovic");
+
+
+            Examination result = service.NewExamination(doctor.Id, period, patient.Id);
+
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void Edit_Examination()
+        {
+            var stubService = new Mock<IExaminationService>();
+            Patient patient = new Patient(7, "Ana", "Ivanovic");
+            Doctor doctor = new Doctor(1, "ivan", "ivanovic");
+            DateTime start = new DateTime(2021, 1, 10);
+            DateTime end = new DateTime(2021, 1, 11);
+            period = new Period(start, end);
+            Examination examination = new Examination(1, patient, doctor, period);
+
+            stubService.Object.Edit(examination);
+
+            stubService.Verify(x => x.Edit(It.IsAny<Examination>()), Times.AtLeastOnce);
         }
 
     }

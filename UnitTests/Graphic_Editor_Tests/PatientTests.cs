@@ -22,6 +22,16 @@ namespace UnitTests.Graphic_Editor_Tests
             return stubRepository.Object;
         }
 
+        private static IPatientRepository CreatePatientRepositoryForSave()
+        {
+            var stubRepository = new Mock<IPatientRepository>();
+            List<Patient> patients = new List<Patient>();
+            Patient patient = new Patient("Ana", "Ivanovic", "1234567891230", "ana@ivanovic", "66999666", new DateTime(1975, 12, 21), false);
+
+            stubRepository.Setup(m => m.GetPatientByJMBG(patient.Jmbg)).Returns(patient);
+            return stubRepository.Object;
+        }
+
         [Fact]
         public void Get_all_patient_exists()
         {
@@ -39,6 +49,17 @@ namespace UnitTests.Graphic_Editor_Tests
             
             Patient p = service.Get(9);
             p.ShouldBeNull();
+        }
+
+        [Fact]
+        public void Save_patient()
+        {
+
+            PatientService service = new PatientService(CreatePatientRepositoryForSave());
+            Patient patient = new Patient("Ana", "Ivanovic", "1234567891230", "ana@ivanovic", "66999666", new DateTime(1975, 12, 21), false);
+
+            Patient result = service.Save(patient);
+            result.ShouldNotBeNull();
         }
 
         [Fact]

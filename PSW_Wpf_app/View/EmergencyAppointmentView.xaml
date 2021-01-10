@@ -37,7 +37,7 @@
             <TextBlock HorizontalAlignment="Left" Height="32" Margin="10,96,0,0" Text="Phone:" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"/>
             <TextBox HorizontalAlignment="Left" Height="28" Margin="80,96,0,0" Name="phone" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
             <TextBlock HorizontalAlignment="Left" Height="32" Margin="616,54,0,0" Text="New patient?" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"/>
-            <Button  FontSize="12" Content="Register" HorizontalAlignment="Left" Height="32" Margin="616,92,0,0" VerticalAlignment="Top" Width="104"/>
+            <Button  FontSize="12" Content="Register" HorizontalAlignment="Left" Height="32" Margin="616,92,0,0" VerticalAlignment="Top" Width="104" Click="NewPatientClick"/>
             <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" Height="156" Margin="581,0,0,0" VerticalAlignment="Center" Width="3"/>
         </Grid>
         <Button  FontSize="12"  Content="Search term" BorderThickness="3" BorderBrush="CadetBlue" Background="White" ToolTip="search" HorizontalAlignment="Center" Height="32" Margin="0,379,0,0" VerticalAlignment="Top" Width="188" Click="Search_Term_Click"/>
