@@ -21,7 +21,7 @@ $(document).ready(function () {
         success: function (data) {
             console.log(data);
             viewAllOffers(data)
-            if (currTender.endDate < new Date()) {
+            if (currTender.endDate < new Date().getTime()) {
                 $("#winner").text(winner.pharmacyName);
                 $("#expired").show();
             }

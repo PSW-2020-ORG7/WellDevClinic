@@ -1,7 +1,6 @@
 ﻿using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
-using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 
@@ -21,7 +20,7 @@ namespace PSW_Pharmacy_Adapter.Service
         public List<PharmacyEmails> GetAllEmails()
             => (List<PharmacyEmails>)_emailRepo.GetAll();
 
-        public static MailMessage createMail(string from, string to, string cc, string bcc, string subject, string body, bool isHtml)
+        public MailMessage createMail(string from, string to, string cc, string bcc, string subject, string body, bool isHtml)
         {
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(from);
@@ -39,7 +38,7 @@ namespace PSW_Pharmacy_Adapter.Service
 
             return mailMessage;
         }
-        public static void sendMail(MailMessage mailMessage)
+        public void sendMail(MailMessage mailMessage)
         {
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
             smtpClient.EnableSsl = true;

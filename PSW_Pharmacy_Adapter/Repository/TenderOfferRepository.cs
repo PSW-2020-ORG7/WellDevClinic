@@ -33,9 +33,7 @@ namespace PSW_Pharmacy_Adapter.Repository
         }
 
         public TenderOffer Get(long id)
-        {
-            throw new System.NotImplementedException();
-        }
+        => _dbContext.TenderOffers.FirstOrDefault(offer => offer.Id == id);
 
         public IEnumerable<TenderOffer> GetAll()
         {
