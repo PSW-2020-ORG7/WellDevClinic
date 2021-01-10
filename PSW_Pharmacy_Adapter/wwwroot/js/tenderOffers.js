@@ -97,6 +97,9 @@
                 if (data) {
                     $('#message').html('Succesfully added to database.');
                     $("#regAction").show();
+                    $("#btnOk").click(function () {
+                        window.location.reload();
+                    })
                 }
             },
             error: function (e) {
@@ -156,48 +159,51 @@ function viewAllTenders(tenders) {
     var now = Date.now();
 
     for (let ten of tenders) {
-        var content = '<div';
-        var date = new Date(ten.endDate).getTime();
-        var expired = false;
+        if (ten.isDeleted == false) {
+            var content = '<div';
+            var date = new Date(ten.endDate).getTime();
+            var expired = false;
 
-        if (date < now) {
-            content += ' class= "card text-white bg-secondary mb-3" style="width:350px; display:inline-block;">';
-            expired = true;
-        } else {
-            content += ' class="card" style="width:350px; display:inline-block;">';
-        }
-        content += '<div class="card-body">';
-        content += '<div class="data"> <h4 class="card-subtitle mb-2 text-muted">ID: '
-        content += ten.id;
-        content += '</h4>';
-        content += '<h5><table style="margin:10px">';
-        if (ten.medications != null) {
-            content += '<h4>Hospital need:<h4>';
-
-            for (let med of ten.medications) {
-                content += '<tr><td float="right">';
-                content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
+            if (date < now) {
+                content += ' class= "card text-white bg-secondary mb-3" style="width:350px; display:inline-block;">';
+                expired = true;
+            } else {
+                content += ' class="card" style="width:350px; display:inline-block;">';
             }
+            content += '<div class="card-body">';
+            content += '<div class="data"> <h4 class="card-subtitle mb-2 text-muted">ID: '
+            content += ten.id;
+            content += '</h4>';
+            content += '<h5><table style="margin:10px">';
+            if (ten.medications != null) {
+                content += '<h4>Hospital need:<h4>';
+
+                for (let med of ten.medications) {
+                    content += '<tr><td float="right">';
+                    content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
+                }
+            }
+            content += '</table></h5><hr color="#FFFF33"> <table>';
+            content += '<tr style="color: gray"><td float="right" >Start date:</td><td>';
+            content += ISOtoShort(new Date(ten.startDate));
+            content += '</td></tr>';
+            content += '<tr style="color: gray"><td float="right">End date:</td><td>';
+            content += ISOtoShort(new Date(ten.endDate));
+            content += '</td></tr>';
+            content += '</table><br>';
+            if (expired == true) {
+                content += '<button type="button" class="btn btn-danger btn-lg" onclick="deleteTender(\'' + ten.id + '\')" data-toggle="modal" data-target="#sendModal">';
+                content += 'Delete tender</button >&nbsp;&nbsp;';
+            } else {
+                content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
+                content += 'Make offer</button >&nbsp;&nbsp;';
+            }
+            content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" > ';
+            content += 'View offers</button >';
+            content += '</div></div></div>';
+            $("#viewTender").append(content);
         }
-        content += '</table></h5><hr color="#FFFF33"> <table>';
-        content += '<tr style="color: gray"><td float="right" >Start date:</td><td>';
-        content += ISOtoShort(new Date(ten.startDate));
-        content += '</td></tr>';
-        content += '<tr style="color: gray"><td float="right">End date:</td><td>';
-        content += ISOtoShort(new Date(ten.endDate));
-        content += '</td></tr>';
-        content += '</table><br>';
-        if (expired == true) {
-            content += '<button type="button" class="btn btn-danger btn-lg" onclick="deleteOffer(\'' + ten.id + '\')" data-toggle="modal" data-target="#sendModal">';
-            content += 'Delete tender</button >&nbsp;&nbsp;';
-        } else {
-            content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
-            content += 'Make offer</button >&nbsp;&nbsp;';
-        }
-        content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" > ';
-        content += 'View offers</button >';
-        content += '</div></div></div>';
-        $("#viewTender").append(content);
+        
     }
 
 }
@@ -279,6 +285,18 @@ function makeOffer(tender) {
 
 }
 
+
+function deleteTender(tender) {
+    $.ajax({
+        method: "PUT",
+        url: "../api/tender/delete/" + tender,
+        contentType: "application/json",
+        success: function (tender) {
+            console.log(tender);
+            window.location.reload();
+        }
+    });
+}
 
 
 function ISOtoShort(date) {
