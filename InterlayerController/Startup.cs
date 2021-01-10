@@ -39,7 +39,7 @@ namespace InterlayerController
 
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironmentDefault(),
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+                   b => b.MigrationsAssembly("UserInteraction_Microservice")).UseLazyLoadingProxies());
             services.AddScoped<IExaminationController, ExaminationController>();
             services.AddScoped<IDoctorController, DoctorController>();
             services.AddScoped<IAddressController, AddressController>();
