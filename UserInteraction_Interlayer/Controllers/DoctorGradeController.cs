@@ -38,5 +38,19 @@ namespace UserInteraction_Interlayer.Controllers
         {
             return _doctorGradeAppService.Save(doctorGrade);
         }
+
+        [HttpGet]
+        [Route("{doctor?}")]
+        public List<DoctorGrade> GetByDoctor(string doctor)
+        {
+            return _doctorGradeAppService.GetByDoctor(doctor);
+        }
+
+        [HttpPost]
+        [Route("doctor_average")]
+        public List<DoctorGradeQuestion> GetAverageGradeDoctor([FromBody] List<DoctorGrade> surveys)
+        {
+            return _doctorGradeAppService.GetAverageGradeDoctor(surveys);
+        }
     }
 }

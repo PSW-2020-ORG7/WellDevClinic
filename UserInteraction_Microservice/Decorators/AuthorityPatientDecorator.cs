@@ -128,5 +128,10 @@ namespace UserInteraction_Microservice.Decorators
         {
             throw new NotImplementedException();
         }
+
+        public void Block(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

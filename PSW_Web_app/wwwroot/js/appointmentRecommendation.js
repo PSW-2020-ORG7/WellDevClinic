@@ -1,7 +1,31 @@
-﻿$(document).ready(function () {
+﻿function authorize() {
+    token = sessionStorage.getItem("token");
+    let payload = parseJwt(token);
+    userType = payload["type"];
+    if (userType != "Patient") {
+        alert("You are not authorized for this page!!!");
+        window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
+    }
+}
+
+var userType = "";
+var token = "";
+
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+
+$(document).ready(function () {
     validDate();
     $.get({
         url: window.location.protocol + "//" + window.location.host + "/api/doctor/",
+        headers: { "Authorization": token },
         success: function (doctors) {
             for (let i = 0; i < doctors.length; i++) {
                 addDoctor(doctors[i])
@@ -24,6 +48,7 @@
             url: window.location.protocol + "//" + window.location.host + '/api/businessDay/',
             data: JSON.stringify({ doctorid: doctor, date: date, date2: date2 }),
             contentType: 'application/json',
+            headers: { "Authorization": token },
             success: function (list) {
                 deleteTable();
                 i = 1;
@@ -83,6 +108,7 @@ function myFunction(item) {
         url: window.location.protocol + "//" + window.location.host + '/api/examination/create/',
         type: 'POST',
         data: JSON.stringify({ doctorId: doctorId, date: date, priority: priority }),
+        headers: { "Authorization": token },
         success: function (data) {
             console.log("usao u success!");
             console.log(data);

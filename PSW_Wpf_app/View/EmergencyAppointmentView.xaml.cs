@@ -108,5 +108,30 @@ namespace PSW_Wpf_app.View
             MessageBox.Show("Term is dilayed!");
         }
 
+        private async void NewPatientClick(object sender, RoutedEventArgs e)
+        {
+            Patient patient = new Patient();
+
+            patient.FirstName = name.Text;
+            patient.LastName = surname.Text;
+            patient.Phone = phone.Text;
+            patient.Jmbg = jmbgpatient.Text;
+            patient.Username = name.Text;
+            patient.Image = ";" + name.Text + ".jpg" + ",";
+            patient.Guest = true;
+            
+
+            Patient p = await WpfClient.SavePatient(patient);
+            if (p != null)
+            {
+                MessageBox.Show("You have successfully registered guest patient!");
+            }
+            else
+            {
+                MessageBox.Show("Fill all data!");
+            }
+
+        }
+
     }
 }

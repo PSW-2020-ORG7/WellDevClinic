@@ -7,5 +7,8 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
 {
     public interface IDoctorGradeAppService : ICRUD<DoctorGrade,long>
     {
+        List<DoctorGrade> GetByDoctor(string doctor);
+
+        List<DoctorGradeQuestion> GetAverageGradeDoctor(List<DoctorGrade> surveys);
     }
 }

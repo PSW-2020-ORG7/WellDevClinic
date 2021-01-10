@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using UserInteraction_Microservice.ApplicationServices.Abstract;
 using UserInteraction_Microservice.Domain.Model;
 
@@ -16,9 +17,21 @@ namespace UserInteraction_Interlayer.Controllers
         }
 
         [HttpGet]
-        public User LogIn(string username, string password)
+        public User LogIn(UserLogIn user)
         {
-            return _userAppService.LogIn("pera", "pera");
+            return _userAppService.LogIn(user);
+        }
+
+        [HttpPost]
+        [Route("patient")]
+        public String LogInPatient(UserLogIn user)
+        {
+            User retVal = _userAppService.LogIn(user);
+            String tokenString = "";
+            if (retVal != null)
+                tokenString = _userAppService.GenerateJWT(retVal);
+
+            return tokenString;
         }
 
         [HttpPost]
