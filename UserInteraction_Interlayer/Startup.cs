@@ -33,7 +33,7 @@ namespace UserInteraction_Interlayer
 
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
-                    b => b.MigrationsAssembly("UserInteraction_Microservice")).UseLazyLoadingProxies());
+                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
 
             services.AddScoped<IUserDomainService, UserDomainService>();
             services.AddScoped<IUserAppService, UserAppService>();
