@@ -27,9 +27,9 @@ namespace UserInteraction_Microservice.ApplicationServices
             _config = config;
         }
 
-        public User LogIn(UserLogIn user)
+        public User LogIn(string username, string password)
         {
-            return _domainService.LogIn(user.Username, user.Password);
+            return _domainService.LogIn(username, password);
         }
 
         public User Registration(User user)
