@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using bolnica.Model.Users;
 using bolnica.Service;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using UserInteraction_Microservice.Domain.Model;
 
 namespace PSW_Web_app.Controllers
 {
@@ -42,7 +42,7 @@ namespace PSW_Web_app.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LeaveFeedback([FromBody] Feedback feedback)
+        public async Task<IActionResult> LeaveFeedback(Feedback feedback)
         {
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();

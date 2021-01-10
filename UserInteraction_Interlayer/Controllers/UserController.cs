@@ -23,6 +23,7 @@ namespace UserInteraction_Interlayer.Controllers
         }
 
         [HttpPost]
+        [Route("patient")]
         public String LogInPatient(UserLogIn user)
         {
             User retVal = _userAppService.LogIn(user);

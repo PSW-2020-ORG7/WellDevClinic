@@ -22,19 +22,6 @@ function authorize() {
 var userType = "";
 var token = "";
 $(document).ready(function () {
-    validDate();
-    $.get({
-        url: window.location.protocol + "//" + window.location.host + "/api/doctor/",
-        headers: { "Authorization": token },
-        success: function (doctors) {
-            for (let i = 0; i < doctors.length; i++) {
-                addDoctor(doctors[i])
-            }
-        }
-    });
-
-
-$(document).ready(function () {
     console.log(window.location.protocol + "//" + window.location.host);
     let form = $("#feedbackForm");
     form.submit(function (event) {
@@ -62,7 +49,8 @@ $(document).ready(function () {
 
             $.get({
                 url: window.location.protocol + "//" + window.location.host + "/api/patient/lazy/" + id,
-                success: function(data) {
+                success: function (data) {
+                    console.log(data);
                     $.post({
                         url: window.location.protocol + "//" + window.location.host + "/api/feedback",
                         data: JSON.stringify({ content: comment.val(), isAnonymous: anonymousBool, isPrivate: privateBool, patient: data }),
@@ -74,13 +62,13 @@ $(document).ready(function () {
                     })
                 }
             })
-            
+
         }
         else {
             alert("Unesite komentar u odgovarajuce polje")
-            comment.css("border-width","5px")
+            comment.css("border-width", "5px")
             comment.css("borderColor", "red")
         }
 
     })
-})
+});

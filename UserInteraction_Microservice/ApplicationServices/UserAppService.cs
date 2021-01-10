@@ -129,7 +129,7 @@ namespace UserInteraction_Microservice.ApplicationServices
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claimUserType = new Claim("type", user.UserType.ToString());
-            var claimId = new Claim("Id", user.UserDetails.Id.ToString());
+            var claimId = new Claim("Id", user.Person.Id.ToString());
             var claims = new List<Claim>();
             claims.Add(claimUserType);
             claims.Add(claimId);

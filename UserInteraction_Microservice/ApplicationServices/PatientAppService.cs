@@ -40,7 +40,8 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public Patient Get(long id)
         {
-            return _patientRepository.Get(id);
+            Patient p = _patientRepository.Get(id);
+            return p;
         }
 
         public IEnumerable<Patient> GetAll()

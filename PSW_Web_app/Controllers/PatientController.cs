@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Model.Users;
+//using Model.Users;
 using bolnica.Service;
 
 using WellDevCore.Model.Adapters;
@@ -13,7 +13,7 @@ using System.Net.Http;
 
 using Newtonsoft.Json;
 using System.Text;
-
+using UserInteraction_Microservice.Domain.Model;
 
 namespace PSW_Web_app.Controllers
 {
