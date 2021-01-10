@@ -7,5 +7,6 @@ namespace PSW_Pharmacy_Adapter.Repository.Iabstract
     public interface ITenderRepository : IRepository<Tender, long>
     {
         public List<Medication> GetMedications(long id);
+        public Tender DeleteTender(long id);
     }
 }

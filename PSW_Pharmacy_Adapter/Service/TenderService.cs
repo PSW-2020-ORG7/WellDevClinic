@@ -30,5 +30,8 @@ namespace PSW_Pharmacy_Adapter.Service
 
         public List<Medication> GetTenderMedications(long tenderId)
             => _tenderRepo.GetMedications(tenderId);
+
+        public Tender DeleteTender(long id)
+            => _tenderRepo.DeleteTender(id);
     }
 }
