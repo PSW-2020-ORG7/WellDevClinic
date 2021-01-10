@@ -92,5 +92,14 @@ namespace InterlayerController.Controllers
             return patient;
         }
 
+        [HttpPost]
+        [Route("savePatient")]
+        public Patient SavePatient(Patient patient)
+        {
+            Patient p = (Patient)_patientController.Save(patient);
+
+            return p;
+        }
+
     }
 }
