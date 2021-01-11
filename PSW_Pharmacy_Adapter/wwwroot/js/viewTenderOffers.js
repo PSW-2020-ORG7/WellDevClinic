@@ -14,7 +14,9 @@ $(document).ready(function () {
                 contentType: "application/json",
                 success: function (data) {
                     console.log(data);
-                    viewAllOffers(data)
+                    if (data != null) {
+                        viewAllOffers(data)
+                    }
                 },
             });
         },
@@ -31,6 +33,8 @@ $(document).ready(function () {
 
 function viewTender(tender) {
     $("#viewTender").empty();
+    var now = new Date().getTime()
+    var endDate = new Date(currTender.endDate).getTime();
 
     var content = '<div class="card border-info mb-3" style="width:350px; position:relative; left:40%">';
     content += '<div class="card-body">';
@@ -49,12 +53,13 @@ function viewTender(tender) {
     content += '</table></h5>'
     var countDownDate = new Date(tender.endDate).getTime();
     content += '<p style="background-color:red;font-size:40px" id="timerTender"></p>';
-    if (tender.offerWinner != null) {
+
+    if (tender.offerWinner != null && endDate < now) {
         content += '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#expiredActionModal" ';
         content += ' onclick="sendEmail()"> Accept current winner </button > ';
-    } else {
+    } else if (endDate < now) {
         content += '<p style="font-size:20px">Choose tender winner!</p>';
-    }
+    } 
     content += '</div></div></div>';
     $("#viewTender").append(content);
 
@@ -126,12 +131,15 @@ function viewAllOffers(offers) {
         content += offer.message;
         content += '</td></tr>';
         content += '</table><br>';
-        /*content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
-        content += ' onclick="deleteAction(' + offer.id + ')"> Decline </button > ';*/
-        content += '<button class="btn btn-success" ';
         if (currTender.offerWinner != null && offer.id == currTender.offerWinner) {
+            content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
+            content += ' onclick="deleteAction(' + offer.id + ')" disabled> Decline </button > ';
+            content += '<button class="btn btn-success" ';
             content += ' onclick="useAction(' + offer.id + ')" disabled> Accept </button > ';
         } else {
+            content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
+            content += ' onclick="deleteAction(' + offer.id + ')"> Decline </button > ';
+            content += '<button class="btn btn-success" ';
             content += ' onclick="useAction(' + offer.id + ')"> Accept </button > ';
         }
         content += '</div></div></div>';
@@ -150,7 +158,6 @@ function deleteAction(id) {
             contentType: "application/json",
             success: function (data) {
                 if (data) {
-                    alert("Successfully deleted");
                     window.location.reload();
                 }
             },
@@ -180,7 +187,6 @@ function sendEmail() {
         console.log("curr:" + endDate + "; " + now);
         if (currTender.offerWinner != null) {
             $("#expiredAction").show();
-            // na klik YES poslati mejl i dobaviti lekove, zatim uraditi disable svih dugmica
             $("#btnYesTender").click(function () {
                 $.ajax({
                     method: "GET",
@@ -191,8 +197,11 @@ function sendEmail() {
                         $("#mailSentAction").show();
                     },
                 });
-                // ajax za slanje mejla i ajax za dobavljanje
             })
         }
     }
+}
+
+function myTimer() {
+    alert("Lekovi su stigli");
 }
