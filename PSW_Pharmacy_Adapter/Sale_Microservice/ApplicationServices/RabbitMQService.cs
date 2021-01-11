@@ -19,13 +19,7 @@ namespace PSW_Pharmacy_Adapter.Service
         IConnection connection;
         IModel channel;
         
-
         private IActionAndBenefitRepository _ActionRepository;
-        /*public RabbitMQService(IActionAndBenefitRepository actionsRepo)
-        {
-            _ActionRepository = actionsRepo;
-        }*/
-
    
         public override Task StartAsync(CancellationToken cancellationToken)
         {
