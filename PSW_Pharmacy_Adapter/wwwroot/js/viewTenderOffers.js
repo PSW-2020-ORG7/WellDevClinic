@@ -19,6 +19,13 @@ $(document).ready(function () {
             });
         },
     });
+    $("#btnYesTender").click(function () {
+        $("#expiredActionModal").hide();
+    })
+    $("#btnOkOk").click(function () {
+        window.location.reload();
+    })
+    
 
 })
 
@@ -159,8 +166,8 @@ function useAction(id) {
         contentType: "application/json",
         success: function (data) {
             if (data) {
-                alert("Accepted");
-                window.location.reload();
+                $("#setWinnerActionModal").modal('toggle');
+                $("#setWinnerAction").show();
             }
         },
     });
@@ -180,8 +187,8 @@ function sendEmail() {
                     url: "../api/tender/email/" + currTender.offerWinner,
                     contentType: "application/json",
                     success: function (data) {
-                        alert("Mail is sent");
-                        viewAllOffers(data)
+                        $("#mailSentActionModal").modal('toggle');
+                        $("#mailSentAction").show();
                     },
                 });
                 // ajax za slanje mejla i ajax za dobavljanje
