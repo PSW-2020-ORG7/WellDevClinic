@@ -39,6 +39,7 @@ namespace PSW_Pharmacy_Adapter.Service
         {
             Api ph = _keyRepo.Get(pharmacyName);
             var response = await _clientFactory.CreateClient().GetAsync(ph.Url + "getAllMedications/" + pharmacyName);
+
             return JsonConvert.DeserializeObject<List<MedicationDto>>(response.Content.ReadAsStringAsync().Result);
         }
 
