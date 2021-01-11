@@ -41,11 +41,40 @@ $(document).ready(function () {
 		$(this).parent('div').remove();
     });
 
-    $("#phName").change(function () {
-        $('#medTableData').find('tbody').children('tr').each(function (i, el) {
-            if ($(el).children('td')[3] == this.value)
+    $("#purchase").click(function () {
+        let pharmacyName = $("#phName").val();
+        let medicationOrder = [];
 
-        })
+        $('span[name="medicine"]').each(function (i, el) {
+            let item = {
+                "medicineName": $(el).text(),
+                "amount": Number(document.getElementsByName('amountToBuy')[i].value)
+            }
+            medicationOrder.push(item);
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "../api/medication/orderMedicines?phName=" + pharmacyName,
+            contentType: "application/json",
+            data: JSON.stringify(medicationOrder),
+            success: function (data) {
+                if (data != null) {
+                    let message = 'Order: ';
+                    for (let d of data) {
+                        message += d.amount + 'x' + d.name + ', ';
+                    }
+
+                    message += '. Expect your package soon!';
+                    $("#message").text(message);
+                    $("#pageInfoModal").modal('toggle');
+                    $("#pageInfo").show();
+                }
+            },
+            error: function (e) {
+                alert("ERROR: " + e.status);
+            }
+        });
     });
 });
 
@@ -91,8 +120,8 @@ function showUrgTable(pharmacies, n) {
         $("#medTableData").find('tbody').append(content);
 
         if (n > 0) {
-            $('#divAmount').append('<span>' + ph.medicine.name + ': </span>');
-            $('#divAmount').append('<input type="number" min="1" id="' + ph.medicine.name + '" style="width:150px%" />');
+            $('#divAmount').append('<span name="medicine">' + ph.medicine.name + '</span>: ');
+            $('#divAmount').append('<input type="number" name="amountToBuy" min="1" id="' + ph.medicine.name + '" style="width:150px" />');
             $('#divAmount').append('<span id="price"></span><br/>');
             n--;
         }
@@ -103,6 +132,10 @@ function showUrgTable(pharmacies, n) {
         $("#phName").append('<option value="' + ph.phName + '">' + ph.phName + '</option>');
     }
     $("#urgProcurementResponse").removeAttr("hidden");
+}
+
+function orderMedicines() {
+    
 }
 
 //function showUrgTable(meds, n) {

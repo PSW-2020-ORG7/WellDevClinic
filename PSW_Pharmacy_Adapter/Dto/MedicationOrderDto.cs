@@ -7,13 +7,13 @@ namespace PSW_Pharmacy_Adapter.Dto
 {
     public class MedicationOrderDto
     {
-        public string Name { get; set; }
-        public int Amount { get; set; }
+        public string medicineName { get; set; }
+        public int amount { get; set; }
 
-        public MedicationOrderDto(string name, int amount)
+        public MedicationOrderDto(string medicineName, int amount)
         {
-            Name = name;
-            Amount = amount;
+            this.medicineName = medicineName;
+            this.amount = amount;
         }
     }
 }

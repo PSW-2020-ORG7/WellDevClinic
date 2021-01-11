@@ -39,7 +39,6 @@ namespace PSW_Pharmacy_Adapter.Service
         {
             Api ph = _keyRepo.Get(pharmacyName);
             var response = await _clientFactory.CreateClient().GetAsync(ph.Url + "getAllMedications/" + pharmacyName);
-
             return JsonConvert.DeserializeObject<List<MedicationDto>>(response.Content.ReadAsStringAsync().Result);
         }
 
@@ -113,15 +112,31 @@ namespace PSW_Pharmacy_Adapter.Service
             var response = await _clientFactory.CreateClient().GetAsync(ph.Url + "orderMedicine/" + phName + "?medicineName=" + medName + "&amount=" + amount);
             MedicationDto boughtMed = JsonConvert.DeserializeObject<MedicationDto>(response.Content.ReadAsStringAsync().Result);
             if (boughtMed != null)
+                return await SaveToHospitalAsync(MedicationMapper.MapMedication(boughtMed));
+            return null;
+        }
+
+        public async Task<List<Medication>> OrderMedicationsAsync(string phName, List<MedicationOrderDto> orders)
+        {
+            Api ph = _keyRepo.Get(phName);
+            string jsonStringOrder = JsonConvert.SerializeObject(orders);
+            using (HttpContent orderContent = new StringContent(jsonStringOrder))
             {
-                string jsonString = JsonConvert.SerializeObject(MedicationMapper.MapMedication(boughtMed));
-                using (HttpContent content = new StringContent(jsonString))
+                orderContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await _clientFactory.CreateClient().PostAsync(ph.Url + "orderMedicines/" + phName, orderContent);
+                List<MedicationDto> boughtMed = JsonConvert.DeserializeObject<List<MedicationDto>>(response.Content.ReadAsStringAsync().Result);
+                if (boughtMed.Count > 0)
                 {
-                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    response = await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug", content);
-                    return JsonConvert.DeserializeObject<Medication>(response.Content.ReadAsStringAsync().Result);
+                    List<Medication> boughtMedications = new List<Medication>();
+                    foreach (Medication medication in MedicationMapper.MapMedicationList(boughtMed))
+                    {
+                        Medication med = await SaveToHospitalAsync(medication);
+                        if (med != null)
+                            boughtMedications.Add(med);
+                    }
+                    return boughtMedications;
                 }
-            } 
+            }
             return null;
         }
 
@@ -142,6 +157,17 @@ namespace PSW_Pharmacy_Adapter.Service
             if (changedMeds.Count == 0)
                 return null;
             return changedMeds;
+        }
+
+        private async Task<Medication> SaveToHospitalAsync(Medication medication)
+        {
+            string jsonString = JsonConvert.SerializeObject(medication);
+            using (HttpContent content = new StringContent(jsonString))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug", content);
+                return JsonConvert.DeserializeObject<Medication>(response.Content.ReadAsStringAsync().Result);
+            }
         }
 
         private bool CompareMedicationsStructure(Medication medication1, Medication medication2)
