@@ -8,9 +8,7 @@ $(document).ready(function () {
         success: function (data) {
 			allMedications = data;
 			viewAllMedications(allMedications);
-			$("#pageLoader").css("display", "none");
-			for (let inp of document.getElementsByName('medicineName'))
-				autocomplete(inp, allMedications.map(x => x.name));
+			$("#pageLoader").hide();
         },
 	});
 

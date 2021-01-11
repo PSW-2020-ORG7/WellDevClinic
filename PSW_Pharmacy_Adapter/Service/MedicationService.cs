@@ -145,8 +145,8 @@ namespace PSW_Pharmacy_Adapter.Service
 
         private bool CompareMedicationsStructure(Medication medication1, Medication medication2)
         {
-            var ingredientList1 = medication1.Ingredients.Select(x => x.Name).ToList();
-            var ingredientList2 = medication2.Ingredients.Select(x => x.Name).ToList();
+            var ingredientList1 = medication1.Ingredients.Select(x => x.Name.ToLower()).ToList();
+            var ingredientList2 = medication2.Ingredients.Select(x => x.Name.ToLower()).ToList();
             if (ingredientList1.All(ingredientList2.Contains))
                 return true;
             return false;
@@ -154,8 +154,8 @@ namespace PSW_Pharmacy_Adapter.Service
 
         private bool CompareMedicationsLists(List<Medication> medicationList1, List<Medication> medicationList2)
         {
-            var list1 = medicationList1.Select(x => x.Name).ToList();
-            var list2 = medicationList2.Select(x => x.Name).ToList();
+            var list1 = medicationList1.Select(x => x.Name.ToLower()).ToList();
+            var list2 = medicationList2.Select(x => x.Name.ToLower()).ToList();
             if (list1.All(list2.Contains))
                 return true;
             return false;
