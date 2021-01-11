@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20201225232739_TenderOffer.cs" />
-    <Compile Remove="Migrations\20201225232739_TenderOffer.Designer.cs" />
-    <Compile Remove="Migrations\20201229113738_TenderOffersAlter.cs" />
-    <Compile Remove="Migrations\20201229113738_TenderOffersAlter.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.12.4" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.30.0" />
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.30.0" />

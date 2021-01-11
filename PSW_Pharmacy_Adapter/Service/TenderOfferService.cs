@@ -28,6 +28,7 @@ namespace PSW_Pharmacy_Adapter.Service
         public bool DeleteTenderOffer(long id)
             => _tenderRepo.Delete(id);
 
-
+        public TenderOffer GetOffer(long id)
+            => _tenderRepo.Get(id);
     }
 }

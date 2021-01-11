@@ -1,30 +1,33 @@
-﻿$(document).ready(function () {
-    var countDownDate;
+﻿var currTender;
+var winner;
+$(document).ready(function () {
     $.ajax({
         method: "GET",
         url: "../api/tender/" + window.location.search.slice(1),
         contentType: "application/json",
         success: function (data) {
+            currTender = data;
             console.log(data);
             viewTender(data)
+            $.ajax({
+                method: "GET",
+                url: "../api/tenderoffer/" + window.location.search.slice(1),
+                contentType: "application/json",
+                success: function (data) {
+                    console.log(data);
+                    if (data != null) {
+                        viewAllOffers(data)
+                    }
+                },
+            });
         },
     });
-
-
-    $.ajax({
-        method: "GET",
-        url: "../api/tenderoffer/" + window.location.search.slice(1),
-        contentType: "application/json",
-        success: function (data) {
-            console.log(data);
-            viewAllOffers(data)
-        },
-    });
-
 })
 
 function viewTender(tender) {
     $("#viewTender").empty();
+    var now = new Date().getTime()
+    var endDate = new Date(currTender.endDate).getTime();
 
     var content = '<div class="card border-info mb-3" style="width:350px; position:relative; left:40%">';
     content += '<div class="card-body">';
@@ -43,6 +46,13 @@ function viewTender(tender) {
     content += '</table></h5>'
     var countDownDate = new Date(tender.endDate).getTime();
     content += '<p style="background-color:red;font-size:40px" id="timerTender"></p>';
+
+    if (tender.offerWinner != null && endDate < now) {
+        content += '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#expiredActionModal" ';
+        content += ' onclick="sendEmail()"> Accept current winner </button > ';
+    } else if (endDate < now) {
+        content += '<p style="font-size:20px">Choose tender winner!</p>';
+    } 
     content += '</div></div></div>';
     $("#viewTender").append(content);
 
@@ -86,8 +96,15 @@ function viewAllOffers(offers) {
     $("#viewTenderOffers").empty();
 
     for (let offer of offers) {
-        var content = '<div class="card" style="width:350px; display:inline-block">';
-        content += '<div class="card-body">';
+        
+        var content = '<div class="card" style="width:350px; display:inline-block ';
+
+        if (currTender.offerWinner != null &&  offer.id == currTender.offerWinner)
+        {
+            winner = offer;
+            content += '; border: 10px solid red';
+        }
+        content += '"><div class="card-body">';
         content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
         content += offer.id;
         content += '<br>' + offer.pharmacyName;
@@ -108,15 +125,23 @@ function viewAllOffers(offers) {
         content += offer.message;
         content += '</td></tr>';
         content += '</table><br>';
-        content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
-        content += ' onclick="deleteAction(' + offer.id + ')"> Decline </button > ';
-        content += '<button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"';
-        content += ' onclick="useAction(' + offer.id + ')"> Accept </button > ';
+        if (currTender.offerWinner != null && offer.id == currTender.offerWinner) {
+            content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
+            content += ' onclick="deleteAction(' + offer.id + ')" disabled> Decline </button > ';
+            content += '<button class="btn btn-success" ';
+            content += ' onclick="useAction(' + offer.id + ')" disabled> Accept </button > ';
+        } else {
+            content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
+            content += ' onclick="deleteAction(' + offer.id + ')"> Decline </button > ';
+            content += '<button class="btn btn-success" ';
+            content += ' onclick="useAction(' + offer.id + ')"> Accept </button > ';
+        }
         content += '</div></div></div>';
         $("#viewTenderOffers").append(content);
     }
-    
+
 }
+
 
 function deleteAction(id) {
 	$("#deleteAction").show();
@@ -127,7 +152,6 @@ function deleteAction(id) {
             contentType: "application/json",
             success: function (data) {
                 if (data) {
-                    alert("Successfully deleted");
                     window.location.reload();
                 }
             },
@@ -137,28 +161,73 @@ function deleteAction(id) {
 }
 
 function useAction(id) {
-    // prihvati ponudu, javi apoteci
+    $.ajax({
+        method: "PUT",
+        url: "../api/tender/winner/" + id,
+        contentType: "application/json",
+        success: function (data) {
+            if (data) {
+                $("#setWinnerActionModal").modal('toggle');
+                $("#setWinnerAction").show();
+            }
+        },
+    });
+} 
+
+function sendEmail() {
+    var now = new Date().getTime()
+    var endDate = new Date(currTender.endDate).getTime();
+    if (endDate < now) {
+        console.log("curr:" + endDate + "; " + now);
+        if (currTender.offerWinner != null) {
+            $("#expiredAction").show();
+            $("#btnYesTender").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "../api/tender/email/" + currTender.offerWinner,
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("Mail sent");
+                        window.location.reload();
+                    },
+                });
+                let order = [];
+
+                for (let med of winner.medications) {
+                    let item = {
+                        "medicineName": med.name,
+                        "amount": med.amount
+                    }
+                    order.push(item);
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: "../api/medication/orderMedicines?phName=" + winner.pharmacyName,
+                    contentType: "application/json",
+                    data: JSON.stringify(order),
+                    success: function (data) {
+                        if (data != null) {
+                            let message = 'Order: ';
+                            for (let d of data) {
+                                message += d.amount + 'x' + d.name + ', ';
+                            }
+
+                            message += '. Expect your package soon!';
+                            $("#message").text(message);
+                            $("#pageInfoModal").modal('toggle');
+                            $("#pageInfo").show();
+                        }
+                    },
+                    error: function (e) {
+                        alert("ERROR: " + e.status);
+                    }
+                });
+            })
+        }
+    }
 }
 
-
-//var countDownDate = new Date("Jan 5, 2022 00:00:00").getTime();
-
-// Update the count down every 1 second
-//var countdownfunction = setInterval(function () {
-//    var now = new Date().getTime();
-
-//    var distance = countDownDate - now;
-
-//    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-//    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-//    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-//    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-//    document.getElementById("timerTender").innerHTML = days + "d " + hours + "h "
-//        + minutes + "m " + seconds + "s ";
- 
-//    if (distance < 0) {
-//        clearInterval(countdownfunction);
-//        document.getElementById("timerTender").innerHTML = "EXPIRED";
-//    }
-//}, 1000);
+function myTimer() {
+    alert("Lekovi su stigli");
+}

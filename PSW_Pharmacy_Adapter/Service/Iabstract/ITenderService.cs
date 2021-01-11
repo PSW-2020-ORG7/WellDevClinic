@@ -1,4 +1,5 @@
-﻿using PSW_Pharmacy_Adapter.Model.Pharmacy;
+﻿using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Model.Pharmacy;
 using System.Collections.Generic;
 
 namespace PSW_Pharmacy_Adapter.Service.Iabstract
@@ -8,5 +9,8 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
         public List<Tender> GetAllTenders();
         public Tender AddTender(Tender tender);
         public Tender GetTender(long id);
+        public List<Medication> GetTenderMedications(long id);
+		public Tender UpdateWinner(long idWinner);
+        public Tender DeleteTender(long id);
     }
 }
