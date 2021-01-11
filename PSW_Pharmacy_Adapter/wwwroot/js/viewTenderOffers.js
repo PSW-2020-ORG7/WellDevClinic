@@ -1,4 +1,5 @@
 ﻿var currTender;
+var winner;
 $(document).ready(function () {
     $.ajax({
         method: "GET",
@@ -21,14 +22,6 @@ $(document).ready(function () {
             });
         },
     });
-    $("#btnYesTender").click(function () {
-        $("#expiredActionModal").hide();
-    })
-    $("#btnOkOk").click(function () {
-        window.location.reload();
-    })
-    
-
 })
 
 function viewTender(tender) {
@@ -108,6 +101,7 @@ function viewAllOffers(offers) {
 
         if (currTender.offerWinner != null &&  offer.id == currTender.offerWinner)
         {
+            winner = offer;
             content += '; border: 10px solid red';
         }
         content += '"><div class="card-body">';
@@ -193,9 +187,41 @@ function sendEmail() {
                     url: "../api/tender/email/" + currTender.offerWinner,
                     contentType: "application/json",
                     success: function (data) {
-                        $("#mailSentActionModal").modal('toggle');
-                        $("#mailSentAction").show();
+                        alert("Mail sent");
+                        window.location.reload();
                     },
+                });
+                let order = [];
+
+                for (let med of winner.medications) {
+                    let item = {
+                        "medicineName": med.name,
+                        "amount": med.amount
+                    }
+                    order.push(item);
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: "../api/medication/orderMedicines?phName=" + winner.pharmacyName,
+                    contentType: "application/json",
+                    data: JSON.stringify(order),
+                    success: function (data) {
+                        if (data != null) {
+                            let message = 'Order: ';
+                            for (let d of data) {
+                                message += d.amount + 'x' + d.name + ', ';
+                            }
+
+                            message += '. Expect your package soon!';
+                            $("#message").text(message);
+                            $("#pageInfoModal").modal('toggle');
+                            $("#pageInfo").show();
+                        }
+                    },
+                    error: function (e) {
+                        alert("ERROR: " + e.status);
+                    }
                 });
             })
         }
