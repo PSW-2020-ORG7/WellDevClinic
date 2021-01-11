@@ -8,7 +8,7 @@ namespace PSW_Pharmacy_Adapter.Sale_Microservice.Repository.Iabstract
         IEnumerable<E> GetAll();
         bool Exists(ID id);
         bool Delete(ID id);
-        E Save(E Entity);
+        E Save(E entity);
         E Update(E entity);
     }
 }

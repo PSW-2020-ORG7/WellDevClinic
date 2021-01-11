@@ -23,10 +23,10 @@ namespace PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices
         public bool DeleteBenefit(long id) =>
             _actionRepository.Delete(id);
 
-        public ActionAndBenefit UpdateStatus(long id, int stat) 
+        public ActionAndBenefit UpdateStatus(long id, int status) 
         {
             ActionAndBenefit action = _actionRepository.Get(id);
-            switch (stat)
+            switch (status)
             {
                 case 0:
                     action.Status = ActionStatus.pending;

@@ -39,26 +39,26 @@ namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository
             return false;
         }
 
-        public Api Save(Api api)
+        public Api Save(Api entity)
         {
-            Api a = _dbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
+            Api a = _dbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == entity.NameOfPharmacy);
             if (a == null)
             {
-                _dbContext.ApiKeys.Add(api);
+                _dbContext.ApiKeys.Add(entity);
                 _dbContext.SaveChanges();
-                return api;
+                return entity;
             }
             return null;
         }
 
-        public Api Update(Api api)
+        public Api Update(Api entity)
         {
-            Api a = _dbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == api.NameOfPharmacy);
+            Api a = _dbContext.ApiKeys.SingleOrDefault(a => a.NameOfPharmacy == entity.NameOfPharmacy);
             if (a != null)
             {
-                _dbContext.ApiKeys.Update(api);
+                _dbContext.ApiKeys.Update(entity);
                 _dbContext.SaveChanges();
-                return api;
+                return entity;
             }
             return null;
         }

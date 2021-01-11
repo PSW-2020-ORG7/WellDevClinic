@@ -17,9 +17,9 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
         public bool Delete(long id)
         {
             TenderOffer offer = _dbContext.TenderOffers.SingleOrDefault(offer => offer.Id == id);
-            offer.Medications.Clear();
             if (offer != null)
             {
+                offer.Medications.Clear();
                 _dbContext.TenderOffers.Remove(offer);
                 _dbContext.SaveChanges();
                 return true;
@@ -28,12 +28,10 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
         }
 
         public bool Exists(long id)
-        {
-            throw new System.NotImplementedException();
-        }
+            => Get(id) != null;
 
         public TenderOffer Get(long id)
-        => _dbContext.TenderOffers.FirstOrDefault(offer => offer.Id == id);
+            => _dbContext.TenderOffers.FirstOrDefault(offer => offer.Id == id);
 
         public IEnumerable<TenderOffer> GetAll()
         {
@@ -42,21 +40,28 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
             return offers;
         }
 
-        public TenderOffer Save(TenderOffer offer)
+        public TenderOffer Save(TenderOffer entity)
         {
-            TenderOffer tender = _dbContext.TenderOffers.SingleOrDefault(t => t.Id == offer.Id);
+            TenderOffer tender = _dbContext.TenderOffers.SingleOrDefault(t => t.Id == entity.Id);
             if (tender == null)
             {
-                _dbContext.TenderOffers.Add(offer);
+                _dbContext.TenderOffers.Add(entity);
                 _dbContext.SaveChanges();
-                return offer;
+                return entity;
             }
             return null;
         }
 
         public TenderOffer Update(TenderOffer entity)
         {
-            throw new System.NotImplementedException();
+            TenderOffer tender = _dbContext.TenderOffers.SingleOrDefault(t => t.Id == entity.Id);
+            if (tender != null)
+            {
+                _dbContext.TenderOffers.Update(entity);
+                _dbContext.SaveChanges();
+                return entity;
+            }
+            return null;
         }
     }
 }

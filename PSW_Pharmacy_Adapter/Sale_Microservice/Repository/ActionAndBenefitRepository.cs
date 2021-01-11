@@ -38,26 +38,26 @@ namespace PSW_Pharmacy_Adapter.Sale_Microservice.Repository
             return false;
         }
 
-        public ActionAndBenefit Save(ActionAndBenefit action)
+        public ActionAndBenefit Save(ActionAndBenefit entity)
         {
-            ActionAndBenefit a = _dbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == action.Id);
+            ActionAndBenefit a = _dbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == entity.Id);
             if (a == null)
             {
-                _dbContext.ActionsAndBenefits.Add(action);
+                _dbContext.ActionsAndBenefits.Add(entity);
                 _dbContext.SaveChanges();
-                return action;
+                return entity;
             }
             return null;
         }
 
-        public ActionAndBenefit Update(ActionAndBenefit action)
+        public ActionAndBenefit Update(ActionAndBenefit entity)
         {
-            ActionAndBenefit a = _dbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == action.Id);
+            ActionAndBenefit a = _dbContext.ActionsAndBenefits.SingleOrDefault(a => a.Id == entity.Id);
             if (a != null)
             {
-                _dbContext.ActionsAndBenefits.Update(action);
+                _dbContext.ActionsAndBenefits.Update(entity);
                 _dbContext.SaveChanges();
-                return action;
+                return entity;
             }
             return null;
         }

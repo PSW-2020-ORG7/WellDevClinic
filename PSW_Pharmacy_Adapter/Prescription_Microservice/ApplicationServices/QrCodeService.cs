@@ -10,14 +10,14 @@ namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices
     public class QrCodeService : IQrCodeService
     {
         private const string SAVE_PATH = @"wwwroot/images/qrCodes/";
-        public byte[] Generate(Prescription pre)
+        public byte[] Generate(Prescription prescription)
         {
             QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(GenerateQRtext(pre), QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(GenerateQRtext(prescription), QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap bitmap = qrCode.GetGraphic(5);
             byte[] bytes = BitmapToBytes(bitmap);
-            SaveFile(bytes, pre.Id.ToString());
+            SaveFile(bytes, prescription.Id.ToString());
 
             return bytes;
         }

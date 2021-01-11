@@ -16,13 +16,18 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
         }
         public bool Delete(long id)
         {
-            throw new NotImplementedException();
+            PharmacyEmails PEmail = _dbContext.Email.SingleOrDefault(e => e.Id == id);
+            if (PEmail != null)
+            {
+                _dbContext.Email.Remove(PEmail);
+                _dbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool Exists(long id)
-        {
-            throw new NotImplementedException();
-        }
+            => Get(id) != null;
 
         public PharmacyEmails Get(long id)
              => _dbContext.Email.FirstOrDefault(email => email.Id == id);
@@ -35,21 +40,28 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
             return emails;
         }
 
-        public PharmacyEmails Save(PharmacyEmails email)
+        public PharmacyEmails Save(PharmacyEmails entity)
         {
-            PharmacyEmails PEmail = _dbContext.Email.SingleOrDefault(e => e.Id == email.Id);
+            PharmacyEmails PEmail = _dbContext.Email.SingleOrDefault(e => e.Id == entity.Id);
             if (PEmail == null)
             {
-                _dbContext.Email.Add(email);
+                _dbContext.Email.Add(entity);
                 _dbContext.SaveChanges();
-                return email;
+                return entity;
             }
             return null;
         }
 
         public PharmacyEmails Update(PharmacyEmails entity)
         {
-            throw new NotImplementedException();
+            PharmacyEmails PEmail = _dbContext.Email.SingleOrDefault(e => e.Id == entity.Id);
+            if (PEmail != null)
+            {
+                _dbContext.Email.Update(entity);
+                _dbContext.SaveChanges();
+                return entity;
+            }
+            return null;
         }
     }
 }

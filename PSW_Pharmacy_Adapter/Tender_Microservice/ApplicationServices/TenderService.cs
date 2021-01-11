@@ -30,13 +30,13 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices
         public Tender GetTender(long id)
             => _tenderRepo.Get(id);
 
-        public List<Medication> GetTenderMedications(long tenderId)
-            => _tenderRepo.GetMedications(tenderId);
+        public List<Medication> GetTenderMedications(long id)
+            => _tenderRepo.GetMedications(id);
 			
 		public Tender UpdateWinner(long idWinner)
             => _tenderRepo.UpdateWinner(idWinner);
 
         public Tender DeleteTender(long id)
-            => _tenderRepo.DeleteTender(id);
+            => _tenderRepo.DeleteTenderLogicaly(id);
     }
 }

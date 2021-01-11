@@ -27,9 +27,7 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
         }
 
         public bool Exists(long id)
-        {
-            throw new System.NotImplementedException();
-        }
+            => Get(id) != null;
 
         public Tender Get(long id)
          => _dbContext.Tender.FirstOrDefault(tender => tender.Id == id);
@@ -41,14 +39,14 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
             return tenders;
         }
 
-        public Tender Save(Tender ten)
+        public Tender Save(Tender entity)
         {
-            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == ten.Id);
+            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == entity.Id);
             if (tender == null)
             {
-                _dbContext.Tender.Add(ten);
+                _dbContext.Tender.Add(entity);
                 _dbContext.SaveChanges();
-                return ten;
+                return entity;
             }
             return null;
         }
@@ -56,34 +54,39 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
 
         public Tender Update(Tender entity)
         {
-            throw new System.NotImplementedException();
-        }
-
-
-        public List<Medication> GetMedications(long tenderId) {
-            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == tenderId);
-            return tender.Medications;
-        }
-		
-		public Tender UpdateWinner(long idWinner)
-        {
-            TenderOffer offer= _dbContext.TenderOffers.SingleOrDefault(o => o.Id == idWinner);
-            Tender tender1 = _dbContext.Tender.SingleOrDefault(t => t.Id == offer.TenderId);
-            tender1.OfferWinner = idWinner;
-            if (tender1 != null)
+            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == entity.Id);
+            if (tender != null)
             {
-                _dbContext.Tender.Update(tender1);
+                _dbContext.Tender.Update(entity);
                 _dbContext.SaveChanges();
-                return tender1;
+                return entity;
             }
             return null;
         }
 
-        public Tender DeleteTender(long id) {
-            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == id);
-            tender.IsDeleted = true;
+
+        public List<Medication> GetMedications(long id)
+            => _dbContext.Tender.SingleOrDefault(t => t.Id == id).Medications;
+		
+		public Tender UpdateWinner(long idWinner)
+        {
+            TenderOffer offer= _dbContext.TenderOffers.SingleOrDefault(o => o.Id == idWinner);
+            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == offer.TenderId);
             if (tender != null)
             {
+                tender.OfferWinner = idWinner;
+                _dbContext.Tender.Update(tender);
+                _dbContext.SaveChanges();
+                return tender;
+            }
+            return null;
+        }
+
+        public Tender DeleteTenderLogicaly(long id) {
+            Tender tender = _dbContext.Tender.SingleOrDefault(t => t.Id == id);
+            if (tender != null)
+            {
+                tender.IsDeleted = true;
                 _dbContext.Tender.Update(tender);
                 _dbContext.SaveChanges();
                 return tender;

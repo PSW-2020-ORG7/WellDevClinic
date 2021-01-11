@@ -80,8 +80,8 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("email/{id?}")]
         public IActionResult SendEmailToWinner(long id)
         {
-            bool isSend=_emailService.sendEmailToWinner(id);
-            if (isSend == true)
+            bool isSend = _emailService.sendEmailToWinner(id);
+            if (isSend)
                 return Ok(isSend);
             return BadRequest();
         }

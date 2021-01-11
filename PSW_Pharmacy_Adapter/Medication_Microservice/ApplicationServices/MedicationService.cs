@@ -84,7 +84,6 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
                 catch
                 {
                     Console.WriteLine("Connection can not be made!");
-                    continue;
                 }
             return pharmacies;
         }

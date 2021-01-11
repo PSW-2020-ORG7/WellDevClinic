@@ -7,7 +7,7 @@ using PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices;
 
 namespace PSW_Pharmacy_Adapter
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
