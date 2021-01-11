@@ -239,6 +239,7 @@ function makeOffer(tender) {
                 let name = $("#txtName").val();
                 let price = $("#txtPrice").val();
                 let message = $("#txtNote").val();
+                let email = $("#txtEmail").val();
                 let meds = [];
 
                 for (let ten of data.medications) {
@@ -259,7 +260,8 @@ function makeOffer(tender) {
                     Price: Number(price),
                     Medications: meds,
                     Message: message,
-                    TenderId: Number(tender)
+                    TenderId: Number(tender),
+                    Email: email
                 });
 
                 $.ajax({
