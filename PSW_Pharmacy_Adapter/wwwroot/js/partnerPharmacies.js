@@ -11,26 +11,6 @@
             }
         },
     });
-
-    $("#btnUrgent").click(function (event) {
-        event.preventDefault();
-        $("#modalUrgProcurement").slideDown("fast");
-    });
-
-    $(".add_field_button").click(function (e) {
-        e.preventDefault();
-        if ($(".input_fields_wrap").children().length < 5) {
-            $(".input_fields_wrap").append('<div><input placeholder="Enter medicine name" type="text" name="medicineName[]"/> ' +
-                                                '<input placeholder="Enter amount" type="number" name="quantity[]"/> ' +
-                                                '<button class="btn btn-outline-danger remove_field">&times;</button>' +
-                                           '</div>');
-        }
-    });
-
-    $(".input_fields_wrap").on('click', '.remove_field', function (e) {
-        e.preventDefault();
-        $(this).parent('div').remove();
-    });
 });
 
 function viewApis(apiDb) {

@@ -17,7 +17,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
 
@@ -43,12 +43,12 @@ namespace PSW_Web_app.Controllers
 
         [HttpGet]
         [Route("{speciality?}")]
-        public async Task<List<DoctorDTO>> GetDoctorsBySpeciality(String speciality)
+        public async Task<List<Doctor>> GetDoctorsBySpeciality(String speciality)
         {
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/doctor/" + speciality);
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/doctor/getBySpeciality/" + speciality);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<DoctorDTO> result = (List<DoctorDTO>)JsonConvert.DeserializeObject<List<DoctorDTO>>(responseBody);
+            List<Doctor> result = (List<Doctor>)JsonConvert.DeserializeObject<List<Doctor>>(responseBody);
             return result;
         }
     }

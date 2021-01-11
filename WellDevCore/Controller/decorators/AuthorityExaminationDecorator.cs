@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Model.Director;
 using Model.Dto;
 using Model.PatientSecretary;
 using Model.Users;
@@ -141,5 +142,9 @@ namespace bolnica.Controller.decorators
                 return null;
         }
 
+        public IEnumerable<Examination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

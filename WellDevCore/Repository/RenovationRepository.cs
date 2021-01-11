@@ -1,6 +1,5 @@
-using bolnica;
 using bolnica.Model;
-using bolnica.Repository;
+using Microsoft.EntityFrameworkCore;
 using Model.Director;
 using System;
 using System.Collections.Generic;
@@ -45,7 +44,16 @@ namespace Repository
 
         public Renovation Save(Renovation entity)
         {
-            throw new NotImplementedException();
+            Renovation result = myDbContext.Renovation.FirstOrDefault(renovation => renovation.Id == entity.Id);
+            if (result == null)
+            {
+                myDbContext.Entry(entity.Room).State = EntityState.Unchanged;
+                myDbContext.Renovation.Add(entity);
+                myDbContext.SaveChanges();
+                return entity;
+            }
+
+            return null;
         }
 
         public void Edit(Renovation entity)
@@ -60,7 +68,9 @@ namespace Repository
 
         public IEnumerable<Renovation> GetEager()
         {
-            throw new NotImplementedException();
+            List<Renovation> result = new List<Renovation>();
+            myDbContext.Renovation.ToList().ForEach(renovation => result.Add(renovation));
+            return result;
         }
 
         public Renovation Get(long id)

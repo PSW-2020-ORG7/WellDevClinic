@@ -21,11 +21,15 @@ namespace InterlayerController.Controllers
     {
         private readonly IExaminationController _examinationController;
         private readonly IBusinessDayController _businessDayController;
+        private readonly IRoomController _roomController;
 
-        public ExaminationController(IExaminationController examinationController, IBusinessDayController businessDayController)
+
+        public ExaminationController(IExaminationController examinationController, IRoomController roomController, IBusinessDayController businessDayController)
         {
             _examinationController = examinationController;
             _businessDayController = businessDayController;
+            _roomController = roomController;
+
         }
 
         [HttpGet]
@@ -140,6 +144,35 @@ namespace InterlayerController.Controllers
         public void EditExamination(Examination examination)
         {
             _examinationController.Edit(examination);
+
+        }
+
+        [HttpGet]
+        [Route("{roomId?}/{dateTime?}")]
+        public List<Examination> GetExaminationsByRoomAndPeriod(long roomId, string dateTime)
+        {
+            DateTime dt = DateTime.Parse(dateTime);
+            Period p = new Period();
+            p.StartDate = dt;
+            p.EndDate = dt + new TimeSpan(0, 30, 0);
+            List<Examination> exams = _examinationController.GetUpcomingExaminationsByRoomAndPeriod(_roomController.Get(roomId), p).ToList();
+
+            return exams;
+
+        }
+
+        [HttpGet]
+        [Route("{roomId?}/{dateTime1?}/{dateTime2?}")]
+        public List<Examination> GetExaminationsByRoomAndPeriodForAlternative(long roomId, string dateTime1, string dateTime2)
+        {
+            DateTime dt1 = DateTime.Parse(dateTime1);
+            DateTime dt2 = DateTime.Parse(dateTime2);
+            Period p = new Period();
+            p.StartDate = dt1;
+            p.EndDate = dt2;
+            List<Examination> exams = _examinationController.GetUpcomingExaminationsByRoomAndPeriod(_roomController.Get(roomId), p).ToList();
+
+            return exams;
 
         }
     }

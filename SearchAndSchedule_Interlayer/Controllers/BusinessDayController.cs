@@ -97,11 +97,11 @@ namespace SearchAndSchedule_Interlayer.Controllers
         }
 
         //DTO za ove parametre
-       /* [HttpPost]
-        [Route("OperationSearch")]
-        public List<ExaminationDTO> OperationSearch(BusinessDayDTO businessDayDTO, double durationOfOperation)
-        {
-            return _businessDayAppService.OperationSearch(businessDayDTO, durationOfOperation);
-        }*/
+        /* [HttpPost]
+         [Route("OperationSearch")]
+         public List<ExaminationDTO> OperationSearch(BusinessDayDTO businessDayDTO, double durationOfOperation)
+         {
+             return _businessDayAppService.OperationSearch(businessDayDTO, durationOfOperation);
+         }*/
     }
 }

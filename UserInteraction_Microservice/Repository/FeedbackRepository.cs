@@ -62,6 +62,8 @@ namespace UserInteraction_Microservice.Repository
 
         public Feedback Save(Feedback entity)
         {
+            Patient patient = _myDbContext.Patient.FirstOrDefault(p => p.Id == entity.Patient.Id);
+            entity.Patient = patient;
             var Feedback = _myDbContext.Feedback.Add(entity);
             _myDbContext.SaveChanges();
             return Feedback.Entity;

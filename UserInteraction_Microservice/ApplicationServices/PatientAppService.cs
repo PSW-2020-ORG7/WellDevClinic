@@ -40,7 +40,8 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public Patient Get(long id)
         {
-            return _patientRepository.Get(id);
+            Patient p = _patientRepository.Get(id);
+            return p;
         }
 
         public IEnumerable<Patient> GetAll()
@@ -91,6 +92,10 @@ namespace UserInteraction_Microservice.ApplicationServices
         public Patient Save(Patient entity)
         {
             return _patientRepository.Save(entity);
+        }
+        public void Block(long id)
+        {
+            _patientRepository.Block(id);
         }
     }
 }

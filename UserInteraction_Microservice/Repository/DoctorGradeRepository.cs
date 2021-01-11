@@ -36,9 +36,16 @@ namespace UserInteraction_Microservice.Repository
 
         public DoctorGrade Save(DoctorGrade entity)
         {
+            Doctor doctor = _myDbContext.Doctor.FirstOrDefault(a => a.Person.FullName == entity.Doctor.Person.FullName);
+            entity.Doctor = doctor;
             var DoctorGrade = _myDbContext.DoctorGrade.Add(entity);
             _myDbContext.SaveChanges();
             return DoctorGrade.Entity;
+        }
+
+        public List<DoctorGrade> GetByDoctor(string doctor)
+        {
+            return _myDbContext.DoctorGrade.Where(a => a.Doctor.Person.FullName  == doctor).ToList();
         }
     }
 }

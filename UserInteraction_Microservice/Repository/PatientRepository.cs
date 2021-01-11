@@ -118,7 +118,8 @@ namespace UserInteraction_Microservice.Repository
                         Person = p.Person,
                         Blocked = p.Blocked,
                         Guest = p.Guest,
-                        UserType = p.UserType
+                        UserType = p.UserType,
+                        UserLogIn = new UserLogIn() { Username = p.UserLogIn.Username}
                     }
                 ).Where(p => p.Blocked == true).DefaultIfEmpty().ToList();
         }
@@ -135,6 +136,39 @@ namespace UserInteraction_Microservice.Repository
                       UserType = p.UserType
                   }
               ).Where(p => p.Blocked == false).DefaultIfEmpty().ToList();
+        }
+
+        public Patient GetPatientToken(string token)
+        {
+            return _myDbContext.Patient.Select(p =>
+                    new Patient()
+                    {
+                        Id = p.Id,
+                        Person = p.Person,
+                        Blocked = p.Blocked,
+                        Guest = p.Guest,
+                        UserType = p.UserType
+                    }
+                ).Where(p => p.VerificationToken.Equals(token)).FirstOrDefault();
+        }
+
+        public Patient GetPatientByMail(string email)
+        {
+            Patient result = _myDbContext.Patient.FirstOrDefault(patient => patient.UserDetails.Email.Equals(email));
+            return result;
+        }
+
+        public Patient GetPatientByUsername(string username)
+        {
+            Patient result = _myDbContext.Patient.FirstOrDefault(patient => patient.UserLogIn.Username.Equals(username));
+            return result;
+        }
+
+        public void Block(long id)
+        {
+            Patient patient = GetEager(id);
+            patient.Blocked = true;
+            Edit(patient);
         }
     }
 }

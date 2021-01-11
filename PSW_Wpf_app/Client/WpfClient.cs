@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -72,6 +73,8 @@ namespace PSW_Wpf_app.Client
         public virtual Period Period { get; set; }
         public Boolean PatientScheduling = false;
         public PriorityType Priority { get; set; }
+        public long RoomId { get; set; }
+
         public BusinessDayDTO(Doctor doctor, Period period)
         {
             this.Doctor = doctor;
@@ -90,6 +93,16 @@ namespace PSW_Wpf_app.Client
 
         }
 
+    }
+
+    public class BusinessDay
+    {
+        public virtual Period Shift { get; set; }
+
+        public long Id { get; set; }
+        public virtual List<Period> ScheduledPeriods { get; set; }
+        public virtual Doctor doctor { get; set; }
+        public virtual Room room { get; set; }
     }
 
     public class Period
@@ -201,6 +214,49 @@ namespace PSW_Wpf_app.Client
 
     }
 
+    public class Renovation
+    {
+
+        public string Description { get; set; }
+        public virtual RenovationStatus Status { get; set; }
+
+        public virtual Period Period { get; set; }
+
+        public virtual Room Room { get; set; }
+
+        public long Id { get; set; }
+
+
+        public Renovation(long id, RenovationStatus status, Period period, string description, Room room)
+        {
+            Id = id;
+            Status = status;
+            Period = period;
+            Description = description;
+            Room = room;
+        }
+
+        public Renovation()
+        {
+
+            Status = RenovationStatus.Traje;
+
+        }
+    }
+
+    public enum RenovationStatus
+    {
+        [Description("U toku")]
+        Traje,
+        [Description("Zavrseno")]
+        Zavrseno,
+        [Description("Zakazano")]
+        Zakazano,
+        [Description("Otkazano")]
+        Otkazano,
+
+    }
+
     public class PatientFile
     {
         public virtual List<Examination> Examination { get; set; }
@@ -232,6 +288,16 @@ namespace PSW_Wpf_app.Client
             List<Drug> drugs = JsonConvert.DeserializeObject<List<Drug>>(responseBody);
 
             return drugs;
+        }
+
+        public static async Task<BusinessDayDTO> GetBussinessdayByDoctor(long doctorId)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/term/" + doctorId);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            BusinessDayDTO buss = JsonConvert.DeserializeObject<BusinessDayDTO>(responseBody);
+
+            return buss;
         }
 
         public static async Task<List<DoctorDTO>> GetDoctorsBySpeciality(String speciality)
@@ -355,7 +421,74 @@ namespace PSW_Wpf_app.Client
             string responseBody = await response.Content.ReadAsStringAsync();
            
         }
+        public static async Task<List<Examination>> GetExaminationsByRoomAndPeriod(long roomId, DateTime dateTime)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/" + roomId + "/" + dateTime.ToString());
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Examination> exams = JsonConvert.DeserializeObject<List<Examination>>(responseBody);
 
+            return exams;
+        }
+
+        public static async Task<List<BusinessDay>> GetAllBusinessDay()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/businessday");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<BusinessDay> businesses = JsonConvert.DeserializeObject<List<BusinessDay>>(responseBody);
+
+            return businesses;
+        }
+
+        public static async Task<Renovation> Save(Renovation entity)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(entity));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:51393/api/renovation/save/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            Renovation result = JsonConvert.DeserializeObject<Renovation>(value);
+            return result;
+        }
+
+
+        public static async Task MarkAsOccupied(List<Period> period, long id)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(period));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:51393/api/renovation/markAsOccupied/" + id, content);
+
+        }
+
+        public static async Task<List<Renovation>> GetAllRenovation()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/renovation");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Renovation> renovations = JsonConvert.DeserializeObject<List<Renovation>>(responseBody);
+
+            return renovations;
+        }
+
+        public static async Task<List<Examination>> GetExaminationsByRoomAndPeriodForAlternative(long roomId, DateTime dateTime1, DateTime dateTime2)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/" + roomId + "/" + dateTime1.ToString() + "/" + dateTime2.ToString());
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Examination> exams = JsonConvert.DeserializeObject<List<Examination>>(responseBody);
+
+            return exams;
+        }
+
+        public static async Task<Patient> SavePatient(Patient patient)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(patient));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:51393/api/patient/savePatient/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            Patient result = JsonConvert.DeserializeObject<Patient>(value);
+            return result;
+        }
     }
 }
 

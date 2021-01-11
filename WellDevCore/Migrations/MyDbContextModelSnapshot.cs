@@ -14,6 +14,7 @@ namespace WellDevCore.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("newmydb")
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
@@ -449,9 +450,6 @@ namespace WellDevCore.Migrations
                     b.Property<long?>("DoctorId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("FilledSurvey")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<long?>("PatientFileId")
                         .HasColumnType("bigint");
 
@@ -785,6 +783,9 @@ namespace WellDevCore.Migrations
 
                     b.Property<long?>("PeriodId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -8,9 +8,11 @@ $(document).ready(function () {
         success: function (data) {
 			allMedications = data;
 			viewAllMedications(allMedications);
-			$("#pageLoader").css("display", "none");
+			$("#pageLoader").hide();
         },
 	});
+
+	
 
 	$(".btnFilter").click(function () {
 		$("#divFilterTable").slideToggle();
