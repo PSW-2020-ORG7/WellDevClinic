@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PSW_Pharmacy_Adapter.Dto;
 using PSW_Pharmacy_Adapter.Model;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 
@@ -27,8 +29,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
 
         [HttpPost]
         [Route("findMedPh")]
-        public async Task<IActionResult> GetPharmacyByMedicineAsync([FromBody]Medication med)
-            => Ok(await _medicationService.GetPharmacyByMedicationAsync(med));
+        public async Task<IActionResult> GetPharmacyByMedicationAsync([FromBody]Medication medication)
+            => Ok(await _medicationService.GetPharmacyByMedicationAsync(medication));
+
+        [HttpPost]
+        [Route("findMedsPh")]
+        public async Task<IActionResult> GetPharmacyByMedicationsAsync([FromBody] List<Medication> medications)
+            => Ok(await _medicationService.GetPharmacyByMedicationsAsync(medications));
 
         [HttpGet]
         [Route("orderMedicine")]
@@ -37,6 +44,16 @@ namespace PSW_Pharmacy_Adapter.Controllers
             if(await _medicationService.OrderMedicationAsync(phName, medName, amount) != null)
                 return Ok();
             return BadRequest();        // There is no such amount at pharmacy
+        }
+
+        [HttpPost]
+        [Route("orderMedicines")]
+        public async Task<IActionResult> OrderMedication([FromQuery] string phName, [FromBody] List<MedicationOrderDto> order)
+        {
+            List<Medication> response = await _medicationService.OrderMedicationsAsync(phName, order);
+            if (response != null)
+                return Ok(response);
+            return BadRequest();        // No medications can be ordered
         }
 
         [HttpGet]
