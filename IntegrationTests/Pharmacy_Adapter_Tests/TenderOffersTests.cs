@@ -22,41 +22,13 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             MyContextFactory cf = new MyContextFactory();
             TenderOfferRepository tenderRepository = new TenderOfferRepository(cf.CreateDbContext(new string[0]));
-            TenderOffer offer = new TenderOffer(TEST_ID, TEST_PHARMACY_NAME, CreateMedicationList(), TEST_PRICE, TEST_MESSAGE, TEST_TENDER_ID, "proba");
+            TenderOffer offer = new TenderOffer(TEST_ID, TEST_PHARMACY_NAME, null, TEST_PRICE, TEST_MESSAGE, TEST_TENDER_ID, "proba");
 
             tenderRepository.Save(offer);
             tenderRepository.Delete(TEST_ID);       //rollback
 
             offer.ShouldNotBeNull();
         }
-
-
-
-
-
-        public List<Medication> CreateMedicationList()
-        {
-            List<Ingredient> ing = GetIngredients();
-            return new List<Medication>()
-                    {
-                        new Medication(1000, "Brufen", 10, true, new List<Ingredient>(){ ing[0], ing[1], ing[2]}, null),
-                        new Medication(2000, "Aspirin", 10, true, new List<Ingredient>(){ ing[3], ing[4], ing[5]}, null),
-                        new Medication(3000, "Bromazepam", 10, true, new List<Ingredient>(){ ing[5], ing[1], ing[2]}, null),
-                        new Medication(4000, "Paracetamol", 10, true, new List<Ingredient>(){ ing[0], ing[1], ing[5]}, null),
-                    };
-        }
-
-        public List<Ingredient> GetIngredients()
-            => new List<Ingredient>()
-            {
-                new Ingredient(1000, "O2", 10),
-                new Ingredient(2000, "H5", 10),
-                new Ingredient(3000, "M1", 10),
-                new Ingredient(4000, "L8", 10),
-                new Ingredient(5000, "K8", 10),
-                new Ingredient(6000, "U7", 10),
-            };
-
 
     }
 }
