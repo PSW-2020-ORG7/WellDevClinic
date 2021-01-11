@@ -175,7 +175,15 @@ function sendEmail() {
             $("#expiredAction").show();
             // na klik YES poslati mejl i dobaviti lekove, zatim uraditi disable svih dugmica
             $("#btnYesTender").click(function () {
-                alert("ok je");
+                $.ajax({
+                    method: "GET",
+                    url: "../api/tender/email/" + currTender.offerWinner,
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("Mail is sent");
+                        viewAllOffers(data)
+                    },
+                });
                 // ajax za slanje mejla i ajax za dobavljanje
             })
         }

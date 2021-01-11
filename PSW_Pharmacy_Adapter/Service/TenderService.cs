@@ -16,6 +16,9 @@ namespace PSW_Pharmacy_Adapter.Service
             _emailsService = pharmacyEmailsService;
         }
 
+        public void SendEmail(long id)
+            => _emailsService.sendEmailToWinner(id);
+
         public Tender AddTender(Tender tender)
         {
             Tender tender1= _tenderRepo.Save(tender);

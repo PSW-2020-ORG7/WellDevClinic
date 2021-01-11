@@ -11,10 +11,12 @@ namespace PSW_Pharmacy_Adapter.Controllers
     public class TenderController : ControllerBase
     {
         private readonly ITenderService _tenderService;
+        private readonly IPharmacyEmailsService _emailService;
 
-        public TenderController(ITenderService tenderSevice)
+        public TenderController(ITenderService tenderSevice, IPharmacyEmailsService emailService)
         {
             _tenderService = tenderSevice;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -75,6 +77,14 @@ namespace PSW_Pharmacy_Adapter.Controllers
             return BadRequest();
         }
 
-
+        [HttpGet]
+        [Route("email/{id?}")]
+        public IActionResult SendEmailToWinner(long id)
+        {
+            bool isSend=_emailService.sendEmailToWinner(id);
+            if (isSend == true)
+                return Ok(isSend);
+            return BadRequest();
+        }
     }
 }

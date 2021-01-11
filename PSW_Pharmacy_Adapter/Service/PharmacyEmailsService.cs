@@ -1,4 +1,5 @@
 ﻿using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Model.Pharmacy;
 using PSW_Pharmacy_Adapter.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Service.Iabstract;
 using System.Collections.Generic;
@@ -9,10 +10,12 @@ namespace PSW_Pharmacy_Adapter.Service
     public class PharmacyEmailsService : IPharmacyEmailsService
     {
         private readonly IPharmacyEmailsRepository _emailRepo;
+        private readonly ITenderOfferService _tenderOfferService;
 
-        public PharmacyEmailsService(IPharmacyEmailsRepository pharmacyEmailsRepository)
+        public PharmacyEmailsService(IPharmacyEmailsRepository pharmacyEmailsRepository, ITenderOfferService tenderOfferService)
         {
             _emailRepo = pharmacyEmailsRepository;
+            _tenderOfferService = tenderOfferService;
         }
         public PharmacyEmails AddEmail(PharmacyEmails email)
             => _emailRepo.Save(email);
@@ -55,6 +58,15 @@ namespace PSW_Pharmacy_Adapter.Service
                 MailMessage mailMessage = createMail("integration.adapter@gmail.com", Emails.Email, "", "", "Posetite nas da biste videli nove tendere", "Posetite nas da biste videli nove tendere", false);
                 sendMail(mailMessage);
             }
+        }
+        public bool sendEmailToWinner(long id)
+        {
+            TenderOffer offer = _tenderOfferService.GetOffer(id);
+            if (offer == null)
+                return false;
+            MailMessage mailMessage = createMail("integration.adapter@gmail.com", offer.Email, "", "", "Pobedili ste!", "Vi ste pobednik tendera, molimo vas da nam posaljete lekove u najkracem mogucem roku!", false);
+            sendMail(mailMessage);
+            return true;
         }
     }
 }

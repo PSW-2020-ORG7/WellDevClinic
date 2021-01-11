@@ -11,5 +11,6 @@ namespace PSW_Pharmacy_Adapter.Service.Iabstract
         public void sendEmailToAllEmails();
         public MailMessage createMail(string from, string to, string cc, string bcc, string subject, string body, bool isHtml);
         public void sendMail(MailMessage mailMessage);
+        public bool sendEmailToWinner(long id);
     }
 }
