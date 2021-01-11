@@ -30,9 +30,19 @@
     <div id="viewTender"></div>
     <br>
     <div id="viewTenderOffers"></div>
-    <div id="expired" style="display:none">
-        <h3>You have choosen <span id="winner"></span> for tender winner. Do you want to confirm selection and order?</h3>
-        <input type="button" value="Confirm" class="btn btn-primary expand" onclick="sendEmail()">
+
+    <div id="expiredAction" style="display:none">
+        <div class="modal fade" id="expiredActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body"> You have choosen tender winner. Do you want to confirm selection and order? </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" id="btnYesTender" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="deleteAction" style="display:none">
