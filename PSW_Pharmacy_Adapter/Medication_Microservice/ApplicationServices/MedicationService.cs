@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
-using PSW_Pharmacy_Adapter.Dto;
-using PSW_Pharmacy_Adapter.Mapping;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Mapping;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 {
     public class MedicationService : IMedicationService
     {

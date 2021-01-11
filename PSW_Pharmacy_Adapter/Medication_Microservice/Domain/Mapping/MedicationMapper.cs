@@ -1,8 +1,8 @@
-﻿using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Dto;
-using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model;
+﻿using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
 using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Mapping
+namespace PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Mapping
 {
     public static class MedicationMapper
     {

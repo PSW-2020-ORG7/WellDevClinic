@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Model
+namespace PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model
 {
     public class Prescription
     {

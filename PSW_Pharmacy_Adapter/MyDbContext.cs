@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PSW_Pharmacy_Adapter.Model.Pharmacy;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model;
 using System;
 
-namespace PSW_Pharmacy_Adapter.Model
+namespace PSW_Pharmacy_Adapter
 {
     public class MyDbContext : DbContext
     {

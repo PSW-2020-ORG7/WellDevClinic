@@ -1,6 +1,6 @@
-﻿using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model;
+﻿using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
 
-namespace PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Dto
+namespace PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto
 {
     public class PharmacyMedicationDto
     {

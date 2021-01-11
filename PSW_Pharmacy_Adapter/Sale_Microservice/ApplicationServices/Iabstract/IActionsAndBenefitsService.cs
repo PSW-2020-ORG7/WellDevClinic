@@ -1,7 +1,7 @@
-﻿using PSW_Pharmacy_Adapter.Model;
+﻿using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model;
 using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices
 {
     public interface IActionsAndBenefitsService
     {

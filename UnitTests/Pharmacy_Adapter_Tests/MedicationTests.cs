@@ -1,8 +1,7 @@
 ﻿using Moq;
-using PSW_Pharmacy_Adapter;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using PSW_Pharmacy_Adapter.Service;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract;
 using Shouldly;
 using System.Collections.Generic;
 using System.Net.Http;

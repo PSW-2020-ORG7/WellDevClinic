@@ -1,7 +1,10 @@
-﻿namespace PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model
 {
     public class Ingredient
     {
+        [Key]
         public long Id { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }

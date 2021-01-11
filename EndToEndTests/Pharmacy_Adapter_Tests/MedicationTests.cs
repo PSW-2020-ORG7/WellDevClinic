@@ -1,7 +1,6 @@
-﻿using Shouldly;
-using PSW_Pharmacy_Adapter;
-using PSW_Pharmacy_Adapter.Model;
-using System;
+﻿using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
+using Shouldly;
 using System.Collections.Generic;
 using Xunit;
 

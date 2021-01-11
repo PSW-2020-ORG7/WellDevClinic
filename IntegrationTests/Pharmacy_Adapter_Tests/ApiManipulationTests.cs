@@ -1,9 +1,9 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Service;
-using Xunit;
+﻿using Xunit;
 using Shouldly;
 using PSW_Pharmacy_Adapter;
-using PSW_Pharmacy_Adapter.Repository;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model;
 
 namespace ServiceTests.Pharmacy_Adapter_Tests
 {

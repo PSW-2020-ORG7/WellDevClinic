@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace PSW_Pharmacy_Adapter.Service.Iabstract
+namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices.Iabstract
 {
     public interface IGreetingsService
     {

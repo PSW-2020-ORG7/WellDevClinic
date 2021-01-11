@@ -1,7 +1,7 @@
-﻿using PSW_Pharmacy_Adapter.Dto;
-using PSW_Pharmacy_Adapter.Converter;
+﻿using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Dto;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Converter;
 
-namespace PSW_Pharmacy_Adapter.Model
+namespace PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model
 {
     public static class ActionAndBenefitMapper
     {

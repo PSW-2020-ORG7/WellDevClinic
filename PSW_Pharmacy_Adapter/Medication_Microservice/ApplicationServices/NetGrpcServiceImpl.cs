@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Grpc.Core;
-using PSW_Pharmacy_Adapter.Protos;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Protos;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 {
     public class NetGrpcServiceImpl : NetGrpcService.NetGrpcServiceBase
     {

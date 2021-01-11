@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PSW_Pharmacy_Adapter.Model
+namespace PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model
 {
     public class ActionAndBenefit
     {

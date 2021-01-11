@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PSW_Pharmacy_Adapter.Dto
+﻿namespace PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto
 {
     public class MedicationOrderDto
     {

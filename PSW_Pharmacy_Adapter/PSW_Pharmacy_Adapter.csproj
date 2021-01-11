@@ -44,8 +44,4 @@
     <Protobuf Include="Medication_Microservice\Protos\springGrpcService.proto" GrpcServices="Client" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Medication_Microservice\Domain\Model\" />
-  </ItemGroup>
-
 </Project>

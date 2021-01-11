@@ -1,8 +1,8 @@
 syntax = "proto3";
 
 package rs.ac.uns.ftn.grpc;
-option csharp_namespace = "PSW_Pharmacy_Adapter.Protos";
-import "Protos/model.proto";
+option csharp_namespace = "PSW_Pharmacy_Adapter.Medication_Microservice.Protos";
+import "Medication_Microservice/Protos/model.proto";
 
 service NetGrpcService {
   rpc transfer (ProtoAvailableMedication) returns (ProtoResponseAvailableMedication);

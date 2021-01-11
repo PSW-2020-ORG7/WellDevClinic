@@ -1,10 +1,9 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Model.Pharmacy;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
+﻿using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PSW_Pharmacy_Adapter.Repository
+namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository
 {
     public class TenderRepository : ITenderRepository
     {

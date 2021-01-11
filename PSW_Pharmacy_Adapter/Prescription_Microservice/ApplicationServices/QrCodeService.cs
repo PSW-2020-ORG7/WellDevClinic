@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model;
 using QRCoder;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices
 {
     public class QrCodeService : IQrCodeService
     {

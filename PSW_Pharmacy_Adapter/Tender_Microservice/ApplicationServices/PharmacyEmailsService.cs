@@ -1,11 +1,10 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Model.Pharmacy;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+﻿using PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract;
 using System.Collections.Generic;
 using System.Net.Mail;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices
 {
     public class PharmacyEmailsService : IPharmacyEmailsService
     {

@@ -4,16 +4,26 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Service;
-using PSW_Pharmacy_Adapter.Repository;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
 using Grpc.Core;
-using PSW_Pharmacy_Adapter.Protos;
 using System;
 using System.Reflection;
-
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Repository;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Repository;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Protos;
 
 namespace PSW_Pharmacy_Adapter
 {

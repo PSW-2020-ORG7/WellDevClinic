@@ -1,8 +1,7 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Model.Pharmacy;
+﻿using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
 using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Repository.Iabstract
+namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract
 {
     public interface ITenderRepository : IRepository<Tender, long>
     {

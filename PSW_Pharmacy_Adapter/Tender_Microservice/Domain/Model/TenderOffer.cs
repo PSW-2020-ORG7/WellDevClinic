@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PSW_Pharmacy_Adapter.Model.Pharmacy
+namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
 {
     public class TenderOffer
     {

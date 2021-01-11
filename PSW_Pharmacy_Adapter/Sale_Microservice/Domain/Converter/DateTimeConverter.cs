@@ -1,7 +1,6 @@
 ﻿using System;
-using PSW_Pharmacy_Adapter.Dto;
 
-namespace PSW_Pharmacy_Adapter.Converter
+namespace PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Converter
 {
     public static class DateTimeConverter
     {

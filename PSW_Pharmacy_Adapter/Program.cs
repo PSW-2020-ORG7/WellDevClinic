@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PSW_Pharmacy_Adapter.Service;
+using PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices;
 
 namespace PSW_Pharmacy_Adapter
 {

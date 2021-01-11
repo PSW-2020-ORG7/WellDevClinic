@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using PSW_Pharmacy_Adapter.Model;
 
 namespace PSW_Pharmacy_Adapter
 {

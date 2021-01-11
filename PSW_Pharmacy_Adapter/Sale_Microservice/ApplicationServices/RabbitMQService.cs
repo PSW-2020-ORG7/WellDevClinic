@@ -4,15 +4,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using PSW_Pharmacy_Adapter.Dto;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Dto;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Repository;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Repository.Iabstract;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices
 {
     public class RabbitMQService : BackgroundService, IRabbitMQService
     {

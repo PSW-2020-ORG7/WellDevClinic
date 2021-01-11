@@ -1,10 +1,10 @@
-﻿using PSW_Pharmacy_Adapter.Dto;
+﻿using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Dto;
 using Renci.SshNet;
 using System;
 using System.IO;
 using System.Net.Sockets;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices
 {
     public class SftpService
     {

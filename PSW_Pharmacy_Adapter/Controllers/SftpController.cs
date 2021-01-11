@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PSW_Pharmacy_Adapter.Dto;
-using PSW_Pharmacy_Adapter.Service;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Dto;
 using Renci.SshNet;
 
 namespace PSW_Pharmacy_Adapter.Controllers

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices
 {
     public class ApiKeyService : IApiKeyService
     {

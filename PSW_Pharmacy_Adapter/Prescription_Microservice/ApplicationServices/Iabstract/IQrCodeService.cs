@@ -1,7 +1,6 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using System;
+﻿using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model;
 
-namespace PSW_Pharmacy_Adapter.Service.Iabstract
+namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices.Iabstract
 {
     public interface IQrCodeService
     {

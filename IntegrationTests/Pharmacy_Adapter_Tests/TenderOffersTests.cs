@@ -1,10 +1,7 @@
 ﻿using PSW_Pharmacy_Adapter;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Model.Pharmacy;
-using PSW_Pharmacy_Adapter.Repository;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Repository;
 using Shouldly;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace ServiceTests.Pharmacy_Adapter_Tests

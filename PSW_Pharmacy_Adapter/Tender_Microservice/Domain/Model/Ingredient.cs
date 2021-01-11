@@ -1,4 +1,4 @@
-﻿namespace PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model
+﻿namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
 {
     public class Ingredient
     {

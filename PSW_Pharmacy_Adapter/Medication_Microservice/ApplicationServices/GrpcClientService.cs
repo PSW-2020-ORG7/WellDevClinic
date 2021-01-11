@@ -1,13 +1,14 @@
 ﻿using Grpc.Core;
 using Microsoft.Extensions.Hosting;
-using PSW_Pharmacy_Adapter.Protos;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Protos;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using PSW_Pharmacy_Adapter.Model;
 using System;
 
-namespace PSW_Pharmacy_Adapter
+
+namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 {
     public class GrpcClientService : IHostedService
     {

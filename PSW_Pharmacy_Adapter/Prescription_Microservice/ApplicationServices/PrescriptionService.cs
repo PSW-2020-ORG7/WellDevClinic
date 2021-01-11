@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Model;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices
 {
     public class PrescriptionService : IPrescriptionService
     {

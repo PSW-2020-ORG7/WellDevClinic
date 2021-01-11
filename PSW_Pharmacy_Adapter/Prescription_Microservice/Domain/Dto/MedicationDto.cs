@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto
+namespace PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Dto
 {
     public class MedicationDto
     {

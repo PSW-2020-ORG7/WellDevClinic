@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PSW_Pharmacy_Adapter.Dto;
-using PSW_Pharmacy_Adapter.Model;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
 
-namespace PSW_Pharmacy_Adapter.Service.Iabstract
+namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices.Iabstract
 {
     public interface IMedicationService
     {

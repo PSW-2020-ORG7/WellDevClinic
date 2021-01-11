@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Dto
+namespace PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Dto
 {
     public class EPrescriptionDto
     {

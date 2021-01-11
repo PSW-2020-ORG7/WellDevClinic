@@ -1,10 +1,6 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
 
-namespace PSW_Pharmacy_Adapter.Repository.Iabstract
+namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract
 {
     public interface IPharmacyEmailsRepository : IRepository<PharmacyEmails, long>
     {

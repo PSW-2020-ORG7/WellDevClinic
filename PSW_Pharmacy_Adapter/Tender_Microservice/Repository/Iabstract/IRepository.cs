@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract
+namespace PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract
 {
     public interface IRepository<E, ID>
     {

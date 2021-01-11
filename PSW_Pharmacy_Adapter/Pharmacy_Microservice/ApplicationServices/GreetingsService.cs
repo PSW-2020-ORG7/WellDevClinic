@@ -1,10 +1,10 @@
-﻿using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository.Iabstract;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model;
 
-namespace PSW_Pharmacy_Adapter.Service
+namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices
 {
     public class GreetingsService : IGreetingsService
     {

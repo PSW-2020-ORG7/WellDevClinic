@@ -1,7 +1,7 @@
-﻿using PSW_Pharmacy_Adapter.Model.Pharmacy;
+﻿using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
 using System.Collections.Generic;
 
-namespace PSW_Pharmacy_Adapter.Service.Iabstract
+namespace PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices.Iabstract
 {
     public interface ITenderOfferService
     {
