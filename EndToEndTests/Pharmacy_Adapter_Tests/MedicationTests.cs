@@ -51,7 +51,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
 
             int availableMed = await service.GetMedicationAmount(TEST_UNAVAILABLE_MEDICATION, TEST_UNAVAILABLE_PHARMACY);
 
-            availableMed.ShouldBeEquivalentTo(-1);
+            availableMed.ShouldBeLessThan(0);
         }
     }
 }

@@ -20,9 +20,10 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices
 
         public Tender AddTender(Tender tender)
         {
-            Tender tender1= _tenderRepo.Save(tender);
-            _emailsService.sendEmailToAllEmails();
-            return tender1;
+            Tender addedTender = _tenderRepo.Save(tender);
+            if(addedTender != null)
+                _emailsService.sendEmailToAllEmails();
+            return addedTender;
         }
         public List<Tender> GetAllTenders()
             => (List<Tender>)_tenderRepo.GetAll();
