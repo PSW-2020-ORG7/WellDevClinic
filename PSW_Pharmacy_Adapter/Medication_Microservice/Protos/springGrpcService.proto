@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package rs.ac.uns.ftn.grpc;
+option csharp_namespace = "PSW_Pharmacy_Adapter.Medication_Microservice.Protos";
+import "Medication_Microservice/Protos/model.proto";
+
+service SpringGrpcService {
+  rpc communicate (ProtoAvailableMedication) returns (ProtoResponseAvailableMedication);
+  rpc communicateMedications (ProtoMedications) returns (ProtoResponseMedications);
+}

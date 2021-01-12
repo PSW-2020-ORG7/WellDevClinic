@@ -96,7 +96,7 @@ function sortCards(sort, order) {
 }
 
 function filter() {
-	filtered = [];
+	let filtered = [];
 	let name = $("#selectname").val();
 	let startDate = $("#start").val();
 	let endDate = $("#end").val();

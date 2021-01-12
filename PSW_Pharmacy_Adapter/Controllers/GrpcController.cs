@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PSW_Pharmacy_Adapter.Dto;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -46,9 +44,5 @@ namespace PSW_Pharmacy_Adapter.Controllers
                 return Ok(amount);
             return StatusCode(408, Global.ErrorMessage);
         }
-            
-
-          
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices.Iabstract;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {

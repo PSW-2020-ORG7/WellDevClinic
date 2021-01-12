@@ -1,6 +1,6 @@
 ﻿using PSW_Pharmacy_Adapter;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Repository;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Repository;
 using Shouldly;
 using System;
 using Xunit;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Service;
+using PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {

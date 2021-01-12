@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using PSW_Pharmacy_Adapter.Model;
-using PSW_Pharmacy_Adapter.Model.Pharmacy;
-using PSW_Pharmacy_Adapter.Service.Iabstract;
+using PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model;
 
 namespace PSW_Pharmacy_Adapter.Controllers
 {
@@ -81,8 +80,8 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("email/{id?}")]
         public IActionResult SendEmailToWinner(long id)
         {
-            bool isSend=_emailService.sendEmailToWinner(id);
-            if (isSend == true)
+            bool isSend = _emailService.sendEmailToWinner(id);
+            if (isSend)
                 return Ok(isSend);
             return BadRequest();
         }

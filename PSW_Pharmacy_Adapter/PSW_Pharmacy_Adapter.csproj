@@ -39,9 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\model.proto" GrpcServices="None" />
-    <Protobuf Include="Protos\netGrpcService.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\springGrpcService.proto" GrpcServices="Client" />
+    <Protobuf Include="Medication_Microservice\Protos\model.proto" GrpcServices="None" />
+    <Protobuf Include="Medication_Microservice\Protos\netGrpcService.proto" GrpcServices="Server" />
+    <Protobuf Include="Medication_Microservice\Protos\springGrpcService.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

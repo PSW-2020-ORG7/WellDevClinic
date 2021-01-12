@@ -1,10 +1,10 @@
-﻿using PSW_Pharmacy_Adapter.Service;
-using Renci.SshNet;
+﻿using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using Shouldly;
 using Xunit;
-using PSW_Pharmacy_Adapter.Dto;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Prescription_Microservice.Domain.Dto;
 
 namespace ServiceTests.Pharmacy_Adapter_Tests
 {
