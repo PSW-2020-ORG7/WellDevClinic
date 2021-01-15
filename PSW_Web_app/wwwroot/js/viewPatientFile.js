@@ -26,6 +26,7 @@ function addAllergy(allergy) {
     element = $('<li>' + allergy + '</li>');
     list.append(element);
 }
+
 $(document).ready(function () {
 
 

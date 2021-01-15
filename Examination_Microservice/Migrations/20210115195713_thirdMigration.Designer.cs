@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Examination_Microservice.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210114135934_ExaminationMigration")]
-    partial class ExaminationMigration
+    [Migration("20210115195713_thirdMigration")]
+    partial class thirdMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,73 @@ namespace Examination_Microservice.Migrations
                     b.ToTable("Diagnosis");
                 });
 
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Doctor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DoctorGradeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SpecialityId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorGradeId");
+
+                    b.HasIndex("PersonId");
+
+                    b.HasIndex("SpecialityId");
+
+                    b.ToTable("Doctor");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.DoctorGrade", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("NumberOfGrades")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DoctorGrade");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.DoctorGradeQuestion", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DoctorGradeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DoctorGradeId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Grade")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorGradeId");
+
+                    b.HasIndex("DoctorGradeId1");
+
+                    b.ToTable("DoctorGradeQuestion");
+                });
+
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Drug", b =>
                 {
                     b.Property<long>("Id")
@@ -113,10 +180,22 @@ namespace Examination_Microservice.Migrations
                     b.Property<long?>("DiagnosisId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("DoctorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("FilledSurvey")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<long?>("PatientFileId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("PatientId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("PrescriptionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ReferralId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("SympthomId")
@@ -131,9 +210,15 @@ namespace Examination_Microservice.Migrations
 
                     b.HasIndex("DiagnosisId");
 
+                    b.HasIndex("DoctorId");
+
                     b.HasIndex("PatientFileId");
 
+                    b.HasIndex("PatientId");
+
                     b.HasIndex("PrescriptionId");
+
+                    b.HasIndex("ReferralId");
 
                     b.HasIndex("SympthomId");
 
@@ -148,7 +233,13 @@ namespace Examination_Microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("DoctorId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("PatientFileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PatientId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("RoomId")
@@ -156,7 +247,11 @@ namespace Examination_Microservice.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorId");
+
                     b.HasIndex("PatientFileId");
+
+                    b.HasIndex("PatientId");
 
                     b.HasIndex("RoomId");
 
@@ -194,7 +289,13 @@ namespace Examination_Microservice.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<long?>("DoctorId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("PatientFileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PatientId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("RoomId")
@@ -202,11 +303,37 @@ namespace Examination_Microservice.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorId");
+
                     b.HasIndex("PatientFileId");
+
+                    b.HasIndex("PatientId");
 
                     b.HasIndex("RoomId");
 
                     b.ToTable("Operation");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Patient", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Guest")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<long?>("PersonId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("Examination_Microservice.Domain.Model.PatientFile", b =>
@@ -215,9 +342,34 @@ namespace Examination_Microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("PatientId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("PatientId");
+
                     b.ToTable("PatientFile");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Person", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Jmbg")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Prescription", b =>
@@ -237,10 +389,15 @@ namespace Examination_Microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("DoctorId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Text")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("Referral");
                 });
@@ -284,6 +441,20 @@ namespace Examination_Microservice.Migrations
                     b.ToTable("RoomType");
                 });
 
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Speciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Speciality");
+                });
+
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Sympthom", b =>
                 {
                     b.Property<long>("Id")
@@ -319,6 +490,32 @@ namespace Examination_Microservice.Migrations
                         .HasForeignKey("PatientFileId");
                 });
 
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Doctor", b =>
+                {
+                    b.HasOne("Examination_Microservice.Domain.Model.DoctorGrade", "DoctorGrade")
+                        .WithMany()
+                        .HasForeignKey("DoctorGradeId");
+
+                    b.HasOne("Examination_Microservice.Domain.Model.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+
+                    b.HasOne("Examination_Microservice.Domain.Model.Speciality", "Speciality")
+                        .WithMany()
+                        .HasForeignKey("SpecialityId");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.DoctorGradeQuestion", b =>
+                {
+                    b.HasOne("Examination_Microservice.Domain.Model.DoctorGrade", null)
+                        .WithMany("AverageGrade")
+                        .HasForeignKey("DoctorGradeId");
+
+                    b.HasOne("Examination_Microservice.Domain.Model.DoctorGrade", null)
+                        .WithMany("DoctorGradeQuestions")
+                        .HasForeignKey("DoctorGradeId1");
+                });
+
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Drug", b =>
                 {
                     b.HasOne("Examination_Microservice.Domain.Model.Drug", null)
@@ -344,13 +541,25 @@ namespace Examination_Microservice.Migrations
                         .WithMany()
                         .HasForeignKey("DiagnosisId");
 
+                    b.HasOne("Examination_Microservice.Domain.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
                     b.HasOne("Examination_Microservice.Domain.Model.PatientFile", null)
                         .WithMany("Examination")
                         .HasForeignKey("PatientFileId");
 
+                    b.HasOne("Examination_Microservice.Domain.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
                     b.HasOne("Examination_Microservice.Domain.Model.Prescription", "Prescription")
                         .WithMany()
                         .HasForeignKey("PrescriptionId");
+
+                    b.HasOne("Examination_Microservice.Domain.Model.Referral", "Referral")
+                        .WithMany()
+                        .HasForeignKey("ReferralId");
 
                     b.HasOne("Examination_Microservice.Domain.Model.Sympthom", "Sympthom")
                         .WithMany()
@@ -359,17 +568,63 @@ namespace Examination_Microservice.Migrations
                     b.HasOne("Examination_Microservice.Domain.Model.Therapy", "Therapy")
                         .WithMany()
                         .HasForeignKey("TherapyId");
+
+                    b.OwnsOne("Examination_Microservice.Domain.Model.Period", "Period", b1 =>
+                        {
+                            b1.Property<long>("ExaminationDetailsId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.HasKey("ExaminationDetailsId");
+
+                            b1.ToTable("ExaminationDetails");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExaminationDetailsId");
+                        });
                 });
 
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Hospitalization", b =>
                 {
+                    b.HasOne("Examination_Microservice.Domain.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
                     b.HasOne("Examination_Microservice.Domain.Model.PatientFile", null)
                         .WithMany("Hospitalization")
                         .HasForeignKey("PatientFileId");
 
+                    b.HasOne("Examination_Microservice.Domain.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
                     b.HasOne("Examination_Microservice.Domain.Model.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId");
+
+                    b.OwnsOne("Examination_Microservice.Domain.Model.Period", "Period", b1 =>
+                        {
+                            b1.Property<long>("HospitalizationId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.HasKey("HospitalizationId");
+
+                            b1.ToTable("Hospitalization");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HospitalizationId");
+                        });
                 });
 
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Ingredient", b =>
@@ -381,13 +636,83 @@ namespace Examination_Microservice.Migrations
 
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Operation", b =>
                 {
+                    b.HasOne("Examination_Microservice.Domain.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
                     b.HasOne("Examination_Microservice.Domain.Model.PatientFile", null)
                         .WithMany("Operation")
                         .HasForeignKey("PatientFileId");
 
+                    b.HasOne("Examination_Microservice.Domain.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
                     b.HasOne("Examination_Microservice.Domain.Model.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Patient", b =>
+                {
+                    b.HasOne("Examination_Microservice.Domain.Model.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.PatientFile", b =>
+                {
+                    b.HasOne("Examination_Microservice.Domain.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Prescription", b =>
+                {
+                    b.OwnsOne("Examination_Microservice.Domain.Model.Period", "Period", b1 =>
+                        {
+                            b1.Property<long>("PrescriptionId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.HasKey("PrescriptionId");
+
+                            b1.ToTable("Prescription");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PrescriptionId");
+                        });
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Referral", b =>
+                {
+                    b.HasOne("Examination_Microservice.Domain.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
+                    b.OwnsOne("Examination_Microservice.Domain.Model.Period", "Period", b1 =>
+                        {
+                            b1.Property<long>("ReferralId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.HasKey("ReferralId");
+
+                            b1.ToTable("Referral");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ReferralId");
+                        });
                 });
 
             modelBuilder.Entity("Examination_Microservice.Domain.Model.Room", b =>
@@ -395,6 +720,28 @@ namespace Examination_Microservice.Migrations
                     b.HasOne("Examination_Microservice.Domain.Model.RoomType", "RoomType")
                         .WithMany()
                         .HasForeignKey("RoomTypeId");
+                });
+
+            modelBuilder.Entity("Examination_Microservice.Domain.Model.Therapy", b =>
+                {
+                    b.OwnsOne("Examination_Microservice.Domain.Model.Period", "Period", b1 =>
+                        {
+                            b1.Property<long>("TherapyId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.HasKey("TherapyId");
+
+                            b1.ToTable("Therapy");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TherapyId");
+                        });
                 });
 #pragma warning restore 612, 618
         }

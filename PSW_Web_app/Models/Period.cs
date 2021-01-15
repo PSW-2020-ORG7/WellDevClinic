@@ -12,6 +12,8 @@ namespace PSW_Web_app.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public Period() {}
+
         public Period(DateTime startDate, DateTime endDate)
         {
             Validate(startDate, EndDate);

@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Examination_Microservice.Domain.Model
 {
+    [NotMapped]
     public class Period
     {
         public DateTime StartDate { get; set; }

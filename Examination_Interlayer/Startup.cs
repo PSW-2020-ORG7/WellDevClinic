@@ -45,7 +45,10 @@ namespace Examination_Interlayer
 
             services.AddScoped<IReferralAppService, ReferralAppService>();
             services.AddScoped<IReferralRepository, ReferralRepository>();
-            
+
+            services.AddScoped<IPrescriptionAppService, PrescriptionAppService>();
+            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+
             services.AddScoped<ITherapyAppService, TherapyAppService>();
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             

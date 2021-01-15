@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Model.PatientSecretary;
+
 using PSW_Web_app.Models.UserInteraction;
 using PSW_Web_app.Models;
 using System;
@@ -115,7 +115,7 @@ namespace PSW_Web_app.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+       /* [HttpPost]
         [Route("newExamination")]
         public async Task<IActionResult> NewExaminationAsync([FromBody] ExaminationIdsDTO examination)
         {
@@ -126,6 +126,33 @@ namespace PSW_Web_app.Controllers
             string responseBody = await response.Content.ReadAsStringAsync();
             Examination result = JsonConvert.DeserializeObject<Examination>(responseBody);
             return Ok(result);
+        }*/
+
+        [HttpGet]
+        [Route("prescription/{id?}")]
+        public async Task<IActionResult> GetPrescriptionById(long id)
+        {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/prescription/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Prescription result = JsonConvert.DeserializeObject<Prescription>(responseBody);
+            return Ok(result);
         }
+
+        [HttpGet]
+        [Route("referral/{id?}")]
+        public async Task<IActionResult> GetReferralById(long id)
+        {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/referral/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Referral result = JsonConvert.DeserializeObject<Referral>(responseBody);
+            return Ok(result);
+        }
+
     }
 }

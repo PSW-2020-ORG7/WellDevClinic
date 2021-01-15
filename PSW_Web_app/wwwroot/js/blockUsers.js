@@ -44,7 +44,14 @@ $(document).ready(function () {
 		headers: { "Authorization": token },
 		success: function (patients) {
 			for (let patient of patients) {
-				addPatient(patient);
+				for (let patient of patients) {
+					$.get({
+						url: window.location.protocol + "//" + window.location.host + '/api/patient/lazy/' + patient.id,
+						success: function (patient) {
+							addPatient(patient);
+						}
+					});
+				}
 			}
 		}
 	});

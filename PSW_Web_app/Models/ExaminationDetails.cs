@@ -17,6 +17,8 @@ namespace PSW_Web_app.Models
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
         public Boolean FilledSurvey { get; set; }
+        public virtual Period Period { get; set; }
+        public virtual Referral Referral { get; set; }
 
         public ExaminationDetails() { }
 

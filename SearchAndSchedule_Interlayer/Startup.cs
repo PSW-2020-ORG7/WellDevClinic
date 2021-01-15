@@ -22,7 +22,7 @@ namespace SearchAndSchedule_Interlayer
 
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+                    b => b.MigrationsAssembly("SearchAndSchedule_Microservice")).UseLazyLoadingProxies());
 
             services.AddScoped<IBussinesDayAppService, BusinessDayAppService>();
             services.AddScoped<IBussinesDayRepository, BussinesDayRepository>();

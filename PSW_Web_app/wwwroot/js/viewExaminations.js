@@ -25,27 +25,53 @@ function addPrviousExamination(examination, i) {
 	tr = $('<tr id="tr"></tr>');
 	let row = $('<th scope="row">' + i + '</th>');
 	let doctor = $('<td>' + examination.doctor.person.fullName + '</td>');
-	let fullDateStart = examination.prescription.period.startDate;
+	let fullDateStart = examination.period.startDate;
 	let splittedStart = fullDateStart.split('T');
-	let fullDateEnd = examination.prescription.period.endDate;
+	let fullDateEnd = examination.period.endDate;
 	let splittedEnd = fullDateEnd.split('T');
 	let date = $('<td>' + splittedStart[0] + '</td>');
 	let time = $('<td>' + splittedStart[1] + ' - ' + splittedEnd[1] + '</td>');
     let diagnosis = $('<td>' + examination.diagnosis.name + '</td>');
-    let therapy = $('<td>' + examination.therapy.note + '</td>');
+	let therapy = $('<td>' + examination.therapy.note + '</td>');
+	tr.append(row).append(doctor).append(date).append(time).append(diagnosis).append(therapy)
+	if (examination.prescription != null) {
+		let buttonPrescription = $('<td><button class="button">View prescription</button></td>');
+		buttonPrescription.click(function (event) {
+			var origin = window.location.origin;
+			window.location.href = origin + '/html/viewPrescription.html' + '?id=' + examination.prescription.id;
+		});
+		tr.append(buttonPrescription);
+	}
+	else {
+		let message = $('<td>/</td>');
+		tr.append(message);
+	}
+
+	if (examination.referral != null) {
+		let buttonReferral = $('<td><button class="button">View referral</button></td>');
+		buttonReferral.click(function (event) {
+			var origin = window.location.origin;
+			window.location.href = origin + '/html/viewReferral.html' + '?id=' + examination.referral.id;
+		});
+		tr.append(buttonReferral);
+	}
+	else {
+		let message = $('<td>/</td>');
+		tr.append(message);
+	}
 	
 	if(!examination.filledSurvey){
-		let buttonSurvey =  $('<button class="button">Fill out survey</button>');
+		let buttonSurvey = $('<td><button class="button">Fill out survey</button></td>');
 		buttonSurvey.click(function (event) {
 			var origin = window.location.origin;
 			window.location.href = origin + '/html/survey.html'+'?doctor=' + examination.doctor+'&id='+examination.id;
 		});
-		tr.append(row).append(doctor).append(date).append(time).append(diagnosis).append(therapy).append(buttonSurvey);
+		tr.append(buttonSurvey);
 
 	}
 	else{
 		let message = $('<td>Survey is filled out.</td>');
-		tr.append(row).append(doctor).append(date).append(time).append(diagnosis).append(therapy).append(message);
+		tr.append(message);
 	}
 	$('#tableP tbody').append(tr);
 }
@@ -89,7 +115,6 @@ $(document).ready(function () {
 			});
 		}
 	});
-
 
     $.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/examination/upcoming/1',

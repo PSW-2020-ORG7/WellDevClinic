@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
+
 namespace Examination_Microservice.Domain
 {
     public class MyDbContext : DbContext
@@ -22,7 +23,11 @@ namespace Examination_Microservice.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<ExaminationDetails>().OwnsOne(e => e.Period);
+            modelBuilder.Entity<Prescription>().OwnsOne(p => p.Period);
+            modelBuilder.Entity<Referral>().OwnsOne(r => r.Period);
+            modelBuilder.Entity<Therapy>().OwnsOne(t => t.Period);
+            modelBuilder.Entity<Hospitalization>().OwnsOne(h => h.Period);
         }
     }
 }
