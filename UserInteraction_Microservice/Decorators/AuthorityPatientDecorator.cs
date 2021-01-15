@@ -133,5 +133,10 @@ namespace UserInteraction_Microservice.Decorators
         {
             throw new NotImplementedException();
         }
+
+        public Patient GetPatientDetails(long id)
+        {
+            return _patientAppService.GetPatientDetails(id);
+        }
     }
 }

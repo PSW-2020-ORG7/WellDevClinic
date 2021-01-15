@@ -2,6 +2,7 @@
     token = sessionStorage.getItem("token");
     let payload = parseJwt(token);
     userType = payload["type"];
+    userId = payload["Id"];
     if (userType != "Patient") {
         alert("You are not authorized for this page!!!");
         window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
@@ -9,6 +10,7 @@
 }
 var token = "";
 var userType = "";
+var userId = "";
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -25,19 +27,23 @@ function addAllergy(allergy) {
     list.append(element);
 }
 $(document).ready(function () {
+
+
     $.get({
-        url: window.location.protocol + "//" + window.location.host + '/api/patient/patientFile/1',
+        url: window.location.protocol + "//" + window.location.host + '/api/patient/patientDetails/' + userId,
         headers: { "Authorization": token },
         success: function (user) {
-            $('label[id="username"]').text(user.username);
-            $('label[id="fullName"]').text(user.fullName);
-            $('label[id="middleName"]').text(user.middleName);
-            $('label[id="date"]').text(user.date);
-            $('label[id="address"]').text(user.address);
-            $('label[id="phone"]').text(user.phone);
-            $('label[id="email"]').text(user.email);
-            $('label[id="gender"]').text(user.gender);
-            $('label[id="bloodType"]').text(user.bloodType);
+           /* $('label[id="username"]').text(user.username);*/
+            $('label[id="fullName"]').text(user.person.fullName);
+            $('label[id="middleName"]').text(user.userDetails.middleName);
+            let fullDate = user.userDetails.dateOfBirth;
+            let date = fullDate.split('T');
+            $('label[id="date"]').text(date[0]);
+            $('label[id="address"]').text(user.userDetails.address.street + user.userDetails.address.number);
+            $('label[id="phone"]').text(user.userDetails.phone);
+            $('label[id="email"]').text(user.userDetails.email);
+            $('label[id="gender"]').text(user.userDetails.gender);
+            $('label[id="bloodType"]').text(user.userDetails.bloodType);
             $('#image').attr('src'," http://localhost:51393"+user.image);
             for (let allergy of user.allergies) {
                 addAllergy(allergy);

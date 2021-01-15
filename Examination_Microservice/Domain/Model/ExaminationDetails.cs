@@ -15,7 +15,6 @@ namespace Examination_Microservice.Domain.Model
         public virtual Sympthom Sympthom { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
-        [NotMapped]
         public Boolean FilledSurvey { get; set; }
 
         public ExaminationDetails() { }

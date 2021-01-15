@@ -14,5 +14,7 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
         public Patient GetPatientByJMBG(string jmbg);
         public DoctorGrade GradeDoctor(DoctorGrade doctorGrade, Doctor doctor);
         public void Block(long id);
+
+        public Patient GetPatientDetails(long id);
     }
 }

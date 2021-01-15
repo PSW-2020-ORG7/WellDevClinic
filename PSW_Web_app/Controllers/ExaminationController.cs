@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.PatientSecretary;
-using Model.Users;
+using PSW_Web_app.Models.UserInteraction;
+using PSW_Web_app.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class ExaminationController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:51393";
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:61089";
 
         static readonly HttpClient client = new HttpClient();
 
@@ -62,17 +63,26 @@ namespace PSW_Web_app.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("{id?}")]
-        public async Task<IActionResult> GetFinishedExaminationsByUser(long id)
+        [HttpPost]
+        public async Task<IActionResult> GetFinishedExaminationsByUser(Patient patient)
         {
-            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+            /*if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/"+id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examinationDetails/getByPaitent/" + patient);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            List<ExaminationDetails> result = JsonConvert.DeserializeObject<List<ExaminationDetails>>(responseBody);
+            return Ok(result);*/
+
+
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
+            var content = new StringContent(JsonConvert.SerializeObject(patient, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink + "/api/examinationDetails/getByPatient/", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<ExaminationDetails> result = JsonConvert.DeserializeObject<List<ExaminationDetails>>(responseBody);
             return Ok(result);
+
         }
         [HttpGet]
         [Route("upcoming/{id?}")]

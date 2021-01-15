@@ -15,6 +15,6 @@ namespace UserInteraction_Microservice.Repository.Abstract
         Patient GetPatientByMail(string email);
         Patient GetPatientByUsername(string username);
         public void Block(long id);
-
+        public Patient GetPatientDetails(long id);
     }
 }

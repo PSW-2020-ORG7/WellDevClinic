@@ -51,5 +51,13 @@ namespace Examination_Interlayer.Controllers
         {
             return _examinationDetailsAppService.GetExaminationDetailsByPatient(patient).ToList();
         }
+
+        [HttpPost]
+        [Route("getByPatient")]
+        public List<ExaminationDetails> GetExaminationsByPatient(Patient patient)
+        {
+            return _examinationDetailsAppService.GetExaminationDetailsByPatient(patient).ToList();
+        }
+
     }
 }

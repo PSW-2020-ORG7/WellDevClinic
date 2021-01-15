@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using Model.Users;
+using PSW_Web_app.Models.UserInteraction;
 using bolnica.Service;
 
 using WellDevCore.Model.Adapters;
@@ -13,7 +13,7 @@ using System.Net.Http;
 
 using Newtonsoft.Json;
 using System.Text;
-using UserInteraction_Microservice.Domain.Model;
+
 
 namespace PSW_Web_app.Controllers
 {
@@ -23,6 +23,7 @@ namespace PSW_Web_app.Controllers
     { 
         string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
         string communicationLink1 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62044";
+        string communicationLink2 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:61089";
 
         static readonly HttpClient client = new HttpClient();
         //povezati sutra obavezno!!
@@ -46,10 +47,23 @@ namespace PSW_Web_app.Controllers
         {
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/patient/patientFile/"+id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink2 + "/api/patient/patientFile/"+id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             PatientDTO patient = JsonConvert.DeserializeObject<PatientDTO>(responseBody);
+            return Ok(patient);
+        }
+
+        [HttpGet]
+        [Route("patientDetails/{id?}")]
+        public async Task<IActionResult> GetPatientDetailsById(long id)
+        {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/patient/patientDetails/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Patient patient = JsonConvert.DeserializeObject<Patient>(responseBody);
             return Ok(patient);
         }
 

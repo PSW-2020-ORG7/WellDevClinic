@@ -22,7 +22,7 @@ namespace Examination_Microservice.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+           
         }
     }
 }

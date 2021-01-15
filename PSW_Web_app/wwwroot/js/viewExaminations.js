@@ -1,9 +1,11 @@
 var userType = "";
 var token = "";
+var userId = "";
 function authorize() {
 	token = sessionStorage.getItem("token");
 	let payload = parseJwt(token);
 	userType = payload["type"];
+	userId = payload["Id"];
 	if (userType != "Patient") {
 		alert("You are not authorized for this page!!!");
 		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
@@ -22,11 +24,15 @@ function parseJwt(token) {
 function addPrviousExamination(examination, i) {
 	tr = $('<tr id="tr"></tr>');
 	let row = $('<th scope="row">' + i + '</th>');
-	let doctor = $('<td>' + examination.doctor+'</td>');
-	let date = $('<td>' + examination.date+'</td>');
-    let time = $('<td>' + examination.startTime + ' - '+ examination.endTime + '</td>');
-    let diagnosis = $('<td>' + examination.diagnosis + '</td>');
-    let therapy = $('<td>' + examination.therapy + '</td>');
+	let doctor = $('<td>' + examination.doctor.person.fullName + '</td>');
+	let fullDateStart = examination.prescription.period.startDate;
+	let splittedStart = fullDateStart.split('T');
+	let fullDateEnd = examination.prescription.period.endDate;
+	let splittedEnd = fullDateEnd.split('T');
+	let date = $('<td>' + splittedStart[0] + '</td>');
+	let time = $('<td>' + splittedStart[1] + ' - ' + splittedEnd[1] + '</td>');
+    let diagnosis = $('<td>' + examination.diagnosis.name + '</td>');
+    let therapy = $('<td>' + examination.therapy.note + '</td>');
 	
 	if(!examination.filledSurvey){
 		let buttonSurvey =  $('<button class="button">Fill out survey</button>');
@@ -63,19 +69,27 @@ function addUpcomingExamination(examination, i) {
 	$('#tableU tbody').append(tr);
 }
 $(document).ready(function () {
-    $.get({
-		url: window.location.protocol + "//" + window.location.host + '/api/examination/1',
+
+	$.get({
+		url: window.location.protocol + "//" + window.location.host + '/api/patient/lazy/' + userId,
 		headers: { "Authorization": token },
-		success: function (list) {
-			i = 1;
-			for (let examination of list) {
-				if (!(examination.canceled)) {
-					addPrviousExamination(examination, i)
-					i++;
+		success: function (data) {
+			$.post({
+				url: window.location.protocol + "//" + window.location.host + '/api/examination/',
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				headers: { "Authorization": token },
+				success: function (list) {
+					i = 1;
+					for (let examination of list) {
+						addPrviousExamination(examination, i)
+						i++;
+					}
 				}
-			}	
+			});
 		}
 	});
+
 
     $.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/examination/upcoming/1',

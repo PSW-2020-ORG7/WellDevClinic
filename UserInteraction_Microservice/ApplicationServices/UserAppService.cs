@@ -40,7 +40,7 @@ namespace UserInteraction_Microservice.ApplicationServices
                 User retVal;
                 if (patient == null)
                 {
-                    Patient p = (Patient)user;
+                    Patient p = (Patient)user; 
                     String token = GenerateToken();
                     p.VerificationToken = token;
                     SendVerification(p.UserDetails.Email, p.Person.Jmbg, token);

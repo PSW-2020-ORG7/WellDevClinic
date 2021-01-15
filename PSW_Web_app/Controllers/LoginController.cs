@@ -32,7 +32,6 @@ namespace PSW_Web_app.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(user, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(communicationLink + "/api/user/patient", content);
             string responseBody = await response.Content.ReadAsStringAsync();
-            //IActionResult result = JsonConvert.DeserializeObject<IActionResult>(responseBody);
             if (responseBody.Length > 0)
                 return Ok(responseBody);
             else
