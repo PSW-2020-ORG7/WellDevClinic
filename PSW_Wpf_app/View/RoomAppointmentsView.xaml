@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="PSW_Wpf_app.View.RoomAppointmentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PSW_Wpf_app.View"
+             mc:Ignorable="d" 
+              d:DesignHeight="500" d:DesignWidth="710" Background="AliceBlue">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="10,32,0,0" Text="Scheduled Appointments" FontSize="22" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="279"/>
+        <DataGrid x:Name="scheduledAppointments" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="296" VerticalAlignment="Center" Width="590" CanUserAddRows="False"
+			AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,0" >
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Term end time" Width="*" Binding="{Binding Period.EndDate}"/>
+                <DataGridTextColumn x:Name="room"  Header="Ordination"  Width="*" Binding="{Binding Room.Id}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

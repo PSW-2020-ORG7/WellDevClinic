@@ -170,6 +170,7 @@ namespace PSW_Wpf_app.Client
         public Doctor Doctor { get; set; }
         public Period Period { get; set; }
         public Patient Patient { get; set; }
+        public Room Room { get; set; }
 
         public Examination(Patient patient, Doctor doctor, Period period)
         {
@@ -488,6 +489,16 @@ namespace PSW_Wpf_app.Client
             var value = await responseBody.Content.ReadAsStringAsync();
             Patient result = JsonConvert.DeserializeObject<Patient>(value);
             return result;
+        }
+
+        public static async Task<List<Examination>> GetAllExaminations()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAllExaminations");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<Examination> examinations = JsonConvert.DeserializeObject<List<Examination>>(responseBody);
+
+            return examinations;
         }
     }
 }
