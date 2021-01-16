@@ -172,6 +172,8 @@ namespace PSW_Wpf_app.Client
         public Period Period { get; set; }
         public Patient Patient { get; set; }
         public Room Room { get; set; }
+        public Boolean Canceled { get; set; }
+        public DateTime CanceledDate { get; set; }
 
         public Examination(Patient patient, Doctor doctor, Period period)
         {
@@ -422,6 +424,16 @@ namespace PSW_Wpf_app.Client
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
            
+        }
+
+        public static async void CancelExamination(long id)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(id));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:51393/api/examination/canceled/" + id, content);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+
         }
         public static async Task<List<Examination>> GetExaminationsByRoomAndPeriod(long roomId, DateTime dateTime)
         {

@@ -2,6 +2,7 @@
 using PSW_Wpf_app.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PSW_Wpf_app.View
@@ -36,12 +37,22 @@ namespace PSW_Wpf_app.View
         {
             foreach (Examination e in examinations)
             {
-                if (e.Doctor.Id.Equals(b.doctor.Id))
+                if (e.Doctor.Id.Equals(b.doctor.Id) && e.Canceled != true)
                 {
                     e.Room = b.room;
                     examinationsInRoom.Add(e);
                 }
             }
+        }
+
+        private async void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Examination examination = (Examination)scheduledAppointments.SelectedItem;
+            WpfClient.CancelExamination(examination.Id);
+          /*  if(scheduledAppointments.SelectedItem != null)
+            {
+                scheduledAppointments.Items.Remove(scheduledAppointments.SelectedItem);
+            }*/
         }
     }
 }
