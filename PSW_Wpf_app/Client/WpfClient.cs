@@ -145,6 +145,7 @@ namespace PSW_Wpf_app.Client
     public class Room
     {
         public long Id { get; set; }
+        public string RoomCode { get; set; }
         public virtual List<EquipmentDTO> Equipment_inventory { get; set; }
         public virtual RoomType RoomType { get; set; }
 

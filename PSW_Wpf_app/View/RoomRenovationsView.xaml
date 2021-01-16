@@ -5,8 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PSW_Wpf_app.View"
              mc:Ignorable="d" 
-              d:DesignHeight="500" d:DesignWidth="610" Background="AliceBlue">
+              d:DesignHeight="500" d:DesignWidth="710" Background="AliceBlue">
     <Grid>
-            
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="10,32,0,0" Text="Room Renovation" FontSize="22" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="279"/>
+        <DataGrid x:Name="equipmentRelocation" Margin="15,114,15,72" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                </Style>
+            </DataGrid.CellStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="ColumnDate" Header="Date and Time"  Binding="{Binding Date}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="ColumnRoom1" Header="Room From" Binding="{Binding Room_from}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="ColumnRoom" Header="Room To" Binding="{Binding Room_to}" Width="*"></DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
