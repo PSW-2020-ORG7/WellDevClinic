@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Model.Users;
 using PSW_Wpf_secretary.Client;
+using Secretary = PSW_Wpf_secretary.Client.Secretary;
 
 namespace UserInterface
 {
@@ -37,7 +38,10 @@ namespace UserInterface
             PasswordBox passwordBox = FindName("password") as PasswordBox;
             try
             {
-                Secretary user = await WpfSecretaryClient.GetUser(username.Text, password.Password);
+                UserLogIn userLogIn = new UserLogIn();
+                userLogIn.Password = password.Password;
+                userLogIn.Username = username.Text;
+                Secretary user = await WpfSecretaryClient.GetUser(userLogIn);
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();
                 this.Close();
