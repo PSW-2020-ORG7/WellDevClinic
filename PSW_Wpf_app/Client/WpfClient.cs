@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PSW_Wpf_app.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,28 +11,7 @@ using System.Threading.Tasks;
 
 namespace PSW_Wpf_app.Client
 {
-    public class Equipment
-    {
-        public int Id { get; set; }
-        public int Type { get; set; }
-        public string Name { get; set; }
-        public int Amount { get; set; }
-    }
-    public class Ingredient
-    {
-        public string Name { get; set; }
-        public int Quantity { get; set; }
-    }
-    public class Drug
-    {
-        public String Name { get; set; }
-        public long Id { get; set; }
-        public int Amount { get; set; }
-        public bool Approved { get; set; }
-        public virtual List<Ingredient> Ingredients { get; set; }
-        public virtual List<Drug> Alternative { get; set; }
-    }
-
+    
     public class Doctor
     {
         public long Id { get; set; }
@@ -282,7 +262,7 @@ namespace PSW_Wpf_app.Client
 
         public static async Task<List<Drug>> GetAllDrug()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/drug");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51891/api/drug");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Drug> drugs = JsonConvert.DeserializeObject<List<Drug>>(responseBody);

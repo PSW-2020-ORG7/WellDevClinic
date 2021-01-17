@@ -1,4 +1,5 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
