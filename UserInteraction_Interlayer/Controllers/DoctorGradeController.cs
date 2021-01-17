@@ -40,7 +40,7 @@ namespace UserInteraction_Interlayer.Controllers
         }
 
         [HttpGet]
-        [Route("{doctor?}")]
+        [Route("doctor/{doctor?}")]
         public List<DoctorGrade> GetByDoctor(string doctor)
         {
             return _doctorGradeAppService.GetByDoctor(doctor);

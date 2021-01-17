@@ -32,6 +32,13 @@ namespace Examination_Interlayer.Controllers
             return _patientFileAppService.Get(id);
         }
 
+        [HttpGet]
+        [Route("getByPatient/{id?}")]
+        public PatientFile GetByPatient(long id)
+        {
+            return _patientFileAppService.GetPatientFileByPatient(id);
+        }
+
         [HttpPost]
         public PatientFile Save(PatientFile patientFile)
         {

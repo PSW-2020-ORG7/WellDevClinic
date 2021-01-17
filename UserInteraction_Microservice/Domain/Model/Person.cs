@@ -17,6 +17,7 @@ namespace UserInteraction_Microservice.Domain.Model
             {
                 return $"{ FirstName } { LastName }";
             }
+            
         }
 
         public Person() { }

@@ -26,9 +26,13 @@ namespace Examination_Interlayer
             services.AddControllers();
             services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            /* services.AddDbContext<MyDbContext>(opts =>
+                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());*/
+
             services.AddDbContext<MyDbContext>(opts =>
-                    opts.UseMySql(CreateConnectionStringFromEnvironment(),
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+                   opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                   b => b.MigrationsAssembly("Examination_Microservice")).UseLazyLoadingProxies());
 
             services.AddScoped<IExaminationDetailsAppService, ExaminationDetailsAppService>();
             services.AddScoped<IExaminationDetailsRepository, ExaminationDetailsRepository>();
@@ -41,7 +45,10 @@ namespace Examination_Interlayer
 
             services.AddScoped<IReferralAppService, ReferralAppService>();
             services.AddScoped<IReferralRepository, ReferralRepository>();
-            
+
+            services.AddScoped<IPrescriptionAppService, PrescriptionAppService>();
+            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+
             services.AddScoped<ITherapyAppService, TherapyAppService>();
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             

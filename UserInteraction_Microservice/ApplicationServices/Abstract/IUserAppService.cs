@@ -5,7 +5,7 @@ namespace UserInteraction_Microservice.ApplicationServices.Abstract
 {
     public interface IUserAppService
     {
-        public User LogIn(UserLogIn user);
+        public User LogIn(string Username, string Password);
 
         public User Registration(User user);
 
