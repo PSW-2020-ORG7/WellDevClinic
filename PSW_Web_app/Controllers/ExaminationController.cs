@@ -49,7 +49,7 @@ namespace PSW_Web_app.Controllers
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(id));
-            var response = await client.PutAsync(communicationLink + "/api/examination/" + id, content);
+            var response = await client.PutAsync(communicationLink + "/api/examinationDetails/" + id, content);
             return Ok();
         }
 

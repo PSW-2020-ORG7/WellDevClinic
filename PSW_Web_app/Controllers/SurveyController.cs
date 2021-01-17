@@ -46,7 +46,7 @@ namespace PSW_Web_app.Controllers
         {
             if (!Authorization.Authorize("Secretary", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/doctorGrade/" + doctor);
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/doctorGrade/doctor/" + doctor);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<DoctorGrade> result = JsonConvert.DeserializeObject<List<DoctorGrade>>(responseBody);
