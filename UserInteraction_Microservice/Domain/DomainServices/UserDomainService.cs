@@ -43,8 +43,10 @@ namespace UserInteraction_Microservice.Domain.DomainServices
                 return _directorAppService.Save((Director)user);
             if (user.UserType == UserType.Doctor)
                 return _doctorAppService.Save((Doctor)user);
-            if (user.UserType == UserType.Patient)
-                return _patientAppService.Save((Patient)user);
+            if (user.UserType == UserType.Patient) { 
+                _patientAppService.Save((Patient)user);
+                return null;
+            }
             if (user.UserType == UserType.Secretary)
                 return _secretaryAppService.Save((Secretary)user);
             

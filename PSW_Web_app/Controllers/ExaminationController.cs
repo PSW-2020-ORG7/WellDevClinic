@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PSW_Web_app.Models.UserInteraction;
+//using PSW_Web_app.Models.SearchAndSchedule;
 using PSW_Web_app.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using PSW_Web_app.Models.Dtos;
+
 
 namespace PSW_Web_app.Controllers
 {
@@ -18,6 +20,7 @@ namespace PSW_Web_app.Controllers
     {
         string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:61089";
         string communicationLink1 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62044";
+        string communicationLink2 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
 
@@ -105,18 +108,30 @@ namespace PSW_Web_app.Controllers
 
         }
 
-        /* [HttpPost]
-         [Route("newExamination")]
-         public async Task<IActionResult> NewExaminationAsync([FromBody] ExaminationIdsDTO examination)
-         {
-             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
-                 return BadRequest();
-             var content = new StringContent(JsonConvert.SerializeObject(examination, Formatting.Indented), Encoding.UTF8, "application/json");
-             var response = await client.PostAsync(communicationLink + "/api/examination/newExamination", content);
-             string responseBody = await response.Content.ReadAsStringAsync();
-             Examination result = JsonConvert.DeserializeObject<Examination>(responseBody);
-             return Ok(result);
-         }*/
+        [HttpPost]
+        [Route("newExamination")]
+        public async Task<IActionResult> NewExaminationAsync(ExaminationDTO examination)
+        {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
+
+            HttpResponseMessage responseDoctor = await client.GetAsync(communicationLink2 + "/api/doctor/eager/" + examination.DoctorId);
+            responseDoctor.EnsureSuccessStatusCode();
+            string responseBodyDoctor = await responseDoctor.Content.ReadAsStringAsync();
+            Models.UserInteraction.Doctor resultDoctor = (Models.UserInteraction.Doctor)JsonConvert.DeserializeObject<Models.UserInteraction.Doctor>(responseBodyDoctor);
+
+            HttpResponseMessage responsePatient = await client.GetAsync(communicationLink2 + "/api/patient/eager/" + examination.PatientId);
+            responsePatient.EnsureSuccessStatusCode();
+            string responseBodyPatient = await responsePatient.Content.ReadAsStringAsync();
+            Models.UserInteraction.Patient resultPatient = (Models.UserInteraction.Patient)JsonConvert.DeserializeObject<Models.UserInteraction.Patient>(responseBodyPatient);
+
+            ExaminationNew newExamination = new ExaminationNew(resultPatient, resultDoctor, new Period(examination.Start, examination.End));
+            var content = new StringContent(JsonConvert.SerializeObject(newExamination, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink1 + "/api/upcomingexamination", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            UpcomingExamination result = JsonConvert.DeserializeObject<UpcomingExamination>(responseBody);
+            return Ok(result);
+        }
 
         [HttpGet]
         [Route("prescription/{id?}")]

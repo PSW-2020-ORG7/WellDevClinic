@@ -12,6 +12,9 @@ namespace SearchAndSchedule_Microservice.Domain
         public DbSet<BusinessDay> BussinesDay { get; set; }
         public DbSet<UpcomingExamination> Examination { get; set; }
         public DbSet<Operation> Operation { get; set; }
+        public DbSet<Doctor> Doctor { get; set; }
+        public DbSet<Patient> Patient { get; set; }
+
 
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }

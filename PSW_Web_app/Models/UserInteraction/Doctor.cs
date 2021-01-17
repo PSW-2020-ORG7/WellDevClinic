@@ -11,6 +11,8 @@ namespace PSW_Web_app.Models.UserInteraction
         public virtual Speciality Speciality { get; set; }
         [NotMapped]
         public virtual DoctorGrade DoctorGrade { get; set; }
+        [NotMapped]
+        public virtual List<BusinessDay> BussinesDays { get; set; }
 
         public Doctor()
         {

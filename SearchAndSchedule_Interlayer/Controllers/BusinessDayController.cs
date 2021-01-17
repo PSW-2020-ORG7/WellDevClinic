@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SearchAndSchedule_Microservice.ApplicationServices.Abstract;
 using SearchAndSchedule_Microservice.ApplicationServices.DTObjects;
 using SearchAndSchedule_Microservice.Domain.Model;
@@ -14,6 +16,9 @@ namespace SearchAndSchedule_Interlayer.Controllers
     public class BusinessDayController : ControllerBase
     {
         private readonly IBussinesDayAppService _businessDayAppService;
+        static readonly HttpClient client = new HttpClient();
+        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+
 
         public BusinessDayController(IBussinesDayAppService businessDayAppService)
         {
@@ -94,6 +99,17 @@ namespace SearchAndSchedule_Interlayer.Controllers
         public List<ExaminationDTO> Search(BusinessDayDTO businessDayDTO)
         {
             return _businessDayAppService.Search(businessDayDTO);
+        }
+
+        [HttpGet]
+        [Route("{date?}/{id?}")]
+        public async Task<List<ExaminationDTO>> GetAvailablePeriodsByDoctor(DateTime date, long id)
+        {
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/doctor/lazy/" + id.ToString());
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Doctor result = (Doctor)JsonConvert.DeserializeObject<Doctor>(responseBody);
+            return _businessDayAppService.Search(new BusinessDayDTO(result, new Period(date), PriorityType.NoPriority));
         }
 
         //DTO za ove parametre

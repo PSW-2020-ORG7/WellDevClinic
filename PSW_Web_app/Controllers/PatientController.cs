@@ -5,13 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PSW_Web_app.Models.UserInteraction;
 using PSW_Web_app.Models;
-using bolnica.Service;
-
-using WellDevCore.Model.Adapters;
-using WellDevCore.Model.dtos;
-
 using System.Net.Http;
-
 using Newtonsoft.Json;
 using System.Text;
 

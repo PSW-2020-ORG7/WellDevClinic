@@ -7,11 +7,11 @@ namespace PSW_Web_app.Models.Dtos
 {
     public class ExaminationDto
     {
-        public String specialist { get; set; }
-        public String textReferral { get; set; }
-        public String doctor { get; set; }
-        public List<String> drug { get; set; }
-        public String date { get; set; }
+        public String Specialist { get; set; }
+        public String TextReferral { get; set; }
+        public String Doctor { get; set; }
+        public List<String> Drug { get; set; }
+        public String Date { get; set; }
 
         public ExaminationDto() { }
     }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using PSW_Web_app.Models.SearchAndSchedule;
+using System.Linq;
+using System.Threading.Tasks;
+using PSW_Web_app.Models.UserInteraction;
 
 namespace PSW_Web_app.Models
 {
-    public class UpcomingExamination : IIdentifiable<long>
+    public class ExaminationNew : IIdentifiable<long>
     {
         public long Id { get; set; }
         public virtual Patient Patient { get; set; }
@@ -14,8 +15,8 @@ namespace PSW_Web_app.Models
         public Boolean Canceled { get; set; }
         public DateTime CanceledDate { get; set; }
 
-        public UpcomingExamination() { }
-        public UpcomingExamination(long id, Patient patient, Doctor doctor, Period period, bool canceled, DateTime canceledDate)
+        public ExaminationNew() { }
+        public ExaminationNew(long id, Patient patient, Doctor doctor, Period period, bool canceled, DateTime canceledDate)
         {
             Id = id;
             Patient = patient;
@@ -25,7 +26,7 @@ namespace PSW_Web_app.Models
             CanceledDate = canceledDate;
         }
 
-        public UpcomingExamination(long id, Patient patient, Doctor doctor, Period period)
+        public ExaminationNew(long id, Patient patient, Doctor doctor, Period period)
         {
             Id = id;
             Patient = patient;
@@ -34,7 +35,7 @@ namespace PSW_Web_app.Models
             Canceled = false;
         }
 
-        public UpcomingExamination(Patient patient, Doctor doctor, Period period)
+        public ExaminationNew(Patient patient, Doctor doctor, Period period)
         {
             Patient = patient;
             Doctor = doctor;
@@ -54,4 +55,3 @@ namespace PSW_Web_app.Models
     }
 
 }
-   

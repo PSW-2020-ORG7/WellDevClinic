@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Model.Users;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,8 +11,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using WellDevCore.Model.dtos;
-using UserInteraction_Microservice.Domain.Model;
 using PSW_Web_app.Models;
 
 namespace PSW_Web_app.Controllers

@@ -40,11 +40,11 @@ namespace UserInteraction_Microservice.ApplicationServices
                 User retVal;
                 if (patient == null)
                 {
-                    Patient p = (Patient)user; 
+                    Patient p = new Patient(user.Person,user.UserDetails,user.UserLogIn); 
                     String token = GenerateToken();
                     p.VerificationToken = token;
                     SendVerification(p.UserDetails.Email, p.Person.Jmbg, token);
-                    retVal = _domainService.Registration(user);
+                    retVal = _domainService.Registration(p);
                 }
                 else
                 {
