@@ -513,6 +513,16 @@ namespace PSW_Wpf_app.Client
 
             return examinations;
         }
+
+        public static async void EditRenovation(Renovation entity)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(entity));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:51393/api/renovation/editRenovation", content);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+        }
     }
 }
 

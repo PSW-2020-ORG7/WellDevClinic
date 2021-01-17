@@ -4,6 +4,7 @@ using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PSW_Wpf_app.View
@@ -24,7 +25,7 @@ namespace PSW_Wpf_app.View
             RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
             foreach (Renovation r in renovation)
             {
-                if (r.Room.Id.Equals(f.RoomId))
+                if (r.Room.Id.Equals(f.RoomId) && r.Status.Equals(RenovationStatus.Otkazano))
                 {
                 Renovation pair = null;
                 foreach (Renovation re in renovation)
@@ -53,6 +54,17 @@ namespace PSW_Wpf_app.View
             }
 
             equipmentRelocation.ItemsSource = relocations;
+        }
+
+        private async void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Renovation renovation = (Renovation)equipmentRelocation.SelectedItem;
+            renovation.Status = RenovationStatus.Otkazano;
+            WpfClient.EditRenovation(renovation);
+            /*  if(scheduledAppointments.SelectedItem != null)
+              {
+                  scheduledAppointments.Items.Remove(scheduledAppointments.SelectedItem);
+              }*/
         }
     }
 }

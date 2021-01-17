@@ -21,7 +21,13 @@
                 <DataGridTextColumn x:Name="ColumnDate" Header="Date and Time"  Binding="{Binding Date}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn x:Name="ColumnRoom1" Header="Room From" Binding="{Binding Room_from}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn x:Name="ColumnRoom" Header="Room To" Binding="{Binding Room_to}" Width="*"></DataGridTextColumn>
-
+                <DataGridTemplateColumn Header="Cancle" x:Name="cancle" Width="*"  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="190" Content="cancel relocation" Click="Cancel_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
