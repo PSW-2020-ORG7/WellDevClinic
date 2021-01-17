@@ -7,8 +7,10 @@
              mc:Ignorable="d" 
               d:DesignHeight="500" d:DesignWidth="710" Background="AliceBlue">
     <Grid>
+        <Button Content="Advanced renovation" VerticalAlignment="Top" HorizontalAlignment="Left" Click="AdvancedRenovation_Click" Height="40" Margin="408,106,0,0"/>
+
         <TextBlock HorizontalAlignment="Left" Height="33" Margin="10,32,0,0" Text="Room Renovation" FontSize="22" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="279"/>
-        <DataGrid x:Name="equipmentRelocation" Margin="15,114,15,72" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid x:Name="equipmentRelocation" Margin="15,200,15,72" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Margin" Value="0"/>

@@ -1,0 +1,40 @@
+﻿<Window x:Class="PSW_Wpf_app.View.RoomAdvancedRenovationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PSW_Wpf_app.View"
+        mc:Ignorable="d"
+        Title="RoomAdvancedRenovationView" Height="500" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="101*"/>
+            <ColumnDefinition Width="99*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="15,34,0,369" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="780">
+            <TextBlock x:Name="ChooseRenovationType" Text="Choose renovation type:" FontSize="25"  Width="316" Height="36"/>
+            <ComboBox   Width="182" Height="25" x:Name="renovations" SelectionChanged="renovations_SelectionChanged">
+                <ComboBoxItem Content="Podela"></ComboBoxItem>
+                <ComboBoxItem Content="Spajanje"></ComboBoxItem>
+
+            </ComboBox>
+
+        </StackPanel>
+
+        <StackPanel x:Name="DatePicker" Orientation="Horizontal" Margin="0,120,10,279" Grid.ColumnSpan="2">
+            <TextBlock Name="ChooseDate" Text=" Select a date:" FontSize="25" Margin="10" Width="190" Height="52"/>
+            <DatePicker Margin="115,0,0,0" Name="Picker1"   Width="190" FirstDayOfWeek="Monday" Height="40"/>
+            <DatePicker Margin="50,0,0,0" x:Name="Picker2"   Width="190" FirstDayOfWeek="Monday" Height="40"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="15,212,-5,222" Grid.ColumnSpan="2" >
+            <TextBlock x:Name="ChooseRoomFrom" Text="Choose room: " FontSize="25"  Width="274" Height="40"/>
+            <ComboBox x:Name="rooms"  Height="25" Width="182" Margin="45,0,0,0" IsEnabled="False" ItemsSource ="{Binding Room, UpdateSourceTrigger=PropertyChanged}"  DisplayMemberPath="Name"/>
+
+        </StackPanel>
+        <StackPanel Margin="10,267,10,156" Grid.ColumnSpan="2">
+            <Button Content="Schedule" Height="28" Width="100" Click="Button_Click" Margin="550,0,0,0"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

@@ -8,9 +8,18 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class RoomRenovationsView : UserControl
     {
+        private FloorElement floor;
+
         public RoomRenovationsView(FloorElement floor)
         {
             InitializeComponent();
+            this.floor = floor;
+        }
+
+        private void AdvancedRenovation_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            RoomAdvancedRenovationView view = new RoomAdvancedRenovationView(floor);
+            view.Show();
         }
     }
 }
