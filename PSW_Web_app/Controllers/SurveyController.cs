@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using bolnica.Model.Users;
-using Model.Doctor;
-using bolnica.Service;
-using PSW_Web_app.DTO;
-using PSW_Web_app.Adapters;
-using bolnica.Model.Dto;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using PSW_Web_app.Models;
 
-// nemamo sta da gadjamo
 namespace PSW_Web_app.Controllers
 {
     [Route("api/[controller]")]
@@ -35,7 +28,6 @@ namespace PSW_Web_app.Controllers
             return Ok(result);
         }
 
-       
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -47,7 +39,6 @@ namespace PSW_Web_app.Controllers
             List<DoctorGrade> result = JsonConvert.DeserializeObject<List<DoctorGrade>>(responseBody);
             return Ok(result);
         }
-
 
         [HttpGet]
         [Route("{doctor?}")]
@@ -61,7 +52,7 @@ namespace PSW_Web_app.Controllers
             List<DoctorGrade> result = JsonConvert.DeserializeObject<List<DoctorGrade>>(responseBody);
             return Ok(result);
         }
-
+        
         [HttpPost]
         [Route("doctor_average")]
         public async Task<IActionResult> GetAverageGradeDoctor([FromBody] List<DoctorGrade> surveys)
@@ -71,10 +62,10 @@ namespace PSW_Web_app.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(surveys, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(communicationLink + "/api/doctorGrade/doctor_average", content);
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<GradeDTO> result = JsonConvert.DeserializeObject<List<GradeDTO>>(responseBody);
+            List<DoctorGradeQuestion> result = JsonConvert.DeserializeObject<List<DoctorGradeQuestion>>(responseBody);
             return Ok(result);
         }
-
+        
     }
 
 

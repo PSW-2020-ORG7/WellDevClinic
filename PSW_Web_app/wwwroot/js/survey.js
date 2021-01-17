@@ -33,6 +33,7 @@ var hospital3_dto = new Object();
 var hospital4_dto = new Object();
 var doctor = []
 var doctorObject = new Object();
+var personObject = new Object();
 $(document).ready(function () {
 	$('#submit').click(function (event) {
 
@@ -89,13 +90,17 @@ $(document).ready(function () {
 
 
 		let searchParams = new URLSearchParams(window.location.search);
-		let doctor_name = searchParams.get('doctor');
-		let examination_id =  searchParams.get('id');
-
-		doctorObject.FullName = doctor_name
+		let doctor_names = searchParams.get('doctor');
+		let examination_id = searchParams.get('id');
+		let doctor_names_split = [];
+		doctor_names_split = doctor_names.split(' ');
+		personObject.firstName = doctor_names_split[0];
+		personObject.lastName = doctor_names_split[1];
+		doctorObject.person = personObject;
+		alert(doctorObject.person.fullName);
 		$.post({
 			url: window.location.protocol + "//" + window.location.host + "/api/survey",
-			data: JSON.stringify({ grades: doctor, doctor: doctorObject }),
+			data: JSON.stringify({ doctorGradeQuestions: doctor, doctor: doctorObject }),
 			headers: { "Authorization": token },
 			success: function () {
 				alert("You have completed the survey");

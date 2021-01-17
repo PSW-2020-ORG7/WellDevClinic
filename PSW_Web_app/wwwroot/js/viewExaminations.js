@@ -64,7 +64,7 @@ function addPrviousExamination(examination, i) {
 		let buttonSurvey = $('<td><button class="button">Fill out survey</button></td>');
 		buttonSurvey.click(function (event) {
 			var origin = window.location.origin;
-			window.location.href = origin + '/html/survey.html'+'?doctor=' + examination.doctor+'&id='+examination.id;
+			window.location.href = origin + '/html/survey.html' + '?doctor=' + examination.doctor.person.fullName + '&id=' + examination.id;
 		});
 		tr.append(buttonSurvey);
 
@@ -79,11 +79,15 @@ function addPrviousExamination(examination, i) {
 function addUpcomingExamination(examination, i) {
 	tr = $('<tr id="tr"></tr>');
 	let row = $('<th scope="row">' + i + '</th>');
-	let doctor = $('<td>' + examination.doctor +'</td>');
-	let date = $('<td>' + examination.date +'</td>');
-	let time = $('<td>' + examination.startTime + ' - ' + examination.endTime + '</td>');
+	let doctor = $('<td>' + examination.doctor.person.fullName  +'</td>');
+	let fullDateStart = examination.period.startDate;
+	let splittedStart = fullDateStart.split('T');
+	let fullDateEnd = examination.period.endDate;
+	let splittedEnd = fullDateEnd.split('T');
+	let date = $('<td>' + splittedStart[0] + '</td>');
+	let time = $('<td>' + splittedStart[1] + ' - ' + splittedEnd[1] + '</td>');
 
-	if (examination.canBeCanceled) {
+	if (!examination.canceled) {
 		let buttonCancel = $('<button class="buttonCancel">Cancel examination</button>');
 		buttonCancel.attr("id", examination.id);
 		tr.append(row).append(doctor).append(date).append(time).append(buttonCancel);
@@ -94,6 +98,7 @@ function addUpcomingExamination(examination, i) {
 
 	$('#tableU tbody').append(tr);
 }
+
 $(document).ready(function () {
 
 	$.get({
@@ -116,7 +121,27 @@ $(document).ready(function () {
 		}
 	});
 
-    $.get({
+	$.get({
+		url: window.location.protocol + "//" + window.location.host + '/api/patient/lazy/' + userId,
+		headers: { "Authorization": token },
+		success: function (data) {
+			$.post({
+				url: window.location.protocol + "//" + window.location.host + '/api/examination/upcoming',
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				headers: { "Authorization": token },
+				success: function (list) {
+					i = 1;
+					for (let examination of list) {
+						addUpcomingExamination(examination, i)
+						i++;
+					}
+				}
+			});
+		}
+	});
+
+   /* $.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/examination/upcoming/1',
 		headers: { "Authorization": token },
 		success: function (list) {
@@ -128,7 +153,7 @@ $(document).ready(function () {
 				}
 			}	
 		}
-	});
+	});*/
 
 	$("#tableU tbody").on("click", ".buttonCancel", function () {
 		var id = $(this).attr('id');

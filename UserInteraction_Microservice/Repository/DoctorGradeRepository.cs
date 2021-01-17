@@ -11,6 +11,10 @@ namespace UserInteraction_Microservice.Repository
     public class DoctorGradeRepository : IDoctorGradeRepository
     {
         private readonly MyDbContext _myDbContext;
+        public DoctorGradeRepository(MyDbContext myDbContext)
+        {
+            _myDbContext = myDbContext;
+        }
 
         public void Delete(DoctorGrade entity)
         {
@@ -36,7 +40,7 @@ namespace UserInteraction_Microservice.Repository
 
         public DoctorGrade Save(DoctorGrade entity)
         {
-            Doctor doctor = _myDbContext.Doctor.FirstOrDefault(a => a.Person.FullName == entity.Doctor.Person.FullName);
+            Doctor doctor = _myDbContext.Doctor.FirstOrDefault(a => a.Person.FirstName == entity.Doctor.Person.FirstName && a.Person.LastName == entity.Doctor.Person.LastName);
             entity.Doctor = doctor;
             var DoctorGrade = _myDbContext.DoctorGrade.Add(entity);
             _myDbContext.SaveChanges();

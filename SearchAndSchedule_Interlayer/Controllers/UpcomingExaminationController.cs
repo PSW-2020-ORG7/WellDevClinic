@@ -72,7 +72,7 @@ namespace SearchAndSchedule_Interlayer.Controllers
             return _examinationAppService.GetUpcomingExaminationsByDoctor(doctor);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetUpcomingExaminationsByPatient")]
         public List<UpcomingExamination> GetUpcomingExaminationsByPatient(Patient patient)
         {

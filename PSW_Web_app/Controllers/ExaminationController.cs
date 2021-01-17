@@ -27,6 +27,7 @@ namespace PSW_Web_app.Controllers
     public class ExaminationController : ControllerBase
     {
         string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:61089";
+        string communicationLink1 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62044";
 
         static readonly HttpClient client = new HttpClient();
 
@@ -66,15 +67,6 @@ namespace PSW_Web_app.Controllers
         [HttpPost]
         public async Task<IActionResult> GetFinishedExaminationsByUser(Patient patient)
         {
-            /*if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
-                return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examinationDetails/getByPaitent/" + patient);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDetails> result = JsonConvert.DeserializeObject<List<ExaminationDetails>>(responseBody);
-            return Ok(result);*/
-
-
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(patient, Formatting.Indented), Encoding.UTF8, "application/json");
@@ -84,7 +76,21 @@ namespace PSW_Web_app.Controllers
             return Ok(result);
 
         }
-        [HttpGet]
+
+        [HttpPost]
+        [Route("upcoming")]
+        public async Task<IActionResult> GetUpcomingExaminationsByUser(Patient patient)
+        {
+            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                return BadRequest();
+            var content = new StringContent(JsonConvert.SerializeObject(patient, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink1 + "/api/upcomingExamination/GetUpcomingExaminationsByPatient/", content);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<ExaminationDetails> result = JsonConvert.DeserializeObject<List<ExaminationDetails>>(responseBody);
+            return Ok(result);
+
+        }
+       /* [HttpGet]
         [Route("upcoming/{id?}")]
         public async Task<IActionResult> GetUpcomingExaminationsByUser(long id)
         {
@@ -95,7 +101,7 @@ namespace PSW_Web_app.Controllers
             string responseBody = await response.Content.ReadAsStringAsync();
             List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
             return Ok(result);
-        }
+        }*/
         /// <summary>
         ///  calls GetFinishedExaminationsByUser(User user) method from class ExaminationService so  
         /// it can get examinations of specified user

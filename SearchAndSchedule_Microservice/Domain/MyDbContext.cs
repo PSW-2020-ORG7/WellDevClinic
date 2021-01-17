@@ -24,6 +24,13 @@ namespace SearchAndSchedule_Microservice.Domain
             modelBuilder.Entity<UpcomingExamination>().OwnsOne(e => e.Period);
             modelBuilder.Entity<Operation>().OwnsOne(e => e.Period);
             modelBuilder.Entity<BusinessDay>().OwnsMany(b => b.ScheduledPeriods);
+            modelBuilder.Entity<Address>().OwnsOne(b => b.Town);
+              modelBuilder.Entity<Address>().OwnsOne(b => b.State);
+            /*modelBuilder.Entity<Address>().Ignore(b => b.Town);
+            modelBuilder.Entity<Address>().Ignore(b => b.State);
+            modelBuilder.Entity<State>().HasNoKey();
+            modelBuilder.Entity<Town>().HasNoKey();*/
+
         }
 
     }
