@@ -24,13 +24,13 @@ namespace UserInteraction_Microservice.Domain.DomainServices
         public User LogIn(string username, string password)
         {
             User user;
-            if ((user = _doctorAppService.LogIn(username, password)) != null)
-                return user;
             if ((user = _directorAppService.LogIn(username, password)) != null)
                 return user;
             if ((user = _secretaryAppService.LogIn(username, password)) != null)
                 return user;
             if ((user = _patientAppService.LogIn(username, password)) != null)
+                return user;
+            if ((user = _doctorAppService.LogIn(username, password)) != null)
                 return user;
 
             return user;

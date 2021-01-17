@@ -16,7 +16,8 @@ namespace UserInteraction_Interlayer.Controllers
             _userAppService = userAppService;
         }
 
-        [HttpGet]
+        [HttpPost]
+        [Route("login")]
         public User LogIn(UserLogIn user)
         {
             return _userAppService.LogIn(user);
