@@ -1,16 +1,47 @@
-﻿using Model.Users;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PSW_Wpf_director.Client
 {
+    public class State
+    {
+        public String Name { get; private set; }
+        public String Code { get; private set; }
 
-    public class UserDetails
+        public State() { }
+    }
+        public class Town
+    {
+        public String Name { get; private set; }
+        public String PostalNumber { get; private set; }
+
+        public Town() { }
+    }
+        public class Address
+    {
+        public long Id { get; set; }
+        public String Street { get; set; }
+        public int Number { get; set; }
+        public String FullAddress { get; set; }
+        public virtual Town Town { get; set; }
+        public virtual State State { get; set; }
+
+        public Address() { }
+
+        public Address(long id, string street, int number, string fullAddress, Town town, State state)
+        {
+            Id = id;
+            Street = street;
+            Number = number;
+            FullAddress = fullAddress;
+            Town = town;
+            State = state;
+        }
+    }
+        public class UserDetails
     {
         public long Id { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -25,8 +56,25 @@ namespace PSW_Wpf_director.Client
 
         public UserDetails() { }
     }
+    public class Person
+    {
+        public long Id { get; set; }
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public String Jmbg { get; set; }
 
-        public enum UserType
+        public String FullName
+        {
+            get
+            {
+                return $"{ FirstName } { LastName }";
+            }
+        }
+
+        public Person() { }
+
+    }
+    public enum UserType
     {
         Patient,
         Doctor,
@@ -79,12 +127,6 @@ namespace PSW_Wpf_director.Client
             var value = await responseBody.Content.ReadAsStringAsync();
             User userLogged = JsonConvert.DeserializeObject<User>(value);
             return userLogged;
-            /*HttpResponseMessage response = await client.PostAsync("http://localhost:14483/api/user" + user);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            User userLogged = JsonConvert.DeserializeObject<User>(responseBody);
-
-            return userLogged;*/
         }
 
     }
