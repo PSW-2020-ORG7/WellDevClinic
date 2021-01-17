@@ -26,6 +26,11 @@ namespace Examination_Microservice.ApplicationSevices
             _examinationDetailsRepository.Edit(entity);
         }
 
+        public void FillSurvey(long id)
+        {
+            _examinationDetailsRepository.FillSurvey(id);
+        }
+
         public ExaminationDetails Get(long id)
         {
             return _examinationDetailsRepository.Get(id);

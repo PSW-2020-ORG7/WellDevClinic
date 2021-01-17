@@ -17,6 +17,15 @@ namespace SearchAndSchedule_Microservice.Repository
             _myDbContext = myDbContext;
         }
 
+        public void Cancel(long id)
+        {
+            UpcomingExamination e = _myDbContext.Examination.FirstOrDefault(e => e.Id == id);
+            e.Canceled = true;
+            e.CanceledDate = DateTime.Now;
+            _myDbContext.Examination.Update(e);
+            _myDbContext.SaveChanges();
+        }
+
         public void Delete(UpcomingExamination entity)
         {
             _myDbContext.Examination.Remove(entity);
@@ -28,6 +37,8 @@ namespace SearchAndSchedule_Microservice.Repository
             _myDbContext.Examination.Update(entity);
             _myDbContext.SaveChanges();
         }
+
+        
 
         public UpcomingExamination Get(long id)
         {

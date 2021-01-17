@@ -78,14 +78,23 @@ namespace SearchAndSchedule_Interlayer.Controllers
         {
             return _examinationAppService.GetUpcomingExaminationsByPatient(patient);
         }
-        
+
         //Pogledati detaljan opis u servisu, i ako je potrebna neki dto za ove parametre
-/*
-        [HttpPost]
-        [Route("GetUpcomingExaminationsByRoomAndPeriod")]
-        public List<UpcomingExamination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
+        /*
+                [HttpPost]
+                [Route("GetUpcomingExaminationsByRoomAndPeriod")]
+                public List<UpcomingExamination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
+                {
+                    return _examinationAppService.GetUpcomingExaminationsByRoomAndPeriod(room, period);
+                }*/
+
+        [HttpPut]
+        [Route("Cancel/{id?}")]
+        public void Cancel(long id)
         {
-            return _examinationAppService.GetUpcomingExaminationsByRoomAndPeriod(room, period);
-        }*/
+            _examinationAppService.Cancel(id);
+        }
+
+       
     }
 }

@@ -10,6 +10,7 @@ namespace PSW_Web_app.Models
         public long Id { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual List<Hospitalization> Hospitalization { get; set; }
+       
         public virtual List<Operation> Operation { get; set; }
         public virtual List<ExaminationDetails> Examination { get; set; }
         public virtual List<Allergy> Allergy { get; set; }

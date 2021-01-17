@@ -23,13 +23,11 @@ function parseJwt(token) {
 
 function addAllergy(allergy) {
     list = $('#allergies');
-    element = $('<li>' + allergy + '</li>');
+    element = $('<li>' + allergy.name + '</li>');
     list.append(element);
 }
 
 $(document).ready(function () {
-
-
     $.get({
         url: window.location.protocol + "//" + window.location.host + '/api/patient/patientDetails/' + userId,
         headers: { "Authorization": token },
@@ -45,11 +43,17 @@ $(document).ready(function () {
             $('label[id="email"]').text(user.userDetails.email);
             $('label[id="gender"]').text(user.userDetails.gender);
             $('label[id="bloodType"]').text(user.userDetails.bloodType);
-            $('#image').attr('src'," http://localhost:51393"+user.image);
-            for (let allergy of user.allergies) {
-                addAllergy(allergy);
-            }
+            $('#image').attr('src', " http://localhost:51393" + user.image);
 
+            $.get({
+                url: window.location.protocol + "//" + window.location.host + '/api/patient/patientFile/' + userId,
+                headers: { "Authorization": token },
+                success: function (file) {
+                    for (let allergy of file.allergy) {
+                        addAllergy(allergy);
+                    }
+                }
+            });
         }
     });
 

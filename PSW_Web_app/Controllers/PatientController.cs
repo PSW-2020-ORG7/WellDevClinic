@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PSW_Web_app.Models.UserInteraction;
+using PSW_Web_app.Models;
 using bolnica.Service;
 
 using WellDevCore.Model.Adapters;
@@ -43,15 +44,15 @@ namespace PSW_Web_app.Controllers
         //Examination microservice
         [HttpGet]
         [Route("patientFile/{id?}")]
-        public async Task<IActionResult> GetPatientByIdDto(long id)
+        public async Task<IActionResult> GetPatientFilebyId(long id)
         {
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink2 + "/api/patient/patientFile/"+id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink2 + "/api/patientFile/getByPatient/" + id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            PatientDTO patient = JsonConvert.DeserializeObject<PatientDTO>(responseBody);
-            return Ok(patient);
+            PatientFile patientFile = JsonConvert.DeserializeObject<PatientFile>(responseBody);
+            return Ok(patientFile);
         }
 
         [HttpGet]
