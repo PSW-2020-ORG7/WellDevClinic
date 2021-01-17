@@ -252,7 +252,7 @@ namespace PSW_Wpf_app.Client
 
         public static async Task<List<Equipment>> GetAllEquipment()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/equipment");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/equipment");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Equipment> equipments = JsonConvert.DeserializeObject<List<Equipment>>(responseBody);

@@ -20,7 +20,7 @@
             Name ="Dg">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Type" Width="*" Binding="{Binding Type}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Type" Width="*" Binding="{Binding EquipmentType}"/>
                 <DataGridTextColumn Header="Amount" Width="*" Binding="{Binding Amount}"/>
             </DataGrid.Columns>
         </DataGrid>
