@@ -44,6 +44,14 @@ namespace UserInteraction_Microservice.Domain.Model
 
         }
 
+        public Patient(Person person, UserDetails userDetails, UserLogIn userLogIn)
+        {
+            UserType = UserType.Patient;
+            Person = person;
+            UserDetails = userDetails;
+            UserLogIn = userLogIn;
+        }
+
         public void ClaimAccount()
         {
             if (!(!this.UserDetails.Phone.Equals("") && !this.UserDetails.Email.Equals("")))

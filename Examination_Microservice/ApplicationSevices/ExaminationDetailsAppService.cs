@@ -23,7 +23,12 @@ namespace Examination_Microservice.ApplicationSevices
 
         public void Edit(ExaminationDetails entity)
         {
-            _examinationDetailsRepository.Delete(entity);
+            _examinationDetailsRepository.Edit(entity);
+        }
+
+        public void FillSurvey(long id)
+        {
+            _examinationDetailsRepository.FillSurvey(id);
         }
 
         public ExaminationDetails Get(long id)

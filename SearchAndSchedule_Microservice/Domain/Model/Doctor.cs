@@ -5,11 +5,10 @@ using System.Text;
 
 namespace SearchAndSchedule_Microservice.Domain.Model
 {
-    public class Doctor :  IIdentifiable<long>
+    public class Doctor : User,  IIdentifiable<long>
     {
         public long Id { get; set; }
         public virtual Speciality Speciality { get; set; }
-        public virtual Person Person { get; set; }
         [NotMapped]
         public virtual DoctorGrade DoctorGrade { get; set; }
         [NotMapped]

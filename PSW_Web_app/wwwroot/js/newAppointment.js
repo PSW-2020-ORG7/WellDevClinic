@@ -2,6 +2,7 @@ function authorize() {
 	token = sessionStorage.getItem("token");
 	let payload = parseJwt(token);
 	userType = payload["type"];
+	userId = payload["Id"];
 	if (userType != "Patient") {
 		alert("You are not authorized for this page!!!");
 		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
@@ -9,6 +10,7 @@ function authorize() {
 }
 var userType = "";
 var token = "";
+var userId = "";
 
 function parseJwt(token) {
 	var base64Url = token.split('.')[1];
@@ -29,7 +31,7 @@ var speciality = $("#specialization");
 var doctors = $("#doctors");
 var fieldSetCounter = 0;
 
-$(".next").click(function () {
+$(".next").click(function(){
 	if (!date.val() || 0 === date.val().length) {
 
 	}
@@ -56,17 +58,18 @@ $(".next").click(function () {
 					console.log("TERMINI");
 					for (var i = 0; i < data.length; i++) {
 						var opt = document.createElement('option');
-						var startDate = data[i].startDate;
-						console.log(data[i].startDate);
-						console.log(data[i].endDate);
-						var endDate = data[i].endDate;
+						var startDate = data[i].period.startDate;
+						//console.log(data[i].startDate);
+						//console.log(data[i].endDate);
+						var endDate = data[i].period.endDate;
 						var startSplit = startDate.split("T");
 						var endSplit = endDate.split("T");
 						var start = startSplit[1].split(":");
 						var end = endSplit[1].split(":");
 						var startTime = start[0] + ":" + start[1];
 						var endTime = end[0] + ":" + end[1];
-						opt.setAttribute('value', data[i].startDate + "S" + data[i].endDate);
+						opt.setAttribute('value', data[i].period.startDate + "S" + data[i].period.endDate);
+						console.log(data[i].period.startDate + "S" + data[i].period.endDate);
 						opt.text = startTime + "-" + endTime;
 						app.appendChild(opt);
 					}
@@ -87,7 +90,7 @@ $(".next").click(function () {
 						//var opt = "<option" + "value=" + data[i].name + ">" + data[i].name + "</option>";
 						var opt = document.createElement('option');
 						opt.setAttribute('value', data[i].id);
-						opt.text = "Dr " + data[i].name + ' ' + data[i].surname;
+						opt.text = "Dr " + data[i].person.firstName + ' ' + data[i].person.lastName;
 						selDoc.appendChild(opt);
 					}
 				}
@@ -120,7 +123,6 @@ $(".next").click(function () {
 			easing: 'easeInOutBack'
 		});
 	}
-
 });
 
 $(document).ready(function () {
@@ -200,7 +202,14 @@ form.submit(function (event) {
 	event.preventDefault();
 
 	var appointments = $("#appointments");
-	var data2 = { doctorId: parseInt(doctors.val(),10), period: appointments.val() }
+	//var doctor = { id : doctors.val() }
+	console.log(appointments.val())
+	var startEnd = appointments.val().split("S");
+	var start = new Date(startEnd[0])
+	var end = new Date(startEnd[1])
+	console.log(start,end)
+	console.log(doctors.val(),userId)
+	var data2 = { Start: start, End : end, PatientId : parseInt(userId,10), DoctorId : parseInt(doctors.val(),10) }
 	$.ajax({
 		url: window.location.protocol + "//" + window.location.host + "/api/examination/newExamination",
 		type: 'POST',
@@ -209,7 +218,9 @@ form.submit(function (event) {
 		headers: { "Authorization": token },
 		success: function (data) {
 			console.log(data);
+			location.href = window.location.protocol + "//" + window.location.host + "/html/homePage.html"
 		}
 	})
 });
+
 

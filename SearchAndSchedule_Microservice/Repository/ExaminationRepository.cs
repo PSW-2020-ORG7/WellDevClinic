@@ -17,6 +17,24 @@ namespace SearchAndSchedule_Microservice.Repository
             _myDbContext = myDbContext;
         }
 
+        public void Cancel(long id)
+        {
+            UpcomingExamination examination = _myDbContext.Examination.FirstOrDefault(e => e.Id == id);
+            BusinessDay bd = _myDbContext.BussinesDay.FirstOrDefault(e => e.Doctor.Id == examination.Doctor.Id && e.Shift.StartDate.Date == examination.Period.StartDate.Date);
+            foreach(Period p in bd.ScheduledPeriods)
+            {
+                if (p.StartDate == examination.Period.StartDate)
+                {
+                    bd.ScheduledPeriods.Remove(p);
+                    break;
+                }
+            }
+            examination.Canceled = true;
+            examination.CanceledDate = DateTime.Now;
+            _myDbContext.Examination.Update(examination);
+            _myDbContext.SaveChanges();
+        }
+
         public void Delete(UpcomingExamination entity)
         {
             _myDbContext.Examination.Remove(entity);
@@ -28,6 +46,8 @@ namespace SearchAndSchedule_Microservice.Repository
             _myDbContext.Examination.Update(entity);
             _myDbContext.SaveChanges();
         }
+
+        
 
         public UpcomingExamination Get(long id)
         {
@@ -56,6 +76,12 @@ namespace SearchAndSchedule_Microservice.Repository
 
         public UpcomingExamination Save(UpcomingExamination entity)
         {
+            Doctor d = _myDbContext.Doctor.FirstOrDefault(e => e.Id == entity.Doctor.Id);
+            entity.Doctor = d;
+            Patient p = _myDbContext.Patient.FirstOrDefault(e => e.Id == entity.Patient.Id);
+            entity.Patient = p;
+            BusinessDay bd = _myDbContext.BussinesDay.FirstOrDefault(e => e.Doctor.Id == entity.Doctor.Id && e.Shift.StartDate.Date == entity.Period.StartDate.Date);
+            bd.ScheduledPeriods.Add(entity.Period);
             var Examination = _myDbContext.Examination.Add(entity);
             _myDbContext.SaveChanges();
             return Examination.Entity;

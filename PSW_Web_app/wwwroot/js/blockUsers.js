@@ -22,10 +22,10 @@ function parseJwt(token) {
 function addPatient(patient) {
 	let tr = $('<tr></tr>');
 	let tdId = $('<td>' + patient.id + '</td>');
-	let tdName = $('<td>' + patient.person.fullName + '</td>');
+	let tdName = $('<td>' + patient.person.firstName + '</td>');
 	let tdBlock = $('<td></td>');
 	if (!patient.blocked) {
-		let button = $('<button> Block user </button>');
+		let button = $('<button type="button"> Block user </button>');
 		button.attr('class', 'block');
 		tdBlock.append(button);
 		tr.append(tdId).append(tdName).append(tdBlock);
@@ -44,7 +44,14 @@ $(document).ready(function () {
 		headers: { "Authorization": token },
 		success: function (patients) {
 			for (let patient of patients) {
-				addPatient(patient);
+				for (let patient of patients) {
+					$.get({
+						url: window.location.protocol + "//" + window.location.host + '/api/patient/lazy/' + patient.id,
+						success: function (patient) {
+							addPatient(patient);
+						}
+					});
+				}
 			}
 		}
 	});

@@ -2,6 +2,7 @@ function authorize() {
 	token = sessionStorage.getItem("token");
 	let payload = parseJwt(token);
 	userType = payload["type"];
+	userId = payload["Id"];
 	if (userType != "Patient") {
 		alert("You are not authorized for this page!!!");
 		window.location.replace(window.location.protocol + "//" + window.location.host + "/html/viewFeedbackAdmin.html");
@@ -9,6 +10,7 @@ function authorize() {
 }
 var token = "";
 var userType = "";
+var userId = "";
 function parseJwt(token) {
 	var base64Url = token.split('.')[1];
 	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -72,8 +74,10 @@ function addPrescription(examination, i) {
 	let doctor = $('<td>' + examination.doctor + '</td>');
 	let date = $('<td>' + examination.date + '</td>');
 	let drugList = $('<td>' + examination.drug + '</td>');
-	tr.append(row).append(doctor).append(date).append(drugList);
-	$('#tableP tbody').append(tr);
+	if (examination.drug.length !== 0) {
+		tr.append(row).append(doctor).append(date).append(drugList);
+		$('#tableP tbody').append(tr);
+	}
 }
 function addReferral(examination, i) {
 	tr = $('<tr id="tr"></tr>');
@@ -81,8 +85,10 @@ function addReferral(examination, i) {
 	let doctor = $('<td>' + examination.doctor + '</td>');
 	let date = $('<td>' + examination.date + '</td>');
 	let specialist = $('<td>' + examination.specialist + '</td>');
-	tr.append(row).append(doctor).append(date).append(specialist);
-	$('#tableR tbody').append(tr);
+	if (examination.specialist.length !== 0) {
+		tr.append(row).append(doctor).append(date).append(specialist);
+		$('#tableR tbody').append(tr);
+	}
 }
 
 function deleteTable() {
@@ -112,20 +118,28 @@ function hideAll() {
 $(document).ready(function () {
 	validDate()
 	$.get({
-		url: window.location.protocol + "//" + window.location.host + '/api/examination/getByUser/1',
+		url: window.location.protocol + "//" + window.location.host + '/api/patient/lazy/' + userId,
 		headers: { "Authorization": token },
-		success: function (list) {
-			deleteTable();
-			i = 1;
-			for (let examination of list) {
-				addPrescription(examination, i);
-				addReferral(examination, i);
-				examinations.push(examination);
-				i++;
-			}
+		success: function (data) {
+			$.post({
+				url: window.location.protocol + "//" + window.location.host + '/api/examination/getByUser/',
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				headers: { "Authorization": token },
+				success: function (list) {
+					deleteTable();
+					i = 1;
+					for (let examination of list) {
+						addPrescription(examination, i);
+						addReferral(examination, i);
+						examinations.push(examination);
+						i++;
+					}
+				}
+			});
 		}
 	});
-
+	
 	$('select[name="type"]').change(function () {
 		var value = $(this).val();
 		if (value == "Referral") {

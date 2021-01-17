@@ -45,9 +45,9 @@ namespace UserInteraction_Interlayer.Controllers
 
         [HttpGet]
         [Route("getBySpeciality/{speciality?}")]
-        public List<Doctor> GetDoctorsBySpeciality(Speciality speciality)
+        public List<Doctor> GetDoctorsBySpeciality(string speciality)
         {
-            return _doctorAppService.GetDoctorsBySpeciality(speciality).ToList();
+            return _doctorAppService.GetDoctorsBySpeciality(new Speciality(speciality)).ToList();
         }
     }
 }

@@ -24,12 +24,13 @@ namespace UserInteraction_Microservice.Domain.DomainServices
         public User LogIn(string username, string password)
         {
             User user;
+            Patient patient = _patientAppService.LogIn(username, password);
             if ((user = _directorAppService.LogIn(username, password)) != null)
                 return user;
             if ((user = _secretaryAppService.LogIn(username, password)) != null)
                 return user;
-            if ((user = _patientAppService.LogIn(username, password)) != null)
-                return user;
+            if (patient != null && !(patient.Blocked))
+                return patient;
             if ((user = _doctorAppService.LogIn(username, password)) != null)
                 return user;
 
@@ -43,8 +44,10 @@ namespace UserInteraction_Microservice.Domain.DomainServices
                 return _directorAppService.Save((Director)user);
             if (user.UserType == UserType.Doctor)
                 return _doctorAppService.Save((Doctor)user);
-            if (user.UserType == UserType.Patient)
-                return _patientAppService.Save((Patient)user);
+            if (user.UserType == UserType.Patient) { 
+                _patientAppService.Save((Patient)user);
+                return null;
+            }
             if (user.UserType == UserType.Secretary)
                 return _secretaryAppService.Save((Secretary)user);
             

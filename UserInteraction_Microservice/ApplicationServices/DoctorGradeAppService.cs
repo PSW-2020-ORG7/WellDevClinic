@@ -38,7 +38,10 @@ namespace UserInteraction_Microservice.ApplicationServices
 
         public List<DoctorGrade> GetByDoctor(string doctor)
         {
-            return _doctorGradeRepository.GetByDoctor(doctor);
+            List<DoctorGrade> surveys = _doctorGradeRepository.GetByDoctor(doctor);
+            foreach (DoctorGrade survey in surveys)
+                survey.AverageGrade = GetAverageGrade(survey);
+            return surveys;
         }
 
         public IEnumerable<DoctorGrade> GetAll()
