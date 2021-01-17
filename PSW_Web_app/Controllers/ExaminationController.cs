@@ -1,23 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using PSW_Web_app.Models.UserInteraction;
 using PSW_Web_app.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using bolnica.Model.Adapters;
-using bolnica.Model.dtos;
-using bolnica.Controller;
-using bolnica.Model;
-using bolnica.Service;
-using Model.Dto;
-using WellDevCore.Model.Dto;
-using System.Globalization;
 using System.Net.Http;
 using Newtonsoft.Json;
-using WellDevCore.Model.dtos;
 using System.Text;
+using PSW_Web_app.Models.Dtos;
 
 namespace PSW_Web_app.Controllers
 {
@@ -31,17 +21,6 @@ namespace PSW_Web_app.Controllers
 
         static readonly HttpClient client = new HttpClient();
 
-        [HttpGet]
-        [Route("getAll")]
-        public async Task<List<ExaminationDto>> GetFinishedExaminations()
-        {
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/getAll");
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
-            return result;
-        }
-
         [HttpPut]
         [Route("{id?}")]
         public async Task<IActionResult> FillSurvey(long id)
@@ -49,7 +28,7 @@ namespace PSW_Web_app.Controllers
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(id));
-            var response = await client.PutAsync(communicationLink + "/api/examination/" + id, content);
+            var response = await client.PutAsync(communicationLink + "/api/examinationDetails/FillSurvey/" + id, content);
             return Ok();
         }
 
@@ -60,7 +39,7 @@ namespace PSW_Web_app.Controllers
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
             var content = new StringContent(JsonConvert.SerializeObject(id));
-            var response = await client.PutAsync(communicationLink + "/api/examination/canceled/" + id, content);
+            var response = await client.PutAsync(communicationLink1 + "/api/upcomingExamination/Cancel/"+id, content);
             return Ok();
         }
 
@@ -86,53 +65,58 @@ namespace PSW_Web_app.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(patient, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(communicationLink1 + "/api/upcomingExamination/GetUpcomingExaminationsByPatient/", content);
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDetails> result = JsonConvert.DeserializeObject<List<ExaminationDetails>>(responseBody);
+            List<UpcomingExamination> result = JsonConvert.DeserializeObject<List<UpcomingExamination>>(responseBody);
             return Ok(result);
 
         }
-       /* [HttpGet]
+        [HttpGet]
         [Route("upcoming/{id?}")]
-        public async Task<IActionResult> GetUpcomingExaminationsByUser(long id)
+        public async Task<IActionResult> GetUpcomingExaminationByUser(long id)
         {
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/upcoming/" + id);
+            HttpResponseMessage response = await client.GetAsync(communicationLink1 + "/api/upcomingExamination/" + id);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
+            UpcomingExamination result = JsonConvert.DeserializeObject<UpcomingExamination>(responseBody);
             return Ok(result);
-        }*/
+        }
         /// <summary>
         ///  calls GetFinishedExaminationsByUser(User user) method from class ExaminationService so  
         /// it can get examinations of specified user
         /// </summary>
         /// <param name="user">specified user</param>
         /// <returns>status 200 OK response with a list of examinations mapped to ExaminationDto</returns>
-        [HttpGet]
-        [Route("getByUser/{id?}")]
-        public async Task<IActionResult> GetFinishedExaminationDocumentsByUser(long id)
+        [HttpPost]
+        [Route("getByUser")]
+        public async Task<IActionResult> GetFinishedExaminationDocumentsByUser(Patient patient)
         {
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/examination/getByUser/" + id);
-            response.EnsureSuccessStatusCode();
+            var content = new StringContent(JsonConvert.SerializeObject(patient, Formatting.Indented), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(communicationLink + "/api/examinationDetails/getByPatient/", content);
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<ExaminationDto> result = JsonConvert.DeserializeObject<List<ExaminationDto>>(responseBody);
-            return Ok(result);
+            List<ExaminationDetails> result = JsonConvert.DeserializeObject<List<ExaminationDetails>>(responseBody);
+            List<ExaminationDto> resultDto = new List<ExaminationDto>();
+            foreach (ExaminationDetails e in result) {
+                resultDto.Add(ExaminationMapper.ExaminationDetailsToExaminationDto(e));
+            }
+            return Ok(resultDto);
+
         }
 
-       /* [HttpPost]
-        [Route("newExamination")]
-        public async Task<IActionResult> NewExaminationAsync([FromBody] ExaminationIdsDTO examination)
-        {
-            if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
-                return BadRequest();
-            var content = new StringContent(JsonConvert.SerializeObject(examination, Formatting.Indented), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(communicationLink + "/api/examination/newExamination", content);
-            string responseBody = await response.Content.ReadAsStringAsync();
-            Examination result = JsonConvert.DeserializeObject<Examination>(responseBody);
-            return Ok(result);
-        }*/
+        /* [HttpPost]
+         [Route("newExamination")]
+         public async Task<IActionResult> NewExaminationAsync([FromBody] ExaminationIdsDTO examination)
+         {
+             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
+                 return BadRequest();
+             var content = new StringContent(JsonConvert.SerializeObject(examination, Formatting.Indented), Encoding.UTF8, "application/json");
+             var response = await client.PostAsync(communicationLink + "/api/examination/newExamination", content);
+             string responseBody = await response.Content.ReadAsStringAsync();
+             Examination result = JsonConvert.DeserializeObject<Examination>(responseBody);
+             return Ok(result);
+         }*/
 
         [HttpGet]
         [Route("prescription/{id?}")]

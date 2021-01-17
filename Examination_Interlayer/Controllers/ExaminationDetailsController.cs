@@ -59,5 +59,12 @@ namespace Examination_Interlayer.Controllers
             return _examinationDetailsAppService.GetExaminationDetailsByPatient(patient).ToList();
         }
 
+        [HttpPut]
+        [Route("FillSurvey/{id?}")]
+        public void FillSurvey(long id)
+        {
+            _examinationDetailsAppService.FillSurvey(id);
+        }
+
     }
 }

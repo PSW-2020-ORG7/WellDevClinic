@@ -100,7 +100,6 @@ function addUpcomingExamination(examination, i) {
 }
 
 $(document).ready(function () {
-
 	$.get({
 		url: window.location.protocol + "//" + window.location.host + '/api/patient/lazy/' + userId,
 		headers: { "Authorization": token },
@@ -133,32 +132,22 @@ $(document).ready(function () {
 				success: function (list) {
 					i = 1;
 					for (let examination of list) {
-						addUpcomingExamination(examination, i)
-						i++;
+						if (!examination.canceled) {
+							addUpcomingExamination(examination, i)
+							i++;
+						}
 					}
 				}
 			});
 		}
 	});
 
-   /* $.get({
-		url: window.location.protocol + "//" + window.location.host + '/api/examination/upcoming/1',
-		headers: { "Authorization": token },
-		success: function (list) {
-			i = 1;
-			for (let examination of list) {
-				if (!(examination.canceled)) {
-					addUpcomingExamination(examination, i)
-					i++;
-				}
-			}	
-		}
-	});*/
+   
 
 	$("#tableU tbody").on("click", ".buttonCancel", function () {
 		var id = $(this).attr('id');
 		$.ajax({
-			url: window.location.protocol + "//" + window.location.host + "/api/examination/canceled/" + id,
+			url: window.location.protocol + "//" + window.location.host + "/api/examination/canceled/"+id,
 			type: 'PUT',
 			headers: { "Authorization": token },
 			success: function () {
