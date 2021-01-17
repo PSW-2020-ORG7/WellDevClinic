@@ -91,11 +91,14 @@ $(document).ready(function () {
 
 		let searchParams = new URLSearchParams(window.location.search);
 		let doctor_names = searchParams.get('doctor');
+		alert(doctor_names);
 		let examination_id = searchParams.get('id');
 		let doctor_names_split = [];
 		doctor_names_split = doctor_names.split(' ');
 		personObject.firstName = doctor_names_split[0];
+		alert(doctor_names_split[0]);
 		personObject.lastName = doctor_names_split[1];
+		alert(doctor_names_split[1]);
 		doctorObject.person = personObject;
 		alert(doctorObject.person.fullName);
 		$.post({

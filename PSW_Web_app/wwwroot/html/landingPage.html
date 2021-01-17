@@ -14,6 +14,10 @@
             <button onclick="login()">Log in</button>
             <button onclick="register()">Register</button>
         </div>
+        <h3>Here you can see the feedback from our patients</h3>
+        <div class="btn-group">
+            <button onclick="feedback()">View feedback</button>
+        </div>
 
     </div>
 
@@ -24,6 +28,9 @@
         }
         function register() {
             window.location.href = origin + "/html/registration.html"
+        }
+        function feedback() {
+            window.location.href = origin + "/html/viewFeedbackUser.html"
         }
     </script>
 </body>
