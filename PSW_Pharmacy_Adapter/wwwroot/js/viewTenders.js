@@ -105,7 +105,7 @@ function viewAllTenders(tenders) {
 
                 for (let med of ten.medications) {
                     content += '<tr style="background: transparent;"><td float="right">';
-                    content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
+                    content += med.name + '</td><td>  x' + med.amount + '</td></tr>';
                 }
             }
             content += '</table></h5><hr color="#FFFF33"> <table>';
