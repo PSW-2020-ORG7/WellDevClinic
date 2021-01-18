@@ -59,9 +59,10 @@ namespace PSW_Wpf_app.View
 
         private async void Schedule_Term_Click(object sender, RoutedEventArgs e)
         {
-            ExaminationDTO examinationDTO = (ExaminationDTO)emergencyData.SelectedItem;
-            examinationDTO.Patient = patient;
-            Examination examination = (Examination)await WpfClient.NewExamination(examinationDTO);
+            ExaminationDTO ex = (ExaminationDTO)emergencyData.SelectedItem;
+            UpcomingExamination upcoming = new UpcomingExamination(ex.Doctor, ex.Period, patient);
+
+            UpcomingExamination examination = (UpcomingExamination)await WpfClient.NewExamination(upcoming);
 
 
             if (examination != null)
@@ -101,7 +102,8 @@ namespace PSW_Wpf_app.View
             List<ExaminationDTO> examinationDTO = context.DelayedTermExamination;
             ExaminationDTO ex = examinationDTO[selected];
             ex.Patient = examination.Patient;
-            Examination examinationNew = (Examination)await WpfClient.NewExamination(ex);
+            UpcomingExamination upcoming = new UpcomingExamination(ex.Doctor, ex.Period, ex.Patient);
+            UpcomingExamination examinationNew = (UpcomingExamination)await WpfClient.NewExamination(upcoming);
 
 
             examination.Patient = patient;

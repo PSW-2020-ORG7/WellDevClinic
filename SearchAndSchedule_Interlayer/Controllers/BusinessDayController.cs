@@ -81,12 +81,12 @@ namespace SearchAndSchedule_Interlayer.Controllers
         }
 
         //DTO za ova dva parametra ukoliko nekom treba metoda
-        /*[HttpPost]
-          [Route("GetExactDay")]
-          public BusinessDay GetExactDay(Doctor doctor, DateTime date)
-          {
-               return _businessDayAppService.GetExactDay(doctor, date);
-          }*/
+        [HttpPost]
+        [Route("GetExactDay")]
+        public BusinessDay GetExactDay(Doctor doctor, DateTime date)
+        {
+             return _businessDayAppService.GetExactDay(doctor, date);
+        }
         [HttpPost]
         [Route("IsExaminationPossible")]
         public bool IsExaminationPossible(UpcomingExamination examination)

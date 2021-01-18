@@ -124,9 +124,9 @@ namespace PSW_Wpf_app.View
             period.EndDate = scheduleExam.Period.EndDate;
 
 
-            ExaminationDTO ex = new ExaminationDTO(doctor, period, patient);
+            UpcomingExamination ex = new UpcomingExamination(doctor, period, patient);
 
-            Examination examination = (Examination)await WpfClient.NewExamination(ex);
+            UpcomingExamination examination = (UpcomingExamination)await WpfClient.NewExamination(ex);
 
             if (examination != null)
             {

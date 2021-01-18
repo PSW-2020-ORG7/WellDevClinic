@@ -144,15 +144,25 @@ namespace PSW_Wpf_app.Client
 
             return drugs;
         }
-
-        public static async Task<BusinessDay> GetBussinessdayByDoctor(Doctor doctor)
+        
+        public static async Task<List<BusinessDay>> GetBussinessdayByDoctor(Doctor doctor)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/businessday/GetBusinessDaysByDoctor/" + doctor);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            BusinessDay buss = JsonConvert.DeserializeObject<BusinessDay>(responseBody);
+            var content = new StringContent(JsonConvert.SerializeObject(doctor));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:62044/api/businessday/GetBusinessDaysByDoctor/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            List<BusinessDay> val = JsonConvert.DeserializeObject<List<BusinessDay>>(value);
+            return val;
+        }
 
-            return buss;
+        public static async Task<List<BusinessDay>> GetExactBusinessdayByDoctor(Doctor doctor, Period date)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(doctor));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:62044/api/businessday/GetBusinessDaysByDoctor/",content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            List<BusinessDay> val = JsonConvert.DeserializeObject<List<BusinessDay>>(value);
+            return val;
         }
 
         public static async Task<List<Doctor>> GetDoctorsBySpeciality(String speciality)
@@ -188,13 +198,13 @@ namespace PSW_Wpf_app.Client
 
         }
 
-        public static async Task<Examination> NewExamination(ExaminationDTO examination)
+        public static async Task<UpcomingExamination> NewExamination(UpcomingExamination examination)
         {
             var content = new StringContent(JsonConvert.SerializeObject(examination));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:51393/api/examination/newExamination/", content);
+            var responseBody = await client.PostAsync("http://localhost:62044/api/upcomingexamination/", content);
             var value = await responseBody.Content.ReadAsStringAsync();
-            Examination result = JsonConvert.DeserializeObject<Examination>(value);
+            UpcomingExamination result = JsonConvert.DeserializeObject<UpcomingExamination>(value);
             return result;
         }
 
