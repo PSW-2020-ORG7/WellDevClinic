@@ -4,13 +4,7 @@ using System.Text;
 
 namespace PSW_Wpf_app.Model
 {
-    public enum PriorityType
-    {
-        NoPriority,
-        Doctor,
-        Date,
-
-    }
+    
     public class BusinessDay
     {
         public long Id { get; set; }

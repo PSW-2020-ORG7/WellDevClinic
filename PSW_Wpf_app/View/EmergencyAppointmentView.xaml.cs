@@ -41,7 +41,7 @@ namespace PSW_Wpf_app.View
             {
                 name.Text = patient.Person.FirstName;
                 surname.Text = patient.Person.LastName;
-                phone.Text = patient.UserDetails.Phone;
+               
                 jmbgpatient.Text = patient.Person.Jmbg;
             }
             
@@ -117,7 +117,7 @@ namespace PSW_Wpf_app.View
 
             patient.Person.FirstName = name.Text;
             patient.Person.LastName = surname.Text;
-            patient.UserDetails.Phone = phone.Text;
+           
             patient.Person.Jmbg = jmbgpatient.Text;
             patient.UserLogIn.Username = name.Text;
             patient.UserDetails.Image = ";" + name.Text + ".jpg" + ",";

@@ -80,11 +80,13 @@ namespace PSW_Wpf_app.ViewModel
             SearchCommand = new MyICommand<object>(OnSearch);
             LoadEquipments();
             LoadDrugs();
+            
         }
         private async void LoadEquipments()
         {
             Equipments = new BindingList<Equipment>(await WpfClient.GetAllEquipment());
         }
+       
 
         private async void LoadDrugs()
         {
