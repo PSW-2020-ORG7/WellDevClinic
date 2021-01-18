@@ -19,6 +19,8 @@ namespace PSW_Pharmacy_Adapter
         // Test data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Tender>().OwnsOne(t => t.Period);
+
             modelBuilder.Entity<Api>().HasData(
                 new Api("PH1", "4545-as84-8s8g-zXCV", "http://localhost:4200/Ph1"),
                 new Api("PH2", "7788-AV5R-zxQt-5845", "http://localhost:4200/Ph2"),
