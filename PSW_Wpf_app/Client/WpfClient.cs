@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PSW_Wpf_app.Model;
+using PSW_Wpf_app.Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -155,13 +156,13 @@ namespace PSW_Wpf_app.Client
             return val;
         }
 
-        public static async Task<List<BusinessDay>> GetExactBusinessdayByDoctor(Doctor doctor, Period date)
+        public static async Task<BusinessDay> GetExactBusinessdayByDoctor(ExactDayDTO exactDay)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(doctor));
+            var content = new StringContent(JsonConvert.SerializeObject(exactDay));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:62044/api/businessday/GetBusinessDaysByDoctor/",content);
+            var responseBody = await client.PostAsync("http://localhost:62044/api/businessday/GetExactDay/", content);
             var value = await responseBody.Content.ReadAsStringAsync();
-            List<BusinessDay> val = JsonConvert.DeserializeObject<List<BusinessDay>>(value);
+            BusinessDay val = JsonConvert.DeserializeObject<BusinessDay>(value);
             return val;
         }
 

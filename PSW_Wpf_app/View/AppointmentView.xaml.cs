@@ -1,5 +1,6 @@
 ﻿using PSW_Wpf_app.Client;
 using PSW_Wpf_app.Model;
+using PSW_Wpf_app.Model.DTO;
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -105,14 +106,15 @@ namespace PSW_Wpf_app.View
             if (examination != null)
             {
                 MessageBox.Show("Appointment is scheduled!");
-                GetRoomId(doctor);
+                GetRoomId(doctor, examination.Period);
 
             }
 
         }
-        private async void GetRoomId(Doctor doctor)
+        private async void GetRoomId(Doctor doctor, Period period)
         {
-            BusinessDay buss = (BusinessDay)await WpfClient.GetBussinessdayByDoctor(doctor);
+            ExactDayDTO exactDay = new ExactDayDTO(doctor, period.StartDate);
+            BusinessDay buss = (BusinessDay)await WpfClient.GetExactBusinessdayByDoctor(exactDay);
             RomId = buss.Room.Id;
         }
 

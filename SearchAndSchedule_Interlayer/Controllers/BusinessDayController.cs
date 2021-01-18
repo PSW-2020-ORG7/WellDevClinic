@@ -80,12 +80,11 @@ namespace SearchAndSchedule_Interlayer.Controllers
             _businessDayAppService.DeleteBusinessDayByRoom(room);
         }
 
-        //DTO za ova dva parametra ukoliko nekom treba metoda
         [HttpPost]
         [Route("GetExactDay")]
-        public BusinessDay GetExactDay(Doctor doctor, DateTime date)
+        public BusinessDay GetExactDay(ExactDayDTO exactDay)
         {
-             return _businessDayAppService.GetExactDay(doctor, date);
+             return _businessDayAppService.GetExactDay(exactDay.Doctor, exactDay.Date);
         }
         [HttpPost]
         [Route("IsExaminationPossible")]
