@@ -114,15 +114,18 @@ namespace PSW_Wpf_app.View
         private async void NewPatientClick(object sender, RoutedEventArgs e)
         {
             Patient patient = new Patient();
+            Person person = new Person();
+            UserLogIn userLogIn = new UserLogIn();
 
-            patient.Person.FirstName = name.Text;
-            patient.Person.LastName = surname.Text;
+            person.FirstName = name.Text;
+            person.LastName = surname.Text;
            
-            patient.Person.Jmbg = jmbgpatient.Text;
-            patient.UserLogIn.Username = name.Text;
-            patient.UserDetails.Image = ";" + name.Text + ".jpg" + ",";
+            person.Jmbg = jmbgpatient.Text;
+            userLogIn.Username = name.Text;
+            //patient.UserDetails.Image = ";" + name.Text + ".jpg" + ",";
             patient.Guest = true;
-            
+            patient.Person = person;
+            patient.UserLogIn = userLogIn;
 
             Patient p = await WpfClient.SavePatient(patient);
             if (p != null)

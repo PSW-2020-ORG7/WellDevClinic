@@ -200,8 +200,8 @@ namespace PSW_Wpf_app.Client
         
         public static async Task<Room> GetRoomById(long id)
         {
-            //HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/room/" + id);
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/" + id);
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/room/" + id);
+            //HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/" + id);
 
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
@@ -331,7 +331,7 @@ namespace PSW_Wpf_app.Client
         {
             var content = new StringContent(JsonConvert.SerializeObject(patient));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:51393/api/patient/savePatient/", content);
+            var responseBody = await client.PostAsync("http://localhost:14483/api/patient/savePatient/", content);
             var value = await responseBody.Content.ReadAsStringAsync();
             Patient result = JsonConvert.DeserializeObject<Patient>(value);
             return result;

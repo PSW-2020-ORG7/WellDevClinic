@@ -29,7 +29,7 @@ namespace UserInteraction_Microservice.Domain.DomainServices
                 return user;
             if ((user = _secretaryAppService.LogIn(username, password)) != null)
                 return user;
-            if (patient != null && !(patient.Blocked))
+            if (patient != null && !(patient.Blocked) && !(patient.Guest))
                 return patient;
             if ((user = _doctorAppService.LogIn(username, password)) != null)
                 return user;
