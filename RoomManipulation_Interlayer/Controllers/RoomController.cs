@@ -52,7 +52,7 @@ namespace RoomManipulation_Interlayer.Controllers
             _roomAppService.DeleteRoomsByRoomType(roomType);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetRoomsCointainingEquipment")]
         public List<Room> GetRoomsCointainingEquipment(Equipment equipment)
         {

@@ -201,8 +201,7 @@ namespace PSW_Wpf_app.Client
         public static async Task<Room> GetRoomById(long id)
         {
             HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/room/" + id);
-            //HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/" + id);
-
+            
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             Room room = JsonConvert.DeserializeObject<Room>(responseBody);
@@ -230,13 +229,14 @@ namespace PSW_Wpf_app.Client
             return doctor;
         }
 
-        public static async Task<List<Room>> GetRoomsByEquipment(long equipmentId)
+        public static async Task<List<Room>> GetRoomsByEquipment(Equipment equipment)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/room/GetRoomByEquipment/" + equipmentId);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(responseBody);
 
+            var content = new StringContent(JsonConvert.SerializeObject(equipment));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:57400/api/room/GetRoomsCointainingEquipment/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(value);
             return rooms;
         }
 

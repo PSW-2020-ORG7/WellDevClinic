@@ -147,11 +147,11 @@ namespace PSW_Wpf_app.ViewModel
 
 
         }
-        public async void LoadRoomByEquipment(long equipId)
+        public async void LoadRoomByEquipment(Equipment equip)
         {
-            BindingList<Room> list = new BindingList<Room>(await WpfClient.GetRoomsByEquipment(equipId));
-            Room_from = list;
 
+            BindingList<Room> list = new BindingList<Room>(await WpfClient.GetRoomsByEquipment(equip));
+            Room_from = list;
 
         }
 
