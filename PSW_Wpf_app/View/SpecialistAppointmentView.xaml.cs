@@ -62,7 +62,6 @@ namespace PSW_Wpf_app.View
             period.EndDate = DateTime.Parse(Picker2.Text);
 
             BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
-            businessDayDTO.PatientScheduling = true;
             List<ExaminationDTO> exams = await WpfClient.FindTerms(businessDayDTO);
 
             List<ExaminationDTO> final = new List<ExaminationDTO>();

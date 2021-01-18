@@ -145,12 +145,12 @@ namespace PSW_Wpf_app.Client
             return drugs;
         }
 
-        public static async Task<BusinessDayDTO> GetBussinessdayByDoctor(long doctorId)
+        public static async Task<BusinessDay> GetBussinessdayByDoctor(Doctor doctor)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/term/" + doctorId);
+            HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/businessday/GetBusinessDaysByDoctor/" + doctor);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            BusinessDayDTO buss = JsonConvert.DeserializeObject<BusinessDayDTO>(responseBody);
+            BusinessDay buss = JsonConvert.DeserializeObject<BusinessDay>(responseBody);
 
             return buss;
         }
@@ -181,7 +181,7 @@ namespace PSW_Wpf_app.Client
         {
             var content = new StringContent(JsonConvert.SerializeObject(businessDTO));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:51393/api/term/", content);
+            var responseBody = await client.PostAsync("http://localhost:62044/api/businessday/Search/", content);
             var value = await responseBody.Content.ReadAsStringAsync();
             List<ExaminationDTO> val = JsonConvert.DeserializeObject<List<ExaminationDTO>>(value);
             return val;
@@ -200,7 +200,7 @@ namespace PSW_Wpf_app.Client
 
         public static async Task<List<Patient>> GetAllPatient()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/patient");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:14483/api/patient");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Patient> patients = JsonConvert.DeserializeObject<List<Patient>>(responseBody);

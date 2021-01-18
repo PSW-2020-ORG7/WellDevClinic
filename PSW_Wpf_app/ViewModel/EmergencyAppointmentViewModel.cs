@@ -146,7 +146,6 @@ namespace PSW_Wpf_app.ViewModel
             foreach (Doctor doctor in doctors)
             {
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
-                businessDayDTO.PatientScheduling = true;
                 List<ExaminationDTO> terms = await WpfClient.FindTerms(businessDayDTO);
                 if (terms == null)
                     continue;
@@ -219,7 +218,6 @@ namespace PSW_Wpf_app.ViewModel
             foreach (Examination ex in examinations)
             {
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(ex.Doctor, ex.Period, PriorityType.NoPriority);
-                businessDayDTO.PatientScheduling = true;
                 List<ExaminationDTO> termsFound = await WpfClient.FindTerms(businessDayDTO);
                 terms = checkTime(termsFound);
                 if (terms.Count == 0)

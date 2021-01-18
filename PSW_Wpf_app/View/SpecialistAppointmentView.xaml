@@ -18,7 +18,7 @@
             <StackPanel Orientation="Horizontal" Width="790">
 
                 <TextBlock Name="ChoosePatient" Text="Choose a patient:" FontSize="19"  Margin="10" Width="150" Height="30"/>
-                <ComboBox  Width="140" Height="25" x:Name="PatientForExaminations" ItemsSource ="{Binding Patients, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Username" Margin="50,0,0,0"/>
+                <ComboBox  Width="140" Height="25" x:Name="PatientForExaminations" ItemsSource ="{Binding Patients, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Person.FirstName" Margin="50,0,0,0"/>
 
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="790">
@@ -70,7 +70,7 @@
                             </DataGrid.CellStyle>
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Binding="{Binding Doctor.FirstName}" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Binding="{Binding Doctor.Person.FirstName}" Width="*"></DataGridTextColumn>
                                 <DataGridTextColumn x:Name="ColumnDateForSchedule" Header="Date and Time"  Binding="{Binding Period.StartDate}" Width="*"></DataGridTextColumn>
                                 <DataGridTextColumn x:Name="ColumnOrdinationForSchedule" Header="Ordination" Binding="{Binding Room.Id}" Width="*"></DataGridTextColumn>
                            
