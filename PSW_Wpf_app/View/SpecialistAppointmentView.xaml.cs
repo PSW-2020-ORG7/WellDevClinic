@@ -67,7 +67,7 @@ namespace PSW_Wpf_app.View
             List<ExaminationDTO> final = new List<ExaminationDTO>();
             foreach (ExaminationDTO item in exams)
             {
-                if (item.Room.Equipment_inventory.Find(x => x.Equipment.Name == ((Equipment)EquipmentBox.SelectedItem).Name) != null)
+                if (item.Room.EquipmentStatistic.Find(x => x.Equipment.Name == ((Equipment)EquipmentBox.SelectedItem).Name) != null)
                 {
                     final.Add(item);
                 }

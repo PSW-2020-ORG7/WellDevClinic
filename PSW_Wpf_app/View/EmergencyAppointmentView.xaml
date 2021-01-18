@@ -46,7 +46,7 @@
 			SelectionMode="Extended" >
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
+                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.Person.FirstName}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
                 <DataGridTextColumn x:Name="room"  Header="Ordination"  Width="*" Binding="{Binding Room.Id}"/>
 

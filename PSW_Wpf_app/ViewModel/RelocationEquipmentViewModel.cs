@@ -159,10 +159,10 @@ namespace PSW_Wpf_app.ViewModel
 
         public async Task<bool> LoadExams(long roomId, DateTime dateTime)
         {
-            BindingList<Examination> list = new BindingList<Examination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, dateTime));
+            BindingList<UpcomingExamination> list = new BindingList<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, dateTime));
 
             if (list.Count == 0) return true;
-            foreach (Examination item in list)
+            foreach (UpcomingExamination item in list)
             {
                 if (item.Period.StartDate == dateTime)
                     return false;
@@ -268,8 +268,8 @@ namespace PSW_Wpf_app.ViewModel
             }
             try
             {
-                List<Examination> list1 = new List<Examination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId1, dateTime1, dateTime2));
-                List<Examination> list2 = new List<Examination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId2, dateTime1, dateTime2));
+                List<UpcomingExamination> list1 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId1, dateTime1, dateTime2));
+                List<UpcomingExamination> list2 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId2, dateTime1, dateTime2));
 
                 List<DateTime> finale = new List<DateTime>();
 

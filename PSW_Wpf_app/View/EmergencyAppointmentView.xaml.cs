@@ -98,7 +98,7 @@ namespace PSW_Wpf_app.View
         private async void Schedule_And_Dilay_Term_Click(object sender, RoutedEventArgs e)
         {
             int selected = analysisData.SelectedIndex;
-            Examination examination = (Examination)analysisData.SelectedItem;
+            UpcomingExamination examination = (UpcomingExamination)analysisData.SelectedItem;
             List<ExaminationDTO> examinationDTO = context.DelayedTermExamination;
             ExaminationDTO ex = examinationDTO[selected];
             ex.Patient = examination.Patient;

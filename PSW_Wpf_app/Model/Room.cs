@@ -12,7 +12,7 @@ namespace PSW_Wpf_app.Model
         public virtual RoomType RoomType { get; set; }
         public int MaxNumberOfPatientsForHospitalization { get; set; }
         public int CurrentNumberOfPatients { get; set; }
-        public virtual List<EquipmentDTO> Equipment_inventory { get; set; }
+        //public virtual List<EquipmentDTO> Equipment_inventory { get; set; }
 
     }
 }
