@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿var allMeds = [];
+var br = 0;
+$(document).ready(function () {
     getMedicationStock();
     $.ajax({
         method: "GET",
@@ -9,122 +11,38 @@
             console.log(data);
         },
     });
-
-    $("#mc-embedded-subscribe").click(function () {
-        let email = $("#mce-EMAIL").val();
-
-        var jsonEmail = JSON.stringify({
-            Email: email,
-        });
-
-        $.ajax({
-            method: "POST",
-            url: "../api/pharmacyemails/add",
-            contentType: "application/json",
-            data: jsonEmail,
-            success: function (data) {
-                if (data) {
-                    $('#message').html('Succesfully added to database.');
-                    $("#regAction").show();
-                }
-            },
-            error: function (e) {
-                $("#message").empty();
-                $('#message').html('Already exists.');
-                $("#regAction").show();
-            }
-        })
-    })
-
-    var br = 0
+  
     $(".add_field_button").click(function (e) {
         e.preventDefault();
-        if ($(".input_fields_wrap").children().length < 5) {
-            var contentField = '<div><input placeholder="Enter medicine name" type="text" name="medicineName[]" id="' + br + '"/> ';
+        if ($(".input_fields_wrap").children().length < 10) {
+            let contentField = '<div>';
+            contentField += '<div class="autocomplete">';
+            contentField += '<input id= "' + br + '" type="text" name="medicineName" placeholder="Enter medicine name" autocomplete="off"/> ';
+            contentField += "</div>";
             br += 1;
-            contentField += '<input placeholder="Enter amount" type="number" name="quantity[]" id="' + br + '"/> ';
+            contentField += '<input id="' + br + '" type="number" name="quantity" placeholder="Enter amount" /> ';
             contentField += '<button class="btn btn-outline-danger remove_field">&times;</button>';
             contentField += '</div>';
             $(".input_fields_wrap").append(contentField);
             br += 1;
+            for (let inp of document.getElementsByName('medicineName'))
+                autocomplete(inp, allMeds.map(x => x.name));
         }
     });
 
     $(".input_fields_wrap").on('click', '.remove_field', function (e) {
         e.preventDefault();
+        br -= 1;
         $(this).parent('div').remove();
     });
 
-
-    $("#btnAddTender").click(function () {
-        var meds = [];
-        for (i = 0; i < br; i++) {
-            medName = $("#" + i + "").val();
-            i += 1;
-            medAmount = $("#" + i + "").val();
-            var med = {
-                "name": medName,
-                "amount": Number(medAmount)
-            };
-            meds.push(med);
-        }
-        
-        console.log(meds);
-        let startDate = $("#dateStart").val();
-        let endDate = $("#dateEnd").val();
-
-        if (startDate == "" || endDate == "") {
-            alert("Start date and end date can't be empty!")
-            return;
-        }
-        if (startDate > endDate) {
-            alert("Start date can't be greater than end date!")
-            return;
-        }
-
-        var jsonTender = JSON.stringify({
-            Medications: meds,
-            StartDate: startDate,
-            EndDate: endDate
-        });
-
-        $.ajax({
-            method: "POST",
-            url: "../api/tender/add",
-            contentType: "application/json",
-            data: jsonTender,
-            success: function (data) {
-                if (data) {
-                    $('#message').html('Succesfully added to database.');
-                    $("#regAction").show();
-                    $("#btnOk").click(function () {
-                        window.location.reload();
-                    })
-                }
-            },
-            error: function (e) {
-                $("#message").empty();
-                $('#message').html('Already exists.');
-                $("#regAction").show();
-            }
-        })
-    })
-
     $(".close").click(function () {
         $(".modalCustom").hide(200);
-    })
+    });
 
-    $("#btnAddTen").click(function () {
+    $("#btnTenderModal").click(function () {
         $("#modalAddTender").slideDown("fast");
-    })
-   
-    var $form = $('#mc-embedded-subscribe-form')
-    if ($form.length > 0) {
-        $('form input[type="submit"]').bind('click', function (event) {
-            if (event) event.preventDefault()
-            subscribe($form)
-        })
-    }
+    });
 })
 
 function getMedicationStock() {
@@ -134,23 +52,30 @@ function getMedicationStock() {
         method: "GET",
         url: "../api/medication/",
         contentType: "application/json",
-        success: function (allMeds) {
-            for (let med of allMeds) {
+        success: function (allMedications) {
+            allMeds = allMedications;
+            for (let med of allMedications) {
                 let content = '<a class="dropdown-item" href="#" onClick="setName(\'' + med.name + '\')">';
                 content += med.name;
                 content += '</a>';
 
                 $("#viewMedication").append(content);
             }
+            for (let inp of document.getElementsByName('medicineName'))
+                autocomplete(inp, allMeds.map(x => x.name));
         },
         error: function (e) {
-            $('#write').html(e.responseText);
+            $('#write').text(e.responseText);
             $("#stockAction").show();
             $("#btnOk").click(function () {
                 $("#txtResponse").val(e.status + " " + e.statusText);
             });
         },
     });
+}
+
+function setName(name) {
+    $("#btnMed").text(name);
 }
 
 
@@ -214,11 +139,7 @@ function viewOffers(tender) {
 
 function makeOffer(tender) {
     $("#viewNeeds").empty();
-
     $("#modalTender").slideDown("fast");
-    $(".close").click(function () {
-        $(".modalCustom").hide(200);
-    })
 
     $.ajax({
         method: "GET",
@@ -253,32 +174,29 @@ function makeOffer(tender) {
                     meds.push(med);
                 }
                 console.log(meds);
-                
-
-                var jsonApi = JSON.stringify({
-                    PharmacyName: name,
-                    Price: Number(price),
-                    Medications: meds,
-                    Message: message,
-                    TenderId: Number(tender),
-                    Email: email
-                });
 
                 $.ajax({
                     method: "POST",
                     url: "../api/tenderoffer/add",
                     contentType: "application/json",
-                    data: jsonApi,
+                    data: JSON.stringify({
+                        PharmacyName: name,
+                        Price: Number(price),
+                        Medications: meds,
+                        Message: message,
+                        TenderId: Number(tender),
+                        Email: email
+                    }),
                     success: function (data) {
                         if (data) {
                             $('#message').html('Succesfully added to database.');
-                            $("#regAction").show();
+                            $("#pageInfo").show();
                         }
                     },
                     error: function (e) {
                         $("#message").empty();
                         $('#message').html('Already exists.');
-                        $("#regAction").show();
+                        $("#pageInfo").show();
                     }
                 })
             })
@@ -287,6 +205,58 @@ function makeOffer(tender) {
 
 }
 
+function addTender() {
+    let meds = [];
+    for (let i = 0; i < br; i++) {
+        medName = $("#" + i + "").val();
+        i += 1;
+        medAmount = $("#" + i + "").val();
+        var item = {
+            "name": medName,
+            "amount": Number(medAmount)
+        };
+        meds.push(item);
+    }
+
+    console.log(meds);
+    let startDate = $("#dateStart").val();
+    let endDate = $("#dateEnd").val();
+
+    if (startDate == "" || endDate == "") {
+        alert("Start date and end date can't be empty!")
+        return;
+    }
+    if (startDate > endDate) {
+        alert("Start date can't be greater than end date!")
+        return;
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "../api/tender/add",
+        contentType: "application/json",
+        data: JSON.stringify({
+            Medications: meds,
+            StartDate: startDate,
+            EndDate: endDate,
+            IsDeleted: false
+        }),
+        success: function (data) {
+            if (data) {
+                $('#message').text('Succesfully added to database.');
+                $("#pageInfo").show();
+                $("#btnOk").click(function () {
+                    window.location.reload();
+                })
+            }
+        },
+        error: function (e) {
+            $("#message").empty();
+            $('#message').text('Already exists.');
+            $("#pageInfo").show();
+        }
+    });
+}
 
 function deleteTender(tender) {
     $.ajax({
@@ -300,6 +270,51 @@ function deleteTender(tender) {
     });
 }
 
+function subscribe() {
+    let mail = $("#inpEmail").val();
+    if (!mail || !mail.includes('@'))
+        return;
+    $('#btnSubscribe').val('Sending...');
+
+    $.ajax({
+        method: "POST",
+        url: "../api/pharmacyemails/add",
+        contentType: "application/json",
+        data: JSON.stringify({
+            Email: mail
+        }),
+        success: function (data) {
+            if (data) {
+                $('#message').text('Succesfully added to database.');
+                $("#pageInfo").show();
+            }
+        },
+        error: function (e) {
+            $("#message").empty();
+            $('#message').text('Already exists.');
+            $("#pageInfo").show();
+        }
+    });
+
+    $.ajax({
+        contentType: 'application/json',
+        success: function (data) {
+            $('#btnSubscribe').val('subscribe')
+            if (data) {
+                $('#inpEmail').css('borderColor', '#ffffff')
+                $('#subscribe-result').css('color', 'rgb(53, 114, 210)')
+                $('#subscribe-result').html('<p>Thank you for subscribing. We will inform you when new tender is opened.</p>')
+                $('#inpEmail').val('')
+            } else {
+                $('#inpEmail').css('borderColor', '#ff8282')
+                $('#subscribe-result').css('color', '#ff8282')
+            }
+        },
+        error: function (err) {
+            alert('Could not connect to the email server. Please try again later.')
+        }
+    })
+}
 
 function ISOtoShort(date) {
     let day = date.getDate();
@@ -312,28 +327,4 @@ function ISOtoShort(date) {
         month = '0' + month;
 
     return String(day + '-' + month + '-' + year);
-}
-
-function subscribe($form) {
-    $('#mc-embedded-subscribe').val('Sending...');
-    $.ajax({
-        contentType: 'application/json',
-        error: function (err) { alert('Could not connect to the email server. Please try again later.') },
-        success: function (data) {
-            $('#mc-embedded-subscribe').val('subscribe')
-            if (data) {
-                $('#mce-EMAIL').css('borderColor', '#ffffff')
-                $('#subscribe-result').css('color', 'rgb(53, 114, 210)')
-                $('#subscribe-result').html('<p>Thank you for subscribing. We will inform you when new tender is opened.</p>')
-                $('#mce-EMAIL').val('')
-            } else {
-                $('#mce-EMAIL').css('borderColor', '#ff8282')
-                $('#subscribe-result').css('color', '#ff8282')
-            }
-        }
-    })
-}
-
-function setName(name) {
-    $("#btnMed").html(name);
 }
