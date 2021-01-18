@@ -83,65 +83,26 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ActionsAndBenefits");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            EndDate = new DateTime(2021, 2, 2, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(1090),
-                            MessageAboutAction = "Andol on sale! 50% off!!",
-                            PharmacyName = "PH1",
-                            StartDate = new DateTime(2021, 1, 8, 11, 43, 3, 351, DateTimeKind.Local).AddTicks(6393),
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            EndDate = new DateTime(2021, 2, 17, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8367),
-                            MessageAboutAction = "Cheap bromazepam on huge quantities!!",
-                            PharmacyName = "PH1",
-                            StartDate = new DateTime(2021, 1, 23, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8323),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            EndDate = new DateTime(2021, 1, 25, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8468),
-                            MessageAboutAction = "Aspirin C for free!!",
-                            PharmacyName = "PH3",
-                            StartDate = new DateTime(2021, 1, 19, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8463),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            EndDate = new DateTime(2021, 2, 9, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8478),
-                            MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
-                            PharmacyName = "PH3",
-                            StartDate = new DateTime(2021, 1, 20, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8474),
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            EndDate = new DateTime(2021, 2, 2, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8486),
-                            MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
-                            PharmacyName = "PH2",
-                            StartDate = new DateTime(2021, 1, 18, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8482),
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            EndDate = new DateTime(2021, 1, 17, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8494),
-                            MessageAboutAction = "Cheap sedatives!",
-                            PharmacyName = "PH1",
-                            StartDate = new DateTime(2021, 1, 8, 11, 43, 3, 355, DateTimeKind.Local).AddTicks(8491),
-                            Status = 1
-                        });
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Ingredient", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Api", b =>
+                {
+                    b.Property<string>("NameOfPharmacy")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ApiKey")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("NameOfPharmacy");
+
+                    b.ToTable("ApiKeys");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>
+
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
