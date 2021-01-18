@@ -242,12 +242,12 @@ namespace PSW_Wpf_app.ViewModel
             {
                 if (selectedType == 0)
                 {
-                    if (ex.Doctor.Specialty.Name.Equals("general practice"))
+                    if (ex.Doctor.Speciality.Name.Equals("general practice"))
                         examinations.Add(ex);
                 }
                 else
                 {
-                    if (!ex.Doctor.Specialty.Name.Equals("general practice"))
+                    if (!ex.Doctor.Speciality.Name.Equals("general practice"))
                         examinations.Add(ex);
                 }
             }
@@ -290,7 +290,7 @@ namespace PSW_Wpf_app.ViewModel
 
             foreach (Doctor d in doctors)
             {
-                if (d.Specialty.Name.Equals("general practice"))
+                if (d.Speciality.Name.Equals("general practice"))
                     generalPractice.Add(d);
                 else
                     specialists.Add(d);

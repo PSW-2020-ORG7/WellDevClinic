@@ -39,10 +39,10 @@ namespace PSW_Wpf_app.View
             }
             else
             {
-                name.Text = patient.FirstName;
-                surname.Text = patient.LastName;
-                phone.Text = patient.Phone;
-                jmbgpatient.Text = patient.Jmbg;
+                name.Text = patient.Person.FirstName;
+                surname.Text = patient.Person.LastName;
+                phone.Text = patient.UserDetails.Phone;
+                jmbgpatient.Text = patient.Person.Jmbg;
             }
             
         }
@@ -113,12 +113,12 @@ namespace PSW_Wpf_app.View
         {
             Patient patient = new Patient();
 
-            patient.FirstName = name.Text;
-            patient.LastName = surname.Text;
-            patient.Phone = phone.Text;
-            patient.Jmbg = jmbgpatient.Text;
-            patient.Username = name.Text;
-            patient.Image = ";" + name.Text + ".jpg" + ",";
+            patient.Person.FirstName = name.Text;
+            patient.Person.LastName = surname.Text;
+            patient.UserDetails.Phone = phone.Text;
+            patient.Person.Jmbg = jmbgpatient.Text;
+            patient.UserLogIn.Username = name.Text;
+            patient.UserDetails.Image = ";" + name.Text + ".jpg" + ",";
             patient.Guest = true;
             
 

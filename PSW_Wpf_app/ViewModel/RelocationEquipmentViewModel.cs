@@ -207,16 +207,16 @@ namespace PSW_Wpf_app.ViewModel
                 foreach (BusinessDay item in buss)
                 {
 
-                    if (item.room.Id == r1.Room.Id && item.Shift.StartDate <= r1.Period.StartDate && item.Shift.EndDate >= r1.Period.EndDate)
+                    if (item.Room.Id == r1.Room.Id && item.Shift.StartDate <= r1.Period.StartDate && item.Shift.EndDate >= r1.Period.EndDate)
                     {
 
-                        d1 = item.doctor;
+                        d1 = item.Doctor;
                         id1 = item.Id;
                     }
 
-                    if (item.room.Id == r2.Room.Id && item.Shift.StartDate <= r2.Period.StartDate && item.Shift.EndDate >= r2.Period.EndDate)
+                    if (item.Room.Id == r2.Room.Id && item.Shift.StartDate <= r2.Period.StartDate && item.Shift.EndDate >= r2.Period.EndDate)
                     {
-                        d2 = item.doctor;
+                        d2 = item.Doctor;
                         id2 = item.Id;
 
 

@@ -53,8 +53,8 @@ namespace PSW_Wpf_app.View
 
         private async void SearchAvailablePeriods(PriorityType priorityType)
         {
-            DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-            Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+            Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+            
 
             PriorityType priority = priorityType;
             Period period = new Period();

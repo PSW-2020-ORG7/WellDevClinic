@@ -1,4 +1,5 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,8 @@ namespace PSW_Wpf_app.View
                     return;
 
                 
-                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+                Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+                
 
                 PriorityType priority = PriorityType.NoPriority;
                 Period period = new Period();
@@ -45,8 +46,8 @@ namespace PSW_Wpf_app.View
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
 
-                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+                Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+                
 
                 PriorityType priority = PriorityType.Doctor;
                 Period period = new Period();
@@ -61,8 +62,8 @@ namespace PSW_Wpf_app.View
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
-                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+                Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+                
 
                 PriorityType priority = PriorityType.Date;
                 Period period = new Period();

@@ -25,7 +25,7 @@
                 <TextBlock Name="ChooseSpeciality" Text="Choose a speciality:" FontSize="19"  Margin="10" Width="195" Height="30"/>
                 <ComboBox  Width="140" Height="25" x:Name="specs" SelectionChanged="OnChangeSpeciality" DisplayMemberPath="Name" ItemsSource ="{Binding Path=Specialities,  UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
                 <TextBlock Name="ChooseDoctor" Text="Choose a doctor:" FontSize="19"  Margin="20,0,0,0" Width="148" Height="30"/>
-                <ComboBox  Width="140" Height="25" Name="DoctorsForExaminations" ItemsSource ="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Margin="50,0,0,0"/>
+                <ComboBox  Width="140" Height="25" Name="DoctorsForExaminations" ItemsSource ="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Person.FirstName" Margin="50,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="790">
             </StackPanel>
