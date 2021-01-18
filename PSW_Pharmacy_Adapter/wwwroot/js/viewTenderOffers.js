@@ -27,7 +27,7 @@ $(document).ready(function () {
 function viewTender(tender) {
     $("#viewTender").empty();
     var now = new Date().getTime()
-    var endDate = new Date(currTender.endDate).getTime();
+    var endDate = new Date(currTender.period.endDate).getTime();
 
     var content = '<div class="card border-info mb-3" style="width:350px; position:relative; left:40%">';
     content += '<div class="card-body">';
@@ -44,7 +44,7 @@ function viewTender(tender) {
         }
     }
     content += '</table></h5>'
-    var countDownDate = new Date(tender.endDate).getTime();
+    var countDownDate = new Date(tender.period.endDate).getTime();
     content += '<p style="background-color:red;font-size:40px" id="timerTender"></p>';
 
     if (tender.offerWinner != null && endDate < now) {

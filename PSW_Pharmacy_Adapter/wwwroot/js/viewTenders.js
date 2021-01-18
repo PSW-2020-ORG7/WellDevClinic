@@ -86,7 +86,7 @@ function viewAllTenders(tenders) {
     for (let ten of tenders) {
         if (ten.isDeleted == false) {
             var content = '<div';
-            var date = new Date(ten.endDate).getTime();
+            var date = new Date(ten.period.endDate).getTime();
             var expired = false;
 
             if (date < now) {
@@ -110,10 +110,10 @@ function viewAllTenders(tenders) {
             }
             content += '</table></h5><hr color="#FFFF33"> <table>';
             content += '<tr style="color: gray;background: transparent;"><td float="right" >Start date:</td><td>';
-            content += ISOtoShort(new Date(ten.startDate));
+            content += ISOtoShort(new Date(ten.period.startDate));
             content += '</td></tr>';
             content += '<tr style="color: gray; background: transparent;"><td float="right">End date:</td><td>';
-            content += ISOtoShort(new Date(ten.endDate));
+            content += ISOtoShort(new Date(ten.period.endDate));
             content += '</td></tr>';
             content += '</table><br>';
             if (expired == true) {
@@ -237,8 +237,10 @@ function addTender() {
         contentType: "application/json",
         data: JSON.stringify({
             Medications: meds,
-            StartDate: startDate,
-            EndDate: endDate,
+            Period: {
+                "startDate": startDate,
+                "endDate": endDate
+            },
             IsDeleted: false
         }),
         success: function (data) {

@@ -18,7 +18,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         public long TEST_OFFER_WINNER = 0;
         public bool TEST_DELETED = false;
 
-        [Fact]
+        /*[Fact]
         public void Add_Tender_Successfully()
         {
             MyContextFactory cf = new MyContextFactory();
@@ -30,7 +30,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
             service.DeleteTender(TEST_ID);      //rollback
             
             addedTender.ShouldNotBeNull();
-        }
+        }*/
 
     }
 }
