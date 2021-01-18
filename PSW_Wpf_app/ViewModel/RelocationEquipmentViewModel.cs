@@ -159,7 +159,10 @@ namespace PSW_Wpf_app.ViewModel
 
         public async Task<bool> LoadExams(long roomId, DateTime dateTime)
         {
-            BindingList<UpcomingExamination> list = new BindingList<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, dateTime));
+            Period period = new Period();
+            period.StartDate = dateTime;
+            period.EndDate = dateTime + new TimeSpan(0, 30, 0);
+            BindingList<UpcomingExamination> list = new BindingList<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, period));
 
             if (list.Count == 0) return true;
             foreach (UpcomingExamination item in list)
@@ -261,15 +264,17 @@ namespace PSW_Wpf_app.ViewModel
         private async void GetAlternativeExaminations(long roomId1, long roomId2, DateTime dateTime1, DateTime dateTime2)
         {
             List<DateTime> all = new List<DateTime>();
-
+            Period period = new Period();
+            period.StartDate = dateTime1;
+            period.EndDate = dateTime2 + new TimeSpan(0, 30, 0);
             for (DateTime dt = dateTime1; dt < dateTime2; dt += new TimeSpan(0, 30, 0))
             {
                 all.Add(dt);
             }
             try
             {
-                List<UpcomingExamination> list1 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId1, dateTime1, dateTime2));
-                List<UpcomingExamination> list2 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId2, dateTime1, dateTime2));
+                List<UpcomingExamination> list1 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId1, period));
+                List<UpcomingExamination> list2 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId2, period));
 
                 List<DateTime> finale = new List<DateTime>();
 

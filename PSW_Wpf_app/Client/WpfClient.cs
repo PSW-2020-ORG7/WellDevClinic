@@ -235,7 +235,7 @@ namespace PSW_Wpf_app.Client
             return rooms;
         }
         public static async Task<List<UpcomingExamination>> GetAllUpcomingExaminations()
-        {
+        {//ne vraca speciality
             HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/upcomingexamination");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
@@ -248,19 +248,10 @@ namespace PSW_Wpf_app.Client
         {
             var content = new StringContent(JsonConvert.SerializeObject(examination));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            HttpResponseMessage response = await client.PutAsync("http://localhost:51393/api/examination/changePatient", content);
+            HttpResponseMessage response = await client.PutAsync("http://localhost:62044/api/upcomingexamination/Edit", content);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
            
-        }
-        public static async Task<List<UpcomingExamination>> GetExaminationsByRoomAndPeriod(long roomId, DateTime dateTime)
-        {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/" + roomId + "/" + dateTime.ToString());
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<UpcomingExamination> exams = JsonConvert.DeserializeObject<List<UpcomingExamination>>(responseBody);
-
-            return exams;
         }
 
         public static async Task<List<BusinessDay>> GetAllBusinessDay()
@@ -273,11 +264,11 @@ namespace PSW_Wpf_app.Client
             return businesses;
         }
 
-        public static async Task<Renovation> Save(Renovation entity)
+        public static async Task<Renovation> Save(Renovation renovation)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(entity));
+            var content = new StringContent(JsonConvert.SerializeObject(renovation));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:51393/api/renovation/save/", content);
+            var responseBody = await client.PostAsync("http://localhost:57400/api/renovation/save/", content);
             var value = await responseBody.Content.ReadAsStringAsync();
             Renovation result = JsonConvert.DeserializeObject<Renovation>(value);
             return result;
@@ -288,13 +279,13 @@ namespace PSW_Wpf_app.Client
         {
             var content = new StringContent(JsonConvert.SerializeObject(period));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:51393/api/renovation/markAsOccupied/" + id, content);
+            var responseBody = await client.PostAsync("http://localhost:62044/api/renovation/markAsOccupied/" + id, content);
 
         }
 
         public static async Task<List<Renovation>> GetAllRenovation()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/renovation");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/renovation");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Renovation> renovations = JsonConvert.DeserializeObject<List<Renovation>>(responseBody);
@@ -302,9 +293,9 @@ namespace PSW_Wpf_app.Client
             return renovations;
         }
 
-        public static async Task<List<UpcomingExamination>> GetExaminationsByRoomAndPeriodForAlternative(long roomId, DateTime dateTime1, DateTime dateTime2)
-        {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/" + roomId + "/" + dateTime1.ToString() + "/" + dateTime2.ToString());
+        public static async Task<List<UpcomingExamination>> GetExaminationsByRoomAndPeriod(long room, Period period)
+        { /// mora post... i da se refaktorise
+            HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/examination/" + room + "/" + period);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<UpcomingExamination> exams = JsonConvert.DeserializeObject<List<UpcomingExamination>>(responseBody);

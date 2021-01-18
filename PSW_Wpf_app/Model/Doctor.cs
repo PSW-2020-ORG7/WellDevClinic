@@ -9,6 +9,6 @@ namespace PSW_Wpf_app.Model
         public long Id { get; set; }
         public virtual Speciality Speciality { get; set; }
         public virtual List<BusinessDay> BussinesDays { get; set; }
-       
+
     }
 }
