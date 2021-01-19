@@ -18,7 +18,6 @@ namespace PSW_Wpf_app.ViewModel
         BindingList<RelocationEquipmentDTO> renovations = new BindingList<RelocationEquipmentDTO>();
         BindingList<DateTime> alternativeDates = new BindingList<DateTime>();
 
-
         public BindingList<DateTime> AlternativeDates
         {
             get
@@ -31,9 +30,6 @@ namespace PSW_Wpf_app.ViewModel
                 OnPropertyChanged("AlternativeDates");
             }
         }
-
-
-
 
         public BindingList<Equipment> Equipments
         {
@@ -162,7 +158,8 @@ namespace PSW_Wpf_app.ViewModel
             Period period = new Period();
             period.StartDate = dateTime;
             period.EndDate = dateTime + new TimeSpan(0, 30, 0);
-            BindingList<UpcomingExamination> list = new BindingList<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, period));
+            Room room = await WpfClient.GetRoomById(roomId);
+            BindingList<UpcomingExamination> list = new BindingList<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(room, period));
 
             if (list.Count == 0) return true;
             foreach (UpcomingExamination item in list)
@@ -273,8 +270,10 @@ namespace PSW_Wpf_app.ViewModel
             }
             try
             {
-                List<UpcomingExamination> list1 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId1, period));
-                List<UpcomingExamination> list2 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId2, period));
+                Room room1 = await WpfClient.GetRoomById(roomId1);
+                Room room2 = await WpfClient.GetRoomById(roomId2);
+                List<UpcomingExamination> list1 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(room1, period));
+                List<UpcomingExamination> list2 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(room2, period));
 
                 List<DateTime> finale = new List<DateTime>();
 

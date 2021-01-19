@@ -3,11 +3,8 @@ using PSW_Wpf_app.Model;
 using PSW_Wpf_app.Model.DTO;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PSW_Wpf_app.Client
@@ -31,58 +28,6 @@ namespace PSW_Wpf_app.Client
         {
         }
     }
-
-
-    
-    public class Renovation
-    {
-
-        public string Description { get; set; }
-        public virtual RenovationStatus Status { get; set; }
-
-        public virtual Period Period { get; set; }
-
-        public virtual Room Room { get; set; }
-
-        public long Id { get; set; }
-
-
-        public Renovation(long id, RenovationStatus status, Period period, string description, Room room)
-        {
-            Id = id;
-            Status = status;
-            Period = period;
-            Description = description;
-            Room = room;
-        }
-
-        public Renovation()
-        {
-
-            Status = RenovationStatus.Traje;
-
-        }
-    }
-
-    public enum RenovationStatus
-    {
-        [Description("U toku")]
-        Traje,
-        [Description("Zavrseno")]
-        Zavrseno,
-        [Description("Zakazano")]
-        Zakazano,
-        [Description("Otkazano")]
-        Otkazano,
-
-    }
-
-    public class PatientFile
-    {
-        public virtual List<UpcomingExamination> Examination { get; set; }
-        public long Id { get; set; }
-    }
-
 
 
     static class WpfClient
@@ -263,12 +208,12 @@ namespace PSW_Wpf_app.Client
 
             return businesses;
         }
-
         public static async Task<Renovation> Save(Renovation renovation)
         {
+
             var content = new StringContent(JsonConvert.SerializeObject(renovation));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:57400/api/renovation/save/", content);
+            var responseBody = await client.PostAsync("http://localhost:57400/api/renovation/SaveRenovation/", content);
             var value = await responseBody.Content.ReadAsStringAsync();
             Renovation result = JsonConvert.DeserializeObject<Renovation>(value);
             return result;
@@ -279,7 +224,7 @@ namespace PSW_Wpf_app.Client
         {
             var content = new StringContent(JsonConvert.SerializeObject(period));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var responseBody = await client.PostAsync("http://localhost:62044/api/renovation/markAsOccupied/" + id, content);
+            var responseBody = await client.PostAsync("http://localhost:62044/api/businessday/markAsOccupied/" + id, content);
 
         }
 
@@ -293,14 +238,16 @@ namespace PSW_Wpf_app.Client
             return renovations;
         }
 
-        public static async Task<List<UpcomingExamination>> GetExaminationsByRoomAndPeriod(long room, Period period)
-        { /// mora post... i da se refaktorise
-            HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/examination/" + room + "/" + period);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<UpcomingExamination> exams = JsonConvert.DeserializeObject<List<UpcomingExamination>>(responseBody);
+        public static async Task<List<UpcomingExamination>> GetExaminationsByRoomAndPeriod(Room room, Period period)
+        { 
+            ExaminationsByRoomAndPeriodDTO examinations = new ExaminationsByRoomAndPeriodDTO(room, period);
+            var content = new StringContent(JsonConvert.SerializeObject(examinations));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:62044/api/upcomingexamination/GetUpcomingExaminationsByRoomAndPeriod/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            List<UpcomingExamination> result = JsonConvert.DeserializeObject<List<UpcomingExamination>>(value);
+            return result;
 
-            return exams;
         }
 
         public static async Task<Patient> SavePatient(Patient patient)

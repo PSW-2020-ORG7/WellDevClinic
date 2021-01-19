@@ -46,7 +46,7 @@
 			SelectionMode="Extended" >
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.Person.FirstName}"/>
+                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
                 <DataGridTextColumn x:Name="room"  Header="Ordination"  Width="*" Binding="{Binding Room.Id}"/>
 
@@ -60,8 +60,8 @@
             SelectionMode="Extended" >
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding Patient.FirstName}"/>
+                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.Person.FirstName}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Name" Width="*" Binding="{Binding Patient.Person.FirstName}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
                 <DataGridTemplateColumn Header="Appointment info" x:Name="info1" Width="*"  >
                     <DataGridTemplateColumn.CellTemplate>

@@ -108,7 +108,7 @@ namespace PSW_Wpf_app.ViewModel
                 Dictionary<UpcomingExamination, ExaminationDTO> dilayTerm = new Dictionary<UpcomingExamination, ExaminationDTO>();
 
                 List<UpcomingExamination> examinations = new List<UpcomingExamination>();
-                examinations = FindExaminationsByType(selectedType, upcomingExaminations);
+                examinations = await FindExaminationsByType(selectedType, upcomingExaminations);
 
                 List<ExaminationDTO> terms = new List<ExaminationDTO>();
                 terms = await FindAllTerms(dilayTerm, examinations, terms);
@@ -233,23 +233,58 @@ namespace PSW_Wpf_app.ViewModel
             return terms;
         }
 
-        private List<UpcomingExamination> FindExaminationsByType(int selectedType, List<UpcomingExamination> upcomingExaminations)
+        private async Task<List<UpcomingExamination>> FindExaminationsByType(int selectedType, List<UpcomingExamination> upcomingExaminations)
         {
             List<UpcomingExamination> examinations = new List<UpcomingExamination>();
-            foreach (UpcomingExamination ex in upcomingExaminations)
+            List<UpcomingExamination> examinationsUpcoming = FindValidTimeTerms(upcomingExaminations);
+            List<Doctor> allDoctors = await WpfClient.GetAllDoctors();
+            List<Doctor> rightDoctorSpeciality = ExtractDoctors(selectedType, allDoctors);//vraca nam ili listu svih spec ili op
+
+            foreach (UpcomingExamination ex in examinationsUpcoming)
+            {
+                foreach (Doctor d in rightDoctorSpeciality)
+                {   
+                    if (ex.Doctor.Id.Equals(d.Id))
+                            examinations.Add(ex);
+                }
+            }
+
+            return examinations;
+        }
+
+        private static List<Doctor> ExtractDoctors(int selectedType, List<Doctor> allDoctors)
+        {
+            List<Doctor> doctorsChoesenSpeciality = new List<Doctor>();
+            foreach (Doctor d in allDoctors)
             {
                 if (selectedType == 0)
                 {
-                    if (ex.Doctor.Speciality.Name.Equals("general practice"))
-                        examinations.Add(ex);
+                    if (d.Speciality.Name.Equals("general practice"))
+                        doctorsChoesenSpeciality.Add(d);
                 }
                 else
                 {
-                    if (!ex.Doctor.Speciality.Name.Equals("general practice"))
-                        examinations.Add(ex);
+                    if (!d.Speciality.Name.Equals("general practice"))
+                        doctorsChoesenSpeciality.Add(d);
                 }
             }
-            return examinations;
+            return doctorsChoesenSpeciality;
+        }
+
+        private static List<UpcomingExamination> FindValidTimeTerms(List<UpcomingExamination> upcomingExaminations)
+        {
+            List<UpcomingExamination> examinationsCheck = new List<UpcomingExamination>();
+            DateTime time = DateTime.Now.AddHours(1);
+
+            foreach (UpcomingExamination exam in upcomingExaminations)
+            {
+                TimeSpan difference = exam.Period.EndDate.TimeOfDay - exam.Period.StartDate.TimeOfDay;
+                if (difference.TotalHours < 1)
+                    if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now.Date) == 0 && (exam.Period.StartDate.TimeOfDay > DateTime.Now.TimeOfDay) && (exam.Period.StartDate.TimeOfDay < time.TimeOfDay))
+                        examinationsCheck.Add(exam);
+            }
+
+            return examinationsCheck;
         }
 
         private List<ExaminationDTO> checkTime(List<ExaminationDTO> termsFound)
