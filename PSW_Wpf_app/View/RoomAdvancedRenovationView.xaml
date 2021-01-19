@@ -27,14 +27,19 @@
             <DatePicker Margin="50,0,0,0" x:Name="Picker2"   Width="190" FirstDayOfWeek="Monday" Height="40"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Margin="15,212,-5,222" Grid.ColumnSpan="2" >
+        <StackPanel Orientation="Horizontal" Margin="15,212,-5,194" Grid.ColumnSpan="2" >
             <TextBlock x:Name="ChooseRoomFrom" Text="Choose room: " FontSize="25"  Width="274" Height="40"/>
             <ComboBox x:Name="rooms"  Height="25" Width="182" Margin="45,0,0,0" IsEnabled="False" ItemsSource ="{Binding Room, UpdateSourceTrigger=PropertyChanged}"  DisplayMemberPath="Name"/>
 
         </StackPanel>
-        <StackPanel Margin="10,267,10,156" Grid.ColumnSpan="2">
-            <Button Content="Schedule" Height="28" Width="100" Click="Button_Click" Margin="550,0,0,0"/>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Margin="15,295,5,46" >
 
+            <TextBlock x:Name="alternative" Text="Alternative date:" FontSize="25" Height="47" Width="204"/>
+            <ComboBox x:Name="alter" Margin="120,0,0,0" IsEnabled="False" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding AlternativeDates, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="182" >
+
+            </ComboBox>
+            <Button Content="Schedule" Height="36" Width="124" Click="Button_Click" Margin="90,-90,0,0"/>
         </StackPanel>
+
     </Grid>
 </Window>

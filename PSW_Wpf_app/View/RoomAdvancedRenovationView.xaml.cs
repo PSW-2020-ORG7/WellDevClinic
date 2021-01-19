@@ -30,9 +30,36 @@ namespace PSW_Wpf_app.View
             DataContext = context;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            FloorElement f = null;
+            DateTime date1 = (DateTime)Picker1.SelectedDate;
+            DateTime date2 = (DateTime)Picker2.SelectedDate;
 
+            string tipRenoviranja = (string)((ComboBoxItem)renovations.SelectedItem).Content;
+            if (tipRenoviranja.CompareTo("Spajanje") == 0)
+            {
+                f = (FloorElement)rooms.SelectedItem;
+
+
+
+            }
+
+            bool IsScheduled = await context.Scheduling(date1, date2, tipRenoviranja, f);
+            if (IsScheduled)
+            {
+                MessageBox.Show("You have successfully scheduled renovation!");
+            }
+            else
+            {
+
+                context.GetAlternativeExaminations(f, date1, date2);
+                MessageBox.Show("Choosen term is busy, please choose an alternative!");
+                alter.IsEnabled = true;
+
+
+
+            }
         }
 
         private void renovations_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -49,6 +76,17 @@ namespace PSW_Wpf_app.View
             {
                 rooms.IsEnabled = true;
             }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime date1 = (DateTime)Picker1.SelectedDate;
+            DateTime date2 = (DateTime)Picker2.SelectedDate;
+            DateTime date3 = (DateTime)alter.SelectedItem;
+
+            double days = (date2 - date1).TotalDays;
+            Picker1.SelectedDate = date3;
+            Picker2.SelectedDate = date3.AddDays(days);
         }
     }
 }
