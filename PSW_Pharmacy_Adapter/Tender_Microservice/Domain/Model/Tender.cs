@@ -15,11 +15,11 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
 
         public Tender() { }
 
-        public Tender(long? id, List<Medication> medications, Period period, long offerWinner, bool isDeleted)
+        public Tender(long? id, List<Medication> medications, DateTime startDate, DateTime endDate, long offerWinner, bool isDeleted)
         {
             Id = id;
             Medications = medications;
-            Period = period;
+            Period = new Period(startDate, endDate);
             OfferWinner = offerWinner;
             IsDeleted = isDeleted;
         }

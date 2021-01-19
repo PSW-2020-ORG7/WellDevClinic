@@ -6,22 +6,22 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
 {
     public class Period
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
-        public Period() { }
+        ///public Period() { }
 
         public Period(DateTime startDate, DateTime endDate)
         {
-            Validate(startDate, endDate);
             StartDate = startDate;
             EndDate = endDate;
+            Validate();
         }
 
-        private void Validate(DateTime startDate, DateTime endDate)
+        private void Validate()
         {
-            if (startDate >= endDate)
-                throw new ArgumentNullException();
+            if (StartDate >= EndDate)
+                throw new ArgumentException("Invalid argument", nameof(StartDate));
         }
 
         public Boolean ComparePeriod(Period period)

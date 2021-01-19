@@ -238,8 +238,8 @@ function addTender() {
         data: JSON.stringify({
             Medications: meds,
             Period: {
-                "startDate": startDate,
-                "endDate": endDate
+                StartDate: startDate,
+                EndDate: endDate
             },
             IsDeleted: false
         }),
