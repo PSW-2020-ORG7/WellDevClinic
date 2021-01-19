@@ -36,20 +36,23 @@ function viewAllMedications(meds) {
 	for (let med of meds) {
 		let content = '<div class="card">';
 		content += '<div class="card-body">';
-		content += '<table>';
-		content += '<tr><td float="right">Id:</td><td>';
-		content += med.id;
-		content += '</td></tr>';
-		content += '<tr><td float="right">Name:</td><td>';
-		content += med.name;
-		content += '</td></tr>';
-		content += '<tr><td float="right">Amount:</td><td>';
-		content += med.amount;
-		content += '</td></tr>';
-		content += '</table>';
+		content += '<div class="data"> <h4 class="card-subtitle mb-2 text-muted">ID: ' + med.id + '</h4>';
+		content += '<h4><table style="margin:10px">';
+		content += '<tr style="background: transparent;"><td>';
+		content += med.name + '</td><td> &nbsp;&nbsp;&nbsp;x' + med.amount + '</td></tr>';
+		content += '</table></h4><hr color="#FFFF33">';
+		if (med.ingredients.length != 0) {
+			content += '<div style="color: gray;"><h5>Ingredients:</h5>';
+
+			for (let ing of med.ingredients) {
+				content += '&nbsp;'
+				content += ing.name + ',';				
+			}
+			content += '</div><br>';
+		}
 		content += '<button class="btn btn-info" data-target="#pageInfoModal" ';
 		content += 'onClick="findMedicine(\'' + med.id + '\')">Check availability</button>';
-		content += '</div></div>';
+		content += '</div></div></div>';
 		$("#viewMedication").append(content);
 	}
 }

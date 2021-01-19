@@ -9,8 +9,6 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
-        ///public Period() { }
-
         public Period(DateTime startDate, DateTime endDate)
         {
             StartDate = startDate;
