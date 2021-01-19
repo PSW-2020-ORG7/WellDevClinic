@@ -153,6 +153,7 @@ namespace PSW_Wpf_app.ViewModel
         public async Task<bool> LoadExams(long roomId, DateTime dateTime)
         {
             BindingList<Examination> list = new BindingList<Examination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, dateTime));
+            
 
             if (list.Count == 0) return true;
 
@@ -206,6 +207,7 @@ namespace PSW_Wpf_app.ViewModel
 
                 }
             }
+            renovation = new List<Renovation>(await WpfClient.GetAllRenovation());
             return true;
         }
         private List<Period> CreatePeriods(BusinessDay bd)
