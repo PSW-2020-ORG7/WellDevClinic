@@ -8,5 +8,6 @@ namespace Examination_Microservice.Repository.Abstract
 {
     public interface IPatientFileRepository : ICRUD<PatientFile,long>
     {
+        PatientFile GetPatientFileByPatient(long id);
     }
 }

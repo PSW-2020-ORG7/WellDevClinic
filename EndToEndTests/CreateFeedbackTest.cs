@@ -2,6 +2,7 @@ using EndToEndTests.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Threading;
 using Xunit;
 
 namespace EndToEndTests
@@ -10,6 +11,7 @@ namespace EndToEndTests
     {
         private readonly IWebDriver Driver;
         private CreateFeedbackPage FeedbackPage;
+        private LoginPage LoginPage;
         private ViewFeedbackAdminPage ViewFeedbackPage;
 
         private int FeedbackCount = 0;
@@ -25,6 +27,15 @@ namespace EndToEndTests
             options.AddArguments("--disable-notifications");
 
             Driver = new ChromeDriver(options);
+
+            LoginPage = new LoginPage(Driver);
+            LoginPage.Navigate();
+            LoginPage.InsertUsername("vuk");
+            LoginPage.InsertPassword("vuk");
+            LoginPage.ClickSubmit();
+            Thread.Sleep(10000);
+
+            //Assert.Equal(Driver.Url, "http://localhost:49153/html/homePage.html");
 
             FeedbackPage = new CreateFeedbackPage(Driver);
             FeedbackPage.Navigate();
@@ -51,6 +62,12 @@ namespace EndToEndTests
             FeedbackPage.ResolveAlertDialog();
             Assert.Equal(Driver.Url, CreateFeedbackPage.URI);
 
+            FeedbackPage.ClickLogOut();
+            LoginPage.InsertUsername("admin");
+            LoginPage.InsertPassword("admin");
+            LoginPage.ClickSubmit();
+            Thread.Sleep(10000);
+
             ViewFeedbackPage = new ViewFeedbackAdminPage(Driver);
             ViewFeedbackPage.Navigate();
             ViewFeedbackPage.EnsurePageIsDisplayed();
@@ -72,6 +89,12 @@ namespace EndToEndTests
             Assert.Equal(FeedbackPage.GetDialogMessage(), CreateFeedbackPage.ALERT_MESSAGE);
             FeedbackPage.ResolveAlertDialog();
             Assert.Equal(Driver.Url, CreateFeedbackPage.URI);
+
+            FeedbackPage.ClickLogOut();
+            LoginPage.InsertUsername("admin");
+            LoginPage.InsertPassword("admin");
+            LoginPage.ClickSubmit();
+            Thread.Sleep(10000);
 
             ViewFeedbackPage = new ViewFeedbackAdminPage(Driver);
             ViewFeedbackPage.Navigate();

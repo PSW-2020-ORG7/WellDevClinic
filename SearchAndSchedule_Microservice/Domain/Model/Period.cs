@@ -10,6 +10,8 @@ namespace SearchAndSchedule_Microservice.Domain.Model
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public Period() { }
+
         public Period(DateTime startDate, DateTime endDate)
         {
             Validate(startDate, EndDate);

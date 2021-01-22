@@ -1,0 +1,42 @@
+﻿body {
+    background-image: url('2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.text {
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-100%, -100%);
+    color: black;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+form{
+    float:left;
+    margin: 60px
+}
+
+
+btn-group {
+    float: left;
+    margin: 60px
+}
+
+.btn-group button {
+    background-color: white; /* Green background */
+    border: 1px solid black; /* Green border */
+    color: black; /* White text */
+    padding: 20px 34px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    
+}
+
+    .btn-group button:hover {
+        background-color: cornflowerblue;
+    }

@@ -12,6 +12,9 @@ namespace SearchAndSchedule_Microservice.Domain
         public DbSet<BusinessDay> BussinesDay { get; set; }
         public DbSet<UpcomingExamination> Examination { get; set; }
         public DbSet<Operation> Operation { get; set; }
+        public DbSet<Doctor> Doctor { get; set; }
+        public DbSet<Patient> Patient { get; set; }
+
 
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
@@ -24,6 +27,13 @@ namespace SearchAndSchedule_Microservice.Domain
             modelBuilder.Entity<UpcomingExamination>().OwnsOne(e => e.Period);
             modelBuilder.Entity<Operation>().OwnsOne(e => e.Period);
             modelBuilder.Entity<BusinessDay>().OwnsMany(b => b.ScheduledPeriods);
+            modelBuilder.Entity<Address>().OwnsOne(b => b.Town);
+              modelBuilder.Entity<Address>().OwnsOne(b => b.State);
+            /*modelBuilder.Entity<Address>().Ignore(b => b.Town);
+            modelBuilder.Entity<Address>().Ignore(b => b.State);
+            modelBuilder.Entity<State>().HasNoKey();
+            modelBuilder.Entity<Town>().HasNoKey();*/
+
         }
 
     }

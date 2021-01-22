@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/landingPage.css">
+    <script src="../js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div class="text">
+        <h1>Welcome to WellDev hospital web site</h1>
+        <h3>You want the best possible health care for you and your family?</h3>
+        <h3>Here we have the best team of doctors, medical experts and staff waiting for you.</h3>
+        <h3>Don't except anything but the best and register today!</h3>
+        <div class="btn-group">
+            <button onclick="login()">Log in</button>
+            <button onclick="register()">Register</button>
+        </div>
+        <h3>Here you can see the feedback from our patients</h3>
+        <div class="btn-group">
+            <button onclick="feedback()">View feedback</button>
+        </div>
+
+    </div>
+
+    <script>
+        var origin = window.location.origin;
+        function login() {
+            window.location.href = origin + "/html/login.html"
+        }
+        function register() {
+            window.location.href = origin + "/html/registration.html"
+        }
+        function feedback() {
+            window.location.href = origin + "/html/viewFeedbackUser.html"
+        }
+    </script>
+</body>
+
+</html>

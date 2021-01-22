@@ -42,6 +42,21 @@ namespace UserInteraction_Microservice.Repository
             ).Where(p => p.Id == id).FirstOrDefault();
         }
 
+        public Patient GetPatientDetails(long id)
+        {
+            return _myDbContext.Patient.Select(p =>
+                new Patient()
+                {
+                    Id = p.Id,
+                    Person = p.Person,
+                    Blocked = p.Blocked,
+                    Guest = p.Guest,
+                    UserType = p.UserType,
+                    UserDetails = p.UserDetails,
+                }
+            ).Where(p => p.Id == id).FirstOrDefault();
+        }
+
         public IEnumerable<Patient> GetAll()
         {
             return _myDbContext.Patient.Select(p =>
@@ -140,7 +155,8 @@ namespace UserInteraction_Microservice.Repository
 
         public Patient GetPatientToken(string token)
         {
-            return _myDbContext.Patient.Select(p =>
+            return _myDbContext.Patient.FirstOrDefault(patient => patient.VerificationToken.Equals(token));
+            /*return _myDbContext.Patient.Select(p =>
                     new Patient()
                     {
                         Id = p.Id,
@@ -149,7 +165,7 @@ namespace UserInteraction_Microservice.Repository
                         Guest = p.Guest,
                         UserType = p.UserType
                     }
-                ).Where(p => p.VerificationToken.Equals(token)).FirstOrDefault();
+                ).Where(p => p.VerificationToken.Equals(token)).FirstOrDefault();*/
         }
 
         public Patient GetPatientByMail(string email)
