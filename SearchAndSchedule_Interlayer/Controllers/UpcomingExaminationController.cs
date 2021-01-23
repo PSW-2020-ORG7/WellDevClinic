@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SearchAndSchedule_Microservice.ApplicationServices.Abstract;
+using SearchAndSchedule_Microservice.ApplicationServices.DTObjects;
 using SearchAndSchedule_Microservice.Domain.Model;
 
 namespace SearchAndSchedule_Interlayer.Controllers
@@ -72,20 +73,28 @@ namespace SearchAndSchedule_Interlayer.Controllers
             return _examinationAppService.GetUpcomingExaminationsByDoctor(doctor);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetUpcomingExaminationsByPatient")]
         public List<UpcomingExamination> GetUpcomingExaminationsByPatient(Patient patient)
         {
             return _examinationAppService.GetUpcomingExaminationsByPatient(patient);
         }
-        
+
         //Pogledati detaljan opis u servisu, i ako je potrebna neki dto za ove parametre
-/*
         [HttpPost]
         [Route("GetUpcomingExaminationsByRoomAndPeriod")]
-        public List<UpcomingExamination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period)
+         public List<UpcomingExamination> GetUpcomingExaminationsByRoomAndPeriod(ExaminationByRoomAndPeriodDTO examination)
+         {
+            return _examinationAppService.GetUpcomingExaminationsByRoomAndPeriod(examination.Room, examination.Period);
+         }
+
+        [HttpPut]
+        [Route("Cancel/{id?}")]
+        public void Cancel(long id)
         {
-            return _examinationAppService.GetUpcomingExaminationsByRoomAndPeriod(room, period);
-        }*/
+            _examinationAppService.Cancel(id);
+        }
+
+       
     }
 }

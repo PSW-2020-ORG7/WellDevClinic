@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Mail;
-using bolnica;
-using Model.Users;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using PSW_Web_app.Models.UserInteraction;
 
 namespace PSW_Web_app.Controllers
 {

@@ -32,6 +32,13 @@ namespace UserInteraction_Interlayer.Controllers
         }
 
         [HttpGet]
+        [Route("patientDetails/{id?}")]
+        public Patient GetPatientDetails(long id)
+        {
+            return _patientAppService.GetPatientDetails(id);
+        }
+
+        [HttpGet]
         [Route("eager/{id?}")]
         public Patient GetEager(long id)
         {
@@ -71,6 +78,13 @@ namespace UserInteraction_Interlayer.Controllers
         public List<Patient> GetBlockedPatients()
         {
             return _patientAppService.GetBlockedPatients();
+        }
+
+        [HttpPost]
+        [Route("savePatient")]
+        public Patient SavePatient(Patient patient)
+        {
+            return _patientAppService.Save(patient);
         }
     }
 }

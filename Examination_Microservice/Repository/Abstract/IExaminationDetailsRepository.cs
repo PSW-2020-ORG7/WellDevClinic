@@ -10,6 +10,7 @@ namespace Examination_Microservice.Repository.Abstract
     {
         public IEnumerable<ExaminationDetails> GetExaminationDetailsByDoctor(Doctor doctor);
         public IEnumerable<ExaminationDetails> GetExaminationDetailsByPatient(Patient patient);
+        public void FillSurvey(long id);
 
     }
 }

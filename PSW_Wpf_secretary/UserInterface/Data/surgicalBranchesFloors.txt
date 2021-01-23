@@ -1,5 +1,5 @@
 room,orthopedic_cabinet,222,83,92,38,0,Surgical,901,WorkingTime:12 
-room,diagnostic_cabinet,149,83,92,121,0,Surgical,901,WorkingTime:12 
+room,diagnostic_cabinet,149,83,92,121,0,Surgical,902,WorkingTime:12 
 room,emergency_room_1,149,117,92,204,0,Surgical,901,WorkingTime:24 
 room,emergency_room_2,149,117,92,321,0,Surgical,901,WorkingTime:8 
 room,emergency_room_3,175,108,402,221,0,Surgical,901,WorkingTime:24 

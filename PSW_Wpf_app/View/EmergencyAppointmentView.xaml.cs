@@ -1,4 +1,5 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -38,10 +39,10 @@ namespace PSW_Wpf_app.View
             }
             else
             {
-                name.Text = patient.FirstName;
-                surname.Text = patient.LastName;
-                phone.Text = patient.Phone;
-                jmbgpatient.Text = patient.Jmbg;
+                name.Text = patient.Person.FirstName;
+                surname.Text = patient.Person.LastName;
+               
+                jmbgpatient.Text = patient.Person.Jmbg;
             }
             
         }
@@ -58,9 +59,10 @@ namespace PSW_Wpf_app.View
 
         private async void Schedule_Term_Click(object sender, RoutedEventArgs e)
         {
-            ExaminationDTO examinationDTO = (ExaminationDTO)emergencyData.SelectedItem;
-            examinationDTO.Patient = patient;
-            Examination examination = (Examination)await WpfClient.NewExamination(examinationDTO);
+            ExaminationDTO ex = (ExaminationDTO)emergencyData.SelectedItem;
+            UpcomingExamination upcoming = new UpcomingExamination(ex.Doctor, ex.Period, patient);
+
+            UpcomingExamination examination = (UpcomingExamination)await WpfClient.NewExamination(upcoming);
 
 
             if (examination != null)
@@ -96,11 +98,12 @@ namespace PSW_Wpf_app.View
         private async void Schedule_And_Dilay_Term_Click(object sender, RoutedEventArgs e)
         {
             int selected = analysisData.SelectedIndex;
-            Examination examination = (Examination)analysisData.SelectedItem;
+            UpcomingExamination examination = (UpcomingExamination)analysisData.SelectedItem;
             List<ExaminationDTO> examinationDTO = context.DelayedTermExamination;
             ExaminationDTO ex = examinationDTO[selected];
             ex.Patient = examination.Patient;
-            Examination examinationNew = (Examination)await WpfClient.NewExamination(ex);
+            UpcomingExamination upcoming = new UpcomingExamination(ex.Doctor, ex.Period, ex.Patient);
+            UpcomingExamination examinationNew = (UpcomingExamination)await WpfClient.NewExamination(upcoming);
 
 
             examination.Patient = patient;
@@ -111,15 +114,18 @@ namespace PSW_Wpf_app.View
         private async void NewPatientClick(object sender, RoutedEventArgs e)
         {
             Patient patient = new Patient();
+            Person person = new Person();
+            UserLogIn userLogIn = new UserLogIn();
 
-            patient.FirstName = name.Text;
-            patient.LastName = surname.Text;
-            patient.Phone = phone.Text;
-            patient.Jmbg = jmbgpatient.Text;
-            patient.Username = name.Text;
-            patient.Image = ";" + name.Text + ".jpg" + ",";
+            person.FirstName = name.Text;
+            person.LastName = surname.Text;
+           
+            person.Jmbg = jmbgpatient.Text;
+            userLogIn.Username = name.Text;
+            //patient.UserDetails.Image = ";" + name.Text + ".jpg" + ",";
             patient.Guest = true;
-            
+            patient.Person = person;
+            patient.UserLogIn = userLogIn;
 
             Patient p = await WpfClient.SavePatient(patient);
             if (p != null)

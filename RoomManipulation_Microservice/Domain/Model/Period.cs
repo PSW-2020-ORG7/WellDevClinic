@@ -15,6 +15,8 @@ namespace RoomManipulation_Microservice.Domain.Model
             EndDate = endDate;
         }
 
+        public Period() { }
+
         private void Validate(DateTime startDate, DateTime endDate)
         {
             if (startDate <= endDate)

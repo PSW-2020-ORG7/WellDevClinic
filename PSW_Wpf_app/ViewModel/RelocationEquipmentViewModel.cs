@@ -18,7 +18,6 @@ namespace PSW_Wpf_app.ViewModel
         BindingList<RelocationEquipmentDTO> renovations = new BindingList<RelocationEquipmentDTO>();
         BindingList<DateTime> alternativeDates = new BindingList<DateTime>();
 
-
         public BindingList<DateTime> AlternativeDates
         {
             get
@@ -31,9 +30,6 @@ namespace PSW_Wpf_app.ViewModel
                 OnPropertyChanged("AlternativeDates");
             }
         }
-
-
-
 
         public BindingList<Equipment> Equipments
         {
@@ -147,11 +143,11 @@ namespace PSW_Wpf_app.ViewModel
 
 
         }
-        public async void LoadRoomByEquipment(long equipId)
+        public async void LoadRoomByEquipment(Equipment equip)
         {
-            BindingList<Room> list = new BindingList<Room>(await WpfClient.GetRoomsByEquipment(equipId));
-            Room_from = list;
 
+            BindingList<Room> list = new BindingList<Room>(await WpfClient.GetRoomsByEquipment(equip));
+            Room_from = list;
 
         }
 
@@ -159,10 +155,14 @@ namespace PSW_Wpf_app.ViewModel
 
         public async Task<bool> LoadExams(long roomId, DateTime dateTime)
         {
-            BindingList<Examination> list = new BindingList<Examination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, dateTime));
+            Period period = new Period();
+            period.StartDate = dateTime;
+            period.EndDate = dateTime + new TimeSpan(0, 30, 0);
+            Room room = await WpfClient.GetRoomById(roomId);
+            BindingList<UpcomingExamination> list = new BindingList<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(room, period));
 
             if (list.Count == 0) return true;
-            foreach (Examination item in list)
+            foreach (UpcomingExamination item in list)
             {
                 if (item.Period.StartDate == dateTime)
                     return false;
@@ -207,16 +207,16 @@ namespace PSW_Wpf_app.ViewModel
                 foreach (BusinessDay item in buss)
                 {
 
-                    if (item.room.Id == r1.Room.Id && item.Shift.StartDate <= r1.Period.StartDate && item.Shift.EndDate >= r1.Period.EndDate)
+                    if (item.Room.Id == r1.Room.Id && item.Shift.StartDate <= r1.Period.StartDate && item.Shift.EndDate >= r1.Period.EndDate)
                     {
 
-                        d1 = item.doctor;
+                        d1 = item.Doctor;
                         id1 = item.Id;
                     }
 
-                    if (item.room.Id == r2.Room.Id && item.Shift.StartDate <= r2.Period.StartDate && item.Shift.EndDate >= r2.Period.EndDate)
+                    if (item.Room.Id == r2.Room.Id && item.Shift.StartDate <= r2.Period.StartDate && item.Shift.EndDate >= r2.Period.EndDate)
                     {
-                        d2 = item.doctor;
+                        d2 = item.Doctor;
                         id2 = item.Id;
 
 
@@ -261,15 +261,19 @@ namespace PSW_Wpf_app.ViewModel
         private async void GetAlternativeExaminations(long roomId1, long roomId2, DateTime dateTime1, DateTime dateTime2)
         {
             List<DateTime> all = new List<DateTime>();
-
+            Period period = new Period();
+            period.StartDate = dateTime1;
+            period.EndDate = dateTime2 + new TimeSpan(0, 30, 0);
             for (DateTime dt = dateTime1; dt < dateTime2; dt += new TimeSpan(0, 30, 0))
             {
                 all.Add(dt);
             }
             try
             {
-                List<Examination> list1 = new List<Examination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId1, dateTime1, dateTime2));
-                List<Examination> list2 = new List<Examination>(await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(roomId2, dateTime1, dateTime2));
+                Room room1 = await WpfClient.GetRoomById(roomId1);
+                Room room2 = await WpfClient.GetRoomById(roomId2);
+                List<UpcomingExamination> list1 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(room1, period));
+                List<UpcomingExamination> list2 = new List<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(room2, period));
 
                 List<DateTime> finale = new List<DateTime>();
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text;
 
 namespace Examination_Microservice.Domain.Model
 {
+    [NotMapped]
     public class Period
     {
         public DateTime StartDate { get; set; }
