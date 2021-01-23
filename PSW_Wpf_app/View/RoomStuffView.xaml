@@ -9,7 +9,13 @@
     <Grid Background="Azure"  Margin="0,0,2,0">
         <UserControl Name="userEqipmentAndDrugs" Margin="208,0,10,1"></UserControl>
         <Grid Background="CadetBlue" HorizontalAlignment="Left" Height="433" VerticalAlignment="Center" Width="208">
+		<Button  Content="Room Overview" HorizontalAlignment="Left" Height="63" Margin="10,24,0,0" VerticalAlignment="Top" Width="174" Click="RoomOverviewClick"/>
+		<Button  Content="Scheduled Appointments" HorizontalAlignment="Left" Height="63" Margin="10,104,0,0" VerticalAlignment="Top" Width="174" Click="ScheduledAppointmentsClick"/>
+		<Button  Content="Room Renovations" HorizontalAlignment="Left" Height="62" VerticalAlignment="Center" Width="174" Margin="10,0,0,0" Click="RoomRenovationsClick"/>
+		<Button  Content="Equipment Relocation" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="174" Margin="10,263,0,0" Click="EquipmentRelocationClick" />
 
         </Grid>
+	<Button  Content="Basic renovation" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="109" Margin="775,12,0,0" Click="BasicRenovationClick" />
+
     </Grid>
 </Window>
