@@ -14,6 +14,7 @@ namespace EndToEndTests.Pages
         private IWebElement AnonimityBox => Driver.FindElement(By.Id("anonymous"));
         private IWebElement PrivateBox => Driver.FindElement(By.Id("private"));
         private IWebElement SubmitButton => Driver.FindElement(By.Id("submit"));
+        private IWebElement LogoutButton => Driver.FindElement(By.Id("logout"));
 
         public static readonly string ALERT_MESSAGE = "Uspesno ste poslali komentar";
 
@@ -42,6 +43,9 @@ namespace EndToEndTests.Pages
 
         public void ClickSubmit()
             => SubmitButton.Click();
+
+        public void ClickLogOut()
+            => LogoutButton.Click();
 
         public void Navigate() 
             => Driver.Navigate().GoToUrl(URI);

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
+  
     public class DoctorGrade : IIdentifiable<long>
     {
         public long Id { get; set; }

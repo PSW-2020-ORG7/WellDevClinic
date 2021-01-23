@@ -19,6 +19,7 @@ namespace EndToEndTests.Pages
         private IWebElement LastRowPrivate => Driver.FindElement(By.XPath("//table[@id='table']/tbody/tr[last()]/td[4]/input[@type='checkbox']"));
         private IWebElement LastRowPublished => Driver.FindElement(By.XPath("//table[@id='table']/tbody/tr[last()]/td[5]/input[@type='checkbox']"));
         private IWebElement LastRowPublish => Driver.FindElement(By.XPath("//table[@id='table']/tbody/tr[last()]/td[6]/button[@type='button']"));
+        private IWebElement BlockUserButton => Driver.FindElement(By.Id("blockUser"));
 
         public ViewFeedbackAdminPage(IWebDriver driver)
         {
@@ -69,5 +70,11 @@ namespace EndToEndTests.Pages
 
         public void Navigate()
             => Driver.Navigate().GoToUrl(URI);
+
+        public void ClickPublish()
+            => LastRowPublish.Click();
+
+        public void ClickBlock()
+            => BlockUserButton.Click();
     }
 }

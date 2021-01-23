@@ -66,13 +66,13 @@ namespace PSW_Wpf_app.ViewModel
                             string[] equipments = temp1[10].Split(':', '-');
                             for (int i = 0; i < equipments.Count() - 1; i += 3)
                             {
-                                shape.Equipments.Add(new Client.Equipment() { Id = int.Parse(equipments[(i % 4) + 1]), Name = equipments[(i % 4) + 2], Amount = int.Parse(equipments[(i % 4) + 3]) });
+                                shape.Equipments.Add(new Equipment() { Id = int.Parse(equipments[(i % 4) + 1]), Name = equipments[(i % 4) + 2], Amount = int.Parse(equipments[(i % 4) + 3]) });
                             }
 
                             string[] drugs = temp1[11].Split(':', '-');
                             for (int i = 0; i < drugs.Count() - 1; i += 3)
                             {
-                                shape.Drugs.Add(new Client.Drug() { Id = int.Parse(drugs[(i % 4) + 1]), Name = drugs[(i % 4) + 2], Amount = int.Parse(drugs[(i % 4) + 3]) });
+                                shape.Drugs.Add(new Drug() { Id = int.Parse(drugs[(i % 4) + 1]), Name = drugs[(i % 4) + 2], Amount = int.Parse(drugs[(i % 4) + 3]) });
                             }
 
                         }

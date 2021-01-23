@@ -27,7 +27,7 @@ function addFeedback(feedback) {
 		tdPatient = $('<td>Anonymous</td>');
 	}
 	else
-		tdPatient = $('<td>' + feedback.patient.fullName + '</td>');
+		tdPatient = $('<td>' + feedback.patient.person.fullName + '</td>');
 
 	let tdPrivate;
 	if (feedback.isPrivate == true) {

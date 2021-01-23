@@ -12,5 +12,7 @@ namespace SearchAndSchedule_Microservice.ApplicationServices.Abstract
         public Room GetExaminationRoom(UpcomingExamination examination);
         public List<UpcomingExamination> GetUpcomingExaminationsByRoomAndPeriod(Room room, Period period);
         public List<Patient> GetPatientsForBlocking();
+
+        public void Cancel(long id);
     }
 }

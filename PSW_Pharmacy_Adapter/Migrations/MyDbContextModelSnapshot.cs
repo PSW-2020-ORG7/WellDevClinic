@@ -39,62 +39,6 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ActionsAndBenefits");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            EndDate = new DateTime(2021, 1, 25, 12, 30, 48, 77, DateTimeKind.Local).AddTicks(9641),
-                            MessageAboutAction = "Andol on sale! 50% off!!",
-                            PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 31, 12, 30, 48, 74, DateTimeKind.Local).AddTicks(6830),
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            EndDate = new DateTime(2021, 2, 9, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8051),
-                            MessageAboutAction = "Cheap bromazepam on huge quantities!!",
-                            PharmacyName = "PH1",
-                            StartDate = new DateTime(2021, 1, 15, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(7989),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            EndDate = new DateTime(2021, 1, 17, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8162),
-                            MessageAboutAction = "Aspirin C for free!!",
-                            PharmacyName = "PH3",
-                            StartDate = new DateTime(2021, 1, 11, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8158),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            EndDate = new DateTime(2021, 2, 1, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8170),
-                            MessageAboutAction = "Amazing deal!! Brufen was 5$, now 15$",
-                            PharmacyName = "PH3",
-                            StartDate = new DateTime(2021, 1, 12, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8167),
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            EndDate = new DateTime(2021, 1, 25, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8177),
-                            MessageAboutAction = "Cant miss!! Vitamin C just for 99$",
-                            PharmacyName = "PH2",
-                            StartDate = new DateTime(2021, 1, 10, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8174),
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            EndDate = new DateTime(2021, 1, 9, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8184),
-                            MessageAboutAction = "Cheap sedatives!",
-                            PharmacyName = "PH1",
-                            StartDate = new DateTime(2020, 12, 31, 12, 30, 48, 78, DateTimeKind.Local).AddTicks(8181),
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Api", b =>
@@ -111,32 +55,6 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.HasKey("NameOfPharmacy");
 
                     b.ToTable("ApiKeys");
-
-                    b.HasData(
-                        new
-                        {
-                            NameOfPharmacy = "PH1",
-                            ApiKey = "4545-as84-8s8g-zXCV",
-                            Url = "http://localhost:4200/Ph1"
-                        },
-                        new
-                        {
-                            NameOfPharmacy = "PH2",
-                            ApiKey = "7788-AV5R-zxQt-5845",
-                            Url = "http://localhost:4200/Ph2"
-                        },
-                        new
-                        {
-                            NameOfPharmacy = "PH3",
-                            ApiKey = "9745-At7S-Aqtr-5q8t",
-                            Url = "http://localhost:4200/Ph3"
-                        },
-                        new
-                        {
-                            NameOfPharmacy = "PH4",
-                            ApiKey = "HgT8-n47E-bE41-2gt5",
-                            Url = "http://localhost:4200/Ph4"
-                        });
                 });
 
             modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>

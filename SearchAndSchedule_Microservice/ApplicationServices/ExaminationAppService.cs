@@ -103,5 +103,12 @@ namespace SearchAndSchedule_Microservice.ApplicationServices
                     examinations.Add(examination);
             return examinations;
         }
+
+        public void Cancel(long id)
+        {
+            _examinationRepository.Cancel(id);
+        }
+
+    
     }
 }

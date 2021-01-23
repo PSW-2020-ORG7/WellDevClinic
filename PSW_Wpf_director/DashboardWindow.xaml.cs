@@ -205,10 +205,6 @@ namespace PSW_Wpf_director
             EmailDirector.Content = director.Email;
             PhoneDirector.Content = director.Phone;
 
-            String directorAddress = director.Address.Street + " " + director.Address.Number + "," + " " + director.Address.Town.Name + " " + director.Address.Town.PostalNumber + "," + " " + director.Address.Town.State.Name;
-            AddressDirector.Content = directorAddress;
-
-            BirthDateDirector.Content = director.DateOfBirth.ToString("dd/MM/yyyy");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

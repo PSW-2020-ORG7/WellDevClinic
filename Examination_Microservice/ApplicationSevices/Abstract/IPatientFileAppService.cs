@@ -7,5 +7,6 @@ namespace Examination_Microservice.ApplicationSevices.Abstract
 {
     public interface IPatientFileAppService : ICRUD<PatientFile,long>
     {
+        PatientFile GetPatientFileByPatient(long id);
     }
 }

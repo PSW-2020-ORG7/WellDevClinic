@@ -25,7 +25,7 @@ function addSurvey(survey) {
     let tdDoctor2;
     let tdDoctor3;
     let tdDoctor4;
-    for (let grade of survey.grades) {
+    for (let grade of survey.doctorGradeQuestions) {
 
         if (grade.question == "doctor1")
             tdDoctor1 = $('<td>' + grade.grade + '</td>');
@@ -37,7 +37,7 @@ function addSurvey(survey) {
             tdDoctor4 = $('<td>' + grade.grade + '</td>');
     }
     let tdDoctor;
-    for (let grade of survey.averageGrades) {
+    for (let grade of survey.averageGrade) {
         if (grade.question == "doctor")
             tdDoctor = $('<td>' + grade.grade + '</td>');
     }
@@ -63,10 +63,8 @@ function addAverage(grades) {
             tdDoctor2 = $('<td>' + grade.grade + '</td>');
         else if (grade.question == "question3")
             tdDoctor3 = $('<td>' + grade.grade + '</td>');
-        else if (grade.question == "question4")
+        else (grade.question == "question4")
             tdDoctor4 = $('<td>' + grade.grade + '</td>');
-        else
-            tdAverage = $('<td>' + grade.grade + '</td>');
     }
 
     tr_doctor.append(tdDoctor1).append(tdDoctor2).append(tdDoctor3).append(tdDoctor4).append(tdAverage);

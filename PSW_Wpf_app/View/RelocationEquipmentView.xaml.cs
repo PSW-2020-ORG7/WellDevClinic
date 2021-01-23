@@ -33,8 +33,7 @@ namespace PSW_Wpf_app.View
 
         private void equipments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            context.LoadRoomByEquipment(((Equipment)equipments.SelectedItem).Id);
-
+            context.LoadRoomByEquipment((Equipment)equipments.SelectedItem);
         }
 
         private void room_from_SelectionChanged(object sender, SelectionChangedEventArgs e)

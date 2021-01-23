@@ -124,6 +124,17 @@ function sendToPharmacies(id) {
 		url: "../api/prescription/" + id,
 		contentType: "application/json",
 		success: function (pre) {
+			let medications = [];
+			for (let med of pre.medications) {
+				let item = {
+					Id: med.id,
+					Name: med.name,
+					Amount: Number(med.amount),
+					Ingredients: med.ingredients.map(x => x.name),
+					Alternative: med.alternative.map(x => x.name)
+				}
+				medications.push(item);
+            }
 			$.ajax({
 				method: "POST",
 				url: "../api/sftp/sendPrescription",
@@ -132,7 +143,7 @@ function sendToPharmacies(id) {
 					PatientName: pre.patFirstName + " " + pre.patLastName,
 					Jmbg: pre.patJmbg,
 					StartTime: pre.timePeriod.startDate,
-					Medicines: pre.medications
+					Medicines: medications
 				}),
 				success: function () {
 					$("#sendMessage").text(" File is succesfully sent. ");

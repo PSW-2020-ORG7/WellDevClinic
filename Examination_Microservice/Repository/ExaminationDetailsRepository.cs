@@ -4,6 +4,7 @@ using Examination_Microservice.Repository.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 
 namespace Examination_Microservice.Repository
@@ -54,6 +55,14 @@ namespace Examination_Microservice.Repository
         public IEnumerable<ExaminationDetails> GetExaminationDetailsByPatient(Patient patient)
         {
             return _myDbContext.ExaminationDetails.Where(h => h.Patient.Id == patient.Id).DefaultIfEmpty().ToList();
+        }
+
+        public void FillSurvey(long id)
+        {
+            ExaminationDetails e = _myDbContext.ExaminationDetails.FirstOrDefault(e => e.Id == id);
+            e.FilledSurvey = true;
+            _myDbContext.ExaminationDetails.Update(e);
+            _myDbContext.SaveChanges();
         }
     }
 }
