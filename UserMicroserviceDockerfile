@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+WORKDIR /app
+EXPOSE 14483
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY ["UserInteraction_Interlayer/UserInteraction_Interlayer.csproj", "UserInteraction_Interlayer/"]
+COPY ["UserInteraction_Microservice/UserInteraction_Microservice.csproj", "UserInteraction_Microservice/"]
+COPY ["EventSourcing/EventSourcing.csproj", "EventSourcing/"]
+
+RUN dotnet restore "UserInteraction_Interlayer/UserInteraction_Interlayer.csproj"
+COPY . .
+WORKDIR "/src/UserInteraction_Interlayer"
+RUN dotnet build "UserInteraction_Interlayer.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "UserInteraction_Interlayer.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+CMD ASPNETCORE_URLS=http://*:14483 dotnet UserInteraction_Interlayer.dll
+
