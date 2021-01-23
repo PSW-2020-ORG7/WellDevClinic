@@ -40,7 +40,7 @@ function viewTender(tender) {
 
         for (let med of tender.medications) {
             content += '<tr><td float="right">';
-            content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
+            content += med.name + '</td><td>  x' + med.amount + '</td></tr>';
         }
     }
     content += '</table></h5>'
@@ -48,8 +48,8 @@ function viewTender(tender) {
     content += '<p style="background-color:red;font-size:40px" id="timerTender"></p>';
 
     if (tender.offerWinner != null && endDate < now) {
-        content += '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#expiredActionModal" ';
-        content += ' onclick="sendEmail()"> Accept current winner </button > ';
+        content += '<button id="btnDeal" class="btn btn-primary btn-lg expand" data-target="#expiredActionModal"';
+        content += 'data-toggle="modal" onclick="sendEmail()"> Accept selected offer </button > ';
     } else if (endDate < now) {
         content += '<p style="font-size:20px">Choose tender winner!</p>';
     } 
@@ -96,7 +96,6 @@ function viewAllOffers(offers) {
     $("#viewTenderOffers").empty();
 
     for (let offer of offers) {
-        
         var content = '<div class="card" style="width:350px; display:inline-block ';
 
         if (currTender.offerWinner != null &&  offer.id == currTender.offerWinner)
@@ -115,7 +114,7 @@ function viewAllOffers(offers) {
 
             for (let med of offer.medications) {
                 content += '<tr><td float="right">';
-                content += med.name + '</td><td>, &nbsp; amount: ' + med.amount + ';</td></tr>';
+                content += med.name + '</td><td>  x' + med.amount + '</td></tr>';
             }
             content += '<tr><td></td><td float="left">  = ' + offer.price +  ' €';
             content += '</td></tr>';
@@ -129,16 +128,19 @@ function viewAllOffers(offers) {
             content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
             content += ' onclick="deleteAction(' + offer.id + ')" disabled> Decline </button > ';
             content += '<button class="btn btn-success" ';
-            content += ' onclick="useAction(' + offer.id + ')" disabled> Accept </button > ';
+            content += ' onclick="useAction(' + offer.id + ')" disabled> Select </button > ';
         } else {
             content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
             content += ' onclick="deleteAction(' + offer.id + ')"> Decline </button > ';
             content += '<button class="btn btn-success" ';
-            content += ' onclick="useAction(' + offer.id + ')"> Accept </button > ';
+            content += ' onclick="useAction(' + offer.id + ')"> Select </button > ';
         }
         content += '</div></div></div>';
         $("#viewTenderOffers").append(content);
     }
+
+    if (!winner)
+        $("#btnDeal").prop("disabled", true);
 
 }
 
@@ -169,6 +171,9 @@ function useAction(id) {
             if (data) {
                 $("#setWinnerActionModal").modal('toggle');
                 $("#setWinnerAction").show();
+                $("#btnOkOk").click(function () {
+                    window.location.reload();
+                });
             }
         },
     });

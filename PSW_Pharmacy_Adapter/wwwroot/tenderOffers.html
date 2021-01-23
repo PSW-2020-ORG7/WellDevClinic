@@ -6,7 +6,8 @@
     <title>Add tender offer</title>
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/tenderOffers.js"></script>
+    <script type="text/javascript" src="js/viewTenders.js"></script>
+    <script type="text/javascript" src="js/autocomplete.js"></script>
     <link rel="stylesheet" href="css/partnerPharmacies.css" />
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
@@ -17,7 +18,7 @@
 </head>
 <body>
     <div class="topnav">
-        <label>Clinic Hello!</label>
+        <label>WellDevClinic</label>
         <a href="index.html">Home</a>
         <a href="partnerPharmacies.html">Partner Pharmacies</a>
         <a href="actionsAndBenefits.html">Actions & Benefits</a>
@@ -25,82 +26,53 @@
         <a href="viewPrescriptions.html">All prescriptions</a>
         <a href="tenderOffers.html" class="active">Tender offers</a>
     </div>
+    <br />
     <div>
-        <button id="btnAddTen" type="submit" class="btn btn-info expand">📜 Add tender</button>
+        <button id="btnTenderModal" type="submit" class="btn btn-info expand">📜 Add tender</button>
     </div>
+    <br />
 
+    <div id="viewTender"></div>
 
-    <div class="modalCustom" id="modalUrgProcurement">
+    <div id="modalAddTender" class="modalCustom">
         <div class="modalContent">
             <span class="close">&times;</span>
-            <h4>Urgent procurement</h4>
-            <br>
-            
-            <button class="add_field_button">Send</button>
-        </div>
-    </div>
-
-
-
-    <div class="modalCustom" id="modalAddTender">
-        <div class="modalContent">
-            <span class="close">&times;</span>
-            <h4><center>Add new tender</center></h4>
+            <h4 style="text-align:center">Add new tender</h4>
+            <div class="input_fields_wrap"></div>
             <table>
-                <tr><td>Start date:&nbsp;</td><td><input type="date" id="dateStart"><td></tr>
-                <tr><td>End date:&nbsp;</td><td><input type="date" id="dateEnd"><td></tr>
-                <tr>
-                    <div class="input_fields_wrap">
-                    </div>
-                    
-                </tr>
+                <tr><td>Start date:</td><td><input type="date" id="dateStart"><td></tr>
+                <tr><td>End date:</td><td><input type="date" id="dateEnd"><td></tr>
                 <tr>
                     <td><button class="add_field_button">Add More Fields</button></td>
-                    <td><button type="button" class="btn btn-secondary" id="btnAddTender"
-                                    data-toggle="modal" data-target="#exampleModalCenter1">
-                                Add tender
-                            </button>
+                    <td>
+                        <button type="button" class="btn btn-primary expand" id="btnAddTender"
+                                data-toggle="modal" data-target="#pageInfoModal" onclick="addTender()">
+                            Add tender
+                        </button>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <br>
-    <div id="viewTender"></div>
-
-    <div class="box">
-        <h1>Sign up form for tenders notifications</h1>
-        <form id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate">
-            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="pharmacy@example.com" required>
-            <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                <input type="text" name="b_e44c1f194bec93e238615469e_f6f826e769" tabindex="-1" value="">
-            </div>
-            <input type="submit" value="subscribe" name="subscribe" id="mc-embedded-subscribe" class="mc-button">
-            <div id="subscribe-result">
-            </div>
-        </form>
-    </div>
-
-    <div class="modalCustom" id="modalTender">
+    <div id="modalTender" class="modalCustom">
         <div class="modalContent">
             <span class="close">&times;</span>
 
             <h5>
-
                 <table>
                     <div id="viewNeeds"></div>
                 </table>
                 <table>
                     <tr><td colspan="2"><h4>Pharmacy infos:</h4></td></tr>
-                    <tr><td>Name:&nbsp;</td><td><input type="text" id="txtName" size="50" /><td></tr>
-                    <tr><td>Email:&nbsp;</td><td><input type="text" id="txtEmail" size="50" /><td></tr>
-                    <tr><td>Note:&nbsp;</td><td><input type="text" id="txtNote" size="50" /><td></tr>
+                    <tr><td>Name: </td><td><input type="text" id="txtName" size="50" /><td></tr>
+                    <tr><td>Email: </td><td><input type="text" id="txtEmail" size="50" /><td></tr>
+                    <tr><td>Note: </td><td><input type="text" id="txtNote" size="50" /><td></tr>
                     &nbsp;
                     <tr>
                         <td colspan="2">
                             <button type="button" class="btn btn-secondary" id="btnAddOffer"
-                                    data-toggle="modal" data-target="#exampleModalCenter1">
+                                    data-toggle="modal" data-target="#pageInfoModal">
                                 Send offer
                             </button>
                         <td>
@@ -110,8 +82,17 @@
         </div>
     </div>
 
-    <div id="regAction" style="display:none">
-        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="box">
+        <h1>Subscribe for tenders notifications</h1>
+        <form id="subscribeForm" name="subscribeForm" class="validate">
+            <input id="inpEmail" type="email" name="EMAIL" class="email" placeholder="pharmacy@example.com" required>
+            <input id="btnSubscribe" type="submit" class="mc-button" value="Subscribe" onclick="subscribe()">
+            <div id="subscribe-result"></div>
+        </form>
+    </div>
+
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body" id="message"> </div>

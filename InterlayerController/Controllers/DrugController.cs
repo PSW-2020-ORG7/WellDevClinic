@@ -31,7 +31,7 @@ namespace InterlayerController.Controllers
             => _drugController.Get(id);
 
         [HttpPut]
-        public Drug Save(Drug d)
+        public Drug Save([FromBody]Drug d)
             => _drugController.Save(d);
 
     }

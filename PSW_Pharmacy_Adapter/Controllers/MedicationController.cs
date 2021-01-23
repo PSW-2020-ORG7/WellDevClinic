@@ -29,7 +29,12 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [HttpPost]
         [Route("findMedPh")]
         public async Task<IActionResult> GetPharmacyByMedicationAsync([FromBody]Medication medication)
-            => Ok(await _medicationService.GetPharmacyByMedicationAsync(medication));
+        {
+            List<PharmacyMedicationDto> result = await _medicationService.GetPharmacyByMedicationAsync(medication);
+            if(result != null)
+                return Ok(result);
+            return StatusCode(408, "No pharmacy has responded to request! Try again later.");
+        }         
 
         [HttpPost]
         [Route("findMedsPh")]
@@ -40,19 +45,20 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("orderMedicine")]
         public async Task<IActionResult> OrderMedication([FromQuery] string phName, [FromQuery]string medName, [FromQuery]int amount)
         {
-            if(await _medicationService.OrderMedicationAsync(phName, medName, amount) != null)
-                return Ok();
-            return BadRequest();        // There is no such amount at pharmacy
+            Medication orderedMedication = await _medicationService.OrderMedicationAsync(phName, medName, amount);
+            if (orderedMedication != null)
+                return Ok(orderedMedication);
+            return BadRequest("There is no such amount of desired medication at the pharmacy");
         }
 
         [HttpPost]
         [Route("orderMedicines")]
         public async Task<IActionResult> OrderMedication([FromQuery] string phName, [FromBody] List<MedicationOrderDto> order)
         {
-            List<Medication> response = await _medicationService.OrderMedicationsAsync(phName, order);
-            if (response != null)
-                return Ok(response);
-            return BadRequest();        // No medications can be ordered
+            List<Medication> orderedMedications = await _medicationService.OrderMedicationsAsync(phName, order);
+            if (orderedMedications != null)
+                return Ok(orderedMedications);
+            return BadRequest("No medications can be ordered. (Pharmacy out of stock)");
         }
 
         [HttpGet]
