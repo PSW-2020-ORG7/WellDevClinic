@@ -27,6 +27,7 @@ using Model.PatientSecretary;
 using bolnica.Service;
 using ControlzEx.Theming;
 
+using Patient = PSW_Wpf_Patient.Client.Patient;
 namespace PSW_Wpf_Patient
 {
     /// <summary>
@@ -69,8 +70,7 @@ namespace PSW_Wpf_Patient
                 TabFile.Visibility = Visibility.Hidden;
                 FeedbackHeader.Visibility = Visibility.Hidden;
             }
-
-            PasswordValidation2.password2 = _patient.Password;
+            
 
             Picker.DisplayDateStart = DateTime.Now.AddDays(1);
             Picker2.DisplayDateStart = DateTime.Now.AddDays(1);
@@ -81,24 +81,7 @@ namespace PSW_Wpf_Patient
         private void NotifyPatient()
         {
             var app = Application.Current as App;
-            List<PatientNotification> patientNotifications = app.PatientNotificationController.getNotificationByPatient(_patient).ToList();
-            if (patientNotifications.Count != 0)
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (PatientNotification notification in patientNotifications)
-                {
-                    sb.Append(notification.Message);
-                    sb.Append("\n");
-                    notification.Read = true;
-                    app.PatientNotificationController.Edit(notification);
-                }
-                string messageBoxText = sb.ToString();
-                string caption = "Informacija";
-                MessageBoxButton button = MessageBoxButton.OK;
-                MessageBoxImage icon = MessageBoxImage.Information;
-
-                System.Windows.MessageBox.Show(messageBoxText, caption, button, icon);
-            }
+           
 
         }
         private void UpdateTownAddress(object sender, RoutedEventArgs e)
@@ -129,15 +112,7 @@ namespace PSW_Wpf_Patient
             ListOfArticles = app.ArticleDecorator.GetAll().ToList();
             doctorsForGrade = new List<Doctor>();
             upcomingExaminations = new List<ExaminationDTO>();
-            List<Examination> examinations = _patient.patientFile.Examination;
-            if (examinations != null)
-            {
-                foreach (Examination exam in examinations)
-                {
-                    if (doctorsForGrade.SingleOrDefault(any => any.GetId() == exam.Doctor.GetId()) == null)
-                        doctorsForGrade.Add(exam.Doctor);
-                }
-            }
+            
             FillAccountData(_patient);
             SetExaminations();
             SetOperation();
@@ -165,94 +140,14 @@ namespace PSW_Wpf_Patient
         {
             var app = Application.Current as App;
             List<Examination> examinations = new List<Examination>();
-            examinations = _patient.patientFile.Examination;
-            if (examinations == null)
-            {
-                return;
-            }
-            foreach (var examination in examinations)
-            {
-                Border b = new Border();
-                b.BorderThickness = new Thickness(2);
-                b.CornerRadius = new CornerRadius(3);
-                b.BorderBrush = Brushes.LightBlue;
-                b.Margin = new Thickness(10, 10, 10, 10);
-
-                StackPanel stackPanelExamination = new StackPanel();
-                TextBlock doctor = new TextBlock();
-                TextBlock period = new TextBlock();
-                TextBlock prescription = new TextBlock();
-                TextBlock refferal = new TextBlock();
-                TextBlock Anamnesis = new TextBlock();
-                TextBlock Diagnosis = new TextBlock();
-                TextBlock therapy = new TextBlock();
-
-                doctor.FontSize = 15;
-                doctor.Inlines.Add(new Run("Doktor:  ") { FontWeight = FontWeights.Bold });
-                doctor.Inlines.Add(examination.Doctor.FullName);
-                doctor.Margin = new Thickness(10, 10, 10, 10);
-                stackPanelExamination.Children.Add(doctor);
-                //
-                period.Inlines.Add(new Run("Datum:  ") { FontWeight = FontWeights.Bold });
-                period.FontSize = 15;
-                period.Inlines.Add(examination.Period.StartDate.ToString());
-                period.Margin = new Thickness(10, 10, 10, 10);
-                stackPanelExamination.Children.Add(period);
-
-                //
-                Anamnesis.FontSize = 15;
-                Anamnesis.Inlines.Add(new Run("Anamnesis:  ") { FontWeight = FontWeights.Bold });
-                Anamnesis.TextWrapping = TextWrapping.Wrap;
-                Anamnesis.Margin = new Thickness(10, 10, 10, 10);
-                Anamnesis.Inlines.Add(examination.Anemnesis.Text);
-                stackPanelExamination.Children.Add(Anamnesis);
-
-                //
-                Diagnosis.FontSize = 15;
-                Diagnosis.TextWrapping = TextWrapping.Wrap;
-                Diagnosis.Inlines.Add(new Run("Diagnoza:  ") { FontWeight = FontWeights.Bold });
-                Diagnosis.Margin = new Thickness(10, 10, 10, 10);
-                Diagnosis.Inlines.Add(examination.Diagnosis.Name);
-                stackPanelExamination.Children.Add(Diagnosis);
-
-                //
-
-                prescription.FontSize = 15;
-                prescription.TextWrapping = TextWrapping.Wrap;
-                prescription.Margin = new Thickness(10, 10, 10, 10);
-                prescription.Inlines.Add(new Run("Recept: ") { FontWeight = FontWeights.Bold });
-                foreach (Drug pr in examination.Prescription.Drug)
-                {
-                    prescription.Inlines.Add(pr.Name);
-                }
-                stackPanelExamination.Children.Add(prescription);
-
-                therapy.FontSize = 15;
-                therapy.TextWrapping = TextWrapping.Wrap;
-                therapy.Margin = new Thickness(10, 10, 10, 10);
-                therapy.Inlines.Add(new Run("Terapija:  ") { FontWeight = FontWeights.Bold });
-                therapy.Inlines.Add(examination.Therapy.Note);
-                stackPanelExamination.Children.Add(therapy);
-                if (examination.Refferal != null)
-                {
-                    refferal.FontSize = 15;
-                    refferal.Margin = new Thickness(10, 10, 10, 10);
-                    refferal.Inlines.Add(new Run("Uput:  ") { FontWeight = FontWeights.Bold });
-                    refferal.Inlines.Add("pacijent se upućuje na dateljniji pregled kod lekara " + examination.Refferal.Doctor.FullName + " datuma " + examination.Refferal.Period.StartDate.ToString());
-                    stackPanelExamination.Children.Add(refferal);
-                }
-
-                b.Child = stackPanelExamination;
-
-                Exeminations.Children.Add(b);
-            }
+            
         }
 
         private void SetHospitalizations()
         {
             var app = Application.Current as App;
             List<Hospitalization> hospitalizations = new List<Hospitalization>();
-            hospitalizations = _patient.patientFile.Hospitalization;
+           
             if (hospitalizations == null)
             {
                 return;
@@ -295,7 +190,7 @@ namespace PSW_Wpf_Patient
         {
             var app = Application.Current as App;
             List<Operation> operations = new List<Operation>();
-            operations = _patient.patientFile.Operation;
+            
             if (operations == null)
             {
                 return;
@@ -390,40 +285,7 @@ namespace PSW_Wpf_Patient
         }
         private void FillAccountData(Patient patient)
         {
-            Username2.Text = _patient.Username;
-            Name2.Text = _patient.FirstName;
-            Surname2.Text = _patient.LastName;
-            ID2.Text = _patient.Jmbg;
-            Adress2.Text = _patient.Address.Street + " " + _patient.Address.Number + "," + " " + _patient.Address.Town.Name + " " + _patient.Address.Town.PostalNumber + "," + " " + _patient.Address.Town.State.Name;
-            DateBirthTextBlock.Text = _patient.DateOfBirth.Date.ToString();
-            Email2.Text = _patient.Email;
-            PhoneNumber2.Text = _patient.Phone;
-            //ProfileImage2.Source = new BitmapImage(_patient.Image);
-            //ProfileImage.Source = new BitmapImage(_patient.Image);
-
-
-            Ime = _patient.FirstName;
-            Prezime = _patient.LastName;
-            JMBG = _patient.Jmbg;
-            DATETIME = _patient.DateOfBirth;
-
-            if (_patient.Guest)
-            {
-                UsernameConst.IsEnabled = true;
-                USERNAME = "";
-                EMAIL = "";
-                Phone = "";
-            }
-            else
-            {
-                USERNAME = _patient.Username;
-                UsernameConst.IsEnabled = false;
-                EMAIL = _patient.Email;
-                Phone = _patient.Phone;
-            }
-
-
-
+            
         }
 
 
@@ -481,18 +343,7 @@ namespace PSW_Wpf_Patient
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             /*if ((int)DarkMode.Value == 1)
-            {
-                ThemeManager.ChangeAppStyle(this,
-                                    ThemeManager.GetAccent("Teal"),//teal Steel
-                                    ThemeManager.GetAppTheme("BaseDark"));
-                Theme = 1;
-            }
-            else
-            {
-                ThemeManager.ChangeAppStyle(this,
-                                    ThemeManager.GetAccent("Blue"),
-                                    ThemeManager.GetAppTheme("BaseLight"));
-                Theme = 0;
+            
             }*/
         }
 
@@ -509,10 +360,6 @@ namespace PSW_Wpf_Patient
             if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 String fileName = op.FileName;
-                //ProfileImage.Source = new BitmapImage(new Uri(fileName));
-                //ProfileImage2.Source = new BitmapImage(new Uri(fileName));
-                _patient.Image = new String(fileName);
-                app.UserController.Edit(_patient);
                 SuccessUpdatePhoto.Foreground = Brushes.Green;
 
                 SuccessUpdatePhoto.Text = "You have successfully changed photo!";
@@ -537,110 +384,12 @@ namespace PSW_Wpf_Patient
             }
 
 
-            if (!Name.Text.ToString().Equals(""))
-            {
-                prom++;
-                _patient.FirstName = Name.Text.ToString();
-            }
-            if (!Surname.Text.ToString().Equals(""))
-            {
-                prom++;
-                _patient.LastName = Surname.Text.ToString();
-            }
-            if (!ID.Text.ToString().Equals(""))
-            {
-                prom++;
-                _patient.Jmbg = ID.Text.ToString();
-            }
-
-            _patient.Address = selectedAddress;
-            _patient.Address.Town = town;
-            _patient.Address.Town.State = state;
-
-
-            if (!PhoneNumber.Text.ToString().Equals(""))
-            {
-                prom++;
-                _patient.Phone = PhoneNumber.Text.ToString();
-            }
-            if (!Email.Text.ToString().Equals(""))
-            {
-                prom++;
-                _patient.Email = Email.Text.ToString();
-
-            }
-            if (!DateBirthPicker.Text.ToString().Equals("") && DateBirthPicker.SelectedDate != DateTime.Today)
-            {
-                prom++;
-                _patient.DateOfBirth = DateTime.Parse(DateBirthPicker.Text);
-            }
-            Storyboard sb = Resources["sbHideAnimation"] as Storyboard;
-
-            if (_patient.Guest)
-            {
-                if (UsernameConst.Text.ToString().Equals("") || _patient.Email.Equals("") || _patient.Phone.Equals(""))
-                {
-                    UsernameConst.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty).UpdateSource();
-                    PhoneNumber.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty).UpdateSource();
-                    Email.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty).UpdateSource();
-                    SuccessUpdateData.Foreground = Brushes.Red;
-                    SuccessUpdateData.Text = "All blank fields are required!";
-                    sb.Begin(SuccessUpdateData);
-                    return;
-                }
-                _patient.Username = UsernameConst.Text.ToString();
-                Patient patient;
-                if ((patient = app.PatientDecorator.ClaimAccount(_patient)) != null)
-                {
-                    _patient = patient;
-                    TabExamination.Visibility = Visibility.Visible;
-                    TabFile.Visibility = Visibility.Visible;
-                    FeedbackHeader.Visibility = Visibility.Visible;
-                    SuccessUpdateData.Foreground = Brushes.Green;
-                    SuccessUpdateData.Text = "You have successfully changed the data!";
-                    sb.Begin(SuccessUpdateData);
-                    FillAccountData(_patient);
-                    return;
-                }
-                else
-                {
-                    SuccessUpdateData.Foreground = Brushes.Red;
-                    SuccessUpdateData.Text = "Username already exists!";
-                    sb.Begin(SuccessUpdateData);
-                    USERNAME = "";
-                    UsernameConst.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty).UpdateSource();
-                    return;
-                }
-
-            }
-
-
-            if (prom != 0)
-            {
-                SuccessUpdateData.Foreground = Brushes.Green;
-
-
-                SuccessUpdateData.Text = "You have successfully changed the data!";
-                Console.WriteLine(_patient.patientFile.GetId());
-
-                app.UserController.Edit(_patient);
-                FillAccountData(_patient);
-
-                sb.Begin(SuccessUpdateData);
-                return;
-
-            }
-            else
-            {
-                SuccessUpdateData.Foreground = Brushes.Red;
-                SuccessUpdateData.Text = "Data required for change!";
-                sb.Begin(SuccessUpdateData);
-            }
+            
         }
 
         private void Password(object sender, RoutedEventArgs e)
         {
-            PasswordValidation2.password2 = _patient.Password;
+            
             CurrentPassword.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty).UpdateSource();
         }
 
@@ -656,9 +405,8 @@ namespace PSW_Wpf_Patient
         {
             if (CurrentPassword.Text != "" && NewPassword.Text != "")
             {
-                _patient.Password = NewPassword.Text;
+               
                 var app = Application.Current as App;
-                app.UserController.Edit(_patient);
                 Storyboard sb = Resources["sbHideAnimation"] as Storyboard;
                 sb.Begin(SuccessUpdatePw);
             }
@@ -726,9 +474,9 @@ namespace PSW_Wpf_Patient
                 basicInfoheader.Font.SetStyle(1);
                 basicInfo.Add(basicInfoheader);
                 basicInfo.Add(new Chunk("\n"));
-                basicInfo.Add("Ime i prezime pacijenta: " + _patient.FullName);
+               // basicInfo.Add("Ime i prezime pacijenta: " + _patient.FullName);
                 basicInfo.Add(new Chunk("\n"));
-                basicInfo.Add("Username: " + _patient.Username);
+               // basicInfo.Add("Username: " + _patient.Username);
                 basicInfo.Add(new Chunk("\n"));
 
 
@@ -740,26 +488,7 @@ namespace PSW_Wpf_Patient
                 therapHeader.Font.SetStyle(1);
                 therapy.Add(therapHeader);
                 therapy.Add(new Chunk("\n"));
-                List<Therapy> therapyCollection = app.ReportDecorator.GenerateTherapyTimetableReport(_patient.patientFile);
-                if (therapyCollection.Count != 0)
-                {
-                    foreach (Therapy current in therapyCollection)
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (Drug drug in current.Drug)
-                        {
-                            sb.Append(drug.Name);
-                            sb.Append(", ");
-                        }
-                        therapy.Add(sb.ToString() + " : " + current.Note + ", terapija je prepisana :" + current.Period.StartDate.ToString("dd/MM/yyyy") + " i vazi do :" + current.Period.EndDate.ToString("dd/MM/yyyy"));
-                        therapy.Add(new Chunk("\n"));
-
-                    }
-                }
-                else
-                {
-                    therapy.Add("Trenutno Vam nije prepisana ni jedna terapija!");
-                }
+               
                 therapy.Add(new Chunk("\n"));
 
                 doc.Add(basicInfo);
@@ -882,8 +611,6 @@ namespace PSW_Wpf_Patient
                 Doctor doctor = scheduleExam.Doctor;
                 Period period = scheduleExam.Period;
 
-                Examination examination = new Examination(this._patient, doctor, period);
-                app.ExaminationDecorator.Save(examination);
                 BusinessDay day = app.BusinessDayDecorator.GetExactDay(doctor, period.StartDate);
                 List<Period> periods = new List<Period>();
                 periods.Add(period);

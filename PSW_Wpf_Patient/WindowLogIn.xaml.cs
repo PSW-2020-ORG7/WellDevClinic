@@ -7,6 +7,7 @@ using MahApps.Metro;
 using Model.Users;
 using System.ComponentModel;
 using PSW_Wpf_Patient.Client;
+using Patient = PSW_Wpf_Patient.Client.Patient;
 
 namespace PSW_Wpf_Patient
 {
@@ -112,13 +113,14 @@ namespace PSW_Wpf_Patient
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            String username = UsernameLogIn.Text.ToString();
-            String password = PasswordLogIn.Password.ToString();
+            UserLogIn user = new UserLogIn();
+            user.Password = PasswordLogIn.Password.ToString();
+            user.Username = UsernameLogIn.Text.ToString();
 
             var app = Application.Current as App;
             try
             {
-                Patient temp = await WpfPatientClient.GetUser(UsernameLogIn.Text, PasswordLogIn.Password);
+                Patient temp = await WpfPatientClient.GetUser(user);
                 if (temp != null)
                 {
 

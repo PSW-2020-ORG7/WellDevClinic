@@ -80,13 +80,12 @@ namespace SearchAndSchedule_Interlayer.Controllers
             _businessDayAppService.DeleteBusinessDayByRoom(room);
         }
 
-        //DTO za ova dva parametra ukoliko nekom treba metoda
-        /*[HttpPost]
-          [Route("GetExactDay")]
-          public BusinessDay GetExactDay(Doctor doctor, DateTime date)
-          {
-               return _businessDayAppService.GetExactDay(doctor, date);
-          }*/
+        [HttpPost]
+        [Route("GetExactDay")]
+        public BusinessDay GetExactDay(ExactDayDTO exactDay)
+        {
+             return _businessDayAppService.GetExactDay(exactDay.Doctor, exactDay.Date);
+        }
         [HttpPost]
         [Route("IsExaminationPossible")]
         public bool IsExaminationPossible(UpcomingExamination examination)
@@ -112,6 +111,15 @@ namespace SearchAndSchedule_Interlayer.Controllers
             return _businessDayAppService.Search(new BusinessDayDTO(result, new Period(date), PriorityType.NoPriority));
         }
 
+        [HttpPost]
+        [Route("markAsOccupied/{id?}")]
+        public void MarkAsOccupied(List<Period> period, long id)
+        {
+            BusinessDay businessDay = _businessDayAppService.Get(id);
+            _businessDayAppService.MarkAsOccupied(period, businessDay);
+
+
+        }
         //DTO za ove parametre
         /* [HttpPost]
          [Route("OperationSearch")]

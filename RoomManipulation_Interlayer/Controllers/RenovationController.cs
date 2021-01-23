@@ -33,7 +33,8 @@ namespace RoomManipulation_Interlayer.Controllers
         }
 
         [HttpPost]
-        public Renovation Save(Renovation renovation)
+        [Route("SaveRenovation")]
+        public Renovation Save( Renovation renovation)
         {
             return _renovationAppService.Save(renovation);
         }

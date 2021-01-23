@@ -79,5 +79,12 @@ namespace UserInteraction_Interlayer.Controllers
         {
             return _patientAppService.GetBlockedPatients();
         }
+
+        [HttpPost]
+        [Route("savePatient")]
+        public Patient SavePatient(Patient patient)
+        {
+            return _patientAppService.Save(patient);
+        }
     }
 }

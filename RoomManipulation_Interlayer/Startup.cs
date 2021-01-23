@@ -26,7 +26,7 @@ namespace RoomManipulation_Interlayer
 
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+                    b => b.MigrationsAssembly("RoomManipulation_Microservice")).UseLazyLoadingProxies());
 
             services.AddScoped<IEquipmentAppService, EquipmentAppService>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();

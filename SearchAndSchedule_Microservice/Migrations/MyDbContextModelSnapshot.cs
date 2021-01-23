@@ -17,6 +17,26 @@ namespace SearchAndSchedule_Microservice.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.Address", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FullAddress")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.BusinessDay", b =>
                 {
                     b.Property<long>("Id")
@@ -47,14 +67,22 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.Property<long?>("PersonId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("SpecialityId")
+                    b.Property<long?>("UserDetailsId")
                         .HasColumnType("bigint");
+
+                    b.Property<long?>("UserLogInId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
 
-                    b.HasIndex("SpecialityId");
+                    b.HasIndex("UserDetailsId");
+
+                    b.HasIndex("UserLogInId");
 
                     b.ToTable("Doctor");
                 });
@@ -91,9 +119,14 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.Property<long?>("EquipmentId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("RoomId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EquipmentId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("EquipmentStatistic");
                 });
@@ -142,9 +175,28 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.Property<long?>("PersonId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("UserDetailsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserLogInId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Validation")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("VerificationToken")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("UserDetailsId");
+
+                    b.HasIndex("UserLogInId");
 
                     b.ToTable("Patient");
                 });
@@ -178,9 +230,6 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.Property<int>("CurrentNumberOfPatients")
                         .HasColumnType("int");
 
-                    b.Property<long?>("EquipmentStatisticId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("MaxNumberOfPatientsForHospitalization")
                         .HasColumnType("int");
 
@@ -191,8 +240,6 @@ namespace SearchAndSchedule_Microservice.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EquipmentStatisticId");
 
                     b.HasIndex("RoomTypeId");
 
@@ -211,20 +258,6 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RoomType");
-                });
-
-            modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.Speciality", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Speciality");
                 });
 
             modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.UpcomingExamination", b =>
@@ -252,6 +285,104 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Examination");
+                });
+
+            modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.UserDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("AddressId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("BloodType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Race")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("UserDetails");
+                });
+
+            modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.UserLogIn", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLogIn");
+                });
+
+            modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.Address", b =>
+                {
+                    b.OwnsOne("SearchAndSchedule_Microservice.Domain.Model.State", "State", b1 =>
+                        {
+                            b1.Property<long>("AddressId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Code")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.HasKey("AddressId");
+
+                            b1.ToTable("Address");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AddressId");
+                        });
+
+                    b.OwnsOne("SearchAndSchedule_Microservice.Domain.Model.Town", "Town", b1 =>
+                        {
+                            b1.Property<long>("AddressId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.Property<string>("PostalNumber")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.HasKey("AddressId");
+
+                            b1.ToTable("Address");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AddressId");
+                        });
                 });
 
             modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.BusinessDay", b =>
@@ -313,9 +444,13 @@ namespace SearchAndSchedule_Microservice.Migrations
                         .WithMany()
                         .HasForeignKey("PersonId");
 
-                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.Speciality", "Speciality")
+                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.UserDetails", "UserDetails")
                         .WithMany()
-                        .HasForeignKey("SpecialityId");
+                        .HasForeignKey("UserDetailsId");
+
+                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.UserLogIn", "UserLogIn")
+                        .WithMany()
+                        .HasForeignKey("UserLogInId");
                 });
 
             modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.EquipmentStatistic", b =>
@@ -323,6 +458,10 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.HasOne("SearchAndSchedule_Microservice.Domain.Model.Equipment", "Equipment")
                         .WithMany()
                         .HasForeignKey("EquipmentId");
+
+                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.Room", null)
+                        .WithMany("EquipmentStatistic")
+                        .HasForeignKey("RoomId");
                 });
 
             modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.Operation", b =>
@@ -364,14 +503,18 @@ namespace SearchAndSchedule_Microservice.Migrations
                     b.HasOne("SearchAndSchedule_Microservice.Domain.Model.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId");
+
+                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.UserDetails", "UserDetails")
+                        .WithMany()
+                        .HasForeignKey("UserDetailsId");
+
+                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.UserLogIn", "UserLogIn")
+                        .WithMany()
+                        .HasForeignKey("UserLogInId");
                 });
 
             modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.Room", b =>
                 {
-                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.EquipmentStatistic", "EquipmentStatistic")
-                        .WithMany()
-                        .HasForeignKey("EquipmentStatisticId");
-
                     b.HasOne("SearchAndSchedule_Microservice.Domain.Model.RoomType", "RoomType")
                         .WithMany()
                         .HasForeignKey("RoomTypeId");
@@ -405,6 +548,13 @@ namespace SearchAndSchedule_Microservice.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UpcomingExaminationId");
                         });
+                });
+
+            modelBuilder.Entity("SearchAndSchedule_Microservice.Domain.Model.UserDetails", b =>
+                {
+                    b.HasOne("SearchAndSchedule_Microservice.Domain.Model.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
                 });
 #pragma warning restore 612, 618
         }

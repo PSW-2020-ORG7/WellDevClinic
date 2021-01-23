@@ -56,7 +56,12 @@ namespace SearchAndSchedule_Microservice.Repository
 
         public IEnumerable<UpcomingExamination> GetAll()
         {
-            return _myDbContext.Examination.DefaultIfEmpty().ToList();
+            List<UpcomingExamination> examinations = _myDbContext.Examination.DefaultIfEmpty().ToList();
+            Doctor doctor = _myDbContext.Doctor.FirstOrDefault(d => d.Id == 4);
+
+            Speciality speciality = doctor.Speciality;
+            return examinations;
+            
         }
 
         public List<UpcomingExamination> GetCanceledExaminations()

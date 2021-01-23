@@ -57,9 +57,13 @@ namespace RoomManipulation_Microservice.Repository
 
         public Renovation Save(Renovation entity)
         {
+            Room room = _myDbContext.Room.FirstOrDefault(r => r.Id == entity.Room.Id);
+            entity.Room = room;
+
             var Renovation = _myDbContext.Renovation.Add(entity);
             _myDbContext.SaveChanges();
             return Renovation.Entity;
         }
+
     }
 }

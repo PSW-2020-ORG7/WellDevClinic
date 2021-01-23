@@ -1,4 +1,5 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ namespace PSW_Wpf_app.ViewModel
     {
         private BindingList<Equipment> equipments = new BindingList<Equipment>();
         private BindingList<ExaminationDTO> examinations = new BindingList<ExaminationDTO>();
-        private BindingList<Examination> examinationForDilay = new BindingList<Examination>();
+        private BindingList<UpcomingExamination> examinationForDilay = new BindingList<UpcomingExamination>();
         private List<double> dileyTime = new List<double>();
         private List<ExaminationDTO> delayedTermExamination = new List<ExaminationDTO>();
         List<ExaminationDTO> allTerms = new List<ExaminationDTO>();
@@ -40,7 +41,7 @@ namespace PSW_Wpf_app.ViewModel
                 OnPropertyChanged("DileyTime");
             }
         }
-        public BindingList<Examination> ExaminationForDilay
+        public BindingList<UpcomingExamination> ExaminationForDilay
         {
             get
             {
@@ -103,19 +104,19 @@ namespace PSW_Wpf_app.ViewModel
             else
             {
                 MessageBox.Show("There are no free terms! We will run the analysis! ");
-                List<Examination> upcomingExaminations = await WpfClient.GetAllUpcomingExaminations();
-                Dictionary<Examination, ExaminationDTO> dilayTerm = new Dictionary<Examination, ExaminationDTO>();
+                List<UpcomingExamination> upcomingExaminations = await WpfClient.GetAllUpcomingExaminations();
+                Dictionary<UpcomingExamination, ExaminationDTO> dilayTerm = new Dictionary<UpcomingExamination, ExaminationDTO>();
 
-                List<Examination> examinations = new List<Examination>();
-                examinations = FindExaminationsByType(selectedType, upcomingExaminations);
+                List<UpcomingExamination> examinations = new List<UpcomingExamination>();
+                examinations = await FindExaminationsByType(selectedType, upcomingExaminations);
 
                 List<ExaminationDTO> terms = new List<ExaminationDTO>();
                 terms = await FindAllTerms(dilayTerm, examinations, terms);
 
-                Dictionary<Examination, double> displayDifference = new Dictionary<Examination, double>();
+                Dictionary<UpcomingExamination, double> displayDifference = new Dictionary<UpcomingExamination, double>();
                 DileyTimeSpan(dilayTerm, displayDifference);
 
-                List<KeyValuePair<Examination, double>> myList = SortTerms(displayDifference);
+                List<KeyValuePair<UpcomingExamination, double>> myList = SortTerms(displayDifference);
                 AllExaminationsForDilay(myList);
                 AllDileyTime(myList);
                 TermForDeley(dilayTerm);
@@ -145,7 +146,6 @@ namespace PSW_Wpf_app.ViewModel
             foreach (Doctor doctor in doctors)
             {
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
-                businessDayDTO.PatientScheduling = true;
                 List<ExaminationDTO> terms = await WpfClient.FindTerms(businessDayDTO);
                 if (terms == null)
                     continue;
@@ -154,11 +154,11 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
-        private void TermForDeley(Dictionary<Examination, ExaminationDTO> dilayTerm)
+        private void TermForDeley(Dictionary<UpcomingExamination, ExaminationDTO> dilayTerm)
         {
-            foreach (Examination e in ExaminationForDilay)
+            foreach (UpcomingExamination e in ExaminationForDilay)
             {
-                foreach (KeyValuePair<Examination, ExaminationDTO> d in dilayTerm)
+                foreach (KeyValuePair<UpcomingExamination, ExaminationDTO> d in dilayTerm)
                 {
                     if (d.Key.Equals(e))
                     {
@@ -169,10 +169,10 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
-        private void AllDileyTime(List<KeyValuePair<Examination, double>> myList)
+        private void AllDileyTime(List<KeyValuePair<UpcomingExamination, double>> myList)
         {
             int n = 0;
-            foreach (KeyValuePair<Examination, double> d in myList)
+            foreach (KeyValuePair<UpcomingExamination, double> d in myList)
             {
                 if (n <= 2)
                     DileyTime.Add(d.Value);
@@ -181,10 +181,10 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
-        private void AllExaminationsForDilay(List<KeyValuePair<Examination, double>> myList)
+        private void AllExaminationsForDilay(List<KeyValuePair<UpcomingExamination, double>> myList)
         {
             int i = 0;
-            foreach (KeyValuePair<Examination, double> d in myList)
+            foreach (KeyValuePair<UpcomingExamination, double> d in myList)
             {
                 if (i <= 2)
                     ExaminationForDilay.Add(d.Key);
@@ -192,33 +192,32 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
-        private static List<KeyValuePair<Examination, double>> SortTerms(Dictionary<Examination, double> displayDifference)
+        private static List<KeyValuePair<UpcomingExamination, double>> SortTerms(Dictionary<UpcomingExamination, double> displayDifference)
         {
-            List<KeyValuePair<Examination, double>> myList = displayDifference.ToList();
+            List<KeyValuePair<UpcomingExamination, double>> myList = displayDifference.ToList();
             myList.Sort(
-                delegate (KeyValuePair<Examination, double> pair1,
-                KeyValuePair<Examination, double> pair2)
+                delegate (KeyValuePair<UpcomingExamination, double> pair1,
+                KeyValuePair<UpcomingExamination, double> pair2)
                 {
                     return pair1.Value.CompareTo(pair2.Value);
                 });
             return myList;
         }
 
-        private static void DileyTimeSpan(Dictionary<Examination, ExaminationDTO> dilayTerm, Dictionary<Examination, double> displayDifference)
+        private static void DileyTimeSpan(Dictionary<UpcomingExamination, ExaminationDTO> dilayTerm, Dictionary<UpcomingExamination, double> displayDifference)
         {
-            foreach (KeyValuePair<Examination, ExaminationDTO> d in dilayTerm)
+            foreach (KeyValuePair<UpcomingExamination, ExaminationDTO> d in dilayTerm)
             {
                 TimeSpan difference = d.Value.Period.StartDate - d.Key.Period.StartDate;
                 displayDifference[d.Key] = difference.TotalMinutes;
             }
         }
 
-        private async Task<List<ExaminationDTO>> FindAllTerms(Dictionary<Examination, ExaminationDTO> dilayTerm, List<Examination> examinations, List<ExaminationDTO> terms)
+        private async Task<List<ExaminationDTO>> FindAllTerms(Dictionary<UpcomingExamination, ExaminationDTO> dilayTerm, List<UpcomingExamination> examinations, List<ExaminationDTO> terms)
         {
-            foreach (Examination ex in examinations)
+            foreach (UpcomingExamination ex in examinations)
             {
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(ex.Doctor, ex.Period, PriorityType.NoPriority);
-                businessDayDTO.PatientScheduling = true;
                 List<ExaminationDTO> termsFound = await WpfClient.FindTerms(businessDayDTO);
                 terms = checkTime(termsFound);
                 if (terms.Count == 0)
@@ -234,23 +233,58 @@ namespace PSW_Wpf_app.ViewModel
             return terms;
         }
 
-        private List<Examination> FindExaminationsByType(int selectedType, List<Examination> upcomingExaminations)
+        private async Task<List<UpcomingExamination>> FindExaminationsByType(int selectedType, List<UpcomingExamination> upcomingExaminations)
         {
-            List<Examination> examinations = new List<Examination>();
-            foreach (Examination ex in upcomingExaminations)
+            List<UpcomingExamination> examinations = new List<UpcomingExamination>();
+            List<UpcomingExamination> examinationsUpcoming = FindValidTimeTerms(upcomingExaminations);
+            List<Doctor> allDoctors = await WpfClient.GetAllDoctors();
+            List<Doctor> rightDoctorSpeciality = ExtractDoctors(selectedType, allDoctors);//vraca nam ili listu svih spec ili op
+
+            foreach (UpcomingExamination ex in examinationsUpcoming)
+            {
+                foreach (Doctor d in rightDoctorSpeciality)
+                {   
+                    if (ex.Doctor.Id.Equals(d.Id))
+                            examinations.Add(ex);
+                }
+            }
+
+            return examinations;
+        }
+
+        private static List<Doctor> ExtractDoctors(int selectedType, List<Doctor> allDoctors)
+        {
+            List<Doctor> doctorsChoesenSpeciality = new List<Doctor>();
+            foreach (Doctor d in allDoctors)
             {
                 if (selectedType == 0)
                 {
-                    if (ex.Doctor.Specialty.Name.Equals("general practice"))
-                        examinations.Add(ex);
+                    if (d.Speciality.Name.Equals("general practice"))
+                        doctorsChoesenSpeciality.Add(d);
                 }
                 else
                 {
-                    if (!ex.Doctor.Specialty.Name.Equals("general practice"))
-                        examinations.Add(ex);
+                    if (!d.Speciality.Name.Equals("general practice"))
+                        doctorsChoesenSpeciality.Add(d);
                 }
             }
-            return examinations;
+            return doctorsChoesenSpeciality;
+        }
+
+        private static List<UpcomingExamination> FindValidTimeTerms(List<UpcomingExamination> upcomingExaminations)
+        {
+            List<UpcomingExamination> examinationsCheck = new List<UpcomingExamination>();
+            DateTime time = DateTime.Now.AddHours(1);
+
+            foreach (UpcomingExamination exam in upcomingExaminations)
+            {
+                TimeSpan difference = exam.Period.EndDate.TimeOfDay - exam.Period.StartDate.TimeOfDay;
+                if (difference.TotalHours < 1)
+                    if (DateTime.Compare(exam.Period.StartDate.Date, DateTime.Now.Date) == 0 && (exam.Period.StartDate.TimeOfDay > DateTime.Now.TimeOfDay) && (exam.Period.StartDate.TimeOfDay < time.TimeOfDay))
+                        examinationsCheck.Add(exam);
+            }
+
+            return examinationsCheck;
         }
 
         private List<ExaminationDTO> checkTime(List<ExaminationDTO> termsFound)
@@ -289,7 +323,7 @@ namespace PSW_Wpf_app.ViewModel
 
             foreach (Doctor d in doctors)
             {
-                if (d.Specialty.Name.Equals("general practice"))
+                if (d.Speciality.Name.Equals("general practice"))
                     generalPractice.Add(d);
                 else
                     specialists.Add(d);
@@ -307,7 +341,7 @@ namespace PSW_Wpf_app.ViewModel
             List<ExaminationDTO> examinations = new List<ExaminationDTO>();
             foreach (ExaminationDTO term in allTerms)
             {
-                if (term.Room.Equipment_inventory.Find(x => x.Equipment.Name == (equipment.Name)) != null)
+                if (term.Room.EquipmentStatistic.Find(x => x.Equipment.Name == (equipment.Name)) != null)
                     examinations.Add(term);
             }
 

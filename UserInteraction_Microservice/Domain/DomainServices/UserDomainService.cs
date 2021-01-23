@@ -25,14 +25,14 @@ namespace UserInteraction_Microservice.Domain.DomainServices
         {
             User user;
             Patient patient = _patientAppService.LogIn(username, password);
-            if ((user = _doctorAppService.LogIn(username, password)) != null)
-                return user;
             if ((user = _directorAppService.LogIn(username, password)) != null)
                 return user;
             if ((user = _secretaryAppService.LogIn(username, password)) != null)
                 return user;
-            if (patient != null && !(patient.Blocked))
+            if (patient != null && !(patient.Blocked) && !(patient.Guest))
                 return patient;
+            if ((user = _doctorAppService.LogIn(username, password)) != null)
+                return user;
 
             return user;
 

@@ -17,10 +17,11 @@ namespace UserInteraction_Interlayer.Controllers
             _userAppService = userAppService;
         }
 
-        [HttpGet]
-        public User LogIn(string username, string password)
+        [HttpPost]
+        [Route("login")]
+        public User LogIn(UserLogIn user)
         {
-            return _userAppService.LogIn(username, password);
+            return _userAppService.LogIn(user.Username, user.Password);
         }
 
         [HttpPost]
