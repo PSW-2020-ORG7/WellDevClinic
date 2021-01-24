@@ -16,25 +16,26 @@
 </head>
 <body>
     <div class="topnav">
-        <label>Clinic Hello!</label>
+        <label>WellDevClinic</label>
         <a href="index.html">Home</a>
         <a href="partnerPharmacies.html" class="active">Partner Pharmacies</a>
         <a href="actionsAndBenefits.html">Actions & Benefits</a>
         <a href="viewMedications.html">Medication stock</a>
         <a href="viewPrescriptions.html">All prescriptions</a>
+        <a href="viewTenders.html">Tender offers</a>
     </div>
     <div class="login-page">
         <div class="form">
             <form class="register-form">
                 <h5>Pharmacy registration</h5>
-                <input type="text" class="input-text" placeholder="Enter pharmacy name" id="txtName" />
+                <input type="text" placeholder="Enter pharmacy name" id="txtName" />
                 <label id="invalidName" class="valid">Required field!</label>
                 <input type="text" placeholder="Enter api key" id="txtApi"/>
                 <label id="invalidApi" class="valid">Required field!</label>
-                <input type="number" placeholder="Enter pharacy gRPC port" id="grpcPort"/>
-                <input type="text" placeholder="Enter pharmacy url" id="txtUrl"/>
+                <input type="number" min="0" class="expand" placeholder="Enter pharmacy gRPC port" id="grpcPort"/>
+                <input type="text" placeholder="Enter pharmacy URL" id="txtUrl"/>
                 <label id="invalidUrl" class="valid">Required field!</label>
-                <button id="btnAddPharmacy" type="button">Add pharmacy</button>
+                <button id="btnAddPharmacy" type="button" class="btn btn-info">Add pharmacy</button>
             </form>
         </div>
     </div>

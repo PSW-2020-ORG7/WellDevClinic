@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\pharmacyRegistration.html~RF18f407e0.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.12.4" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.30.0" />
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.30.0" />

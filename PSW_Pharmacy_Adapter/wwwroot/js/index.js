@@ -6,8 +6,8 @@
 		success: function (sales) {
 			viewNewSales(sales)
 		},
-		error: function (e) {
-			pageInfo("An error has occured while trying to get all actions!");
+		error: function () {
+			pageInfo("An error has occured while trying to connect with hospital server. Try again later!");
 		}
 	});
 })
@@ -16,18 +16,18 @@
 function viewNewSales(sales) {
 	$(".salesNotifications").empty();
 	var num = 0;
-	for (let act of sales) {
-		if (act.status != 0)
+	for (let sale of sales) {
+		if (sale.status != 0)
 			continue;
 		let content = '<div class="card text-center"><div class="card-body">';
 		content += '<h5 class="card-title">';
-		content += act.pharmacyName;
+		content += sale.pharmacyName;
 		content += '</h5>';
-		content += '<p>' + act.messageAboutAction + '</p>';
+		content += '<p>' + sale.saleMessage + '</p>';
 		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
-		content += ' onclick="deleteSale(' + act.id + ')"> Discard </button > ';
+		content += ' onclick="deleteSale(' + sale.id + ')"> Discard </button > ';
 		content += '<button class="btn btn-success"';
-		content += ' onclick="saveSale(' + act.id + ')"> Save </button > ';
+		content += ' onclick="saveSale(' + sale.id + ')"> Save </button > ';
 		content += '</div></div>';
 		content += '</div>';
 

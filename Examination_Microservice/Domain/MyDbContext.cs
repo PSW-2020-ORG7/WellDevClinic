@@ -18,6 +18,7 @@ namespace Examination_Microservice.Domain
         public DbSet<Prescription> Prescription { get; set; }
         public DbSet<PatientFile> PatientFile { get; set; }
         public DbSet<Hospitalization> Hospitalization { get; set; }
+        public DbSet<Drug> Drug { get; set; }
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
 
