@@ -74,7 +74,7 @@ namespace PSW_Wpf_app.View
                     period.StartDate = period.StartDate.AddDays(1);
                     period.EndDate = period.EndDate.AddDays(1);
                     List<UpcomingExamination> temp = await WpfClient.GetExaminationsByRoomAndPeriod(room, period);
-                    Boolean isFreeAlternative = await CheckRenovationsSchedule(period, room);
+                    Boolean isFreeAlternative = await CheckRenovationsScheduleAlternative(period, room);
                     if (temp.Count == 0 && isFreeAlternative == true)
                     {
                         alt.Add(new Period(period.StartDate, period.EndDate));
@@ -105,16 +105,37 @@ namespace PSW_Wpf_app.View
             foreach (Renovation r in renovations)
             {
                 if (room.Id == r.Room.Id && r.Period.StartDate.Date >= period.StartDate.Date && period.EndDate.Date >= r.Period.EndDate.Date)
-                {
-                    if (r.RenovationStatus == RenovationStatus.Zakazano || r.RenovationStatus == RenovationStatus.Traje)
-                    {
-                       return false;
-                    }
-
-                }
+                    return CheckRenovationStatus(r);
             }
             return true;
         }
+
+        private static async Task<Boolean> CheckRenovationsScheduleAlternative(Period period, Room room)
+        {
+            List<Renovation> renovations = await WpfClient.GetAllRenovation();
+            foreach (Renovation r in renovations)
+            {
+                if (room.Id == r.Room.Id && r.Period.StartDate.Date == period.EndDate.Date)
+                    return CheckRenovationStatus(r);
+                else if (room.Id == r.Room.Id && period.StartDate.Date == r.Period.EndDate.Date)
+                    return CheckRenovationStatus(r);
+                else if (room.Id == r.Room.Id && period.StartDate.Date == r.Period.StartDate.Date)
+                    return CheckRenovationStatus(r);
+
+                else if (room.Id == r.Room.Id && period.EndDate.Date == r.Period.EndDate.Date)
+                    return CheckRenovationStatus(r);
+
+            }
+            return true;
+        }
+
+        private static Boolean CheckRenovationStatus(Renovation r)
+        {
+            if (r.RenovationStatus == RenovationStatus.Zakazano || r.RenovationStatus == RenovationStatus.Traje)
+                return  false;
+            return true;
+        }
+
 
         private static async Task MarkRenovationDays(Renovation renovation)
         {

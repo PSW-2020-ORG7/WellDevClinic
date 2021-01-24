@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSW_Wpf_app.View" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 		mc:Ignorable="d"
-        Title="BasicRenovationView" Height="450" Width="800">
+        Title="Basic Renovation" Height="450" Width="850" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DataGrid Margin="353,183,144,43" x:Name="scheduleRenovationGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid Margin="10,287,168,41" x:Name="scheduleRenovationGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Margin" Value="0"/>
@@ -18,21 +18,21 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn   Header="Date From" Binding="{Binding StartDate}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Date To"  Binding="{Binding Period.EndDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Date To"  Binding="{Binding EndDate}" Width="*"></DataGridTextColumn>
 
 
             </DataGrid.Columns>
         </DataGrid>
 
-        <materialDesign:TimePicker x:Name="startTimePicker" HorizontalAlignment="Right" Margin="0,21,266,0" Width="134" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-                                   materialDesign:HintAssist.Hint="" Height="33" VerticalAlignment="Top"/>
+        <materialDesign:TimePicker x:Name="startTimePicker" HorizontalAlignment="Right" Margin="0,17,266,0" Width="134" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                   materialDesign:HintAssist.Hint="" Height="42" VerticalAlignment="Top"/>
         <DatePicker x:Name="startDatePicker" HorizontalAlignment="Right" Margin="0,21,463,367" Width="139" Focusable="False"/>
 
-        <materialDesign:TimePicker x:Name="endTimePicker" HorizontalAlignment="Right" Margin="0,89,266,0" Width="134" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-	  materialDesign:HintAssist.Hint="" Height="33" VerticalAlignment="Top"/>
-        <DatePicker x:Name="endDatePicker" HorizontalAlignment="Right" Margin="0,89,463,306" Width="139" Focusable="False"/>
-        <TextBox x:Name="RenovationText" BorderBrush="CadetBlue" BorderThickness="3" TextWrapping="Wrap" Margin="10,183,0,0" Height="208" VerticalAlignment="Top" HorizontalAlignment="Left" Width="312"/>
-        <Button  Content="Shedule" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Margin="698,389,0,0" VerticalAlignment="Top" Click="ScheduleBasicRenovationClick" Height="35" Width="92"/>
+        <materialDesign:TimePicker x:Name="endTimePicker" HorizontalAlignment="Right" Margin="0,85,266,0" Width="134" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+	  materialDesign:HintAssist.Hint="" Height="44" VerticalAlignment="Top"/>
+        <DatePicker x:Name="endDatePicker" HorizontalAlignment="Right" Margin="0,89,463,295" Width="139" Focusable="False"/>
+        <TextBox x:Name="RenovationText" BorderBrush="CadetBlue" BorderThickness="3" TextWrapping="Wrap" Margin="10,183,0,0" Height="83" VerticalAlignment="Top" HorizontalAlignment="Left" Width="672"/>
+        <Button  Content="Shedule" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Margin="714,358,0,0" VerticalAlignment="Top" Click="ScheduleBasicRenovationClick" Height="35" Width="92" RenderTransformOrigin="0.412,0.647"/>
         <Label Content="Choose start date:" FontSize="20" HorizontalAlignment="Left" Height="33" Margin="10,21,0,0" VerticalAlignment="Top" Width="166"/>
         <Label Content="Choose end date:" FontSize="20" HorizontalAlignment="Left" Height="33" Margin="10,89,0,0" VerticalAlignment="Top" Width="166"/>
         <Label Content="Enter description for renovation:" FontSize="20" HorizontalAlignment="Left" Height="34" Margin="10,144,0,0" VerticalAlignment="Top" Width="312"/>
