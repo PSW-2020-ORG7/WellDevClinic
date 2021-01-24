@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices
 {
-    public interface IActionsAndBenefitsService
+    public interface ISaleService
     {
-        public ActionAndBenefit GetBenefit(long id);
+        public Sale GetBenefit(long id);
 
-        public IEnumerable<ActionAndBenefit> GetAll();
+        public IEnumerable<Sale> GetAll();
 
         public bool DeleteBenefit(long id);
 
-        public ActionAndBenefit UpdateStatus(long id, int status);
+        public Sale UpdateStatus(long id, int status);
 
         public void DeleteExpiredAction();
     }

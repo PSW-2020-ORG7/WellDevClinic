@@ -1,21 +1,21 @@
 ﻿namespace PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Dto
 {
-    public class ActionAndBenefitDto
+    public class SaleDto
     {
         public long? Id { get; set; }
         public string PharmacyName { get; set; }
-        public string MessageAboutAction { get; set; }
+        public string SaleMessage { get; set; }
         public long StartDate { get; set; }
         public long EndDate { get; set; }
 
-        public ActionAndBenefitDto() { }
+        public SaleDto() { }
 
 
-        public ActionAndBenefitDto(long id, string pharmacyName, string messageAboutAction, long startDate, long endDate)
+        public SaleDto(long id, string pharmacyName, string saleMessage, long startDate, long endDate)
         {
             Id = id;
             PharmacyName = pharmacyName;
-            MessageAboutAction = messageAboutAction;
+            SaleMessage = saleMessage;
             StartDate = startDate;
             EndDate = endDate;
         }

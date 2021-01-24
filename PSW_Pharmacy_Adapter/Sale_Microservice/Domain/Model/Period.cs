@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
+namespace PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model
 {
     public class Period
     {

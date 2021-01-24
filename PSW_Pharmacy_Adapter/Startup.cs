@@ -47,7 +47,7 @@ namespace PSW_Pharmacy_Adapter
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
             services.AddScoped<IApiKeyService, ApiKeyService>();
             services.AddScoped<IGreetingsService, GreetingsService>();
-            services.AddScoped<IActionsAndBenefitsService, ActionsAndBenefitsService>();
+            services.AddScoped<ISaleService, SaleService>();
             services.AddScoped<IRabbitMQService, RabbitMQService>();
             services.AddScoped<IMedicationService, MedicationService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
@@ -57,7 +57,7 @@ namespace PSW_Pharmacy_Adapter
             services.AddScoped<IPharmacyEmailsService, PharmacyEmailsService>();
 
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
-            services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
+            services.AddScoped<ISaleRepository, SaleRepository>();
             services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<IPharmacyEmailsRepository, PharmacyEmailsRepository>();

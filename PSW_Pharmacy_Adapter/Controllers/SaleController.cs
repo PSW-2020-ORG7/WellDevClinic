@@ -6,35 +6,35 @@ namespace PSW_Pharmacy_Adapter.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActionsAndBenefitsController : ControllerBase
+    public class SaleController : ControllerBase
     {
-        private readonly IActionsAndBenefitsService _actionService;
+        private readonly ISaleService _saleService;
         
-        public ActionsAndBenefitsController(IActionsAndBenefitsService service)
+        public SaleController(ISaleService service)
         {
-            _actionService = service;
+            _saleService = service;
         }
 
         [HttpGet]
         [Route("{id?}")]
         public IActionResult GetBenefit(long id)
         {
-            ActionAndBenefit act = _actionService.GetBenefit(id);
-            if (act == null)
+            Sale sale = _saleService.GetBenefit(id);
+            if (sale == null)
                 return NotFound();
-            return Ok(act);
+            return Ok(sale);
         }
 
         [HttpGet]
         [Route("all")]
         public IActionResult GetAll()
-            => Ok(_actionService.GetAll());
+            => Ok(_saleService.GetAll());
 
         [HttpDelete]
         [Route("delete/{id?}")]
         public IActionResult DeleteBenefit(long id)
         {
-            if (_actionService.DeleteBenefit(id))
+            if (_saleService.DeleteBenefit(id))
                 return Ok(true);
             return BadRequest();
         }
@@ -43,7 +43,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("status/{id?}/{stat?}")]
         public IActionResult UpdateStatus(long id, int stat)
         {
-            ActionAndBenefit action = _actionService.UpdateStatus(id, stat);
+            Sale action = _saleService.UpdateStatus(id, stat);
             if (action != null)
                 return Ok(action);
             return BadRequest();
@@ -53,7 +53,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("deleteExpired")]
         public IActionResult DeleteExpired()
         {
-            _actionService.DeleteExpiredAction();
+            _saleService.DeleteExpiredAction();
             return Ok();
         }
 

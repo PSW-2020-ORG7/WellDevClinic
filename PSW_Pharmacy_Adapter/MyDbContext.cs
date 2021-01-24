@@ -8,7 +8,7 @@ namespace PSW_Pharmacy_Adapter
     public class MyDbContext : DbContext
     {
         public DbSet<Api> ApiKeys { get; set; }
-        public DbSet<ActionAndBenefit> ActionsAndBenefits { get; set; }
+        public DbSet<Sale> Sales { get; set; }
         public DbSet<TenderOffer> TenderOffers { get; set; }
         public DbSet<Tender> Tender { get; set; }
         public DbSet<PharmacyEmails> Email { get; set; }
@@ -17,6 +17,7 @@ namespace PSW_Pharmacy_Adapter
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Sale>().OwnsOne(t => t.ValPeriod);
             modelBuilder.Entity<Tender>().OwnsOne(t => t.Period);
             modelBuilder.Entity<PharmacyEmails>().OwnsOne(t => t.Mail);
             modelBuilder.Entity<TenderOffer>().OwnsOne(t => t.Mail);
