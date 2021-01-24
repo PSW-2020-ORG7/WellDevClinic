@@ -11,6 +11,11 @@ $(document).ready(function () {
             viewAllTenders(data);
             console.log(data);
         },
+        error: function (e) {
+            $("#message").empty();
+            $('#message').text('Error occured while loading tenders!');
+            $("#pageInfo").show();
+        }
     });
 
     $(".add_field_button").click(function (e) {
@@ -312,6 +317,12 @@ function deleteTender(tender) {
         success: function (tender) {
             console.log(tender);
             window.location.reload();
+        },
+
+        error: function (e) {
+            $("#message").empty();
+            $('#message').text('Error occured while deleting tender!');
+            $("#pageInfo").show();
         }
     });
 }
