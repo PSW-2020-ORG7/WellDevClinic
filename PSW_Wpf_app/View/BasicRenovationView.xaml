@@ -6,32 +6,35 @@
         xmlns:local="clr-namespace:PSW_Wpf_app.View" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 		mc:Ignorable="d"
         Title="BasicRenovationView" Height="450" Width="800">
-	<Grid>
-		<DataGrid ItemsSource="{Binding Alternative}" Margin="20,233,10,22" x:Name="scheduleRenovationGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
-			<DataGrid.CellStyle>
-				<Style TargetType="DataGridCell">
-					<Setter Property="Margin" Value="0"/>
-					<Setter Property="Padding" Value="0"/>
-					<Setter Property="BorderThickness" Value="0.5"/>
-				</Style>
-			</DataGrid.CellStyle>
+    <Grid>
+        <DataGrid Margin="353,183,144,43" x:Name="scheduleRenovationGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                </Style>
+            </DataGrid.CellStyle>
 
-			<DataGrid.Columns>
-				<DataGridTextColumn   Header="Date From" Binding="{Binding Path = Item1}" Width="*"></DataGridTextColumn>
-				<DataGridTextColumn Header="Date To"  Binding="{Binding Path= Item2}" Width="*"></DataGridTextColumn>
-				
+            <DataGrid.Columns>
+                <DataGridTextColumn   Header="Date From" Binding="{Binding StartDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Date To"  Binding="{Binding Period.EndDate}" Width="*"></DataGridTextColumn>
 
-			</DataGrid.Columns>
-		</DataGrid>
 
-		<materialDesign:TimePicker x:Name="startTimePicker" HorizontalAlignment="Right" Margin="0,9,359,380" Width="139" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-                                   materialDesign:HintAssist.Hint="" Height="45"/>
-		<DatePicker x:Name="startDatePicker" HorizontalAlignment="Right" Margin="0,21,524,380" Width="139" Height="33" Focusable="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
-		<materialDesign:TimePicker x:Name="endTimePicker" HorizontalAlignment="Right" Margin="0,77,359,312" Width="139" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-	  materialDesign:HintAssist.Hint="" Height="45"/>
-		<DatePicker x:Name="endDatePicker" HorizontalAlignment="Right" Margin="0,89,524,312" Width="139" Height="33" Focusable="False"/>
-		<TextBox x:Name="RenovationText" TextWrapping="Wrap" Margin="171,127,0,0" Height="101" VerticalAlignment="Top" HorizontalAlignment="Left" Width="512"/>
-		<Button  Content="Shedule" HorizontalAlignment="Left" Margin="709,398,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-	</Grid>
+        <materialDesign:TimePicker x:Name="startTimePicker" HorizontalAlignment="Right" Margin="0,21,266,0" Width="134" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                   materialDesign:HintAssist.Hint="" Height="33" VerticalAlignment="Top"/>
+        <DatePicker x:Name="startDatePicker" HorizontalAlignment="Right" Margin="0,21,463,367" Width="139" Focusable="False"/>
+
+        <materialDesign:TimePicker x:Name="endTimePicker" HorizontalAlignment="Right" Margin="0,89,266,0" Width="134" Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+	  materialDesign:HintAssist.Hint="" Height="33" VerticalAlignment="Top"/>
+        <DatePicker x:Name="endDatePicker" HorizontalAlignment="Right" Margin="0,89,463,306" Width="139" Focusable="False"/>
+        <TextBox x:Name="RenovationText" BorderBrush="CadetBlue" BorderThickness="3" TextWrapping="Wrap" Margin="10,183,0,0" Height="208" VerticalAlignment="Top" HorizontalAlignment="Left" Width="312"/>
+        <Button  Content="Shedule" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Margin="698,389,0,0" VerticalAlignment="Top" Click="ScheduleBasicRenovationClick" Height="35" Width="92"/>
+        <Label Content="Choose start date:" FontSize="20" HorizontalAlignment="Left" Height="33" Margin="10,21,0,0" VerticalAlignment="Top" Width="166"/>
+        <Label Content="Choose end date:" FontSize="20" HorizontalAlignment="Left" Height="33" Margin="10,89,0,0" VerticalAlignment="Top" Width="166"/>
+        <Label Content="Enter description for renovation:" FontSize="20" HorizontalAlignment="Left" Height="34" Margin="10,144,0,0" VerticalAlignment="Top" Width="312"/>
+    </Grid>
 </Window>

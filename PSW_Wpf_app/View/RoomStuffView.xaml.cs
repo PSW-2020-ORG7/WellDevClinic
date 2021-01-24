@@ -8,12 +8,12 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class RoomStuffView : Window
     {
-	FloorElement floorElement = new FloorElement();
+	    FloorElement floorElement = new FloorElement();
         public RoomStuffView(FloorElement f)
         {
             
             InitializeComponent();
-	    floorElement = f;
+	        floorElement = f;
             userEqipmentAndDrugs.Content = new RoomOverviewView(f);
         }
 
@@ -24,23 +24,23 @@ namespace PSW_Wpf_app.View
 
         private void ScheduledAppointmentsClick(object sender, RoutedEventArgs e)
         {
-            userEqipmentAndDrugs.Content = new RoomAppointmentsView(floorElement);
+           //userEqipmentAndDrugs.Content = new RoomAppointmentsView(floorElement);
         }
 
         private void RoomRenovationsClick(object sender, RoutedEventArgs e)
         {
-            userEqipmentAndDrugs.Content = new RoomRenovationsView(floorElement);
+            //userEqipmentAndDrugs.Content = new RoomRenovationsView(floorElement);
         }
 
         private void EquipmentRelocationClick(object sender, RoutedEventArgs e)
         {
-            userEqipmentAndDrugs.Content = new RoomEquipmentRelocationView(floorElement);
+            //userEqipmentAndDrugs.Content = new RoomEquipmentRelocationView(floorElement);
         }
 
         private void BasicRenovationClick(object sender, RoutedEventArgs e)
         {
             BasicRenovationView basic = new BasicRenovationView(floorElement.RoomId);
-            basic.ShowDialog()
+            basic.ShowDialog();
         }
     }
 }

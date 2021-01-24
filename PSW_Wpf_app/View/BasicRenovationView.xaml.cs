@@ -1,8 +1,10 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,23 +22,21 @@ namespace PSW_Wpf_app.View
     public partial class BasicRenovationView : Window
     {
         int id;
-        public BindingList<Tuple<DateTime, DateTime>> Alternative = new BindingList<Tuple<DateTime, DateTime>>();
         public BasicRenovationView(int id)
         {
             this.id = id;
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ScheduleBasicRenovationClick(object sender, RoutedEventArgs e)
         {
             if (scheduleRenovationGrid.SelectedItem == null)
             {
                 DateTime start = new DateTime(((DateTime)startDatePicker.SelectedDate).Year, ((DateTime)startDatePicker.SelectedDate).Month, ((DateTime)startDatePicker.SelectedDate).Day, ((DateTime)startTimePicker.SelectedTime).Hour, ((DateTime)startTimePicker.SelectedTime).Minute, ((DateTime)startTimePicker.SelectedTime).Second);
                 DateTime end = new DateTime(((DateTime)endDatePicker.SelectedDate).Year, ((DateTime)endDatePicker.SelectedDate).Month, ((DateTime)endDatePicker.SelectedDate).Day, ((DateTime)endTimePicker.SelectedTime).Hour, ((DateTime)endTimePicker.SelectedTime).Minute, ((DateTime)endTimePicker.SelectedTime).Second);
+                Period period = new Period(start, end);
 
-                string tekst = RenovationText.Text;
-
-                LoadExams(start, end);
+                LoadExams(period);
             }
             else
             {
@@ -46,50 +46,101 @@ namespace PSW_Wpf_app.View
 
         private async void ScheduleAlternative()
         {
-            Tuple<DateTime, DateTime> chosen = (Tuple<DateTime, DateTime>)scheduleRenovationGrid.SelectedItem;
-            Renovation r1 = new Renovation();
-            r1.Room = await WpfClient.GetRoomById(id);
-            r1.Period = new Period() { StartDate = chosen.Item1, EndDate = chosen.Item2 };
-            r1.Description = RenovationText.Text;
+            Period chosenPeriod = (Period)scheduleRenovationGrid.SelectedItem;
+            Renovation renovation = new Renovation();
+            renovation.Room = await WpfClient.GetRoomById(id);
+            renovation.Period = new Period(chosenPeriod.StartDate, chosenPeriod.EndDate);
+            renovation.Description = RenovationText.Text;
+            renovation.RenovationStatus = RenovationStatus.Zakazano;
 
-            r1 = await WpfClient.Save(r1);
+            await WpfClient.Save(renovation);
+            await MarkRenovationDays(renovation);
 
             MessageBox.Show("Renovation in successfuly scheduled.");
         }
 
-        private async void LoadExams( DateTime start, DateTime end)
+        private async void LoadExams(Period period)
         {
-            List<Examination> list = await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(id, start, end);
-            List<Tuple<DateTime, DateTime>> alt = new List<Tuple<DateTime, DateTime>>();
-            if (list.Count != 0)
+            Room room = await LoadRoom(id);
+            List<UpcomingExamination> list = await WpfClient.GetExaminationsByRoomAndPeriod(room, period);
+            Boolean isFree =  await CheckRenovationsSchedule(period, room);
+
+            List<Period> alt = new List<Period>();
+            if (list.Count != 0 || isFree == false)
             {
                 int i = 5;
-                while(i > 0)
+                while (i > 0)
                 {
-                    start = start.AddDays(1);
-                    end = end.AddDays(1);
-                    List<Examination> temp = await WpfClient.GetExaminationsByRoomAndPeriodForAlternative(id, start, end);
-                    if (temp.Count == 0)
+                    period.StartDate = period.StartDate.AddDays(1);
+                    period.EndDate = period.EndDate.AddDays(1);
+                    List<UpcomingExamination> temp = await WpfClient.GetExaminationsByRoomAndPeriod(room, period);
+                    Boolean isFreeAlternative = await CheckRenovationsSchedule(period, room);
+                    if (temp.Count == 0 && isFreeAlternative == true)
                     {
-                        alt.Add(new Tuple<DateTime, DateTime>(start, end));
+                        alt.Add(new Period(period.StartDate, period.EndDate));
                         i--;
                     }
                 }
-                Alternative = new BindingList<Tuple<DateTime, DateTime>>(alt);
-
+                scheduleRenovationGrid.ItemsSource = alt;
 
             }
             else
             {
-                Renovation r1 = new Renovation();
-                r1.Room = await WpfClient.GetRoomById(id);
-                r1.Period = new Period() { StartDate = start, EndDate = end };
-                r1.Description = RenovationText.Text;
+                Renovation renovation = new Renovation();
+                renovation.Room = room;
+                renovation.Period = period;
+                renovation.Description = RenovationText.Text;
+                renovation.RenovationStatus = RenovationStatus.Zakazano;
 
-                r1 = await WpfClient.Save(r1);
+                await WpfClient.Save(renovation);
+                await MarkRenovationDays(renovation);
 
                 MessageBox.Show("Renovation in successfuly scheduled.");
             }
+        }
+
+        private static async Task<Boolean> CheckRenovationsSchedule(Period period, Room room)
+        {
+            List<Renovation> renovations = await WpfClient.GetAllRenovation();
+            foreach (Renovation r in renovations)
+            {
+                if (room.Id == r.Room.Id && r.Period.StartDate.Date >= period.StartDate.Date && period.EndDate.Date >= r.Period.EndDate.Date)
+                {
+                    if (r.RenovationStatus == RenovationStatus.Zakazano || r.RenovationStatus == RenovationStatus.Traje)
+                    {
+                       return false;
+                    }
+
+                }
+            }
+            return true;
+        }
+
+        private static async Task MarkRenovationDays(Renovation renovation)
+        {
+            List<BusinessDay> buss = await WpfClient.GetAllBusinessDay();
+            List<Period> periods = new List<Period>();
+
+            foreach (BusinessDay b in buss)
+            {
+                if (b.Room.Id == renovation.Room.Id && renovation.Period.StartDate.Date <= b.Shift.StartDate.Date && b.Shift.StartDate.Date <= renovation.Period.EndDate.Date)
+                {
+                    DateTime date = b.Shift.EndDate;
+                    DateTime startDate = b.Shift.StartDate;
+                    while (startDate <= date)
+                    {
+                        b.Shift.EndDate = startDate.AddMinutes(30);
+                        periods.Add(new Period(startDate, b.Shift.EndDate));
+                        startDate = startDate.AddMinutes(30);
+                    }
+                    await WpfClient.MarkAsOccupied(periods, b.Id);
+                }
+            }
+        }
+
+        public async Task<Room> LoadRoom(int id)
+        {
+            return await WpfClient.GetRoomById(id);
         }
     }
 }
