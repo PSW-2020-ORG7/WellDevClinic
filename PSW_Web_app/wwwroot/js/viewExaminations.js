@@ -88,7 +88,7 @@ function addUpcomingExamination(examination, i) {
 	let time = $('<td>' + splittedStart[1] + ' - ' + splittedEnd[1] + '</td>');
 
 	if (!examination.canceled) {
-		let buttonCancel = $('<button class="buttonCancel">Cancel examination</button>');
+		let buttonCancel = $('<button type="button" class="buttonCancel">Cancel examination</button>');
 		buttonCancel.attr("id", examination.id);
 		tr.append(row).append(doctor).append(date).append(time).append(buttonCancel);
 	}

@@ -31,7 +31,27 @@ var speciality = $("#specialization");
 var doctors = $("#doctors");
 var fieldSetCounter = 0;
 
-$(".next").click(function(){
+//var timer1, timer2 = 0;
+//var start = [];
+function SendEvent(type,max) {
+	$.ajax({
+		url: window.location.protocol + "//" + window.location.host + "/api/event/save",
+		type: 'POST',
+		data: JSON.stringify({ patientId: parseInt(userId, 10), stepId: parseInt(counter, 10), stepType: type, scheduleId : max }),
+		//data: JSON.stringify({ patientId: parseInt(userId, 10)}),
+		contentType: "application/json; charset=utf-8",
+		headers: { "Authorization": token },
+		success: function (data) {
+			console.log(data);
+		}
+	});
+}
+
+$(".next").click(function () {
+	//console.log(fieldSetCounter);
+	console.log("Brojac pre sendEvent");
+	SendEvent(0,max);
+	counter += 1;
 	if (!date.val() || 0 === date.val().length) {
 
 	}
@@ -45,7 +65,7 @@ $(".next").click(function(){
 		//activate next step on progressbar using the index of next_fs
 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-		console.log(fieldSetCounter);
+		//console.log(fieldSetCounter);
 		console.log(doctors.val());
 		var app = document.getElementById("appointments");
 		if (fieldSetCounter == 2) {
@@ -78,7 +98,7 @@ $(".next").click(function(){
 		}
 		//show the next fieldset
 		var selDoc = document.getElementById("doctors");
-		console.log(fieldSetCounter);
+		//console.log(fieldSetCounter);
 		if (fieldSetCounter == 1) {
 			$.ajax({
 				url: window.location.protocol + "//" + window.location.host + "/api/doctor/" + speciality.val(),
@@ -97,6 +117,7 @@ $(".next").click(function(){
 			});
 		}
 		fieldSetCounter += 1;
+		//counter += 1;
 		next_fs.show();
 		//hide the current fieldset with style
 		current_fs.animate({ opacity: 0 }, {
@@ -124,8 +145,24 @@ $(".next").click(function(){
 		});
 	}
 });
-
+var max = 0;
+var counter = 0;
 $(document).ready(function () {
+	$.ajax({
+		url: window.location.protocol + "//" + window.location.host + "/api/event/max",
+		type: 'GET',
+		headers: { "Authorization": token },
+		success: function (data) {
+			console.log(data);
+			console.log("MAX");
+			max = data;
+
+			SendEvent(0,max);
+			counter += 1;
+		}
+	});
+
+
 	//var today = new Date().toISOString().split('T')[0];
 	//document.getElementsByName("calendar")[0].setAttribute('min', today);
 	var dtToday = new Date();
@@ -162,6 +199,9 @@ $(document).ready(function () {
 
 
 $(".previous").click(function () {
+	console.log(fieldSetCounter);
+	console.log("Brojac pre sendEvent");
+	SendEvent(1,max);
 	if (animating) return false;
 	animating = true;
 
@@ -174,6 +214,7 @@ $(".previous").click(function () {
 	//show the previous fieldset
 	previous_fs.show();
 	fieldSetCounter -= 1;
+	counter -= 1;
 	//hide the current fieldset with style
 	current_fs.animate({ opacity: 0 }, {
 		step: function (now, mx) {
@@ -218,7 +259,10 @@ form.submit(function (event) {
 		headers: { "Authorization": token },
 		success: function (data) {
 			console.log(data);
+			counter += 1;
+			SendEvent(0,max);
 			location.href = window.location.protocol + "//" + window.location.host + "/html/homePage.html"
+			
 		}
 	})
 });
