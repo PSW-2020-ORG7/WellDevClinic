@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices;
 using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices.Iabstract;
 using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto;
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Mapping;
 using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
 
 namespace PSW_Pharmacy_Adapter.Controllers
@@ -11,10 +13,12 @@ namespace PSW_Pharmacy_Adapter.Controllers
     public class MedicationController : ControllerBase
     {
         private readonly IMedicationService _medicationService;
+        private readonly GrpcClientService _serviceGrpc;
 
         public MedicationController(IMedicationService medicationService) 
         {
             _medicationService = medicationService;
+            _serviceGrpc = new GrpcClientService();
         }
 
         [HttpGet]
@@ -40,6 +44,45 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("findMedsPh")]
         public async Task<IActionResult> GetPharmacyByMedicationsAsync([FromBody] List<Medication> medications)
             => Ok(await _medicationService.GetPharmacyByMedicationsAsync(medications));
+
+
+        [HttpGet]
+        [Route("{pharmacyname?}")]
+        public async Task<IActionResult> GetPharmacyMedications(string pharmacyname) 
+        {
+            List<Medication> meds = new List<Medication>();
+            try
+            {
+                meds = await _serviceGrpc.GetAllMedicationsAmount(pharmacyname);
+            }
+            catch {
+                meds =  MedicationMapper.MapMedicationList(await _medicationService.GetAllPharmacyMedications(pharmacyname));
+            }
+
+            if (meds != null)
+                return Ok(meds);
+            return StatusCode(408, Global.ErrorMessage);
+        }
+
+        [HttpGet]
+        [Route("available/{medicationName?}/{pharmacyName?}")]
+        public async Task<IActionResult> GetMedicationAmount(string medicationName, string pharmacyName)
+        {
+            int amount = -408;
+            try
+            {
+                amount = await _serviceGrpc.GetMedicationAmount(medicationName, pharmacyName);
+            }
+            catch {
+                MedicationDto med = await _medicationService.GetPharmacyMedication(pharmacyName, medicationName);
+                amount = med.Amount;
+            }
+            
+            if (amount >= -1)
+                return Ok(amount);
+            return StatusCode(408, Global.ErrorMessage);
+        }
+
 
         [HttpGet]
         [Route("orderMedicine")]

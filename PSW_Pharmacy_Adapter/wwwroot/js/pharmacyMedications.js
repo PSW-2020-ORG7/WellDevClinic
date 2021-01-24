@@ -43,9 +43,9 @@ function askPharmacy() {
 
     let uri;
     if (medicationName == 'All medications')
-        uri = "../api/grpc/medications/" + pharmacyName;
+        uri = "../api/medication/" + pharmacyName;
     else
-        uri = "../api/grpc/available/" + medicationName + "/" + pharmacyName; 
+        uri = "../api/medication/available/" + medicationName + "/" + pharmacyName; 
     $.ajax({
         method: "GET",
         url: uri,             
