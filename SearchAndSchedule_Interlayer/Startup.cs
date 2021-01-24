@@ -1,3 +1,6 @@
+using EventSourcing;
+using EventSourcing.Repository;
+using EventSourcing.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +28,13 @@ namespace SearchAndSchedule_Interlayer
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
                     b => b.MigrationsAssembly("SearchAndSchedule_Microservice")).UseLazyLoadingProxies());
 
+            services.AddDbContext<EventDbContext>(opts =>
+                opts.UseMySql(CreateConnectionStringFromEnvironmentEventLogs(),
+                b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+
+            services.AddScoped<IDomainEventRepository, DomainEventRepository>();
+            services.AddScoped<IDomainEventService, DomainEventService>();
+
             services.AddScoped<IBussinesDayAppService, BusinessDayAppService>();
             services.AddScoped<IBussinesDayRepository, BussinesDayRepository>();
 
@@ -39,12 +49,14 @@ namespace SearchAndSchedule_Interlayer
             services.AddScoped<ISearchPeriods, DoctorPrioritySearch>();
 
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db, EventDbContext event_db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            event_db.Database.EnsureCreated();
 
             try
             {
@@ -84,6 +96,16 @@ namespace SearchAndSchedule_Interlayer
             string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "DbDDD";
             string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
             string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            return $"server={server};port={port};database={database};user={user};password={password};";
+        }
+
+        private string CreateConnectionStringFromEnvironmentEventLogs()
+        {
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST_EVENTS") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT_EVENTS") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA_EVENTS") ?? "eventlogs";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME_EVENTS") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD_EVENTS") ?? "root";
             return $"server={server};port={port};database={database};user={user};password={password};";
         }
     }

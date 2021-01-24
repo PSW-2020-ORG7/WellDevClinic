@@ -62,6 +62,9 @@ namespace Examination_Interlayer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            db.Database.EnsureCreated();
+
             try
             {
                 using (StreamReader file = new StreamReader("DBScript.txt"))

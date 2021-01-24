@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace EventSourcing
     {
         //public DbSet<EventLogEntry> Events { get; set; }
         public DbSet<FeedbackSubmittedEvent> feedbackSubmittedEvents { get; set; }
+        public DbSet<NewExaminationTimeSpent> newExaminationTimeSpent { get; set; }
 
 
         public EventDbContext(DbContextOptions<EventDbContext> options) : base(options) { }
