@@ -10,5 +10,11 @@ namespace PSW_Wpf_app.Model
         public DateTime EndDate { get; set; }
 
         public Period() { }
+
+        public Period(DateTime start, DateTime end) 
+        {
+            this.StartDate = start;
+            this.EndDate = end;
+        }
     }
 }
