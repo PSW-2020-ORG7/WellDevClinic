@@ -56,10 +56,9 @@ namespace SearchAndSchedule_Interlayer
                 app.UseDeveloperExceptionPage();
             }
 
-            db.Database.EnsureCreated();
             event_db.Database.EnsureCreated();
 
-            /*try
+            try
             {
                 using (StreamReader file = new StreamReader("DBScript.txt"))
                 {
@@ -81,7 +80,7 @@ namespace SearchAndSchedule_Interlayer
             catch
             {
                 Console.WriteLine("Tables already exist!");
-            }*/
+            }
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
