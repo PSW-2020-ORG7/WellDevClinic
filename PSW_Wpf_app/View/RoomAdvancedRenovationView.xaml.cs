@@ -41,8 +41,6 @@ namespace PSW_Wpf_app.View
             {
                 f = (FloorElement)rooms.SelectedItem;
 
-
-
             }
 
             bool IsScheduled = await context.Scheduling(date1, date2, tipRenoviranja, f);
@@ -56,9 +54,6 @@ namespace PSW_Wpf_app.View
                 context.GetAlternativeExaminations(f, date1, date2);
                 MessageBox.Show("Choosen term is busy, please choose an alternative!");
                 alter.IsEnabled = true;
-
-
-
             }
         }
 

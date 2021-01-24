@@ -136,12 +136,16 @@ namespace PSW_Wpf_app.ViewModel
             foreach (Renovation ren in renovation)
 
             {
-
-                if (ren.Room.Id == roomId && dateTime.Date >= ren.Period.StartDate.Date && dateTime.Date <= ren.Period.EndDate.Date)
+                try
                 {
+                    if (ren.Room.Id == roomId && dateTime.Date >= ren.Period.StartDate.Date && dateTime.Date <= ren.Period.EndDate.Date)
+                    {
 
-                    return false;
+                        return false;
+                    }
                 }
+                catch (Exception e) { continue; }
+
 
 
             }
@@ -152,7 +156,11 @@ namespace PSW_Wpf_app.ViewModel
 
         public async Task<bool> LoadExams(long roomId, DateTime dateTime)
         {
-            BindingList<Examination> list = new BindingList<Examination>(await WpfClient.GetExaminationsByRoomAndPeriod(roomId, dateTime));
+            Period period = new Period();
+            period.StartDate = dateTime;
+            period.EndDate = dateTime + new TimeSpan(0, 30, 0);
+            Room room = await WpfClient.GetRoomById(roomId);
+            BindingList<UpcomingExamination> list = new BindingList<UpcomingExamination>(await WpfClient.GetExaminationsByRoomAndPeriod(room, period));
             
 
             if (list.Count == 0) return true;
@@ -175,7 +183,7 @@ namespace PSW_Wpf_app.ViewModel
 
             Renovation r1 = new Renovation();
             r1.Room = rom;
-            r1.Status = RenovationStatus.Zakazano;
+            r1.RenovationStatus = RenovationStatus.Zakazano;
 
             r1.Period = new Period() { StartDate = d1, EndDate = d2 };
             r1.Description = "";
@@ -185,7 +193,7 @@ namespace PSW_Wpf_app.ViewModel
             {
                 Renovation r2 = new Renovation();
                 r2.Room = mergingRoom;
-                r2.Status = RenovationStatus.Zakazano;
+                r2.RenovationStatus = RenovationStatus.Zakazano;
                 r2.Period = new Period() { StartDate = d1, EndDate = d2 };
                 r2.Description = r1.Id.ToString();
 
@@ -198,7 +206,7 @@ namespace PSW_Wpf_app.ViewModel
                 if (bd.Shift.StartDate >= d1 && bd.Shift.StartDate <= d2)
                 {
 
-                    if (bd.room.Id == rom.Id || (mergingRoom != null && mergingRoom.Id == bd.room.Id))
+                    if (bd.Room.Id == rom.Id || (mergingRoom != null && mergingRoom.Id == bd.Room.Id))
                     {
                         List<Period> periods = CreatePeriods(bd);
                         await WpfClient.MarkAsOccupied(periods, bd.Id);
@@ -269,7 +277,7 @@ namespace PSW_Wpf_app.ViewModel
             Room rom = null;
             foreach (Room r in list)
             {
-                if (r.RoomCode.CompareTo(fe.Name) == 0)
+                if (r.Id.CompareTo(fe.RoomId) == 0)
 
                     rom = r;
 

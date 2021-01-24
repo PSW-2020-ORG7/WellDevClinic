@@ -11,15 +11,15 @@ namespace PSW_Wpf_app.View
     /// </summary>
     public partial class RoomAppointmentsView : UserControl
     {
-        BindingList<Examination> examinations;
+       // BindingList<Examination> examinations;
         List<BusinessDay> businessDays = new List<BusinessDay>();
         public RoomAppointmentsView(FloorElement floor)
         {
             InitializeComponent();
-            GetExaminations(floor);
+           // GetExaminations(floor);
         }
 
-        public async void GetExaminations(FloorElement floor)
+       /* public async void GetExaminations(FloorElement floor)
         {
             examinations = new BindingList<Examination>(await WpfClient.GetAllExaminations());
             businessDays = await WpfClient.GetAllBusinessDay();
@@ -42,6 +42,6 @@ namespace PSW_Wpf_app.View
                     examinationsInRoom.Add(e);
                 }
             }
-        }
+        }*/
     }
 }
