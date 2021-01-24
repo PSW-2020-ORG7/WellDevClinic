@@ -35,7 +35,7 @@ services:
 
   drugManipulation:
     build: .
-    image: daviddrvar/
+    image: daviddrvar/drug-manipulation:latest
     container_name: drugManipulation
     restart: always
     networks:
@@ -52,7 +52,7 @@ services:
   
   examination:
     build: .
-    image: daviddrvar/
+    image: daviddrvar/examination:latest
     container_name: examination
     restart: always
     networks:
@@ -69,7 +69,7 @@ services:
 
   roomManipulation:
     build: .
-    image: daviddrvar/
+    image: daviddrvar/room-manipulation:latest
     container_name: roomManipulation
     restart: always
     networks:
@@ -86,7 +86,7 @@ services:
 
   search:
     build: .
-    image: daviddrvar/
+    image: daviddrvar/search-schedule:latest
     container_name: search
     restart: always
     networks:
@@ -102,13 +102,13 @@ services:
       DATABASE_PASSWORD_EVENTS: root
       DATABASE_HOST_EVENTS: mysql
       DATABASE_SCHEMA_EVENTS: eventlogs
-
+      - userInteractionServerAddress= http://userInteraction:14483
     depends_on:
       -roomManipulation
   
   userInteraction:
     build: .
-    image: daviddrvar/
+    image: daviddrvar/user-interaction:latest
     container_name: userInteraction
     restart: always
     networks:

@@ -17,7 +17,7 @@ namespace SearchAndSchedule_Interlayer.Controllers
     {
         private readonly IBussinesDayAppService _businessDayAppService;
         static readonly HttpClient client = new HttpClient();
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
 
 
         public BusinessDayController(IBussinesDayAppService businessDayAppService)
