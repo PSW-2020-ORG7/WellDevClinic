@@ -11,6 +11,9 @@ $(document).ready(function () {
             for (let inp of document.getElementsByName('medicineName'))
                 autocomplete(inp, allMedications.map(x => x.name));
         },
+        error: function (e) {
+            pageInfo("An error has occured while trying to get hospital medications!");
+        }
     });
 
     $("#btnUrgent").click(function (e) {
@@ -101,6 +104,9 @@ function findMedicines() {
                 showUrgTable(data, n);
                 $("#urgProcurementInput").hide();
             }
+        },
+        error: function (e) {
+            pageInfo("Cannot find pharmacy! Maybe you lost connection!");
         }
     });
         
@@ -138,30 +144,8 @@ function orderMedicines() {
     
 }
 
-//function showUrgTable(meds, n) {
-//    for (let i = 0; i < meds.length; i++) {
-//        let content = "";
-//        if (i % n == 0) {
-//            content += '<div class="card">';
-//            content += '<table border="1" id="' + meds[i].phName + '" class="customTable expand">';
-//            content += '<thead><tr><th colspan=4 style="text-align:center">' + meds[i].phName + '</th></tr>';
-//            content += '<tr><th>Medicine name</th>';
-//            content += '<th>Amount</th>';
-//            content += '<th>Price/piece(RSD)</th>';
-//            content += '<th>Pharmacy</th>';
-//            content += '</tr ></thead ><tbody>';
-//        }
-//        content += '<tr>';
-//        content += '<td>' + meds[i].medicine.name + '</td>';
-//        content += '<td>' + meds[i].medicine.amount + '</td>';
-//        content += '<td>' + meds[i].price + '</td>';
-//        content += '<td>' + meds[i].phName + '</td>';
-//        content += '</tr>';
-//        console.log(((i + 1) % n));
-//        if ((i % (n + 1)) == 0)
-//            content += '</tbody></table></div>';
-
-//        $("#medData").append(content);
-//    }
-//    $("#urgProcurementResponse").removeAttr("hidden");
-//}
+function pageInfo(text) {
+    $("#message").text(text);
+    $("#pageInfoModal").modal('toggle');
+    $("#pageInfo").show();
+}
