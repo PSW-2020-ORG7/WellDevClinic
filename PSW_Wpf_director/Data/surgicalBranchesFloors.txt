@@ -3,7 +3,7 @@ room,diagnostic_cabinet,149,83,92,121,0,Surgical,902,WorkingTime:12
 room,emergency_room_1,149,117,92,204,0,Surgical,901,WorkingTime:24 
 room,emergency_room_2,149,117,92,321,0,Surgical,901,WorkingTime:8 
 room,emergency_room_3,175,108,402,221,0,Surgical,901,WorkingTime:24 
-storageRoom,medical_supplies,175,111,402,327,0,Surgical,0,WorkingTime:24 
+storageRoom,medical_supplies,175,111,402,327,0,Surgical,950,WorkingTime:24 
 counter,info_pult,75,119,280,161,0,Surgical,0,WorkingTime:24 
 restroom,F_restroom,75,60,314,38,0,Surgical,0, 
 restroom,M_restroom,75,60,389,38,0,Surgical,0, 

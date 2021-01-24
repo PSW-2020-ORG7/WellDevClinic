@@ -1,5 +1,6 @@
 ﻿using PSW_Wpf_app.Client;
 using PSW_Wpf_app.Model;
+using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,13 +23,16 @@ namespace PSW_Wpf_app.View
     {
 
         long roomId;
+        long mapRoomId;
         DateTime date;
-        public MergedRoomInfoView(long roomId, DateTime date)
+        RenovationFlowViewModel renovationFlow = new RenovationFlowViewModel();
+        public MergedRoomInfoView(long roomId, DateTime date, long mapRoomId)
         {
 
             InitializeComponent();
             this.roomId = roomId;
             this.date = date;
+            this.mapRoomId = mapRoomId;
         }
 
         public async Task<Renovation> LoadExactRenovation(long roomId, DateTime date)
@@ -49,6 +53,8 @@ namespace PSW_Wpf_app.View
         {
             Renovation renovation = await LoadExactRenovation(roomId, date);
             WpfClient.EditRenovation(renovation);
+            renovationFlow.RelocateEquipment(renovation, roomId, date);
+            renovationFlow.RelocateEquipment(renovation, mapRoomId, date);
             MessageBox.Show("After renovation is finished, information will be applied !");
         }
     }

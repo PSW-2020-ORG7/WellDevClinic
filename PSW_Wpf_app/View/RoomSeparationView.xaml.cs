@@ -1,5 +1,6 @@
 ﻿using PSW_Wpf_app.Client;
 using PSW_Wpf_app.Model;
+using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +23,7 @@ namespace PSW_Wpf_app.View
     {
         long roomId;
         DateTime date;
+        RenovationFlowViewModel renovationFlow = new RenovationFlowViewModel();
         public RoomSeparationView(long roomId, DateTime date)
         {
             InitializeComponent();
@@ -48,7 +50,9 @@ namespace PSW_Wpf_app.View
         {
             Renovation renovation = await LoadExactRenovation(roomId, date);
             WpfClient.EditRenovation(renovation);
+            renovationFlow.RelocateEquipment(renovation, roomId, date);
             MessageBox.Show("After renovation is finished, information will be applied !");
         }
+
     }
 }

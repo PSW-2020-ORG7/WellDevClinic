@@ -14,8 +14,8 @@
         <StackPanel Orientation="Horizontal" Margin="15,34,0,369" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="780">
             <TextBlock x:Name="ChooseRenovationType" Text="Choose renovation type:" FontSize="25"  Width="316" Height="36"/>
             <ComboBox   Width="182" Height="25" x:Name="renovations" SelectionChanged="renovations_SelectionChanged">
-                <ComboBoxItem Content="Podela"></ComboBoxItem>
-                <ComboBoxItem Content="Spajanje"></ComboBoxItem>
+                <ComboBoxItem Content="Merge"></ComboBoxItem>
+                <ComboBoxItem Content="Separation"></ComboBoxItem>
 
             </ComboBox>
 

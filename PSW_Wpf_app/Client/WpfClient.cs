@@ -179,7 +179,7 @@ namespace PSW_Wpf_app.Client
             return rooms;
         }
         public static async Task<List<UpcomingExamination>> GetAllUpcomingExaminations()
-        {//ne vraca speciality
+        {
             HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/upcomingexamination");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
@@ -268,6 +268,7 @@ namespace PSW_Wpf_app.Client
             string responseBody = await response.Content.ReadAsStringAsync();
 
         }
+
     }
 }
 
