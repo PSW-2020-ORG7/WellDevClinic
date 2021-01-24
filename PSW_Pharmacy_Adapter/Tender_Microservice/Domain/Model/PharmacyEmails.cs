@@ -7,12 +7,14 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
     {
         [Key]
         public long? Id { get; set; }
-        public string Email { get; set; }
+        public virtual Email Mail { get; set; }
+
+        public PharmacyEmails() { }
 
         public PharmacyEmails(long? id, string email)
         {
             Id = id;
-            Email = email;
+            Mail = new Email(email);
         }
     }
 }

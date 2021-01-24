@@ -18,6 +18,8 @@ namespace PSW_Pharmacy_Adapter
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Tender>().OwnsOne(t => t.Period);
+            modelBuilder.Entity<PharmacyEmails>().OwnsOne(t => t.Mail);
+            modelBuilder.Entity<TenderOffer>().OwnsOne(t => t.Mail);
         }
     }
 }

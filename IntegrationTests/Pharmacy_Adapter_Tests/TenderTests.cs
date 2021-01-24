@@ -24,7 +24,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
             var EmailServiceMock = new Mock<IPharmacyEmailsService>();
             TenderService service = new TenderService(tenderRepository, EmailServiceMock.Object);
 
-            Tender addedTender = service.AddTender(new Tender(TEST_ID, null, null, TEST_OFFER_WINNER, TEST_DELETED));
+            Tender addedTender = service.AddTender(new Tender(TEST_ID, null, DateTime.Now, DateTime.Now.AddDays(1), TEST_OFFER_WINNER, TEST_DELETED));
             service.DeleteTender(TEST_ID);      //rollback
             
             addedTender.ShouldNotBeNull();
