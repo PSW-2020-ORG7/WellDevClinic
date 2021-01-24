@@ -36,9 +36,13 @@
 
     <table class="notifications">
         <!--<tr class="notifyTitle"><td>Notifications</td></tr>-->
-        <tr><td><button type="button" class="notificationBtn">
-                Notifications <span class="badge" id="num"></span>
-        </button></td></tr>
+        <tr>
+            <td>
+                <button type="button" class="notificationBtn">
+                    Notifications <span class="badge" id="num"></span>
+                </button>
+            </td>
+        </tr>
         <tr class="salesNotifications"></tr>
     </table>
 
@@ -51,6 +55,19 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                         <button type="button" id="btnYes" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="message"></div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
                     </div>
                 </div>
             </div>
