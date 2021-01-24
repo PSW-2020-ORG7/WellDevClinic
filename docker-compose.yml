@@ -52,7 +52,7 @@ services:
   
   examination:
     build: .
-    image: pera:latest
+    image: daviddrvar/examination:latest
     container_name: examination
     restart: always
     networks:
