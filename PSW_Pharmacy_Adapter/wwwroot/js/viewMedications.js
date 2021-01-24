@@ -57,11 +57,11 @@ function viewAllMedications(meds) {
 	}
 }
 
-function findMedicine(name) {
+function findMedicine(medId) {
 	$("#responseLoad").show();
 	$.ajax({
 		method: "GET",
-		url: "../api/medication/" + name,
+		url: "../api/medication/hospital/" + medId,
 		contentType: "application/json",
 		success: function (med) {
 			$.ajax({

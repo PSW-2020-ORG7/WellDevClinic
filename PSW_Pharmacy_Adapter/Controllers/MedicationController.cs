@@ -26,7 +26,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
             => Ok(await _medicationService.GetAllHospitalMedications());
 
         [HttpGet]
-        [Route("{id?}")]
+        [Route("hospital/{id?}")]
         public async Task<IActionResult> GetHospitalMedicationAsync(long id)
             => Ok(await _medicationService.GetHospitalMedication(id));
 

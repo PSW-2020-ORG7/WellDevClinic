@@ -7,4 +7,5 @@ import "Medication_Microservice/Protos/model.proto";
 service SpringGrpcService {
   rpc communicate (ProtoAvailableMedication) returns (ProtoResponseAvailableMedication);
   rpc communicateMedications (ProtoMedications) returns (ProtoResponseMedications);
+  rpc communicateOrderMeds (ProtoOrderMeds) returns (ProtoResponseOrderMeds);
 }

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
-
+using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto;
 
 namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 {
@@ -24,7 +24,22 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
         public Task StartAsync(CancellationToken cancellationToken)
             => Task.CompletedTask;
 
-
+         public async Task<List<MedicationOrderDto>> GetOrderedMeds(string name, List<MedicationOrderDto> medications) {
+            try
+            {
+                List<MedicationOrderDto> medsDto = new List<MedicationOrderDto>();
+                foreach (MedicationOrderDto m in medications) {
+                    ProtoResponseOrderMeds response = await _client.communicateOrderMedsAsync(new ProtoOrderMeds() { PharmacyName = name, MedicineName = m.medicineName, Amount = m.amount });
+                    medsDto.Add(new MedicationOrderDto(response.MedicineName, response.Amount));
+                }
+                
+                return medsDto;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public async Task<List<Medication>> GetAllMedicationsAmount(string name)
         {
