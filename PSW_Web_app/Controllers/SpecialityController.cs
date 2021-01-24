@@ -13,7 +13,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class SpecialityController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
 

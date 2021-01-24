@@ -18,9 +18,9 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class ExaminationController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:61089";
-        string communicationLink1 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62044";
-        string communicationLink2 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink = Environment.GetEnvironmentVariable("examinationServerAddress") ?? "http://localhost:61089";
+        string communicationLink1 = Environment.GetEnvironmentVariable("searchAndScheduleServerAddress") ?? "http://localhost:62044";
+        string communicationLink2 = Environment.GetEnvironmentVariable(" userInteractionServerAddress") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
 
