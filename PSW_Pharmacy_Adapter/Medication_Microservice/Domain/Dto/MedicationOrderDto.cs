@@ -5,6 +5,7 @@
         public string medicineName { get; set; }
         public int amount { get; set; }
 
+        public MedicationOrderDto() { }
         public MedicationOrderDto(string medicineName, int amount)
         {
             this.medicineName = medicineName;

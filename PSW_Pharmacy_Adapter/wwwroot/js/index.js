@@ -1,10 +1,13 @@
 ﻿$(document).ready(function () {
 	$.ajax({
 		method: "GET",
-		url: "../api/actionsandbenefits/all",
+		url: "../api/sale/all",
 		contentType: "application/json",
 		success: function (sales) {
 			viewNewSales(sales)
+		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to get all actions!");
 		}
 	});
 })
@@ -39,10 +42,13 @@ function saveSale(id) {
 
 	$.ajax({
 		method: "PUT",
-		url: "../api/actionsandbenefits/status/" + id + "/1",
+		url: "../api/sale/status/" + id + "/1",
 		contentType: "application/json",
 		success: function () {
 			window.location.reload();
+		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to update actions status!");
 		}
 	});
 }
@@ -52,7 +58,7 @@ function deleteSale(id) {
 	$("button#btnYes").click(function () {
 		$.ajax({
 			method: "DELETE",
-			url: "../api/actionsandbenefits/delete/" + id,
+			url: "../api/sale/delete/" + id,
 			contentType: "application/json",
 			success: function (data) {
 				if (data) {
@@ -60,6 +66,15 @@ function deleteSale(id) {
 					window.location.reload();
 				}
 			},
+			error: function (e) {
+				pageInfo("An error has occured while trying to delete action!");
+			}
 		});
 	});
+}
+
+function pageInfo(text) {
+	$("#message").text(text);
+	$("#pageInfoModal").modal('toggle');
+	$("#pageInfo").show();
 }

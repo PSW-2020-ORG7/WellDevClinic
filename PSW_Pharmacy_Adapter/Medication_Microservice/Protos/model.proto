@@ -28,5 +28,18 @@ message ProtoResponseMedications{
   repeated ProtoMedication medication = 1;
 }
 
+// orderMedications
+message ProtoOrderMeds {
+	string pharmacyName = 1;
+	string medicineName = 2;
+	int32 amount = 3;
+}
+
+message ProtoResponseOrderMeds{
+  string medicineName = 1;
+  int32 amount = 2;
+}
+
+
 
 

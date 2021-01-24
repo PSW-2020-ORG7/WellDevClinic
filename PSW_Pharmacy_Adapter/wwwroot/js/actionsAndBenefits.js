@@ -11,6 +11,9 @@ $(document).ready(function () {
 			viewSales(allSales);
 			$(".loader").css("display", "none");
 			$("#viewSales").css("display", "block");
+		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to show all actions!");
 		}
 	});
 
@@ -134,6 +137,9 @@ function deleteSale(id) {
 					window.location.reload();
 				}
 			},
+			error: function (e) {
+				pageInfo("Action is not successfully deleted!");
+			}
 		});
 	});
 }
@@ -156,6 +162,9 @@ function toggleFav(id) {
 		contentType: "application/json",
 		success: function (data) {
 			viewSales(allSales);
+		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to update action!");
 		}
 	});
 }
@@ -181,4 +190,10 @@ function ISOtoShort(date) {
 		month = '0' + month;
 
 	return String(day + '-' + month + '-' + year);
+}
+
+function pageInfo(text) {
+	$("#message").text(text);
+	$("#pageInfoModal").modal('toggle');
+	$("#pageInfo").show();
 }
