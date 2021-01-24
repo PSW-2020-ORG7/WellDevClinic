@@ -19,8 +19,14 @@ $(document).ready(function () {
                         viewAllOffers(data)
                     }
                 },
+                error: function (e) {
+                    pageInfo("Error while loading tender offer!");
+                }
             });
         },
+        error: function (e) {
+            pageInfo("Error while loading tender!");
+        }
     });
 })
 
@@ -160,6 +166,9 @@ function deleteAction(id) {
                     window.location.reload();
                 }
             },
+            error: function (e) {
+                pageInfo("Error while deleting offer!");
+            }
         });
 
 	});
@@ -179,6 +188,9 @@ function useAction(id) {
                 });
             }
         },
+        error: function (e) {
+            pageInfo("Error while updating tender winner!");
+        }
     });
 } 
 
@@ -198,6 +210,9 @@ function sendEmail() {
                         alert("Mail sent");
                         window.location.reload();
                     },
+                    error: function (e) {
+                        pageInfo("Email is not sent!");
+                    }
                 });
                 let order = [];
 
@@ -238,4 +253,10 @@ function sendEmail() {
 
 function myTimer() {
     alert("Lekovi su stigli");
+}
+
+function pageInfo(text) {
+    $("#message").text(text);
+    $("#pageInfoModal").modal('toggle');
+    $("#pageInfo").show();
 }
