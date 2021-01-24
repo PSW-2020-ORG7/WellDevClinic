@@ -98,14 +98,17 @@ function viewAllOffers(offers) {
     for (let offer of offers) {
         var content = '<div class="card" style="width:350px; display:inline-block ';
 
-        if (currTender.offerWinner != null &&  offer.id == currTender.offerWinner)
-        {
+        if (currTender.offerWinner != null && offer.id == currTender.offerWinner) {
             winner = offer;
             content += '; border: 10px solid red';
+            content += '"><div class="card-body">';
+            content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
+            content += offer.id + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🏆';
+        } else {
+            content += '"><div class="card-body">';
+            content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
+            content += offer.id;
         }
-        content += '"><div class="card-body">';
-        content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
-        content += offer.id;
         content += '<br>' + offer.pharmacyName;
         content += '</h5>';
         content += '<h6><table style="margin:10px">';

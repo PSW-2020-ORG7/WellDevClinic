@@ -1,5 +1,6 @@
 ﻿var allMeds = [];
 var br = 0;
+var delList = [];
 $(document).ready(function () {
     getMedicationStock();
     $.ajax({
@@ -11,17 +12,25 @@ $(document).ready(function () {
             console.log(data);
         },
     });
-  
+
     $(".add_field_button").click(function (e) {
         e.preventDefault();
-        if ($(".input_fields_wrap").children().length < 10) {
+        skip = false;
+        if (br > 1) {
+            br -= 2;
+            if ($("#" + br).val() == "") {
+                skip = true;
+            } 
+            br += 2;
+        }
+        if ($(".input_fields_wrap").children().length < 10 && skip == false) {
             let contentField = '<div>';
             contentField += '<div class="autocomplete">';
-            contentField += '<input id= "' + br + '" type="text" name="medicineName" placeholder="Enter medicine name" autocomplete="off"/> ';
+            contentField += '<input id= "' + br + '" type="text" name="medicineName" placeholder="Enter medicine name" autocomplete="off" value =""/> ';
             contentField += "</div>";
             br += 1;
-            contentField += '<input id="' + br + '" type="number" name="quantity" placeholder="Enter amount" /> ';
-            contentField += '<button class="btn btn-outline-danger remove_field">&times;</button>';
+            contentField += '<input id="' + br + '" type="number" name="quantity" placeholder="Enter amount"/> ';
+            //contentField += '<button class="btn btn-outline-danger remove_field">&times;</button>';
             contentField += '</div>';
             $(".input_fields_wrap").append(contentField);
             br += 1;
@@ -30,11 +39,11 @@ $(document).ready(function () {
         }
     });
 
-    $(".input_fields_wrap").on('click', '.remove_field', function (e) {
+    /*$(".input_fields_wrap").on('click', '.remove_field', function (e) {
         e.preventDefault();
         br -= 1;
         $(this).parent('div').remove();
-    });
+    });*/
 
     $(".close").click(function () {
         $(".modalCustom").hide(200);
@@ -163,42 +172,59 @@ function makeOffer(tender) {
                 let email = $("#txtEmail").val();
                 let meds = [];
 
-                for (let ten of data.medications) {
-                    var elemN = ten.name;
-                    var elemA = $("#" + ten.name).val();
-                    let med = {
-                        "name": elemN,
-                        "amount": Number(elemA)
-                    };
-                    
-                    meds.push(med);
-                }
-                console.log(meds);
+                var patternNum = /^\d+$/;
+                var patternEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-                $.ajax({
-                    method: "POST",
-                    url: "../api/tenderoffer/add",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        PharmacyName: name,
-                        Price: Number(price),
-                        Medications: meds,
-                        Message: message,
-                        TenderId: Number(tender),
-                        Email: email
-                    }),
-                    success: function (data) {
-                        if (data) {
-                            $('#message').html('Succesfully added to database.');
+                if (name == "" || price == "" || email == "") {
+                    $('#message').html('Please fill out requested fields.');
+                    $("#pageInfo").show();
+                } else if (patternNum.test(Number(price)) == false) {
+                    $('#message').html('Ups! Price must be a positive number.');
+                    $("#pageInfo").show();
+                } else if (patternEmail.test(email) == false) {
+                    $('#message').html('Ups! Invalid email format. Format is example@mail.com');
+                    $("#pageInfo").show();
+                } else {
+                    for (let ten of data.medications) {
+                        var elemN = ten.name;
+                        var elemA = $("#" + ten.name).val();
+                        if (elemA == '') {
+                            elemA == '0';
+                        }
+                        let med = {
+                            "name": elemN,
+                            "amount": Number(elemA)
+                        };
+
+                        meds.push(med);
+                    }
+                    console.log(meds);
+
+                    $.ajax({
+                        method: "POST",
+                        url: "../api/tenderoffer/add",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            PharmacyName: name,
+                            Price: Number(price),
+                            Medications: meds,
+                            Message: message,
+                            TenderId: Number(tender),
+                            Email: email
+                        }),
+                        success: function (data) {
+                            if (data) {
+                                $('#message').html('Succesfully added to database.');
+                                $("#pageInfo").show();
+                            }
+                        },
+                        error: function (e) {
+                            $("#message").empty();
+                            $('#message').html('Already exists.');
                             $("#pageInfo").show();
                         }
-                    },
-                    error: function (e) {
-                        $("#message").empty();
-                        $('#message').html('Already exists.');
-                        $("#pageInfo").show();
-                    }
-                })
+                    })
+                }
             })
         },
     });
@@ -207,57 +233,75 @@ function makeOffer(tender) {
 
 function addTender() {
     let meds = [];
-    for (let i = 0; i < br; i++) {
-        medName = $("#" + i + "").val();
-        i += 1;
-        medAmount = $("#" + i + "").val();
-        var item = {
-            "name": medName,
-            "amount": Number(medAmount)
-        };
-        meds.push(item);
-    }
-
+    var patternNum = /^\d+$/;
     console.log(meds);
     let startDate = $("#dateStart").val();
     let endDate = $("#dateEnd").val();
 
-    if (startDate == "" || endDate == "") {
-        alert("Start date and end date can't be empty!")
-        return;
-    }
-    if (startDate > endDate) {
-        alert("Start date can't be greater than end date!")
-        return;
-    }
 
-    $.ajax({
-        method: "POST",
-        url: "../api/tender/add",
-        contentType: "application/json",
-        data: JSON.stringify({
-            Medications: meds,
-            Period: {
-                StartDate: startDate,
-                EndDate: endDate
-            },
-            IsDeleted: false
-        }),
-        success: function (data) {
-            if (data) {
-                $('#message').text('Succesfully added to database.');
-                $("#pageInfo").show();
-                $("#btnOk").click(function () {
-                    window.location.reload();
-                })
-            }
-        },
-        error: function (e) {
-            $("#message").empty();
-            $('#message').text('Already exists.');
+    for (let i = 0; i < br; i++) {
+        medName = $("#" + i + "").val();
+        i += 1;
+        medAmount = $("#" + i + "").val();
+        if (medName == "" || medAmount == "") {
+            $('#message').html('Please fill out requested fields.');
             $("#pageInfo").show();
+            continue;
+        } else {
+            if (patternNum.test(Number(medAmount)) == false) {
+                $('#message').html('Ups! Price must be a positive number.');
+                $("#pageInfo").show();
+                return;
+            } else {
+                var item = {
+                    "name": medName,
+                    "amount": Number(medAmount)
+                };
+                meds.push(item);
+
+                if (startDate == "" || endDate == "") {
+                    $('#message').text('Start date and end date can not be empty!');
+                    $("#pageInfo").show();
+                } else if (startDate >= endDate) {
+                    $('#message').text('Start date can not be same or greater than end date!');
+                    $("#pageInfo").show();
+                } else {
+                    $.ajax({
+                        method: "POST",
+                        url: "../api/tender/add",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            Medications: meds,
+                            Period: {
+                                StartDate: startDate,
+                                EndDate: endDate
+                            },
+                            IsDeleted: false
+                        }),
+                        success: function (data) {
+                            if (data) {
+                                $('#message').text('Succesfully added to database.');
+                                $("#pageInfo").show();
+                                $("#btnOk").click(function () {
+                                    window.location.reload();
+                                })
+                            }
+                        },
+                        error: function (e) {
+                            $("#message").empty();
+                            $('#message').text('Already exists.');
+                            $("#pageInfo").show();
+                        }
+                    });
+                }
+            }
         }
-    });
+    } 
+
+    if (br == 0) {
+        $('#message').html('Please add desired medications. You can not make tender without at least one medication.');
+        $("#pageInfo").show();
+    }
 }
 
 function deleteTender(tender) {
