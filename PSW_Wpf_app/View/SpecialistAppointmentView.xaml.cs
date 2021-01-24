@@ -64,6 +64,14 @@ namespace PSW_Wpf_app.View
             BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
             List<ExaminationDTO> exams = await WpfClient.FindTerms(businessDayDTO);
 
+            if(exams.Count == 0)
+            {
+
+                MessageBox.Show("There is no available term.Choose a priority!");
+                return;
+            
+            }
+
             List<ExaminationDTO> final = new List<ExaminationDTO>();
             foreach (ExaminationDTO item in exams)
             {
