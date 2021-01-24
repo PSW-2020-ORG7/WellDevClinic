@@ -259,14 +259,14 @@ namespace PSW_Wpf_app.Client
             return result;
         }
 
-        public static async Task<List<UpcomingExamination>> GetAllExaminations()
+        public static async void EditRenovation(Renovation renovation)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAllExaminations");
+            var content = new StringContent(JsonConvert.SerializeObject(renovation));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:57400/api/renovation/Edit", content);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            List<UpcomingExamination> examinations = JsonConvert.DeserializeObject<List<UpcomingExamination>>(responseBody);
 
-            return examinations;
         }
     }
 }

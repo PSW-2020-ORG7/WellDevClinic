@@ -47,6 +47,17 @@ namespace PSW_Wpf_app.View
             if (IsScheduled)
             {
                 MessageBox.Show("You have successfully scheduled renovation!");
+                if (tipRenoviranja.Equals("Spajanje"))
+                {
+                    MergedRoomInfoView mergedRoomInfo = new MergedRoomInfoView(f.RoomId, date1);
+                    mergedRoomInfo.Show();
+                }
+                else 
+                {
+                    RoomSeparationView roomSeparation = new RoomSeparationView(floor.RoomId, date1);
+                    roomSeparation.Show();
+                }
+                
             }
             else
             {
