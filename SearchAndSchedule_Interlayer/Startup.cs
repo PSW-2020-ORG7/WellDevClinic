@@ -9,6 +9,7 @@ using SearchAndSchedule_Microservice.Domain;
 using SearchAndSchedule_Microservice.Repository;
 using SearchAndSchedule_Microservice.Repository.Abstract;
 using System;
+using System.IO;
 using System.Reflection;
 
 namespace SearchAndSchedule_Interlayer
@@ -47,8 +48,22 @@ namespace SearchAndSchedule_Interlayer
 
             try
             {
-                var script = db.Database.GenerateCreateScript();
-                db.Database.ExecuteSqlRaw(script);
+                using (StreamReader file = new StreamReader("DBScript.txt"))
+                {
+                    string sqlRow = "";
+                    string ln = "";
+
+                    while ((ln = file.ReadLine()) != null)
+                    {
+                        sqlRow = sqlRow + " " + ln;
+                        if (sqlRow.Contains(";"))
+                        {
+                            db.Database.ExecuteSqlCommand(sqlRow);
+                            sqlRow = "";
+                        }
+                    }
+                    file.Close();
+                }
             }
             catch
             {
