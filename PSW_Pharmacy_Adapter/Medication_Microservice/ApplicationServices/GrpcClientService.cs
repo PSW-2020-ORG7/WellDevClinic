@@ -24,13 +24,13 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
         public Task StartAsync(CancellationToken cancellationToken)
             => Task.CompletedTask;
 
-         public async Task<List<MedicationOrderDto>> GetOrderedMeds(string name, List<MedicationOrderDto> medications) {
+         public async Task<List<Medication>> GetOrderedMeds(string name, List<MedicationOrderDto> medications) {
             try
             {
-                List<MedicationOrderDto> medsDto = new List<MedicationOrderDto>();
+                List<Medication> medsDto = new List<Medication>();
                 foreach (MedicationOrderDto m in medications) {
                     ProtoResponseOrderMeds response = await _client.communicateOrderMedsAsync(new ProtoOrderMeds() { PharmacyName = name, MedicineName = m.medicineName, Amount = m.amount });
-                    medsDto.Add(new MedicationOrderDto(response.MedicineName, response.Amount));
+                    medsDto.Add(new Medication(response.MedicineName, response.Amount));
                 }
                 
                 return medsDto;

@@ -98,7 +98,14 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("orderMedicines")]
         public async Task<IActionResult> OrderMedication([FromQuery] string phName, [FromBody] List<MedicationOrderDto> order)
         {
-            List<Medication> orderedMedications = await _medicationService.OrderMedicationsAsync(phName, order);
+            List<Medication> orderedMedications = new List<Medication>();
+            try
+            {
+                orderedMedications = await _serviceGrpc.GetOrderedMeds(phName, order);
+            }
+            catch {
+                orderedMedications = await _medicationService.OrderMedicationsAsync(phName, order);
+            }
             if (orderedMedications != null)
                 return Ok(orderedMedications);
             return BadRequest("No medications can be ordered. (Pharmacy out of stock)");
