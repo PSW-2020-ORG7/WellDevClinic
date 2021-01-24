@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>View events admin</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/viewEventsAdmin.js"></script>
+    <script>authorize()</script>
+</head>
+<body>
+    <div class="topnav">
+        <a href="viewFeedbackAdmin.html"><img src="house.png"></a>
+        <a href="blockUsers.html">Block users</a>
+        <a href="viewSurvey.html">View survey results</a>
+        <a href="viewEventsAdmin.html">View events</a>
+        <a href="login.html" style="float:right">Log out</a>
+    </div>
+    <h1>Average time on steps </h1>
+
+    <table id="table">
+        <thead>
+            <tr>
+                <th>First step</th>
+                <th>Second step</th>
+                <th>Third step</th>
+                <th>Fourth step</th>
+                <th>Success %</th>
+                <th>Unsuccessful %</th>
+                <th>Next %</th>
+                <th>Previous %</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Events</h2>
+
+    <table id="table2">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Step name</th>
+                <th>Time spent</th>
+            </tr>
+        </thead>
+        <tbody id="tbody2">
+        </tbody>
+    </table>
+
+</body>
+</html>

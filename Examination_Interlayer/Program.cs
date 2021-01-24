@@ -16,11 +16,25 @@ namespace Examination_Interlayer
             CreateHostBuilder(args).Build().Run();
         }
 
+        private static int CalculatePort()
+        {
+            var port = Environment.GetEnvironmentVariable("PORT");
+            if (port == null)
+                return 61089;
+            else
+                return int.Parse(Environment.GetEnvironmentVariable("PORT"));
+        }
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                        serverOptions.ListenAnyIP(CalculatePort());
+                    })
+                    .UseStartup<Startup>();
+
                 });
     }
 }

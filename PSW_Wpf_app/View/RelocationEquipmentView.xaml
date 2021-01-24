@@ -15,12 +15,12 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="10,93,0,578">
             <TextBlock x:Name="ChooseRoomFrom" Text="Choose starting room: " FontSize="25"  Width="274" Height="40"/>
-            <ComboBox x:Name="rooms_from"  Height="25" Width="182" Margin="50,0,0,0" SelectionChanged="room_from_SelectionChanged"  ItemsSource ="{Binding Room_from, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>
+            <ComboBox x:Name="rooms_from"  Height="25" Width="182" Margin="50,0,0,0" SelectionChanged="room_from_SelectionChanged"  ItemsSource ="{Binding Room_from, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomCode"/>
 
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="10,161,0,501">
             <TextBlock x:Name="ChooseRoomTo" Text="Choose destination room: " FontSize="25"  Width="303" Height="40"/>
-            <ComboBox x:Name="rooms_to" Margin="25,0,0,0"   Height="25" Width="182"   ItemsSource ="{Binding Room_to, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomType.Name"/>
+            <ComboBox x:Name="rooms_to" Margin="25,0,0,0"   Height="25" Width="182"   ItemsSource ="{Binding Room_to, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RoomCode"/>
 
         </StackPanel>
         <StackPanel x:Name="DatePicker" Orientation="Horizontal" Margin="10,259,10,367">

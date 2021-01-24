@@ -36,6 +36,32 @@ namespace EventSourcing.Migrations
 
                     b.ToTable("feedbackSubmittedEvents");
                 });
+
+            modelBuilder.Entity("EventSourcing.NewExaminationTimeSpent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ScheduleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("StepId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StepType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("newExaminationTimeSpent");
+                });
 #pragma warning restore 612, 618
         }
     }
