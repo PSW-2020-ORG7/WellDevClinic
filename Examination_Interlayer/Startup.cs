@@ -61,7 +61,10 @@ namespace Examination_Interlayer
             {
                 app.UseDeveloperExceptionPage();
             }
-            try
+
+            db.Database.EnsureCreated();
+
+            /*try
             {
                 var script = db.Database.GenerateCreateScript();
                 db.Database.ExecuteSqlRaw(script);
@@ -69,7 +72,7 @@ namespace Examination_Interlayer
             catch
             {
                 Console.WriteLine("Tables already exist!");
-            }
+            }*/
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

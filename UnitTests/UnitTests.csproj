@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EventSourcing\EventSourcing.csproj" />
     <ProjectReference Include="..\PSW_Pharmacy_Adapter\PSW_Pharmacy_Adapter.csproj" />
     <ProjectReference Include="..\WellDevCore\WellDevCore.csproj" />
   </ItemGroup>
