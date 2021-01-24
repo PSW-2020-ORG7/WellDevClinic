@@ -65,7 +65,7 @@ namespace Examination_Interlayer
 
             db.Database.EnsureCreated();
 
-            /*try
+            try
             {
                 using (StreamReader file = new StreamReader("DBScript.txt"))
                 {
@@ -87,7 +87,7 @@ namespace Examination_Interlayer
             catch
             {
                 Console.WriteLine("Tables already exist!");
-            }*/
+            }
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
