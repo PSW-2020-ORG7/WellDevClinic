@@ -7,7 +7,7 @@ namespace EventSourcing.Repository
     public interface IDomainEventRepository
     {
         DomainEvent Save(DomainEvent domainEvent);
-
         IEnumerable<DomainEvent> GetAll(String eventType);
+        long GetMax(String eventType);
     }
 }
