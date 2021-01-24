@@ -31,7 +31,7 @@ services:
     ports: 
       - 49153:49153
     depends_on:
-      - servers
+      - userInteraction
 
   drugManipulation:
     build: .
@@ -102,9 +102,8 @@ services:
       DATABASE_PASSWORD_EVENTS: root
       DATABASE_HOST_EVENTS: mysql
       DATABASE_SCHEMA_EVENTS: eventlogs
-      - userInteractionServerAddress= http://userInteraction:14483
     depends_on:
-      -roomManipulation
+      - roomManipulation
   
   userInteraction:
     build: .
