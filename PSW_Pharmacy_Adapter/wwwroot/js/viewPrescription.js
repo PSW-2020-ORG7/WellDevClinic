@@ -10,6 +10,9 @@ $(document).ready(function () {
 			$(".loader").css("display", "none");
 			viewAllPrescriptions(allPrescriptions);
 		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to show all prescriptions!");
+		}
 	});
 
 	$(".btnFilter").click(function () {
@@ -204,4 +207,10 @@ function ISOtoShort(date) {
 		month = '0' + month;
 
 	return String(day + '-' + month + '-' + year);
+}
+
+function pageInfo(text) {
+	$("#message").text(text);
+	$("#pageInfoModal").modal('toggle');
+	$("#pageInfo").show();
 }
