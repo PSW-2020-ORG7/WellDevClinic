@@ -209,7 +209,6 @@ namespace PSW_Wpf_app.ViewModel
 
                     if (item.Room.Id == r1.Room.Id && item.Shift.StartDate <= r1.Period.StartDate && item.Shift.EndDate >= r1.Period.EndDate)
                     {
-
                         d1 = item.Doctor;
                         id1 = item.Id;
                     }
@@ -219,10 +218,8 @@ namespace PSW_Wpf_app.ViewModel
                         d2 = item.Doctor;
                         id2 = item.Id;
 
-
                     }
                 }
-
 
                 List<Period> periods = new List<Period>();
                 periods.Add(r1.Period);

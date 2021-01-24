@@ -36,17 +36,28 @@ namespace PSW_Wpf_app.View
             DateTime date1 = (DateTime)Picker1.SelectedDate;
             DateTime date2 = (DateTime)Picker2.SelectedDate;
 
-            string tipRenoviranja = (string)((ComboBoxItem)renovations.SelectedItem).Content;
-            if (tipRenoviranja.CompareTo("Spajanje") == 0)
+            string renovationType = (string)((ComboBoxItem)renovations.SelectedItem).Content;
+            if (renovationType.CompareTo("Merge") == 0)
             {
                 f = (FloorElement)rooms.SelectedItem;
 
             }
 
-            bool IsScheduled = await context.Scheduling(date1, date2, tipRenoviranja, f);
+            bool IsScheduled = await context.Scheduling(date1, date2, renovationType, f);
             if (IsScheduled)
             {
                 MessageBox.Show("You have successfully scheduled renovation!");
+                if (renovationType.Equals("Separation"))
+                {
+                    MergedRoomInfoView mergedRoomInfo = new MergedRoomInfoView(f.RoomId, date1, floor.RoomId);
+                    mergedRoomInfo.Show();
+                }
+                else 
+                {
+                    RoomSeparationView roomSeparation = new RoomSeparationView(floor.RoomId, date1);
+                    roomSeparation.Show();
+                }
+                
             }
             else
             {
@@ -60,17 +71,11 @@ namespace PSW_Wpf_app.View
         private void renovations_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string str = (string)((ComboBoxItem)((ComboBox)e.Source).SelectedItem).Content;
-            if (str.CompareTo("Podela") == 0)
-
-            {
+            if (str.CompareTo("Separation") == 0)
                 rooms.IsEnabled = false;
 
-            }
-
             else
-            {
                 rooms.IsEnabled = true;
-            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

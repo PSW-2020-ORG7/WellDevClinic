@@ -46,13 +46,20 @@ namespace RoomManipulation_Interlayer.Controllers
             _renovationAppService.DeleteRenovationByRoom(room);
         }
 
-/*        
- *    TODO: Napraviti DTO objekat u ovom interleyeru koji ce da sadrzi room i period kako bi se slao kao parametar 
- *        [HttpPost]
-        [Route("GetRenovationsByRoomAndPeriod")]
-        public void GetRenovationsByRoomAndPeriod(Room room, Period period)
+        [HttpPut]
+        [Route("Edit")]
+        public void Edit(Renovation renovation)
         {
-            _renovationAppService.GetRenovationsByRoomAndPeriod(room, period);
-        }*/
+            _renovationAppService.Edit(renovation);
+        }
+
+        /*        
+         *    TODO: Napraviti DTO objekat u ovom interleyeru koji ce da sadrzi room i period kako bi se slao kao parametar 
+         *        [HttpPost]
+                [Route("GetRenovationsByRoomAndPeriod")]
+                public void GetRenovationsByRoomAndPeriod(Room room, Period period)
+                {
+                    _renovationAppService.GetRenovationsByRoomAndPeriod(room, period);
+                }*/
     }
 }
