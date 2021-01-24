@@ -210,7 +210,7 @@ function makeOffer(tender) {
                             Medications: meds,
                             Message: message,
                             TenderId: Number(tender),
-                            Email: email
+                            Mail: { Mail: email }
                         }),
                         success: function (data) {
                             if (data) {
@@ -316,22 +316,26 @@ function deleteTender(tender) {
     });
 }
 
-function subscribe() {
+function subscribe(e) {
+    e.preventDefault();
     let mail = $("#inpEmail").val();
     if (!mail || !mail.includes('@'))
         return;
-    $('#btnSubscribe').val('Sending...');
 
     $.ajax({
         method: "POST",
         url: "../api/pharmacyemails/add",
         contentType: "application/json",
         data: JSON.stringify({
-            Email: mail
+            Mail: { Mail: $('#inpEmail').val()}
         }),
         success: function (data) {
             if (data) {
                 $('#message').text('Succesfully added to database.');
+                $('#inpEmail').css('borderColor', '#ffffff')
+                $('#subscribe-result').css('color', 'rgb(53, 114, 210)')
+                $('#subscribe-result').html('<p>Thank you for subscribing. We will inform you when new tender is opened.</p>')
+                $('#inpEmail').val('')
                 $("#pageInfo").show();
             }
         },
@@ -341,25 +345,6 @@ function subscribe() {
             $("#pageInfo").show();
         }
     });
-
-    $.ajax({
-        contentType: 'application/json',
-        success: function (data) {
-            $('#btnSubscribe').val('subscribe')
-            if (data) {
-                $('#inpEmail').css('borderColor', '#ffffff')
-                $('#subscribe-result').css('color', 'rgb(53, 114, 210)')
-                $('#subscribe-result').html('<p>Thank you for subscribing. We will inform you when new tender is opened.</p>')
-                $('#inpEmail').val('')
-            } else {
-                $('#inpEmail').css('borderColor', '#ff8282')
-                $('#subscribe-result').css('color', '#ff8282')
-            }
-        },
-        error: function (err) {
-            alert('Could not connect to the email server. Please try again later.')
-        }
-    })
 }
 
 function ISOtoShort(date) {
