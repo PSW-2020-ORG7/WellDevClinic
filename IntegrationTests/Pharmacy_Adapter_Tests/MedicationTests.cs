@@ -143,6 +143,6 @@ namespace IntegrationTests.Pharmacy_Adapter_Tests
         }
 
         public Api CreateTestApi()
-            => new Api(TEST_PHARMACY, "12345", "http://localhost:8081/Jankovic");
+            => new Api(TEST_PHARMACY, "12345", 2222,"http://localhost:8081/Jankovic");
     }
 }

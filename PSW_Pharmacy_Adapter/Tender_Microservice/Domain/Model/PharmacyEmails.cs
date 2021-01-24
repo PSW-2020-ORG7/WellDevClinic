@@ -16,5 +16,6 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
             Id = id;
             Mail = new Email(email);
         }
+
     }
 }

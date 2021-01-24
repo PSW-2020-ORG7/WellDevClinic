@@ -12,8 +12,6 @@ namespace PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model
         public virtual Period ValPeriod { get; set; }
         public SaleStatus Status { get; set; }
 
-        public Sale() { }
-
 
         public Sale(long id, string pharmacyName, string messageAbouAction, DateTime startDate, DateTime endDate, SaleStatus status) {
             Validate();
@@ -29,5 +27,7 @@ namespace PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model
             if (string.IsNullOrWhiteSpace(PharmacyName) || string.IsNullOrWhiteSpace(SaleMessage))
                 throw new ArgumentNullException("Arguments: PharmacyName and MessageAboutAction can't be empty");
         }
+
+        public Sale() { }
     }
 }
