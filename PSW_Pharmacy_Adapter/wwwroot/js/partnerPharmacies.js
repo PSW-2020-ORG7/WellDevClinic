@@ -10,6 +10,9 @@
                 $("#apiTable").css("display", "table");
             }
         },
+        error: function (e) {
+            pageInfo("An error has occured while trying to load partner pharmacies!");
+        }
     });
 });
 
@@ -45,6 +48,9 @@ function deleteEntry(id) {
                     window.location.reload();
                 }
             },
+            error: function (e) {
+                pageInfo("An error has occured while trying to delete partner pharmacy!");
+            }
         });
     })
 }
@@ -53,4 +59,10 @@ function getMedications(id) {
     $("#phName").html(id);
     $("#txtResponse").val("");
     $("#medModal").slideDown("fast");
+}
+
+function pageInfo(text) {
+    $("#message").text(text);
+    $("#pageInfoModal").modal('toggle');
+    $("#pageInfo").show();
 }
