@@ -87,6 +87,7 @@ namespace PSW_Wpf_app.Model
         public List<Drug> Drugs { get => drugs; set => drugs = value; }
         public List<Equipment> Equipments { get => equipments; set => equipments = value; }
 
+        public FloorElement() { }
         public FloorElement(string t, int w, int h, int xx, int yy)
         {
             type = t;
