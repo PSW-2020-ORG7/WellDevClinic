@@ -29,7 +29,6 @@ namespace PSW_Wpf_app.Client
         }
     }
 
-
     static class WpfClient
     {
 
@@ -258,6 +257,16 @@ namespace PSW_Wpf_app.Client
             var value = await responseBody.Content.ReadAsStringAsync();
             Patient result = JsonConvert.DeserializeObject<Patient>(value);
             return result;
+        }
+
+        public static async Task<List<UpcomingExamination>> GetAllExaminations()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:51393/api/examination/getAllExaminations");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            List<UpcomingExamination> examinations = JsonConvert.DeserializeObject<List<UpcomingExamination>>(responseBody);
+
+            return examinations;
         }
     }
 }

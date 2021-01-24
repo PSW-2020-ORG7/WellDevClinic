@@ -112,8 +112,8 @@ namespace PSW_Wpf_app.ViewModel
                 if (pair != null)
                 {
                     RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
-                    relocation.Room_from = r.Room.RoomType.Name;
-                    relocation.Room_to = pair.Room.RoomType.Name;
+                    relocation.Room_from = r.Room.RoomCode;
+                    relocation.Room_to = pair.Room.RoomCode;
                     relocation.Equip_name = r.Description;
                     relocation.Date = r.Period.StartDate;
 
