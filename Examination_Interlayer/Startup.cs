@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -63,8 +64,22 @@ namespace Examination_Interlayer
             }
             try
             {
-                var script = db.Database.GenerateCreateScript();
-                db.Database.ExecuteSqlRaw(script);
+                using (StreamReader file = new StreamReader("DBScript.txt"))
+                {
+                    string sqlRow = "";
+                    string ln = "";
+
+                    while ((ln = file.ReadLine()) != null)
+                    {
+                        sqlRow = sqlRow + " " + ln;
+                        if (sqlRow.Contains(";"))
+                        {
+                            db.Database.ExecuteSqlCommand(sqlRow);
+                            sqlRow = "";
+                        }
+                    }
+                    file.Close();
+                }
             }
             catch
             {

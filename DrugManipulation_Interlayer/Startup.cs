@@ -11,6 +11,7 @@ using DrugManipulation_Microservice.Repository;
 using DrugManipulation_Microservice.Domain;
 using System;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace DrugManipulation_Interlayer
 {
@@ -46,7 +47,29 @@ namespace DrugManipulation_Interlayer
             {
                 app.UseDeveloperExceptionPage();
             }
-            db.Database.EnsureCreated();
+            try
+            {
+                using (StreamReader file = new StreamReader("DBScript.txt"))
+                {
+                    string sqlRow = "";
+                    string ln = "";
+
+                    while ((ln = file.ReadLine()) != null)
+                    {
+                        sqlRow = sqlRow + " " + ln;
+                        if (sqlRow.Contains(";"))
+                        {
+                            db.Database.ExecuteSqlCommand(sqlRow);
+                            sqlRow = "";
+                        }
+                    }
+                    file.Close();
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Tables already exist!");
+            }
 
             app.UseRouting();
 

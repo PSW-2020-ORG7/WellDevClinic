@@ -15,5 +15,7 @@
             <Button  Content="Equipment Relocation" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="174" Margin="10,263,0,0" Click="EquipmentRelocationClick" />
 
         </Grid>
+        <Button  Content="Basic renovation" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="109" Margin="654,10,0,0" Click="BasicRenovationClick" />
+
     </Grid>
 </Window>

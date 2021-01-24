@@ -14,6 +14,7 @@ using UserInteraction_Microservice.ApplicationServices;
 using UserInteraction_Microservice.Domain.DomainServices;
 using UserInteraction_Microservice.Repository.Abstract;
 using UserInteraction_Microservice.Repository;
+using System.IO;
 
 namespace UserInteraction_Interlayer
 {
@@ -69,7 +70,29 @@ namespace UserInteraction_Interlayer
             {
                 app.UseDeveloperExceptionPage();
             }
-            db.Database.EnsureCreated();
+            try
+            {
+                using (StreamReader file = new StreamReader("DBScript.txt"))
+                {
+                    string sqlRow = "";
+                    string ln = "";
+
+                    while ((ln = file.ReadLine()) != null)
+                    {
+                        sqlRow = sqlRow + " " + ln;
+                        if (sqlRow.Contains(";"))
+                        {
+                            db.Database.ExecuteSqlCommand(sqlRow);
+                            sqlRow = "";
+                        }
+                    }
+                    file.Close();
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Tables already exist!");
+            }
 
             app.UseRouting();
 

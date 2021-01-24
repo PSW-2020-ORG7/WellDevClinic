@@ -1,0 +1,456 @@
+CREATE TABLE `Address` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Street` longtext CHARACTER SET utf8mb4 NULL,
+    `Number` int NOT NULL,
+    `FullAddress` longtext CHARACTER SET utf8mb4 NULL,
+    `Town_Name` longtext CHARACTER SET utf8mb4 NULL,
+    `Town_PostalNumber` longtext CHARACTER SET utf8mb4 NULL,
+    `State_Name` longtext CHARACTER SET utf8mb4 NULL,
+    `State_Code` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Address` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Person` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `FirstName` longtext CHARACTER SET utf8mb4 NULL,
+    `LastName` longtext CHARACTER SET utf8mb4 NULL,
+    `Jmbg` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Person` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Speciality` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Speciality` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `UserLogIn` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Username` varchar(255) CHARACTER SET utf8mb4 NULL,
+    `Password` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_UserLogIn` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `UserDetails` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `DateOfBirth` datetime(6) NOT NULL,
+    `Phone` longtext CHARACTER SET utf8mb4 NULL,
+    `MiddleName` longtext CHARACTER SET utf8mb4 NULL,
+    `Race` longtext CHARACTER SET utf8mb4 NULL,
+    `Gender` longtext CHARACTER SET utf8mb4 NULL,
+    `Email` longtext CHARACTER SET utf8mb4 NULL,
+    `Image` longtext CHARACTER SET utf8mb4 NULL,
+    `BloodType` longtext CHARACTER SET utf8mb4 NULL,
+    `AddressId` bigint NULL,
+    CONSTRAINT `PK_UserDetails` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_UserDetails_Address_AddressId` FOREIGN KEY (`AddressId`) REFERENCES `Address` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Director` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `PersonId` bigint NULL,
+    `UserDetailsId` bigint NULL,
+    `UserLogInId` bigint NULL,
+    `UserType` int NOT NULL,
+    CONSTRAINT `PK_Director` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Director_Person_PersonId` FOREIGN KEY (`PersonId`) REFERENCES `Person` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Director_UserDetails_UserDetailsId` FOREIGN KEY (`UserDetailsId`) REFERENCES `UserDetails` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Director_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Doctor` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `PersonId` bigint NULL,
+    `UserDetailsId` bigint NULL,
+    `UserLogInId` bigint NULL,
+    `UserType` int NOT NULL,
+    `SpecialityId` bigint NULL,
+    CONSTRAINT `PK_Doctor` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Doctor_Person_PersonId` FOREIGN KEY (`PersonId`) REFERENCES `Person` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Doctor_Speciality_SpecialityId` FOREIGN KEY (`SpecialityId`) REFERENCES `Speciality` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Doctor_UserDetails_UserDetailsId` FOREIGN KEY (`UserDetailsId`) REFERENCES `UserDetails` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Doctor_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Patient` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `PersonId` bigint NULL,
+    `UserDetailsId` bigint NULL,
+    `UserLogInId` bigint NULL,
+    `UserType` int NOT NULL,
+    `Guest` tinyint(1) NOT NULL,
+    `Blocked` tinyint(1) NOT NULL,
+    `Validation` tinyint(1) NOT NULL,
+    `VerificationToken` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Patient` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Patient_Person_PersonId` FOREIGN KEY (`PersonId`) REFERENCES `Person` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Patient_UserDetails_UserDetailsId` FOREIGN KEY (`UserDetailsId`) REFERENCES `UserDetails` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Patient_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Secretary` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `PersonId` bigint NULL,
+    `UserDetailsId` bigint NULL,
+    `UserLogInId` bigint NULL,
+    `UserType` int NOT NULL,
+    CONSTRAINT `PK_Secretary` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Secretary_Person_PersonId` FOREIGN KEY (`PersonId`) REFERENCES `Person` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Secretary_UserDetails_UserDetailsId` FOREIGN KEY (`UserDetailsId`) REFERENCES `UserDetails` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Secretary_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Articles` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `DatePublished` datetime(6) NOT NULL,
+    `DoctorId` bigint NULL,
+    `Topic` longtext CHARACTER SET utf8mb4 NULL,
+    `Text` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Articles` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Articles_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `DoctorGrade` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `NumberOfGrades` int NOT NULL,
+    `DoctorId` bigint NULL,
+    CONSTRAINT `PK_DoctorGrade` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_DoctorGrade_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Feedback` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `PatientId` bigint NULL,
+    `Content` longtext CHARACTER SET utf8mb4 NULL,
+    `IsPrivate` tinyint(1) NOT NULL,
+    `Publish` tinyint(1) NOT NULL,
+    `IsAnonymous` tinyint(1) NOT NULL,
+    CONSTRAINT `PK_Feedback` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Feedback_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `DoctorGradeQuestion` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Grade` double NOT NULL,
+    `Question` longtext CHARACTER SET utf8mb4 NULL,
+    `DoctorGradeId` bigint NULL,
+    `DoctorGradeId1` bigint NULL,
+    CONSTRAINT `PK_DoctorGradeQuestion` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_DoctorGradeQuestion_DoctorGrade_DoctorGradeId` FOREIGN KEY (`DoctorGradeId`) REFERENCES `DoctorGrade` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_DoctorGradeQuestion_DoctorGrade_DoctorGradeId1` FOREIGN KEY (`DoctorGradeId1`) REFERENCES `DoctorGrade` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Drug` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` varchar(255) CHARACTER SET utf8mb4 NULL,
+    `Amount` int NOT NULL,
+    `Approved` tinyint(1) NOT NULL,
+    `DrugId` bigint NULL,
+    CONSTRAINT `PK_Drug` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Drug_Drug_DrugId` FOREIGN KEY (`DrugId`) REFERENCES `Drug` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Ingredient` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NULL,
+    `Quantity` int NOT NULL,
+    `DrugId` bigint NULL,
+    CONSTRAINT `PK_Ingredient` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Ingredient_Drug_DrugId` FOREIGN KEY (`DrugId`) REFERENCES `Drug` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Equipment` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NULL,
+    `Amount` int NOT NULL,
+    `EquipmentType` int NOT NULL,
+    CONSTRAINT `PK_Equipment` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `RoomType` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_RoomType` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Room` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `RoomCode` longtext CHARACTER SET utf8mb4 NULL,
+    `RoomTypeId` bigint NULL,
+    `MaxNumberOfPatientsForHospitalization` int NOT NULL,
+    `CurrentNumberOfPatients` int NOT NULL,
+    CONSTRAINT `PK_Room` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Room_RoomType_RoomTypeId` FOREIGN KEY (`RoomTypeId`) REFERENCES `RoomType` (`Id`) ON DELETE RESTRICT
+);
+
+
+CREATE TABLE `EquipmentStatistic` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Amount` int NOT NULL,
+    `EquipmentId` bigint NULL,
+    `RoomId` bigint NULL,
+    CONSTRAINT `PK_EquipmentStatistic` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_EquipmentStatistic_Equipment_EquipmentId` FOREIGN KEY (`EquipmentId`) REFERENCES `Equipment` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_EquipmentStatistic_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Renovation` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    `Description` longtext CHARACTER SET utf8mb4 NULL,
+    `RoomId` bigint NULL,
+    `RenovationStatus` int NOT NULL,
+    CONSTRAINT `PK_Renovation` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Renovation_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
+);
+
+
+CREATE TABLE `BussinesDay` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Shift_StartDate` datetime(6) NULL,
+    `Shift_EndDate` datetime(6) NULL,
+    `DoctorId` bigint NULL,
+    `RoomId` bigint NULL,
+    CONSTRAINT `PK_BussinesDay` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_BussinesDay_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_BussinesDay_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Examination` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `PatientId` bigint NULL,
+    `DoctorId` bigint NULL,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    `Canceled` tinyint(1) NOT NULL,
+    `CanceledDate` datetime(6) NOT NULL,
+    CONSTRAINT `PK_Examination` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Examination_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Examination_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Operation` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `DoctorId` bigint NULL,
+    `Description` longtext CHARACTER SET utf8mb4 NULL,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    `RoomId` bigint NULL,
+    `PatientId` bigint NULL,
+    CONSTRAINT `PK_Operation` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Operation_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Operation_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Operation_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `BussinesDay_ScheduledPeriods` (
+    `BusinessDayId` bigint NOT NULL,
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `StartDate` datetime(6) NOT NULL,
+    `EndDate` datetime(6) NOT NULL,
+    CONSTRAINT `PK_BussinesDay_ScheduledPeriods` PRIMARY KEY (`Id`, `BusinessDayId`),
+    CONSTRAINT `FK_BussinesDay_ScheduledPeriods_BussinesDay_BusinessDayId` FOREIGN KEY (`BusinessDayId`) REFERENCES `BussinesDay` (`Id`) ON DELETE CASCADE
+);
+
+CREATE TABLE `Anamnesis` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Text` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Anamnesis` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Diagnosis` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Diagnosis` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Prescription` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    CONSTRAINT `PK_Prescription` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Sympthom` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NULL,
+    CONSTRAINT `PK_Sympthom` PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Therapy` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Note` longtext CHARACTER SET utf8mb4 NULL,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    CONSTRAINT `PK_Therapy` PRIMARY KEY (`Id`)
+);
+
+
+CREATE TABLE `PatientFile` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `PatientId` bigint NULL,
+    CONSTRAINT `PK_PatientFile` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_PatientFile_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Referral` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Text` longtext CHARACTER SET utf8mb4 NULL,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    `DoctorId` bigint NULL,
+    CONSTRAINT `PK_Referral` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Referral_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Allergy` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Name` longtext CHARACTER SET utf8mb4 NULL,
+    `PatientFileId` bigint NULL,
+    CONSTRAINT `PK_Allergy` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Allergy_PatientFile_PatientFileId` FOREIGN KEY (`PatientFileId`) REFERENCES `PatientFile` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `Hospitalization` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    `RoomId` bigint NULL,
+    `DoctorId` bigint NULL,
+    `PatientId` bigint NULL,
+    `PatientFileId` bigint NULL,
+    CONSTRAINT `PK_Hospitalization` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Hospitalization_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Hospitalization_PatientFile_PatientFileId` FOREIGN KEY (`PatientFileId`) REFERENCES `PatientFile` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Hospitalization_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_Hospitalization_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE TABLE `ExaminationDetails` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `DiagnosisId` bigint NULL,
+    `PrescriptionId` bigint NULL,
+    `AnamnesisId` bigint NULL,
+    `TherapyId` bigint NULL,
+    `SympthomId` bigint NULL,
+    `DoctorId` bigint NULL,
+    `PatientId` bigint NULL,
+    `FilledSurvey` tinyint(1) NOT NULL,
+    `Period_StartDate` datetime(6) NULL,
+    `Period_EndDate` datetime(6) NULL,
+    `ReferralId` bigint NULL,
+    `PatientFileId` bigint NULL,
+    CONSTRAINT `PK_ExaminationDetails` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_ExaminationDetails_Anamnesis_AnamnesisId` FOREIGN KEY (`AnamnesisId`) REFERENCES `Anamnesis` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_Diagnosis_DiagnosisId` FOREIGN KEY (`DiagnosisId`) REFERENCES `Diagnosis` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_PatientFile_PatientFileId` FOREIGN KEY (`PatientFileId`) REFERENCES `PatientFile` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_Prescription_PrescriptionId` FOREIGN KEY (`PrescriptionId`) REFERENCES `Prescription` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_Referral_ReferralId` FOREIGN KEY (`ReferralId`) REFERENCES `Referral` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_Sympthom_SympthomId` FOREIGN KEY (`SympthomId`) REFERENCES `Sympthom` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `FK_ExaminationDetails_Therapy_TherapyId` FOREIGN KEY (`TherapyId`) REFERENCES `Therapy` (`Id`) ON DELETE RESTRICT
+);
+
+CREATE INDEX `IX_Allergy_PatientFileId` ON `Allergy` (`PatientFileId`);
+
+CREATE INDEX `IX_ExaminationDetails_AnamnesisId` ON `ExaminationDetails` (`AnamnesisId`);
+
+CREATE INDEX `IX_EquipmentStatistic_EquipmentId` ON `EquipmentStatistic` (`EquipmentId`);
+
+CREATE INDEX `IX_EquipmentStatistic_RoomId` ON `EquipmentStatistic` (`RoomId`);
+
+CREATE INDEX `IX_Renovation_RoomId` ON `Renovation` (`RoomId`);
+
+CREATE INDEX `IX_Room_RoomTypeId` ON `Room` (`RoomTypeId`);
+
+CREATE INDEX `IX_Drug_DrugId` ON `Drug` (`DrugId`);
+
+CREATE INDEX `IX_ExaminationDetails_DiagnosisId` ON `ExaminationDetails` (`DiagnosisId`);
+
+CREATE INDEX `IX_ExaminationDetails_DoctorId` ON `ExaminationDetails` (`DoctorId`);
+
+CREATE INDEX `IX_ExaminationDetails_PatientFileId` ON `ExaminationDetails` (`PatientFileId`);
+
+CREATE INDEX `IX_ExaminationDetails_PatientId` ON `ExaminationDetails` (`PatientId`);
+
+CREATE INDEX `IX_ExaminationDetails_PrescriptionId` ON `ExaminationDetails` (`PrescriptionId`);
+
+CREATE INDEX `IX_ExaminationDetails_ReferralId` ON `ExaminationDetails` (`ReferralId`);
+
+CREATE INDEX `IX_ExaminationDetails_SympthomId` ON `ExaminationDetails` (`SympthomId`);
+
+CREATE INDEX `IX_ExaminationDetails_TherapyId` ON `ExaminationDetails` (`TherapyId`);
+
+CREATE INDEX `IX_Hospitalization_DoctorId` ON `Hospitalization` (`DoctorId`);
+
+CREATE INDEX `IX_Hospitalization_PatientFileId` ON `Hospitalization` (`PatientFileId`);
+
+CREATE INDEX `IX_Hospitalization_PatientId` ON `Hospitalization` (`PatientId`);
+
+CREATE INDEX `IX_PatientFile_PatientId` ON `PatientFile` (`PatientId`);
+
+CREATE INDEX `IX_Referral_DoctorId` ON `Referral` (`DoctorId`);
+
+CREATE INDEX `IX_Hospitalization_RoomId` ON `Hospitalization` (`RoomId`);
+
+CREATE UNIQUE INDEX `IX_Drug_Name` ON `Drug` (`Name`);
+
+CREATE INDEX `IX_Ingredient_DrugId` ON `Ingredient` (`DrugId`);
+
+CREATE INDEX `IX_BussinesDay_DoctorId` ON `BussinesDay` (`DoctorId`);
+
+CREATE INDEX `IX_BussinesDay_RoomId` ON `BussinesDay` (`RoomId`);
+
+
+CREATE INDEX `IX_Examination_DoctorId` ON `Examination` (`DoctorId`);
+
+CREATE INDEX `IX_Examination_PatientId` ON `Examination` (`PatientId`);
+
+CREATE INDEX `IX_Operation_DoctorId` ON `Operation` (`DoctorId`);
+
+CREATE INDEX `IX_Operation_PatientId` ON `Operation` (`PatientId`);
+
+CREATE INDEX `IX_Operation_RoomId` ON `Operation` (`RoomId`);
+
+CREATE INDEX `IX_Articles_DoctorId` ON `Articles` (`DoctorId`);
+
+CREATE INDEX `IX_Director_PersonId` ON `Director` (`PersonId`);
+
+CREATE INDEX `IX_Director_UserDetailsId` ON `Director` (`UserDetailsId`);
+
+CREATE INDEX `IX_Director_UserLogInId` ON `Director` (`UserLogInId`);
+
+CREATE INDEX `IX_Doctor_PersonId` ON `Doctor` (`PersonId`);
+
+CREATE INDEX `IX_Doctor_SpecialityId` ON `Doctor` (`SpecialityId`);
+
+CREATE INDEX `IX_Doctor_UserDetailsId` ON `Doctor` (`UserDetailsId`);
+
+CREATE INDEX `IX_Doctor_UserLogInId` ON `Doctor` (`UserLogInId`);
+
+CREATE INDEX `IX_DoctorGrade_DoctorId` ON `DoctorGrade` (`DoctorId`);
+
+CREATE INDEX `IX_DoctorGradeQuestion_DoctorGradeId` ON `DoctorGradeQuestion` (`DoctorGradeId`);
+
+CREATE INDEX `IX_DoctorGradeQuestion_DoctorGradeId1` ON `DoctorGradeQuestion` (`DoctorGradeId1`);
+
+CREATE INDEX `IX_Feedback_PatientId` ON `Feedback` (`PatientId`);
+
+CREATE INDEX `IX_Patient_PersonId` ON `Patient` (`PersonId`);
+
+CREATE INDEX `IX_Patient_UserDetailsId` ON `Patient` (`UserDetailsId`);
+
+CREATE INDEX `IX_Patient_UserLogInId` ON `Patient` (`UserLogInId`);
+
+CREATE INDEX `IX_Secretary_PersonId` ON `Secretary` (`PersonId`);
+
+CREATE INDEX `IX_Secretary_UserDetailsId` ON `Secretary` (`UserDetailsId`);
+
+CREATE INDEX `IX_Secretary_UserLogInId` ON `Secretary` (`UserLogInId`);
+
+CREATE INDEX `IX_UserDetails_AddressId` ON `UserDetails` (`AddressId`);
+
+CREATE UNIQUE INDEX `IX_UserLogIn_Username` ON `UserLogIn` (`Username`);
+
