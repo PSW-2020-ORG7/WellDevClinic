@@ -1,4 +1,4 @@
-CREATE TABLE `Address` (
+CREATE TABLE if not exists `Address` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Street` longtext CHARACTER SET utf8mb4 NULL,
     `Number` int NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `Address` (
     CONSTRAINT `PK_Address` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `Person` (
+CREATE TABLE if not exists `Person` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `FirstName` longtext CHARACTER SET utf8mb4 NULL,
     `LastName` longtext CHARACTER SET utf8mb4 NULL,
@@ -18,20 +18,20 @@ CREATE TABLE `Person` (
     CONSTRAINT `PK_Person` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `Speciality` (
+CREATE TABLE if not exists `Speciality` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` longtext CHARACTER SET utf8mb4 NULL,
     CONSTRAINT `PK_Speciality` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `UserLogIn` (
+CREATE TABLE if not exists `UserLogIn` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Username` varchar(255) CHARACTER SET utf8mb4 NULL,
     `Password` longtext CHARACTER SET utf8mb4 NULL,
     CONSTRAINT `PK_UserLogIn` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `UserDetails` (
+CREATE TABLE if not exists `UserDetails` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `DateOfBirth` datetime(6) NOT NULL,
     `Phone` longtext CHARACTER SET utf8mb4 NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `UserDetails` (
     CONSTRAINT `FK_UserDetails_Address_AddressId` FOREIGN KEY (`AddressId`) REFERENCES `Address` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Director` (
+CREATE TABLE if not exists `Director` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `PersonId` bigint NULL,
     `UserDetailsId` bigint NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `Director` (
     CONSTRAINT `FK_Director_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Doctor` (
+CREATE TABLE if not exists `Doctor` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `PersonId` bigint NULL,
     `UserDetailsId` bigint NULL,
@@ -72,7 +72,7 @@ CREATE TABLE `Doctor` (
     CONSTRAINT `FK_Doctor_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Patient` (
+CREATE TABLE if not exists `Patient` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `PersonId` bigint NULL,
     `UserDetailsId` bigint NULL,
@@ -88,7 +88,7 @@ CREATE TABLE `Patient` (
     CONSTRAINT `FK_Patient_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Secretary` (
+CREATE TABLE if not exists `Secretary` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `PersonId` bigint NULL,
     `UserDetailsId` bigint NULL,
@@ -100,7 +100,7 @@ CREATE TABLE `Secretary` (
     CONSTRAINT `FK_Secretary_UserLogIn_UserLogInId` FOREIGN KEY (`UserLogInId`) REFERENCES `UserLogIn` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Articles` (
+CREATE TABLE if not exists `Articles` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `DatePublished` datetime(6) NOT NULL,
     `DoctorId` bigint NULL,
@@ -110,7 +110,7 @@ CREATE TABLE `Articles` (
     CONSTRAINT `FK_Articles_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `DoctorGrade` (
+CREATE TABLE if not exists `DoctorGrade` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `NumberOfGrades` int NOT NULL,
     `DoctorId` bigint NULL,
@@ -118,7 +118,7 @@ CREATE TABLE `DoctorGrade` (
     CONSTRAINT `FK_DoctorGrade_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Feedback` (
+CREATE TABLE if not exists `Feedback` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `PatientId` bigint NULL,
     `Content` longtext CHARACTER SET utf8mb4 NULL,
@@ -129,7 +129,7 @@ CREATE TABLE `Feedback` (
     CONSTRAINT `FK_Feedback_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `DoctorGradeQuestion` (
+CREATE TABLE if not exists `DoctorGradeQuestion` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Grade` double NOT NULL,
     `Question` longtext CHARACTER SET utf8mb4 NULL,
@@ -140,7 +140,7 @@ CREATE TABLE `DoctorGradeQuestion` (
     CONSTRAINT `FK_DoctorGradeQuestion_DoctorGrade_DoctorGradeId1` FOREIGN KEY (`DoctorGradeId1`) REFERENCES `DoctorGrade` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Drug` (
+CREATE TABLE if not exists `Drug` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` varchar(255) CHARACTER SET utf8mb4 NULL,
     `Amount` int NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE `Drug` (
     CONSTRAINT `FK_Drug_Drug_DrugId` FOREIGN KEY (`DrugId`) REFERENCES `Drug` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Ingredient` (
+CREATE TABLE if not exists `Ingredient` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` longtext CHARACTER SET utf8mb4 NULL,
     `Quantity` int NOT NULL,
@@ -159,7 +159,7 @@ CREATE TABLE `Ingredient` (
     CONSTRAINT `FK_Ingredient_Drug_DrugId` FOREIGN KEY (`DrugId`) REFERENCES `Drug` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Equipment` (
+CREATE TABLE if not exists `Equipment` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` longtext CHARACTER SET utf8mb4 NULL,
     `Amount` int NOT NULL,
@@ -167,13 +167,13 @@ CREATE TABLE `Equipment` (
     CONSTRAINT `PK_Equipment` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `RoomType` (
+CREATE TABLE if not exists `RoomType` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` longtext CHARACTER SET utf8mb4 NULL,
     CONSTRAINT `PK_RoomType` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `Room` (
+CREATE TABLE if not exists `Room` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `RoomCode` longtext CHARACTER SET utf8mb4 NULL,
     `RoomTypeId` bigint NULL,
@@ -184,7 +184,7 @@ CREATE TABLE `Room` (
 );
 
 
-CREATE TABLE `EquipmentStatistic` (
+CREATE TABLE if not exists `EquipmentStatistic` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Amount` int NOT NULL,
     `EquipmentId` bigint NULL,
@@ -194,7 +194,7 @@ CREATE TABLE `EquipmentStatistic` (
     CONSTRAINT `FK_EquipmentStatistic_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Renovation` (
+CREATE TABLE if not exists `Renovation` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Period_StartDate` datetime(6) NULL,
     `Period_EndDate` datetime(6) NULL,
@@ -206,7 +206,7 @@ CREATE TABLE `Renovation` (
 );
 
 
-CREATE TABLE `BussinesDay` (
+CREATE TABLE if not exists `BussinesDay` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Shift_StartDate` datetime(6) NULL,
     `Shift_EndDate` datetime(6) NULL,
@@ -217,7 +217,7 @@ CREATE TABLE `BussinesDay` (
     CONSTRAINT `FK_BussinesDay_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Examination` (
+CREATE TABLE if not exists `Examination` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `PatientId` bigint NULL,
     `DoctorId` bigint NULL,
@@ -230,7 +230,7 @@ CREATE TABLE `Examination` (
     CONSTRAINT `FK_Examination_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Operation` (
+CREATE TABLE if not exists `Operation` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `DoctorId` bigint NULL,
     `Description` longtext CHARACTER SET utf8mb4 NULL,
@@ -244,7 +244,7 @@ CREATE TABLE `Operation` (
     CONSTRAINT `FK_Operation_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `BussinesDay_ScheduledPeriods` (
+CREATE TABLE if not exists `BussinesDay_ScheduledPeriods` (
     `BusinessDayId` bigint NOT NULL,
     `Id` int NOT NULL AUTO_INCREMENT,
     `StartDate` datetime(6) NOT NULL,
@@ -253,32 +253,32 @@ CREATE TABLE `BussinesDay_ScheduledPeriods` (
     CONSTRAINT `FK_BussinesDay_ScheduledPeriods_BussinesDay_BusinessDayId` FOREIGN KEY (`BusinessDayId`) REFERENCES `BussinesDay` (`Id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `Anamnesis` (
+CREATE TABLE if not exists `Anamnesis` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Text` longtext CHARACTER SET utf8mb4 NULL,
     CONSTRAINT `PK_Anamnesis` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `Diagnosis` (
+CREATE TABLE if not exists `Diagnosis` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` longtext CHARACTER SET utf8mb4 NULL,
     CONSTRAINT `PK_Diagnosis` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `Prescription` (
+CREATE TABLE if not exists `Prescription` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Period_StartDate` datetime(6) NULL,
     `Period_EndDate` datetime(6) NULL,
     CONSTRAINT `PK_Prescription` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `Sympthom` (
+CREATE TABLE if not exists `Sympthom` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` longtext CHARACTER SET utf8mb4 NULL,
     CONSTRAINT `PK_Sympthom` PRIMARY KEY (`Id`)
 );
 
-CREATE TABLE `Therapy` (
+CREATE TABLE if not exists `Therapy` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Note` longtext CHARACTER SET utf8mb4 NULL,
     `Period_StartDate` datetime(6) NULL,
@@ -287,14 +287,14 @@ CREATE TABLE `Therapy` (
 );
 
 
-CREATE TABLE `PatientFile` (
+CREATE TABLE if not exists `PatientFile` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `PatientId` bigint NULL,
     CONSTRAINT `PK_PatientFile` PRIMARY KEY (`Id`),
     CONSTRAINT `FK_PatientFile_Patient_PatientId` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Referral` (
+CREATE TABLE if not exists `Referral` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Text` longtext CHARACTER SET utf8mb4 NULL,
     `Period_StartDate` datetime(6) NULL,
@@ -304,7 +304,7 @@ CREATE TABLE `Referral` (
     CONSTRAINT `FK_Referral_Doctor_DoctorId` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Allergy` (
+CREATE TABLE if not exists `Allergy` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Name` longtext CHARACTER SET utf8mb4 NULL,
     `PatientFileId` bigint NULL,
@@ -312,7 +312,7 @@ CREATE TABLE `Allergy` (
     CONSTRAINT `FK_Allergy_PatientFile_PatientFileId` FOREIGN KEY (`PatientFileId`) REFERENCES `PatientFile` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `Hospitalization` (
+CREATE TABLE if not exists `Hospitalization` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `Period_StartDate` datetime(6) NULL,
     `Period_EndDate` datetime(6) NULL,
@@ -327,7 +327,7 @@ CREATE TABLE `Hospitalization` (
     CONSTRAINT `FK_Hospitalization_Room_RoomId` FOREIGN KEY (`RoomId`) REFERENCES `Room` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `ExaminationDetails` (
+CREATE TABLE if not exists `ExaminationDetails` (
     `Id` bigint NOT NULL AUTO_INCREMENT,
     `DiagnosisId` bigint NULL,
     `PrescriptionId` bigint NULL,
@@ -353,104 +353,104 @@ CREATE TABLE `ExaminationDetails` (
     CONSTRAINT `FK_ExaminationDetails_Therapy_TherapyId` FOREIGN KEY (`TherapyId`) REFERENCES `Therapy` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE INDEX `IX_Allergy_PatientFileId` ON `Allergy` (`PatientFileId`);
+CREATE INDEX if not exists `IX_Allergy_PatientFileId` ON `Allergy` (`PatientFileId`);
 
-CREATE INDEX `IX_ExaminationDetails_AnamnesisId` ON `ExaminationDetails` (`AnamnesisId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_AnamnesisId` ON `ExaminationDetails` (`AnamnesisId`);
 
-CREATE INDEX `IX_EquipmentStatistic_EquipmentId` ON `EquipmentStatistic` (`EquipmentId`);
+CREATE INDEX if not exists `IX_EquipmentStatistic_EquipmentId` ON `EquipmentStatistic` (`EquipmentId`);
 
-CREATE INDEX `IX_EquipmentStatistic_RoomId` ON `EquipmentStatistic` (`RoomId`);
+CREATE INDEX if not exists `IX_EquipmentStatistic_RoomId` ON `EquipmentStatistic` (`RoomId`);
 
-CREATE INDEX `IX_Renovation_RoomId` ON `Renovation` (`RoomId`);
+CREATE INDEX if not exists `IX_Renovation_RoomId` ON `Renovation` (`RoomId`);
 
-CREATE INDEX `IX_Room_RoomTypeId` ON `Room` (`RoomTypeId`);
+CREATE INDEX if not exists `IX_Room_RoomTypeId` ON `Room` (`RoomTypeId`);
 
-CREATE INDEX `IX_Drug_DrugId` ON `Drug` (`DrugId`);
+CREATE INDEX if not exists `IX_Drug_DrugId` ON `Drug` (`DrugId`);
 
-CREATE INDEX `IX_ExaminationDetails_DiagnosisId` ON `ExaminationDetails` (`DiagnosisId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_DiagnosisId` ON `ExaminationDetails` (`DiagnosisId`);
 
-CREATE INDEX `IX_ExaminationDetails_DoctorId` ON `ExaminationDetails` (`DoctorId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_DoctorId` ON `ExaminationDetails` (`DoctorId`);
 
-CREATE INDEX `IX_ExaminationDetails_PatientFileId` ON `ExaminationDetails` (`PatientFileId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_PatientFileId` ON `ExaminationDetails` (`PatientFileId`);
 
-CREATE INDEX `IX_ExaminationDetails_PatientId` ON `ExaminationDetails` (`PatientId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_PatientId` ON `ExaminationDetails` (`PatientId`);
 
-CREATE INDEX `IX_ExaminationDetails_PrescriptionId` ON `ExaminationDetails` (`PrescriptionId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_PrescriptionId` ON `ExaminationDetails` (`PrescriptionId`);
 
-CREATE INDEX `IX_ExaminationDetails_ReferralId` ON `ExaminationDetails` (`ReferralId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_ReferralId` ON `ExaminationDetails` (`ReferralId`);
 
-CREATE INDEX `IX_ExaminationDetails_SympthomId` ON `ExaminationDetails` (`SympthomId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_SympthomId` ON `ExaminationDetails` (`SympthomId`);
 
-CREATE INDEX `IX_ExaminationDetails_TherapyId` ON `ExaminationDetails` (`TherapyId`);
+CREATE INDEX if not exists `IX_ExaminationDetails_TherapyId` ON `ExaminationDetails` (`TherapyId`);
 
-CREATE INDEX `IX_Hospitalization_DoctorId` ON `Hospitalization` (`DoctorId`);
+CREATE INDEX if not exists `IX_Hospitalization_DoctorId` ON `Hospitalization` (`DoctorId`);
 
-CREATE INDEX `IX_Hospitalization_PatientFileId` ON `Hospitalization` (`PatientFileId`);
+CREATE INDEX if not exists `IX_Hospitalization_PatientFileId` ON `Hospitalization` (`PatientFileId`);
 
-CREATE INDEX `IX_Hospitalization_PatientId` ON `Hospitalization` (`PatientId`);
+CREATE INDEX if not exists `IX_Hospitalization_PatientId` ON `Hospitalization` (`PatientId`);
 
-CREATE INDEX `IX_PatientFile_PatientId` ON `PatientFile` (`PatientId`);
+CREATE INDEX if not exists `IX_PatientFile_PatientId` ON `PatientFile` (`PatientId`);
 
-CREATE INDEX `IX_Referral_DoctorId` ON `Referral` (`DoctorId`);
+CREATE INDEX if not exists `IX_Referral_DoctorId` ON `Referral` (`DoctorId`);
 
-CREATE INDEX `IX_Hospitalization_RoomId` ON `Hospitalization` (`RoomId`);
+CREATE INDEX if not exists `IX_Hospitalization_RoomId` ON `Hospitalization` (`RoomId`);
 
-CREATE UNIQUE INDEX `IX_Drug_Name` ON `Drug` (`Name`);
+CREATE UNIQUE INDEX if not exists `IX_Drug_Name` ON `Drug` (`Name`);
 
-CREATE INDEX `IX_Ingredient_DrugId` ON `Ingredient` (`DrugId`);
+CREATE INDEX if not exists `IX_Ingredient_DrugId` ON `Ingredient` (`DrugId`);
 
-CREATE INDEX `IX_BussinesDay_DoctorId` ON `BussinesDay` (`DoctorId`);
+CREATE INDEX if not exists `IX_BussinesDay_DoctorId` ON `BussinesDay` (`DoctorId`);
 
-CREATE INDEX `IX_BussinesDay_RoomId` ON `BussinesDay` (`RoomId`);
+CREATE INDEX if not exists `IX_BussinesDay_RoomId` ON `BussinesDay` (`RoomId`);
 
 
-CREATE INDEX `IX_Examination_DoctorId` ON `Examination` (`DoctorId`);
+CREATE INDEX if not exists `IX_Examination_DoctorId` ON `Examination` (`DoctorId`);
 
-CREATE INDEX `IX_Examination_PatientId` ON `Examination` (`PatientId`);
+CREATE INDEX if not exists `IX_Examination_PatientId` ON `Examination` (`PatientId`);
 
-CREATE INDEX `IX_Operation_DoctorId` ON `Operation` (`DoctorId`);
+CREATE INDEX if not exists `IX_Operation_DoctorId` ON `Operation` (`DoctorId`);
 
-CREATE INDEX `IX_Operation_PatientId` ON `Operation` (`PatientId`);
+CREATE INDEX if not exists `IX_Operation_PatientId` ON `Operation` (`PatientId`);
 
-CREATE INDEX `IX_Operation_RoomId` ON `Operation` (`RoomId`);
+CREATE INDEX if not exists `IX_Operation_RoomId` ON `Operation` (`RoomId`);
 
-CREATE INDEX `IX_Articles_DoctorId` ON `Articles` (`DoctorId`);
+CREATE INDEX if not exists `IX_Articles_DoctorId` ON `Articles` (`DoctorId`);
 
-CREATE INDEX `IX_Director_PersonId` ON `Director` (`PersonId`);
+CREATE INDEX if not exists `IX_Director_PersonId` ON `Director` (`PersonId`);
 
-CREATE INDEX `IX_Director_UserDetailsId` ON `Director` (`UserDetailsId`);
+CREATE INDEX if not exists `IX_Director_UserDetailsId` ON `Director` (`UserDetailsId`);
 
-CREATE INDEX `IX_Director_UserLogInId` ON `Director` (`UserLogInId`);
+CREATE INDEX if not exists `IX_Director_UserLogInId` ON `Director` (`UserLogInId`);
 
-CREATE INDEX `IX_Doctor_PersonId` ON `Doctor` (`PersonId`);
+CREATE INDEX if not exists `IX_Doctor_PersonId` ON `Doctor` (`PersonId`);
 
-CREATE INDEX `IX_Doctor_SpecialityId` ON `Doctor` (`SpecialityId`);
+CREATE INDEX if not exists `IX_Doctor_SpecialityId` ON `Doctor` (`SpecialityId`);
 
-CREATE INDEX `IX_Doctor_UserDetailsId` ON `Doctor` (`UserDetailsId`);
+CREATE INDEX if not exists `IX_Doctor_UserDetailsId` ON `Doctor` (`UserDetailsId`);
 
-CREATE INDEX `IX_Doctor_UserLogInId` ON `Doctor` (`UserLogInId`);
+CREATE INDEX if not exists `IX_Doctor_UserLogInId` ON `Doctor` (`UserLogInId`);
 
-CREATE INDEX `IX_DoctorGrade_DoctorId` ON `DoctorGrade` (`DoctorId`);
+CREATE INDEX if not exists `IX_DoctorGrade_DoctorId` ON `DoctorGrade` (`DoctorId`);
 
-CREATE INDEX `IX_DoctorGradeQuestion_DoctorGradeId` ON `DoctorGradeQuestion` (`DoctorGradeId`);
+CREATE INDEX if not exists `IX_DoctorGradeQuestion_DoctorGradeId` ON `DoctorGradeQuestion` (`DoctorGradeId`);
 
-CREATE INDEX `IX_DoctorGradeQuestion_DoctorGradeId1` ON `DoctorGradeQuestion` (`DoctorGradeId1`);
+CREATE INDEX if not exists `IX_DoctorGradeQuestion_DoctorGradeId1` ON `DoctorGradeQuestion` (`DoctorGradeId1`);
 
-CREATE INDEX `IX_Feedback_PatientId` ON `Feedback` (`PatientId`);
+CREATE INDEX if not exists `IX_Feedback_PatientId` ON `Feedback` (`PatientId`);
 
-CREATE INDEX `IX_Patient_PersonId` ON `Patient` (`PersonId`);
+CREATE INDEX if not exists `IX_Patient_PersonId` ON `Patient` (`PersonId`);
 
-CREATE INDEX `IX_Patient_UserDetailsId` ON `Patient` (`UserDetailsId`);
+CREATE INDEX if not exists `IX_Patient_UserDetailsId` ON `Patient` (`UserDetailsId`);
 
-CREATE INDEX `IX_Patient_UserLogInId` ON `Patient` (`UserLogInId`);
+CREATE INDEX if not exists `IX_Patient_UserLogInId` ON `Patient` (`UserLogInId`);
 
-CREATE INDEX `IX_Secretary_PersonId` ON `Secretary` (`PersonId`);
+CREATE INDEX if not exists `IX_Secretary_PersonId` ON `Secretary` (`PersonId`);
 
-CREATE INDEX `IX_Secretary_UserDetailsId` ON `Secretary` (`UserDetailsId`);
+CREATE INDEX if not exists `IX_Secretary_UserDetailsId` ON `Secretary` (`UserDetailsId`);
 
-CREATE INDEX `IX_Secretary_UserLogInId` ON `Secretary` (`UserLogInId`);
+CREATE INDEX if not exists `IX_Secretary_UserLogInId` ON `Secretary` (`UserLogInId`);
 
-CREATE INDEX `IX_UserDetails_AddressId` ON `UserDetails` (`AddressId`);
+CREATE INDEX if not exists `IX_UserDetails_AddressId` ON `UserDetails` (`AddressId`);
 
-CREATE UNIQUE INDEX `IX_UserLogIn_Username` ON `UserLogIn` (`Username`);
+CREATE UNIQUE INDEX if not exists `IX_UserLogIn_Username` ON `UserLogIn` (`Username`);
 
