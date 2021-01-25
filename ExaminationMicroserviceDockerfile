@@ -7,6 +7,7 @@ WORKDIR /src
 COPY ["Examination_Interlayer/Examination_Interlayer.csproj", "Examination_Interlayer/"]
 COPY ["Examination_Microservice/Examination_Microservice.csproj", "Examination_Microservice/"]
 COPY ["EventSourcing/EventSourcing.csproj", "EventSourcing/"]
+COPY ["Examination_Interlayer/DBScript.txt" , "Examination_Interlayer/DBScript.txt"]
 
 RUN dotnet restore "Examination_Interlayer/Examination_Interlayer.csproj"
 COPY . .
