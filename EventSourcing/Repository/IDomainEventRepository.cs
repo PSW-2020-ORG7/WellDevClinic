@@ -9,6 +9,5 @@ namespace EventSourcing.Repository
         DomainEvent Save(DomainEvent domainEvent);
         IEnumerable<DomainEvent> GetAll(String eventType);
         long GetMax(String eventType);
-        long GetMostVisitedRoom();
     }
 }

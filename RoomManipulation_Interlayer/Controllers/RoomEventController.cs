@@ -38,10 +38,10 @@ namespace RoomManipulation_Interlayer.Controllers
         }
 
         [HttpGet]
-        [Route("mostVisitedRoom")]
-        public long GetMostVisitedRoom()
+        [Route("mostVisitedRoom/{username?}")]
+        public long GetMostVisitedRoom(string username)
         {
-            return _domainEventService.GetMostVisitedRoom();
+            return _domainEventService.GetMostVisitedRoom(username);
         }
     }
 }

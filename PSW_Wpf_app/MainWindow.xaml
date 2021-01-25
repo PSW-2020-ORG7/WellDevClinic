@@ -42,6 +42,7 @@
 
 
         </Grid>
+        <Button Content="most visited room" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="30" Margin="10,572,0,0" VerticalAlignment="Top" Width="119" Click="Shortcut_Click"/>
     </Grid>
 
 </Window>

@@ -143,6 +143,13 @@ namespace PSW_Wpf_app
             RelocationEquipmentView view = new RelocationEquipmentView();
             view.Show();
         }
+
+        private async void Shortcut_Click(object sender, RoutedEventArgs e)
+        {
+            long id =  await Client.WpfClient.GetMostVisitedRoom(Username);
+            Room room = await Client.WpfClient.GetRoomById(id);
+            MessageBox.Show("The most visited room is room -> "+room.RoomCode);
+        }
     }
     
 }

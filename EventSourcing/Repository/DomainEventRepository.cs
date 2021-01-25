@@ -27,7 +27,7 @@ namespace EventSourcing.Repository
 
             return result;
         }
-
+        
         public DomainEvent Save(DomainEvent domainEvent)
         {
             var @event = (dynamic)domainEvent;
@@ -62,28 +62,6 @@ namespace EventSourcing.Repository
                 max += 1;
             }
             return max;
-        }
-
-        public long GetMostVisitedRoom()
-        {
-            List<RoomEvent> roomEvents = (List<RoomEvent>)GetAll("roomevent");
-            List <RoomEvent> mostVisitedRoom = new List<RoomEvent>();
-            int days = 3;
-            foreach(RoomEvent r in roomEvents)
-            {
-                if(r.TimeStamp.Day <= DateTime.Now.Day && r.TimeStamp.Day >= DateTime.Now.Day - days)
-                {
-                    mostVisitedRoom.Add(r);
-                }
-            }
-            if(mostVisitedRoom.Count == 0)
-                return 0;
-            long mostVisitedRoomId = mostVisitedRoom.GroupBy(x => x.RoomId)
-                .Select(group => new { RoomEventID = group.Key, Count = group.Count() })
-                .OrderByDescending(x => x.Count).First().RoomEventID;
-
-            return mostVisitedRoomId;
-            
         }
     }
 }

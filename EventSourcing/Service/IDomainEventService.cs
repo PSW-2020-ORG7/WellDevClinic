@@ -11,6 +11,6 @@ namespace EventSourcing.Service
         IEnumerable<DomainEvent> GetAll(String eventType);
         long GetMax(String eventType);
         AverageTimeDTO GetStepTime(String eventType);
-        long GetMostVisitedRoom();
+        long GetMostVisitedRoom(string username);
     }
 }

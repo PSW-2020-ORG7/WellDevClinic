@@ -268,10 +268,9 @@ namespace PSW_Wpf_app.Client
             string responseBody = await response.Content.ReadAsStringAsync();
 
         }
-
-        public static async Task<long> GetMostVisitedRoom()
+        public static async Task<long> GetMostVisitedRoom(string username)
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/roomevent/mostVisitedRoom");
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/roomevent/mostVisitedRoom/" + username);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             long roomId = JsonConvert.DeserializeObject<long>(responseBody);

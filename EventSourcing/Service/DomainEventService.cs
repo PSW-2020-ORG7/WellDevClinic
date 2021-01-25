@@ -2,6 +2,7 @@
 using EventSourcing.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EventSourcing.Service
@@ -28,11 +29,6 @@ namespace EventSourcing.Service
         public long GetMax(String eventType)
         {
             return _domainEventRepository.GetMax(eventType);
-        }
-
-        public long GetMostVisitedRoom()
-        {
-            return _domainEventRepository.GetMostVisitedRoom();
         }
 
         public AverageTimeDTO Initialize()
@@ -119,6 +115,29 @@ namespace EventSourcing.Service
             }
 
             return av;
+        }
+
+        public long GetMostVisitedRoom(string username)
+        {
+
+            List<DomainEvent> roomEvents = (List<DomainEvent>)GetAll("roomevent");
+            List<RoomEvent> mostVisitedRoom = new List<RoomEvent>();
+            int days = 3;
+            foreach (RoomEvent r in roomEvents)
+            {
+                if (r.TimeStamp.Day <= DateTime.Now.Day && r.TimeStamp.Day >= DateTime.Now.Day - days && r.Username.Equals(username))
+                {
+                    mostVisitedRoom.Add(r);
+                }
+            }
+            if (mostVisitedRoom.Count == 0)
+                return 0;
+            long mostVisitedRoomId = mostVisitedRoom.GroupBy(x => x.RoomId)
+                .Select(group => new { RoomEventID = group.Key, Count = group.Count() })
+                .OrderByDescending(x => x.Count).First().RoomEventID;
+
+            return mostVisitedRoomId;
+
         }
     }
 }
