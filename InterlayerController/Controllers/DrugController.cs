@@ -55,6 +55,28 @@ namespace InterlayerController.Controllers
         public Drug GetDrug(long id)
             => _drugController.Get(id);
 
+        [HttpGet]
+        [Route("getByName/{name?}")]
+        public Drug GetStockedDrug(string name)
+        {
+            List<Drug> prescribed = new List<Drug>();
+            foreach (Examination e in _examinationController.GetAllPrevious())
+                prescribed.AddRange(_prescriptionController.Get(e.Prescription.Id).Drug);
+            foreach (Drug d in _drugController.GetAll())
+                if (d.Name.ToLower() == name.ToLower())
+                    if (!prescribed.Select(x => x.Id).Contains(d.Id))
+                        return d;
+            return null;
+        }
+            
+
+        [HttpPut]
+        [Route("update")]
+        public void Update([FromBody] Drug d)
+        {
+            _drugController.Edit(d);
+        }
+
         [HttpPut]
         public Drug Save([FromBody]Drug d)
             => _drugController.Save(d);
