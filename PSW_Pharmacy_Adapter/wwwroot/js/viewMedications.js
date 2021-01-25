@@ -164,7 +164,7 @@ function purchase() {
 		},
 		success: function (recievedMed) {
 			if (recievedMed != null) {
-				pageInfo('Order: ' + recievedMed.amount + 'x ' + recievedMed.name + '. Expect your package soon.');
+				pageInfo('Order: ' + quantity + 'x ' + recievedMed.name + '. Expect your package soon.');
 				$("#btnOk").click(function () {
 					$("#medAvailability").hide();
 				});

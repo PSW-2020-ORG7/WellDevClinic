@@ -2,6 +2,7 @@
 using Moq.Protected;
 using Newtonsoft.Json;
 using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices.Iabstract;
 using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto;
 using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model;
 using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract;
@@ -26,12 +27,13 @@ namespace IntegrationTests.Pharmacy_Adapter_Tests
         public void Get_Pharmacy_Medication_Stock()
         {
             var mockFactory = new Mock<IHttpClientFactory>();
+            var hospitalService = new Mock<IHospitalMedicationService>();
             var keyRepo = new Mock<IApiKeyRepository>();
             keyRepo.Setup(x => x.Get(TEST_PHARMACY)).Returns(CreateTestApi());
 
             HttpClient client = MockClient(CreateReturnList());
             mockFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
-            MedicationService service = new MedicationService(mockFactory.Object, keyRepo.Object);
+            PharmacyMedicationService service = new PharmacyMedicationService(mockFactory.Object, hospitalService.Object, keyRepo.Object);
 
             Task<List<MedicationDto>> pharmacyMedication = service.GetAllPharmacyMedications(TEST_PHARMACY);
 
@@ -42,11 +44,12 @@ namespace IntegrationTests.Pharmacy_Adapter_Tests
         public void Check_Available_Medicaiton()
         {
             var mockFactory = new Mock<IHttpClientFactory>();
+            var hospitalService = new Mock<IHospitalMedicationService>();
             var keyRepo = new Mock<IApiKeyRepository>();
             keyRepo.Setup(x => x.Get(TEST_PHARMACY)).Returns(CreateTestApi());
             HttpClient client = MockClient2(new MedicationDto(AVAILABLE_MEDICATION, 1L, 85));
             mockFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
-            MedicationService service = new MedicationService(mockFactory.Object, keyRepo.Object);
+            PharmacyMedicationService service = new PharmacyMedicationService(mockFactory.Object, hospitalService.Object, keyRepo.Object);
 
             Task<MedicationDto> medicationDtos = service.GetPharmacyMedication(TEST_PHARMACY, AVAILABLE_MEDICATION);
 
@@ -57,11 +60,12 @@ namespace IntegrationTests.Pharmacy_Adapter_Tests
         public void Check_Unavailable_Medicaiton()
         {
             var mockFactory = new Mock<IHttpClientFactory>();
+            var hospitalService = new Mock<IHospitalMedicationService>();
             var keyRepo = new Mock<IApiKeyRepository>();
             keyRepo.Setup(x => x.Get(TEST_PHARMACY)).Returns(CreateTestApi());
             HttpClient client = MockClient(null);
             mockFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
-            MedicationService service = new MedicationService(mockFactory.Object, keyRepo.Object);
+            PharmacyMedicationService service = new PharmacyMedicationService(mockFactory.Object, hospitalService.Object, keyRepo.Object);
 
             Task<MedicationDto> unavailableMedicine = service.GetPharmacyMedication(TEST_PHARMACY, UNAVAILABLE_MEDICATION);
 
@@ -72,12 +76,13 @@ namespace IntegrationTests.Pharmacy_Adapter_Tests
         public void Get_Multiple_Pharmacy_Medications()
         {
             var mockFactory = new Mock<IHttpClientFactory>();
+            var hospitalService = new Mock<IHospitalMedicationService>();
             var keyRepo = new Mock<IApiKeyRepository>();
             keyRepo.Setup(x => x.Get(TEST_PHARMACY)).Returns(CreateTestApi());
 
             HttpClient client = MockClient(CreateReturnList());
             mockFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
-            MedicationService service = new MedicationService(mockFactory.Object, keyRepo.Object);
+            PharmacyMedicationService service = new PharmacyMedicationService(mockFactory.Object, hospitalService.Object, keyRepo.Object);
 
             Task<List<MedicationDto>> medications = service.GetPharmacyMedications(TEST_PHARMACY, CreateMedicationList());
 
@@ -88,12 +93,13 @@ namespace IntegrationTests.Pharmacy_Adapter_Tests
         public void Get_Empty_Pharmacy_MedicationList()
         {
             var mockFactory = new Mock<IHttpClientFactory>();
+            var hospitalService = new Mock<IHospitalMedicationService>();
             var keyRepo = new Mock<IApiKeyRepository>();
             keyRepo.Setup(x => x.Get(TEST_PHARMACY)).Returns(CreateTestApi());
 
             HttpClient client = MockClient(null);
             mockFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
-            MedicationService service = new MedicationService(mockFactory.Object, keyRepo.Object);
+            PharmacyMedicationService service = new PharmacyMedicationService(mockFactory.Object, hospitalService.Object,keyRepo.Object);
 
             Task<List<MedicationDto>> medicationDtos = service.GetPharmacyMedications(TEST_PHARMACY, CreateMedicationList());
 

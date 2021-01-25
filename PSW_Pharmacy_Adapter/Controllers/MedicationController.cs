@@ -12,23 +12,25 @@ namespace PSW_Pharmacy_Adapter.Controllers
     [Route("api/[controller]")]
     public class MedicationController : ControllerBase
     {
-        private readonly IMedicationService _medicationService;
+        private readonly IPharmacyMedicationService _medicationService;
+        private readonly IHospitalMedicationService _hospitalService;
         private readonly GrpcClientService _serviceGrpc;
 
-        public MedicationController(IMedicationService medicationService) 
+        public MedicationController(IPharmacyMedicationService medicationService, IHospitalMedicationService hospitalService) 
         {
             _medicationService = medicationService;
+            _hospitalService = hospitalService;
             _serviceGrpc = new GrpcClientService();
         }
 
         [HttpGet]
         public async Task<IActionResult> GetHospitalMedicationStockAsync()
-            => Ok(await _medicationService.GetAllHospitalMedications());
+            => Ok(await _hospitalService.GetAllHospitalMedications());
 
         [HttpGet]
         [Route("hospital/{id?}")]
         public async Task<IActionResult> GetHospitalMedicationAsync(long id)
-            => Ok(await _medicationService.GetHospitalMedication(id));
+            => Ok(await _hospitalService.GetHospitalMedication(id));
 
         [HttpPost]
         [Route("findMedPh")]

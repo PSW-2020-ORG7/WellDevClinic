@@ -43,7 +43,9 @@
                 NameOfPharmacy: name,
                 ApiKey: api,
                 GrpcPort: Number(port),
-                Url: url
+                Url: {
+                    Url: url
+                }
             }),
             success: function (data) {
                 if (data) {

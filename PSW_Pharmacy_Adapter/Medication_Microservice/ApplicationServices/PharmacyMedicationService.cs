@@ -15,35 +15,25 @@ using System.Threading.Tasks;
 
 namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 {
-    public class MedicationService : IMedicationService
+    public class PharmacyMedicationService : IPharmacyMedicationService
     {
         private readonly IHttpClientFactory _clientFactory;
+        private readonly IHospitalMedicationService _hospitalService;
         private readonly IApiKeyRepository _keyRepo;
 
-        public MedicationService(IHttpClientFactory clientFactory, IApiKeyRepository keyRepo)
+        public PharmacyMedicationService(IHttpClientFactory clientFactory, IHospitalMedicationService hospitalService,IApiKeyRepository keyRepo)
         {
             _clientFactory = clientFactory;
+            _hospitalService = hospitalService;
             _keyRepo = keyRepo;
         }
-
-        public async Task<List<Medication>> GetAllHospitalMedications()
-            => JsonConvert.DeserializeObject<List<Medication>>(
-                           (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug/medicationStock"))
-                           .Content.ReadAsStringAsync().Result);
-            
-
-        public async Task<Medication> GetHospitalMedication(long id)
-            => JsonConvert.DeserializeObject<Medication>(
-                       (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug/" + id))
-                       .Content.ReadAsStringAsync().Result);
-
 
         public async Task<List<MedicationDto>> GetAllPharmacyMedications(string pharmacyName)
         {
             Api ph = _keyRepo.Get(pharmacyName);
             HttpClient client = _clientFactory.CreateClient();
             client.DefaultRequestHeaders.Add("apiKey", ph.ApiKey);
-            var response = await client.GetAsync(ph.Url + "getAllMedicines/" + pharmacyName);
+            var response = await client.GetAsync(ph.Url.Url + "getAllMedicines/" + pharmacyName);
             if (response.StatusCode.Equals(HttpStatusCode.NotFound))
                 return null;
             return JsonConvert.DeserializeObject<List<MedicationDto>>(response.Content.ReadAsStringAsync().Result);
@@ -54,7 +44,7 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
             Api ph = _keyRepo.Get(pharmacyName);
             HttpClient client = _clientFactory.CreateClient();
             client.DefaultRequestHeaders.Add("apiKey", ph.ApiKey);
-            var response = await client.GetAsync(ph.Url + "checkAvailability/" + medName + "/" + pharmacyName);
+            var response = await client.GetAsync(ph.Url.Url + "checkAvailability/" + medName + "/" + pharmacyName);
             if (response.StatusCode.Equals(HttpStatusCode.NotFound))
                 return null;
             return JsonConvert.DeserializeObject<MedicationDto>(response.Content.ReadAsStringAsync().Result);
@@ -71,7 +61,7 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     HttpClient client = _clientFactory.CreateClient();
                     client.DefaultRequestHeaders.Add("apiKey", ph.ApiKey);
-                    var response = await client.PostAsync(ph.Url + "checkAvailability/" + pharmacyName, content);
+                    var response = await client.PostAsync(ph.Url.Url + "checkAvailability/" + pharmacyName, content);
                     if (response.StatusCode.Equals(HttpStatusCode.NotFound))
                         return null;
                     return JsonConvert.DeserializeObject<List<MedicationDto>>(response.Content.ReadAsStringAsync().Result);
@@ -129,10 +119,10 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
             Api ph = _keyRepo.Get(phName);
             HttpClient client = _clientFactory.CreateClient();
             client.DefaultRequestHeaders.Add("apiKey", ph.ApiKey);
-            var response = await client.GetAsync(ph.Url + "orderMedicine/" + phName + "?medicineName=" + medName + "&amount=" + amount);
+            var response = await client.GetAsync(ph.Url.Url + "orderMedicine/" + phName + "?medicineName=" + medName + "&amount=" + amount);
             MedicationDto boughtMed = JsonConvert.DeserializeObject<MedicationDto>(response.Content.ReadAsStringAsync().Result);
             if (boughtMed != null)
-                return await SaveToHospitalAsync(MedicationMapper.MapMedication(boughtMed));
+                return await _hospitalService.SaveToHospitalAsync(MedicationMapper.MapMedication(boughtMed));
             return null;
         }
 
@@ -145,14 +135,14 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
                 orderContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 HttpClient client = _clientFactory.CreateClient();
                 client.DefaultRequestHeaders.Add("apiKey", ph.ApiKey);
-                var response = await client.PostAsync(ph.Url + "orderMedicines/" + phName, orderContent);
+                var response = await client.PostAsync(ph.Url.Url + "orderMedicines/" + phName, orderContent);
                 List<MedicationDto> boughtMed = JsonConvert.DeserializeObject<List<MedicationDto>>(response.Content.ReadAsStringAsync().Result);
                 if (boughtMed.Count > 0)
                 {
                     List<Medication> boughtMedications = new List<Medication>();
                     foreach (Medication medication in MedicationMapper.MapMedicationList(boughtMed))
                     {
-                        Medication med = await SaveToHospitalAsync(medication);
+                        Medication med = await _hospitalService.SaveToHospitalAsync(medication);
                         if (med != null)
                             boughtMedications.Add(med);
                     }
@@ -165,7 +155,7 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
         public async Task<List<Medication>> GetUnsyncedMedicationsAsync(string pharmacyName)
         {
             List<Medication> phMeds = MedicationMapper.MapMedicationList(await GetAllPharmacyMedications(pharmacyName));
-            return CheckIngredientsMatching(GetAllHospitalMedications().Result, phMeds);
+            return CheckIngredientsMatching(_hospitalService.GetAllHospitalMedications().Result, phMeds);
         }
 
         public List<Medication> CheckIngredientsMatching(List<Medication> hospMeds, List<Medication> phMeds)
@@ -179,38 +169,6 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
             if (changedMeds.Count == 0)
                 return null;
             return changedMeds;
-        }
-
-        private async Task<Medication> SaveToHospitalAsync(Medication medication)
-        {
-            var foundMedicine = await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug/getByName/" + medication.Name);
-            if (foundMedicine.StatusCode.Equals(HttpStatusCode.OK))
-            {
-                Medication medDb = JsonConvert.DeserializeObject<Medication>(foundMedicine.Content.ReadAsStringAsync().Result);
-                medDb.Amount += medication.Amount;
-                await UpdateMediaction(medDb);
-                return medication;
-            }
-            else
-            {
-                return JsonConvert.DeserializeObject<Medication>((await SaveMedicationAsync(medication)).Content.ReadAsStringAsync().Result);
-            }
-        }
-
-        private async Task UpdateMediaction(Medication medDb)
-        {
-            string jsonString = JsonConvert.SerializeObject(medDb);
-            HttpContent content = new StringContent(jsonString);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug/update", content);
-        }
-
-        private async Task<HttpResponseMessage> SaveMedicationAsync(Medication medication)
-        {
-            string jsonString = JsonConvert.SerializeObject(medication);
-            HttpContent content = new StringContent(jsonString);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug", content);
         }
 
         private bool CompareMedicationsStructure(Medication medication1, Medication medication2)

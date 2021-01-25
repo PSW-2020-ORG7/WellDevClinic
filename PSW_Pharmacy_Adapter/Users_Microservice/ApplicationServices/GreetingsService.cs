@@ -23,7 +23,7 @@ namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.ApplicationServices
 
             HttpClient client = _clientFactory.CreateClient();
             client.DefaultRequestHeaders.Add("api-key", a.ApiKey);
-            return await client.GetAsync(a.Url + "/greet");
+            return await client.GetAsync(a.Url.Url + "/greet"); ;
         }
     }
 }

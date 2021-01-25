@@ -72,9 +72,10 @@ namespace InterlayerController.Controllers
 
         [HttpPut]
         [Route("update")]
-        public void Update([FromBody] Drug d)
+        public Drug Update([FromBody] Drug d)
         {
             _drugController.Edit(d);
+            return d;
         }
 
         [HttpPut]
