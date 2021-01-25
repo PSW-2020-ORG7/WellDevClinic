@@ -6,14 +6,14 @@
         xmlns:viewmodel="clr-namespace:PSW_Wpf_app.ViewModel" 
         xmlns:local="clr-namespace:PSW_Wpf_app"
         mc:Ignorable="d"
-        Title="Hospital Map" Height="628" Width="984" WindowStartupLocation="CenterScreen">
+        Title="Hospital Map" Height="650" Width="984" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
         <viewmodel:ShapeViewModel x:Key="vm"></viewmodel:ShapeViewModel>
     </Window.Resources>
     <Grid Background="White"  DataContext="{Binding Source={StaticResource vm}}">
         <!--<Canvas Background="LightGreen" HorizontalAlignment="Left" Height="470" Margin="0" VerticalAlignment="Top" Width="655" Name="Can1"/>-->
-        <UserControl Name="userControl" Margin="0,0,224.6,1.4"></UserControl>
+        <UserControl Name="userControl" Margin="0,0,225,59"></UserControl>
         <Grid Background="#FFAAC4C5" HorizontalAlignment="Left" Height="609" Margin="759,0,0,0" VerticalAlignment="Center" Width="218">
             <Grid Background="CadetBlue" HorizontalAlignment="Center" Height="550" Margin="0,49,0,0" VerticalAlignment="Top" Width="198">
                 <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,5,0,0" TextWrapping="Wrap" Text="Choose building:" FontSize="16" VerticalAlignment="Top" Width="150"/>
@@ -42,7 +42,8 @@
 
 
         </Grid>
-        <Button Content="most visited room" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="30" Margin="10,572,0,0" VerticalAlignment="Top" Width="119" Click="Shortcut_Click"/>
+        <Button Content="most visited room" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="30" Margin="10,572,0,0" VerticalAlignment="Top" Width="179" Click="Shortcut_Click"/>
+        <Button Content="most visited floor" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="30" Margin="200,572,0,0" VerticalAlignment="Top" Width="180" Click="ShortcutFloor_Click"/>
     </Grid>
 
 </Window>

@@ -12,5 +12,6 @@ namespace EventSourcing.Service
         long GetMax(String eventType);
         AverageTimeDTO GetStepTime(String eventType);
         long GetMostVisitedRoom(string username);
+        MapEvent GetMostVisitedFloor(string username);
     }
 }

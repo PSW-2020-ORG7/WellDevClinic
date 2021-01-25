@@ -24,6 +24,8 @@ namespace EventSourcing.Repository
                 myDbContext.newExaminationTimeSpent.ToList().ForEach(@event => result.Add(@event));
             if (eventType.ToLower().Equals("roomevent"))
                 myDbContext.roomEvents.ToList().ForEach(@event => result.Add(@event));
+            if (eventType.ToLower().Equals("mapevent"))
+                myDbContext.mapEvent.ToList().ForEach(@event => result.Add(@event));
 
             return result;
         }
@@ -42,6 +44,10 @@ namespace EventSourcing.Repository
             if (@event is RoomEvent)
             {
                 myDbContext.roomEvents.Add(@event);
+            }
+            if (@event is MapEvent)
+            {
+                myDbContext.mapEvent.Add(@event);
             }
 
             myDbContext.SaveChanges();

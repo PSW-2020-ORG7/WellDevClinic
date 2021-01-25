@@ -150,6 +150,13 @@ namespace PSW_Wpf_app
             Room room = await Client.WpfClient.GetRoomById(id);
             MessageBox.Show("The most visited room is room -> "+room.RoomCode);
         }
+
+        private async void ShortcutFloor_Click(object sender, RoutedEventArgs e)
+        {
+            MapEvent map = await Client.WpfClient.GetMostVisitedFloor(Username);
+            
+            MessageBox.Show("The most visited building is " + map.BuildingName + " and its floor is " + map.FloorLevel);
+        }
     }
     
 }

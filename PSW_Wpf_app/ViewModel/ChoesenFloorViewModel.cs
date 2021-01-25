@@ -7,6 +7,7 @@ using System.Windows.Input;
 using PSW_Wpf_app.Drawing;
 using System;
 using PSW_Wpf_app.View;
+using PSW_Wpf_app.Client;
 
 namespace PSW_Wpf_app.ViewModel
 {
@@ -45,7 +46,7 @@ namespace PSW_Wpf_app.ViewModel
 
         public ChoesenFloorViewModel(Canvas canvasFloor, string buil, int floor)
         {
-            
+
             choosenBuilding = buil;
             choosenFloor = floor;
             floors = getFloor(ChoosenBuilding);
@@ -67,6 +68,7 @@ namespace PSW_Wpf_app.ViewModel
         {
             user = userType;
             Username = username;
+            LoadMapEvents(build, floor);
             if (AppointmentView.RomId == -1 && RelocationEquipmentViewModel.RoomId == -1 && EquipmentAndDrugsViewModel.SelectedEquipment == null && EquipmentAndDrugsViewModel.SelectedDrug == null && SearchResultViewModel.SelectedResult == null)
             {
                 choosenBuilding = build;
@@ -228,7 +230,7 @@ namespace PSW_Wpf_app.ViewModel
                     {
                         if (f.RoomId == RelocationEquipmentViewModel.RoomId)
                         {
-                            
+
                             flag = true;
 
                         }
@@ -245,38 +247,38 @@ namespace PSW_Wpf_app.ViewModel
 
 
         private List<FloorElement> getFloor(object name)
+        {
+            string pathSurgical = "../../../Data/surgicalBranchesFloors.txt";
+            string pathMedical = "../../../Data/medicalCenter.txt";
+            string pathPediatrics = "../../../Data/pediatrics.txt";
+
+            List<FloorElement> floors = new List<FloorElement>();
+
+            switch (ChoosenBuilding)
             {
-                string pathSurgical = "../../../Data/surgicalBranchesFloors.txt";
-                string pathMedical = "../../../Data/medicalCenter.txt";
-                string pathPediatrics = "../../../Data/pediatrics.txt";
-
-                List<FloorElement> floors = new List<FloorElement>();
-
-                switch (ChoosenBuilding)
-                {
-                    case "Surgical":
-                        floors = ShapeViewModel.ReadFloor(pathSurgical);
-                        break;
-                    case "MedicalCenter":
-                        floors = ShapeViewModel.ReadFloor(pathMedical);
-                        break;
-                    case "Pediatrics":
-                        floors = ShapeViewModel.ReadFloor(pathPediatrics);
-                        break;
-                }
-
-                return floors;
+                case "Surgical":
+                    floors = ShapeViewModel.ReadFloor(pathSurgical);
+                    break;
+                case "MedicalCenter":
+                    floors = ShapeViewModel.ReadFloor(pathMedical);
+                    break;
+                case "Pediatrics":
+                    floors = ShapeViewModel.ReadFloor(pathPediatrics);
+                    break;
             }
-            void openInfo(object sender, MouseButtonEventArgs e)
-            {
-                floors = getFloor(ChoosenBuilding);
 
-                var mouseWasDownOn = e.Source as FrameworkElement;
-                if (mouseWasDownOn != null)
+            return floors;
+        }
+        void openInfo(object sender, MouseButtonEventArgs e)
+        {
+            floors = getFloor(ChoosenBuilding);
+
+            var mouseWasDownOn = e.Source as FrameworkElement;
+            if (mouseWasDownOn != null)
+            {
+                string elementName = mouseWasDownOn.Name;
+                foreach (FloorElement f in floors)
                 {
-                    string elementName = mouseWasDownOn.Name;
-                    foreach (FloorElement f in floors)
-                    {
                     if (elementName.Equals(f.Name))
                     {
                         RoomEvent roomEvent = new RoomEvent(f.RoomId, Username);
@@ -285,14 +287,21 @@ namespace PSW_Wpf_app.ViewModel
                             MessageBox.Show(string.Format("additional information: {0}\n", f.Info));
                         else
                         {
-                            
+
                             RoomStuffView roomStuffView = new RoomStuffView(f);
                             roomStuffView.Show();
                         }
                     }
-                        
-                    }
+
                 }
             }
         }
+        public async void LoadMapEvents(string buildingName, int floor)
+        {
+            MapEvent mapEvent = new MapEvent(buildingName, floor, Username);
+            await WpfClient.SaveMostVisitedFloor(mapEvent);
+
+        }
+    }
+        
     }

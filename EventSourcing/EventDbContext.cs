@@ -14,6 +14,7 @@ namespace EventSourcing
         public DbSet<FeedbackSubmittedEvent> feedbackSubmittedEvents { get; set; }
         public DbSet<NewExaminationTimeSpent> newExaminationTimeSpent { get; set; }
         public DbSet<RoomEvent> roomEvents { get; set; }
+        public DbSet<MapEvent> mapEvent { get; set; }
 
 
         public EventDbContext(DbContextOptions<EventDbContext> options) : base(options) { }

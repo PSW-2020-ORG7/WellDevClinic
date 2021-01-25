@@ -139,5 +139,26 @@ namespace EventSourcing.Service
             return mostVisitedRoomId;
 
         }
+
+        public MapEvent GetMostVisitedFloor(string username)
+        {
+            List<DomainEvent> mapEvents = (List<DomainEvent>)GetAll("mapevent");
+            List<MapEvent> mostVisitedFloor = new List<MapEvent>();
+            int days = 3;
+            foreach (MapEvent m in mapEvents)
+            {
+                if (m.TimeStamp.Day <= DateTime.Now.Day && m.TimeStamp.Day >= DateTime.Now.Day - days && m.Username.Equals(username))
+                    mostVisitedFloor.Add(m);
+            }
+            if (mostVisitedFloor.Count == 0)
+                return null;
+            var mostVisitedFloorId = mostVisitedFloor.GroupBy(x => new { x.BuildingName, x.FloorLevel, x.Username })
+                .Select(group => new { MapEventID = group.Key, Count = group.Count() })
+                .OrderByDescending(x => x.Count).First().MapEventID;
+
+            MapEvent mapEvent = new MapEvent(mostVisitedFloorId.BuildingName, mostVisitedFloorId.FloorLevel, mostVisitedFloorId.Username);
+
+            return mapEvent;
+        }
     }
 }

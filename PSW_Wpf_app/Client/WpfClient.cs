@@ -288,6 +288,26 @@ namespace PSW_Wpf_app.Client
             return result;
         }
 
+        public static async Task<MapEvent> GetMostVisitedFloor(string username)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/mapevent/mostVisitedFloor/" + username);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            MapEvent floor = JsonConvert.DeserializeObject<MapEvent>(responseBody);
+
+            return floor;
+        }
+
+        public static async Task<MapEvent> SaveMostVisitedFloor(MapEvent mapEvent)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(mapEvent));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:57400/api/mapevent/save/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            MapEvent result = JsonConvert.DeserializeObject<MapEvent>(value);
+            return result;
+        }
+
     }
 }
 
