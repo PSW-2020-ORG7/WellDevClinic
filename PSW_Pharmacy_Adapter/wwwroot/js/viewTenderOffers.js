@@ -51,7 +51,7 @@ function viewTender(tender) {
     }
     content += '</table></h5>'
     var countDownDate = new Date(tender.period.endDate).getTime();
-    content += '<p style="background-color:red;font-size:40px" id="timerTender"></p>';
+    content += '<p style="background-color:#17a2b8;font-size:40px" id="timerTender"></p>';
 
     if (tender.offerWinner != null && endDate < now) {
         content += '<button id="btnDeal" class="btn btn-primary btn-lg expand" data-target="#expiredActionModal"';
@@ -106,7 +106,7 @@ function viewAllOffers(offers) {
 
         if (currTender.offerWinner != null && offer.id == currTender.offerWinner) {
             winner = offer;
-            content += '; border: 10px solid red';
+            content += '; border: 10px solid #ffc107';
             content += '"><div class="card-body">';
             content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
             content += offer.id + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🏆';
