@@ -46,8 +46,9 @@ function viewAllMedications(meds) {
 
 			for (let ing of med.ingredients) {
 				content += '&nbsp;'
-				content += ing.name + ',';				
+				content += ing.name + ', ';				
 			}
+			content = content.slice(0, -2);
 			content += '</div><br>';
 		}
 		content += '<button class="btn btn-info" data-target="#pageInfoModal" ';

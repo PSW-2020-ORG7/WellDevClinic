@@ -8,7 +8,10 @@ $(document).ready(function () {
 		contentType: "application/json",
 		success: function (data) {
 			allSales = data;
-			viewSales(allSales);
+			if (data.length <= 0)
+				$("#noContent").removeAttr("hidden");
+			else
+				viewSales(allSales);
 			$(".loader").css("display", "none");
 			$("#viewSales").css("display", "block");
 		},
@@ -26,24 +29,26 @@ $(document).ready(function () {
 function viewSales(data) {
 	$("#viewSales").empty();
 	for (let sale of data) {
-		let content = '<div class="card">';
-		content += '<p class="card-text">';
-		content += sale.saleMessage;
+		let content = '<div class="card"><div class="card-body">';
+		content += '<h4 class="card-text card-subtitle mb-2">';
+		content += sale.pharmacyName;
 		content += '<span class="fa fa-star star';
 		if (sale.status == 2)
 			content += " checked";
-		content += '" onClick="toggleFav(' + sale.id + ')"></span></p>';
-		content += '<div class="card-body">';
+		content += '" onClick="toggleFav(' + sale.id + ')"></span></h4>';
 		content += '<div class="data">';
+		content += '<hr color="#FFFF33">';
+		content += sale.saleMessage;
+		content += '<hr color="#FFFF33">';
 		content += '<table style="margin:10px">';
-		content += '<tr><td float="right">Pharmacy:</td><td>';
-		content += sale.pharmacyName;
-		content += '</td></tr>';
-		content += '<tr><td>Start date:</td><td>';
-		content += ISOtoShort(new Date(sale.valPeriod.startDate));
-		content += '</td></tr>';
-		content += '<tr><td>End date:</td><td>';
-		content += ISOtoShort(new Date(sale.valPeriod.endDate));
+		let currDate = new Date(sale.valPeriod.startDate).getTime();
+		if (currDate > new Date().getTime()) {
+			content += '<tr><td class="text-muted">Starts at:</td><td>';
+			content += ISOtoShort(new Date(sale.valPeriod.startDate));
+		} else {
+			content += '<tr><td class="text-muted">Expires at:</td><td>';
+			content += ISOtoShort(new Date(sale.valPeriod.endDate));
+        }
 		content += '</td></tr>';
 		content += '</table>';
 		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteSaleModal" ';

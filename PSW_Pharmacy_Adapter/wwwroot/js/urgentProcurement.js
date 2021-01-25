@@ -63,11 +63,11 @@ $(document).ready(function () {
             data: JSON.stringify(medicationOrder),
             success: function (data) {
                 if (data != null) {
-                    let message = 'Order: ';
+                    let message = 'New medication stock: ';
                     for (let d of data) {
                         message += d.amount + 'x' + d.name + ', ';
                     }
-
+                    message = message.slice(0, -2);
                     message += '. Expect your package soon!';
                     $("#message").text(message);
                     $("#pageInfoModal").modal('toggle');
