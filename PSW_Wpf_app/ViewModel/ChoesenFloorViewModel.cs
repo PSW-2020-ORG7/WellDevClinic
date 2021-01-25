@@ -17,6 +17,7 @@ namespace PSW_Wpf_app.ViewModel
 
         private string choosenBuilding;
         private string user;
+        private string Username { get; set; }
         public string User
         {
             get { return user; }
@@ -62,9 +63,10 @@ namespace PSW_Wpf_app.ViewModel
             }
         }
 
-        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms, string userType)
+        public ChoesenFloorViewModel(Canvas canvasFloor, String build, int floor, List<FloorElement> rooms, string userType, string username)
         {
             user = userType;
+            Username = username;
             if (AppointmentView.RomId == -1 && RelocationEquipmentViewModel.RoomId == -1 && EquipmentAndDrugsViewModel.SelectedEquipment == null && EquipmentAndDrugsViewModel.SelectedDrug == null && SearchResultViewModel.SelectedResult == null)
             {
                 choosenBuilding = build;
@@ -277,12 +279,13 @@ namespace PSW_Wpf_app.ViewModel
                     {
                     if (elementName.Equals(f.Name))
                     {
+                        RoomEvent roomEvent = new RoomEvent(f.RoomId, Username);
+                        Client.WpfClient.SaveMostVisitedRoom(roomEvent);
                         if (user == "patient")
-                        {
                             MessageBox.Show(string.Format("additional information: {0}\n", f.Info));
-                        }
                         else
                         {
+                            
                             RoomStuffView roomStuffView = new RoomStuffView(f);
                             roomStuffView.Show();
                         }

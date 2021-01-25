@@ -32,7 +32,9 @@ namespace RoomManipulation_Interlayer.Controllers
         [Route("save")]
         public RoomEvent Save(RoomEvent roomEvent)
         {
-            return (RoomEvent)_domainEventService.Save(roomEvent);
+            var @event = new RoomEvent(roomEvent.RoomId, roomEvent.Username);
+            _domainEventService.Save(@event);
+            return roomEvent;
         }
 
         [HttpGet]

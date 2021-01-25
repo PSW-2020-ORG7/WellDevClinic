@@ -18,6 +18,7 @@ namespace PSW_Wpf_app
 
         private List<FloorElement> foundRooms = new List<FloorElement>();
         private string user;
+        private string Username { get; set; }
         public string User
         {
             get { return user; }
@@ -31,11 +32,12 @@ namespace PSW_Wpf_app
         }
 
 
-        public MainWindow(string role)
+        public MainWindow(string role, string username)
         {
 
             InitializeComponent();
             user = role;
+            Username = username;
             if (role == "patient")
             {
                 Equipment_Drugs.Visibility = Visibility.Hidden;
@@ -70,7 +72,7 @@ namespace PSW_Wpf_app
             }
             else
             {
-                this.userControl.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()), FoundRooms, user);
+                this.userControl.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()), FoundRooms, user, Username);
             }
         }
 

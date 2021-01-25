@@ -16,10 +16,10 @@ namespace PSW_Wpf_app.View
             DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor);
         }
 
-        public ChosenFloorView(string build, int floor, List<FloorElement> rooms, string user)
+        public ChosenFloorView(string build, int floor, List<FloorElement> rooms, string user, string username)
         {
             InitializeComponent();
-            DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor, rooms, user);
+            DataContext = new ChoesenFloorViewModel(CanvasFloor, build, floor, rooms, user, username);
         }
     }
 }
