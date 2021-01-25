@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     $("#btnLogin").click(function (e) {
         e.preventDefault();
+        $("#responseLoad").show();
         let userInput = $("#txtUsername").val();
         let passwordInput = $("#txtPassword").val();
 
@@ -35,16 +36,22 @@
                 password: $("#txtPassword").val()
             }),
             success: function (data) {
-                if (data) {
-
+                $("#responseLoad").hide();
+                if (data)
                     window.location.assign(window.location.origin += "/index.html");
-                } else {
-                    alert("Password or username is incorrect.");
-                }
+                else
+                    pageInfo("Password or username is incorrect.");
             },
             error: function () {
-                alert("An error has occurred while trying to connect with hospital server. Try again later!")
+                $("#responseLoad").hide();
+                pageInfo("An error has occurred while trying to connect with hospital server. Try again later!")
             }
-        })
-    })
-})
+        });
+    });
+});
+
+function pageInfo(text) {
+    $("#message").text(text);
+    $("#pageInfoModal").modal('toggle');
+    $("#pageInfo").show();
+}

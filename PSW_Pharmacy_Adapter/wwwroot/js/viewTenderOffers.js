@@ -197,7 +197,7 @@ function useAction(id) {
 function sendEmail() {
     var now = new Date().getTime()
     var endDate = new Date(currTender.endDate).getTime();
-    if (endDate < now) {
+
         console.log("curr:" + endDate + "; " + now);
         if (currTender.offerWinner != null) {
             $("#expiredAction").show();
@@ -248,7 +248,7 @@ function sendEmail() {
                 });
             })
         }
-    }
+
 }
 
 function myTimer() {

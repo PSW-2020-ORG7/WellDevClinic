@@ -16,29 +16,31 @@
 </head>
 <body>
     <div class="topnav">
-        <label>Clinic Hello!</label>
+        <label>WellDevClinic</label>
         <a href="viewTenders.html">Tender</a>
     </div>
     <div class="login-page">
         <div class="form">
             <form class="register-form">
-                <h5>Login</h5>
-                <br/>
+                <h4><b>Login</b></h4>
+                <br />
                 <input type="text" class="form-control" placeholder="Enter username" id="txtUsername" />
                 <label id="invalidUsername" class="valid">Required field!</label>
                 <input type="password" class="form-control" placeholder="Enter password" id="txtPassword" />
                 <label id="invalidPassword" class="valid">Required field!</label>
-                <br/>
+                <br />
                 <button id="btnLogin" class="btn btn-info">Login</button>
             </form>
         </div>
     </div>
-
-    <div id="regAction" style="display:none">
-        <div class="modal fade" id="regActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div id="responseLoad">
+        <div class="loader" id="pageLoader"></div>
+    </div>
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-body" id="message"> </div>
+                    <div class="modal-body" id="message"></div>
                     <div class="modal-footer">
                         <button type="button" id="btnOk" class="btn btn-info" data-dismiss="modal">OK</button>
                     </div>
