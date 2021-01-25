@@ -13,6 +13,7 @@ namespace PSW_Wpf_app.Model
         public virtual Period Period { get; set; }
         public Boolean Canceled { get; set; }
         public DateTime CanceledDate { get; set; }
+        public Room Room { get; set; }
 
         public UpcomingExamination() { }
 
