@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Model.Doctor;
 using Newtonsoft.Json;
+using PSW_Web_app.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class SpecialityController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
 
@@ -22,7 +22,7 @@ namespace PSW_Web_app.Controllers
         {
             if (!Authorization.Authorize("Patient", Request.Headers["Authorization"]))
                 return BadRequest();
-            HttpResponseMessage response = await client.GetAsync(communicationLink  + "/api/speciality");
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/speciality");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             List<Speciality> result = (List<Speciality>)JsonConvert.DeserializeObject<List<Speciality>>(responseBody);

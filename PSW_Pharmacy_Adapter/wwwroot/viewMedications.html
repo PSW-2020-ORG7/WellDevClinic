@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="topnav">
-        <label>Clinic Hello!</label>
+        <label>WellDevClinic</label>
         <a href="index.html">Home</a>
         <a href="partnerPharmacies.html">Partner Pharmacies</a>
         <a href="actionsAndBenefits.html">Actions & Benefits</a>
@@ -65,45 +65,61 @@
 
     <div name="mainContent">
         <div class="loader" id="pageLoader"></div>
-        <div class="modalCustom" id="medAvailability">
-            <div class="modalContent">
-                <span class="close">&times;</span>
-                <h4 id="txtMedName"></h4>
-                <br>
-                <table border="1" id="medTableData" class="customTable" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Medicine name</th>
-                            <th>Amount</th>
-                            <th>Price/piece(RSD)</th>
-                            <th>Pharmacy</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <form>
-                    <h5>
-                        <select id="phName" style="width:50%; margin-top:10px; border: 1px solid #ccc">
-                            <option selected disabled>Select pharmacy..</option>
-                        </select>
-                        <label id="invalidPharmacy" class="valid">Select pharmacy!</label>
-                        <br />
-                        <input type="number" min="1" max="0" id="amountToBuy" placeholder="Enter amount" style="width:50%" />
-                        <label id="invalidAmount" class="valid">Input correct amount to buy!</label>
-                        <br />
-                        <input type="button" class="btn btn-info expand" style="margin-top:15px" value="Purchase" id="purchase" />
-                    </h5>
-                </form>
-            </div>
-        </div>
-
         <div id="viewMedication"></div>
+        <div id="noContent" class="welcome-text" hidden>
+            <h1>Nothing to show</h1>
+        </div>
+    </div>
+
+    <div class="modalCustom" id="medAvailability">
+        <div class="modalContent">
+            <span class="close">&times;</span>
+            <h4 id="txtMedName"></h4>
+            <br>
+            <table border="1" id="medTable" class="customTable" width="100%">
+                <thead>
+                    <tr>
+                        <th>Medicine name</th>
+                        <th>Amount</th>
+                        <th>Price/piece(RSD)</th>
+                        <th>Pharmacy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <form>
+                <h5>
+                    <select id="phName" style="width:50%; margin-top:10px; border: 1px solid #ccc">
+                        <option selected disabled>Select pharmacy..</option>
+                    </select>
+                    <label id="invalidPharmacy" class="valid">Select pharmacy!</label>
+                    <br />
+                    <input id="amountToBuy" type="number" min="1" max="0" placeholder="Enter amount" style="width:50%" />
+                    <label id="invalidAmount" class="valid">Input correct amount to buy!</label>
+                    <br />
+                    <input type="button" class="btn btn-info expand" style="margin-top:15px" value="Purchase" onclick="purchase()" />
+                </h5>
+            </form>
+        </div>
     </div>
 
     <div id="responseLoad">
         <div class="loader"></div>
         <h4 class="responseInfo">Processing request. Please wait.</h4>
+    </div>
+
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="message"></div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--<div class="modalCustom" id="modalUrgProcurement">
@@ -144,19 +160,6 @@
             <input type="button" class="btn btn-info expand" style="margin-top:15px" value="Purchase" id="purchase" />
         </div>
     </div>-->
-
-    <div id="pageInfo" style="display:none">
-        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body" id="message"></div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>

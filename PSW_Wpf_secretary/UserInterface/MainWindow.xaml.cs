@@ -13,6 +13,7 @@ using Model.Dto;
 using bolnica.Model.Dto;
 using Model.Doctor;
 using System.Configuration;
+using Secretary = PSW_Wpf_secretary.Client.Secretary;
 
 namespace UserInterface
 {
@@ -77,11 +78,7 @@ namespace UserInterface
             GuestPatient = new Patient(true);
             Patients = new List<Patient>();
             Secretary = secretary;
-            Day = secretary.DateOfBirth.Day;
-            Month = secretary.DateOfBirth.Month;
-            Year = secretary.DateOfBirth.Year;
-            FullDate = string.Join("/", Day, Month, Year);
-            _fileName = Secretary.Image.ToString();
+            
 
             se = ScheduledExaminations;
             ee = EmptyExaminations;
@@ -130,31 +127,7 @@ namespace UserInterface
             App app = Application.Current as App;
             States = app.StateController.GetAll().ToList();
             states.ItemsSource = States;
-            foreach(State state in States)
-                if(Secretary.Address.Town.State.Name == state.Name)
-                {
-                    states.SelectedItem = state;
-                    SelectedState = state;
-                    break;
-                }
-            Towns = Secretary.Address.Town.State.GetTown();
-            towns.ItemsSource = Towns;
-            foreach (Town town in Towns)
-                if (Secretary.Address.Town.Name == town.Name)
-                {
-                    towns.SelectedItem = town;
-                    SelectedTown = town;
-                    break;
-                }
-            Addresses = Secretary.Address.Town.GetAddress();
-            addresses.ItemsSource = Addresses;
-            foreach (Address address in Addresses)
-                if (Secretary.Address.FullAddress == address.FullAddress)
-                {
-                    addresses.SelectedItem = address;
-                    SelectedAddress = address;
-                    break;
-                }
+            
         }
 
         private void PopulatePatients()
@@ -165,12 +138,7 @@ namespace UserInterface
         private void Edit(object sender, RoutedEventArgs e)
         {
             App app = Application.Current as App;
-            Secretary.DateOfBirth = new DateTime(Year, Month, Day);
-            Secretary.Address = SelectedAddress;
-            Secretary.Address.Town = SelectedTown;
-            Secretary.Address.Town.State = SelectedState;
-            FullDate = string.Join("/", Day, Month, Year);
-
+            
             TextBlock date = FindName("txtDate") as TextBlock;
             date.Text = FullDate;
             TextBlock state = FindName("txtState") as TextBlock;
@@ -372,27 +340,12 @@ namespace UserInterface
             PasswordBox pass = FindName("oldPass") as PasswordBox;
             TextBlock err = FindName("WrongPass") as TextBlock;
             Button cnf = FindName("confirmBtn") as Button;
-            if (pass.Password.Trim() != Secretary.Password)
-            {
-                err.Text = "Pogrešna lozinka!";
-                err.Visibility = Visibility.Visible;
-                cnf.IsEnabled = false;
-            }
-            else
-            {
-                err.Visibility = Visibility.Collapsed;
-                if (oldPass.Password.Trim() == "" || newPass.Password.Trim() == "" || confPass.Password.Trim() == "")
-                    confirmBtn.IsEnabled = false;
-                else
-                    confirmBtn.IsEnabled = true;
-            }
+            
         }
 
         private void ChangePass(object sender, RoutedEventArgs e)
         {
             PasswordBox confPass = FindName("confPass") as PasswordBox;
-
-            Secretary.Password = confPass.Password;
 
             App app = Application.Current as App;
             CancelProfileChangeDialog(sender, e);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Examination_Microservice.Domain.Model
@@ -9,6 +10,7 @@ namespace Examination_Microservice.Domain.Model
         public long Id { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual List<Hospitalization> Hospitalization { get; set; }
+        [NotMapped]
         public virtual List<Operation> Operation { get; set; }
         public virtual List<ExaminationDetails> Examination { get; set; }
         public virtual List<Allergy> Allergy { get; set; }

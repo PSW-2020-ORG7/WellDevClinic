@@ -9,18 +9,32 @@ using Microsoft.Extensions.Logging;
 
 namespace UserInteraction_Interlayer
 {
-    public class Program
+   public class Program
     {
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }
 
+        private static int CalculatePort()
+        {
+            var port = Environment.GetEnvironmentVariable("PORT");
+            if (port == null)
+                return 14483;
+            else
+                return int.Parse(Environment.GetEnvironmentVariable("PORT"));
+        }
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                        serverOptions.ListenAnyIP(CalculatePort());
+                    })
+                    .UseStartup<Startup>();
+
                 });
     }
 }

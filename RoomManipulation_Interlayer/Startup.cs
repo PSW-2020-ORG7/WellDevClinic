@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace RoomManipulation_Interlayer
 
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+                    b => b.MigrationsAssembly("RoomManipulation_Microservice")).UseLazyLoadingProxies());
 
             services.AddScoped<IEquipmentAppService, EquipmentAppService>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
@@ -49,9 +50,24 @@ namespace RoomManipulation_Interlayer
             }
             try
             {
-                var script = db.Database.GenerateCreateScript();
-                db.Database.ExecuteSqlRaw(script);
-            }catch
+                using (StreamReader file = new StreamReader("DBScript.txt"))
+                {
+                    string sqlRow = "";
+                    string ln = "";
+
+                    while ((ln = file.ReadLine()) != null)
+                    {
+                        sqlRow = sqlRow + " " + ln;
+                        if (sqlRow.Contains(";"))
+                        {
+                            db.Database.ExecuteSqlCommand(sqlRow);
+                            sqlRow = "";
+                        }
+                    }
+                    file.Close();
+                }
+            }
+            catch
             {
                 Console.WriteLine("Tables already exist!");
             }

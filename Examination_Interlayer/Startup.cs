@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -26,9 +27,13 @@ namespace Examination_Interlayer
             services.AddControllers();
             services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            /* services.AddDbContext<MyDbContext>(opts =>
+                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());*/
+
             services.AddDbContext<MyDbContext>(opts =>
-                    opts.UseMySql(CreateConnectionStringFromEnvironment(),
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+                   opts.UseMySql(CreateConnectionStringFromEnvironment(),
+                   b => b.MigrationsAssembly("Examination_Microservice")).UseLazyLoadingProxies());
 
             services.AddScoped<IExaminationDetailsAppService, ExaminationDetailsAppService>();
             services.AddScoped<IExaminationDetailsRepository, ExaminationDetailsRepository>();
@@ -41,7 +46,10 @@ namespace Examination_Interlayer
 
             services.AddScoped<IReferralAppService, ReferralAppService>();
             services.AddScoped<IReferralRepository, ReferralRepository>();
-            
+
+            services.AddScoped<IPrescriptionAppService, PrescriptionAppService>();
+            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+
             services.AddScoped<ITherapyAppService, TherapyAppService>();
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             
@@ -54,10 +62,25 @@ namespace Examination_Interlayer
             {
                 app.UseDeveloperExceptionPage();
             }
+
             try
             {
-                var script = db.Database.GenerateCreateScript();
-                db.Database.ExecuteSqlRaw(script);
+                using (StreamReader file = new StreamReader("DBScript.txt"))
+                {
+                    string sqlRow = "";
+                    string ln = "";
+
+                    while ((ln = file.ReadLine()) != null)
+                    {
+                        sqlRow = sqlRow + " " + ln;
+                        if (sqlRow.Contains(";"))
+                        {
+                            db.Database.ExecuteSqlCommand(sqlRow);
+                            sqlRow = "";
+                        }
+                    }
+                    file.Close();
+                }
             }
             catch
             {

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace UserInteraction_Microservice.Domain.Model
 {
-    [NotMapped]
     public class Doctor : User, IIdentifiable<long>
     {
         public long Id { get; set; }
+       
         public virtual Speciality Speciality { get; set; }
         [NotMapped]
         public virtual DoctorGrade DoctorGrade { get; set; }

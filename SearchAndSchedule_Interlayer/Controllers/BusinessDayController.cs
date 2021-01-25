@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SearchAndSchedule_Microservice.ApplicationServices.Abstract;
 using SearchAndSchedule_Microservice.ApplicationServices.DTObjects;
 using SearchAndSchedule_Microservice.Domain.Model;
@@ -14,6 +16,9 @@ namespace SearchAndSchedule_Interlayer.Controllers
     public class BusinessDayController : ControllerBase
     {
         private readonly IBussinesDayAppService _businessDayAppService;
+        static readonly HttpClient client = new HttpClient();
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
+
 
         public BusinessDayController(IBussinesDayAppService businessDayAppService)
         {
@@ -75,13 +80,12 @@ namespace SearchAndSchedule_Interlayer.Controllers
             _businessDayAppService.DeleteBusinessDayByRoom(room);
         }
 
-        //DTO za ova dva parametra ukoliko nekom treba metoda
-        /*[HttpPost]
-          [Route("GetExactDay")]
-          public BusinessDay GetExactDay(Doctor doctor, DateTime date)
-          {
-               return _businessDayAppService.GetExactDay(doctor, date);
-          }*/
+        [HttpPost]
+        [Route("GetExactDay")]
+        public BusinessDay GetExactDay(ExactDayDTO exactDay)
+        {
+             return _businessDayAppService.GetExactDay(exactDay.Doctor, exactDay.Date);
+        }
         [HttpPost]
         [Route("IsExaminationPossible")]
         public bool IsExaminationPossible(UpcomingExamination examination)
@@ -96,6 +100,26 @@ namespace SearchAndSchedule_Interlayer.Controllers
             return _businessDayAppService.Search(businessDayDTO);
         }
 
+        [HttpGet]
+        [Route("{date?}/{id?}")]
+        public async Task<List<ExaminationDTO>> GetAvailablePeriodsByDoctor(DateTime date, long id)
+        {
+            HttpResponseMessage response = await client.GetAsync(communicationLink + "/api/doctor/lazy/" + id.ToString());
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Doctor result = (Doctor)JsonConvert.DeserializeObject<Doctor>(responseBody);
+            return _businessDayAppService.Search(new BusinessDayDTO(result, new Period(date), PriorityType.NoPriority));
+        }
+
+        [HttpPost]
+        [Route("markAsOccupied/{id?}")]
+        public void MarkAsOccupied(List<Period> period, long id)
+        {
+            BusinessDay businessDay = _businessDayAppService.Get(id);
+            _businessDayAppService.MarkAsOccupied(period, businessDay);
+
+
+        }
         //DTO za ove parametre
         /* [HttpPost]
          [Route("OperationSearch")]

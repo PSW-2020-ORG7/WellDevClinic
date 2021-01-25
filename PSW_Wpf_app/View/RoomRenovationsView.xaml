@@ -7,8 +7,11 @@
              mc:Ignorable="d" 
               d:DesignHeight="500" d:DesignWidth="710" Background="AliceBlue">
     <Grid>
+        <Button Content="Advanced renovation" VerticalAlignment="Top" HorizontalAlignment="Left" Click="AdvancedRenovation_Click" Height="40" Margin="355,65,0,0"/>
+
         <TextBlock HorizontalAlignment="Left" Height="33" Margin="10,32,0,0" Text="Room Renovation" FontSize="22" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="279"/>
-        <DataGrid x:Name="equipmentRelocation" Margin="15,114,15,72" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid x:Name="roomRenovation" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="230" VerticalAlignment="Center" Width="650" CanUserAddRows="False"
+			AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,0" >
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Margin" Value="0"/>
@@ -16,13 +19,14 @@
                     <Setter Property="BorderThickness" Value="0.5"/>
                 </Style>
             </DataGrid.CellStyle>
-
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ColumnDate" Header="Date and Time"  Binding="{Binding Date}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn x:Name="ColumnRoom1" Header="Room From" Binding="{Binding Room_from}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn x:Name="ColumnRoom" Header="Room To" Binding="{Binding Room_to}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="ColumnDate" Header="Date and Time"  Binding="{Binding Period.StartDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="ColumnRoom1" Header="Room for renovation" Binding="{Binding Room.RoomCode}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="ColumnRoom" Header="Status" Binding="{Binding RenovationStatus}" Width="*"></DataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Basic renovation" VerticalAlignment="Top" HorizontalAlignment="Left" Click="BasicRenovationClick" Height="40" Margin="200,65,0,0"/>
+        <Label Content="Schedule renovation:" FontSize="16" HorizontalAlignment="Left" Height="32" Margin="10,70,0,0" VerticalAlignment="Top" Width="185"/>
     </Grid>
 </UserControl>

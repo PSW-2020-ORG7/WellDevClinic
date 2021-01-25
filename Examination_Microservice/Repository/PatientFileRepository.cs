@@ -39,6 +39,29 @@ namespace Examination_Microservice.Repository
             return _myDbContext.PatientFile.DefaultIfEmpty().ToList();
         }
 
+        public PatientFile GetPatientFileByPatient(long id)
+        {
+
+            /* return _myDbContext.Patient.Select(p =>
+                new Patient()
+                {
+                    Id = p.Id,
+                    Person = p.Person,
+                    Blocked = p.Blocked,
+                    Guest = p.Guest,
+                    UserType = p.UserType
+
+                }
+            ).Where(p => p.Id == id).FirstOrDefault();*/
+           /*return _myDbContext.PatientFile.Select(p =>
+                new PatientFile()
+                {
+                    Allergy = p.Allergy
+                }
+            ).Where(p => p.Patient.Id==id).FirstOrDefault();*/
+            return _myDbContext.PatientFile.FirstOrDefault(p => p.Patient.Id == id);
+        }
+
         public PatientFile Save(PatientFile entity)
         {
             var PatientFile = _myDbContext.PatientFile.Add(entity);

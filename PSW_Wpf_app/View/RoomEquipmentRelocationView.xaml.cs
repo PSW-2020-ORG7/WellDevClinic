@@ -21,50 +21,71 @@ namespace PSW_Wpf_app.View
 
         private async void LoadRenovationForRoom(FloorElement f)
         {
-            List<Renovation> renovation = await WpfClient.GetAllRenovation();
+            List<Renovation> renovations = await WpfClient.GetAllRenovation();
+            List<RelocationEquipmentDTO> relocations = new List<RelocationEquipmentDTO>();
             RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
-            foreach (Renovation r in renovation)
+            foreach(Renovation r in renovations)
             {
-                if (r.Room.Id.Equals(f.RoomId) && r.Status.Equals(RenovationStatus.Otkazano))
-                {
-                Renovation pair = null;
-                foreach (Renovation re in renovation)
-                {
-                    try
-                    {
-                        long id = long.Parse(re.Description);
-                        if (id == r.Id)
-                        {
-                            pair = re;
-                            break;
-                        }
-                    }
 
-                    catch (Exception e) { continue; }
-
-                }
-                    
-                    relocation.Room_from = r.Room.RoomCode;
-                    relocation.Room_to = pair.Room.RoomCode;
-                    relocation.Date = r.Period.StartDate;
+                if(r.RenovationStatus.Equals(RenovationStatus.Traje) && r.Room.Id.Equals(f.RoomId))
+                {
+                    int n;
+                    bool isNumeric = int.TryParse(r.Description, out n);
+                    if (isNumeric)
+                        relocation = FindRoomTo(renovations, r, n);
+                    else
+                        relocation = FindRoomFrom(renovations, r);
 
                     relocations.Add(relocation);
                 }
-
             }
 
             equipmentRelocation.ItemsSource = relocations;
         }
 
+
         private async void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Renovation renovation = (Renovation)equipmentRelocation.SelectedItem;
-            renovation.Status = RenovationStatus.Otkazano;
-            WpfClient.EditRenovation(renovation);
+            //  Renovation renovation = (Renovation)equipmentRelocation.SelectedItem;
+            // renovation.Status = RenovationStatus.Otkazano;
+            //WpfClient.EditRenovation(renovation);
             /*  if(scheduledAppointments.SelectedItem != null)
               {
                   scheduledAppointments.Items.Remove(scheduledAppointments.SelectedItem);
               }*/
+        }
+        private static RelocationEquipmentDTO FindRoomFrom(List<Renovation> renovations, Renovation r)
+        {
+            RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
+            relocation.Room_from = r.Room.RoomCode;
+            relocation.Equip_name = r.Description;
+            relocation.Date = r.Period.StartDate;
+            foreach (Renovation re in renovations)
+            {
+                if (re.RenovationStatus.Equals(RenovationStatus.Traje) && re.Description.Equals(r.Id.ToString()))
+                  relocation.Room_to = re.Room.RoomCode;
+
+            }
+
+            return relocation;
+        }
+
+        private static RelocationEquipmentDTO FindRoomTo(List<Renovation> renovations, Renovation r, int n)
+        {
+            RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
+            relocation.Room_to = r.Room.RoomCode;
+            relocation.Date = r.Period.StartDate;
+            foreach (Renovation re in renovations)
+            {
+                if (re.RenovationStatus.Equals(RenovationStatus.Traje) && re.Id.Equals(n))
+                {
+                    relocation.Room_from = re.Room.RoomCode;
+                    relocation.Equip_name = re.Description;
+                }
+            }
+
+            return relocation;
+
         }
     }
 }

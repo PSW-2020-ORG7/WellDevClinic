@@ -7,9 +7,17 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (data) {
 			allMedications = data;
-			viewAllMedications(allMedications);
+			if (data.length <= 0)
+				$("#noContent").removeAttr("hidden");
+			else
+				viewAllMedications(allMedications);
 			$("#pageLoader").hide();
-        },
+		},
+		error: function (e) {
+			$("#pageLoader").hide();
+			pageInfo("An error has occured while trying to connect with hospital server. Try again later!");
+			$("#noContent").removeAttr("hidden");
+        }
 	});
 
 	
@@ -20,58 +28,6 @@ $(document).ready(function () {
 
 	$(".close").click(function () {
 		$(".modalCustom").hide(200);
-	});
-
-	$("#purchase").click(function () {
-		let pharmacyName = $("#phName").val();
-		let quantity = Number($("#amountToBuy").val());
-		let med = $("#txtMedName").text();
-
-		let valid = true;
-
-		if (!pharmacyName) {
-			valid = false;
-			$("#phName").css("border-color", "red");
-			$("#invalidPharmacy").css("display", "inline-block");
-		} else {
-			$("#phName").css("border-color", "#ccc");
-			$("#invalidPharmacy").css("display", "none");
-		}
-		if (!quantity || quantity < 1) {
-			valid = false;
-			$("#amountToBuy").css("border-color", "red");
-			$("#invalidAmount").css("display", "inline-block");
-		} else {
-			$("#amountToBuy").css("border-color", "#ccc");
-			$("#invalidAmount").css("display", "none");
-        }
-
-		if (!valid)
-			return;
-
-		$.ajax({
-			method: "GET",
-			url: "../api/medication/orderMedicine",
-			contentType: "application/json",
-			data: {
-				phName: pharmacyName,
-				amount: quantity,
-				medName: med,
-			},
-			success: function (data) {
-				if (data != null) {
-					$("#message").text("Medications succesfuly ordered! Expect your package soon.");
-					$("#pageInfoModal").modal('toggle');
-					$("#pageInfo").show();
-					$("#btnOk").click(function () {
-						$("#medAvailability").hide();
-					});
-				}
-			},
-			error: function (e) {
-				alert("ERROR: " + e.status);
-			}
-		});
 	});
 });
 
@@ -97,6 +53,129 @@ function viewAllMedications(meds) {
 		$("#viewMedication").append(content);
 	}
 }
+
+function findMedicine(name) {
+	$("#responseLoad").show();
+	$.ajax({
+		method: "GET",
+		url: "../api/medication/" + name,
+		contentType: "application/json",
+		success: function (med) {
+			$.ajax({
+				method: "POST",
+				url: "../api/medication/findMedPh",
+				contentType: "application/json",
+				data: JSON.stringify({
+					Id: med.id,
+					Name: med.name,
+					Amount: med.amount,
+					Approved: med.approved,
+					Ingredients: med.ingredients,
+					Alternative: med.alternative,
+				}),
+				success: function (pharmacies) {
+					$("#responseLoad").hide();
+					resetMedTable();
+					if (pharmacies.length > 0) {
+						showMedTable(pharmacies);
+						$("#medAvailability").slideToggle("fast");
+					} else {
+						pageInfo("The medicaiton that you're looking for isn't available in any partner pharmacy.");
+                    }
+				},
+				error: function (e) {
+					$("#responseLoad").hide();
+					pageInfo(e.responseText);
+                }
+			});
+		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to connect with hospital server. Try again later!");
+        }
+	});
+}
+
+function resetMedTable() {
+	$("#phName").html("<option selected disabled>Select pharmacy..</option>");
+	$("#amountToBuy").val("");
+	$("#amountToBuy").css("border-color", "#ccc");
+	$("#invalidAmount").css("display", "none");
+	$("#phName").css("border-color", "#ccc");
+	$("#invalidPharmacy").css("display", "none");
+}
+
+function showMedTable(pharmacies) {
+	$("#txtMedName").text(pharmacies[0].medicine.name.charAt(0).toUpperCase() + pharmacies[0].medicine.name.slice(1));
+	$("#medTable").find('tbody').empty();
+	for (let ph of pharmacies) {
+		let content = '<tr>';
+		content += '<td>' + ph.medicine.name + '</td>';
+		content += '<td>' + ph.medicine.amount + '</td>';
+		content += '<td>' + ph.price + '</td>';
+		content += '<td>' + ph.phName + '</td>';
+		content += '</tr>';
+
+		$("#medTable").find('tbody').append(content);
+
+		$("#phName").append('<option value="' + ph.phName + '">' + ph.phName + '</option>');
+		if ($('#amountToBuy').attr('max') < Number(ph.medicine.amount))
+			$('#amountToBuy').attr('max', ph.medicine.amount);
+    }
+}
+
+function purchase() {
+	let pharmacyName = $("#phName").val();
+	let quantity = Number($("#amountToBuy").val());
+	let med = $("#txtMedName").text();
+
+	let valid = true;
+
+	if (!pharmacyName) {
+		valid = false;
+		$("#phName").css("border-color", "red");
+		$("#invalidPharmacy").css("display", "inline-block");
+	} else {
+		$("#phName").css("border-color", "#ccc");
+		$("#invalidPharmacy").css("display", "none");
+	}
+	if (!quantity || quantity < 1) {
+		valid = false;
+		$("#amountToBuy").css("border-color", "red");
+		$("#invalidAmount").css("display", "inline-block");
+	} else {
+		$("#amountToBuy").css("border-color", "#ccc");
+		$("#invalidAmount").css("display", "none");
+	}
+
+	if (!valid)
+		return;
+
+	$.ajax({
+		method: "GET",
+		url: "../api/medication/orderMedicine",
+		contentType: "application/json",
+		data: {
+			phName: pharmacyName,
+			amount: quantity,
+			medName: med,
+		},
+		success: function (recievedMed) {
+			if (recievedMed != null) {
+				pageInfo('Order: ' + recievedMed.amount + 'x ' + recievedMed.name + '. Expect your package soon.');
+				$("#btnOk").click(function () {
+					$("#medAvailability").hide();
+				});
+			}
+		},
+		error: function (e) {
+			if (e.status == 400)
+				pageInfo(e.responseText);
+			else
+				alert('An unknown error has occured.');
+		}
+	});
+}
+
 
 function sortData() {
 	let sort = $("#sort").val();
@@ -134,7 +213,7 @@ function filter() {
 	if (amountFrom != "" && amountTo != "" && amountFrom > amountTo) {
 		alert("Parameter amount from can't be less than amount to!");
 		return;
-    }
+	}
 
 	let filter = [];
 	for (let med of allMedications) {
@@ -147,69 +226,8 @@ function filter() {
 	viewAllMedications(filter);
 }
 
-function findMedicine(name) {
-	$("#responseLoad").show();
-	$.ajax({
-		method: "GET",
-		url: "../api/medication/" + name,
-		contentType: "application/json",
-		success: function (med) {
-			$.ajax({
-				method: "POST",
-				url: "../api/medication/findMedPh",
-				contentType: "application/json",
-				data: JSON.stringify({
-					Id: med.id,
-					Name: med.name,
-					Amount: med.amount,
-					Approved: med.approved,
-					Ingredients: med.ingredients,
-					Alternative: med.alternative,
-				}),
-				success: function (pharmacies) {
-					$("#responseLoad").hide();
-					resetResultTableState();
-					if (pharmacies.length > 0) {
-						showResultTable(pharmacies);
-						$("#medAvailability").slideToggle("fast");
-					} else {
-						$("#message").text("The medicaiton that you're looking for isn't available in any partner pharmacy.");
-						$("#pageInfoModal").modal('toggle');
-						$("#pageInfo").show();
-                    }
-				},
-				error: function (e) {
-					alert("No pharmacy responded to request!");
-                }
-			});
-		},
-	});
-}
-
-function resetResultTableState() {
-	$("#phName").html("<option selected disabled>Select pharmacy..</option>");
-	$("#amountToBuy").val("");
-	$("#amountToBuy").css("border-color", "#ccc");
-	$("#invalidAmount").css("display", "none");
-	$("#phName").css("border-color", "#ccc");
-	$("#invalidPharmacy").css("display", "none");
-}
-
-function showResultTable(pharmacies) {
-	$("#txtMedName").text(pharmacies[0].medicine.name.charAt(0).toUpperCase() + pharmacies[0].medicine.name.slice(1));
-	$("#medTableData").find('tbody').empty();
-	for (let ph of pharmacies) {
-		let content = '<tr>';
-		content += '<td>' + ph.medicine.name + '</td>';
-		content += '<td>' + ph.medicine.amount + '</td>';
-		content += '<td>' + ph.price + '</td>';
-		content += '<td>' + ph.phName + '</td>';
-		content += '</tr>';
-
-		$("#medTableData").find('tbody').append(content);
-
-		$("#phName").append('<option value="' + ph.phName + '">' + ph.phName + '</option>');
-		if ($('#amountToBuy').attr('max') < Number(ph.medicine.amount))
-			$('#amountToBuy').attr('max', ph.medicine.amount);
-    }
+function pageInfo(text) {
+	$("#message").text(text);
+	$("#pageInfoModal").modal('toggle');
+	$("#pageInfo").show();
 }

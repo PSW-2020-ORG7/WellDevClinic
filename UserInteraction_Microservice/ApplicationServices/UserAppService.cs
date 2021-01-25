@@ -27,9 +27,9 @@ namespace UserInteraction_Microservice.ApplicationServices
             _config = config;
         }
 
-        public User LogIn(UserLogIn user)
+        public User LogIn(string username, string password)
         {
-            return _domainService.LogIn(user.Username, user.Password);
+            return _domainService.LogIn(username, password);
         }
 
         public User Registration(User user)
@@ -40,11 +40,11 @@ namespace UserInteraction_Microservice.ApplicationServices
                 User retVal;
                 if (patient == null)
                 {
-                    Patient p = (Patient)user;
+                    Patient p = new Patient(user.Person,user.UserDetails,user.UserLogIn); 
                     String token = GenerateToken();
                     p.VerificationToken = token;
                     SendVerification(p.UserDetails.Email, p.Person.Jmbg, token);
-                    retVal = _domainService.Registration(user);
+                    retVal = _domainService.Registration(p);
                 }
                 else
                 {

@@ -47,7 +47,11 @@ namespace PSW_Wpf_director
             }
             try
             {
-                Director director = await WpfDirectorClient.GetUser(TxtBoxKorisnickoIme.Text, lozinka.Password);
+                UserLogIn user = new UserLogIn();
+                user.Password = lozinka.Password;
+                user.Username = TxtBoxKorisnickoIme.Text;
+                Client.User director1 = await WpfDirectorClient.GetUser(user);
+                Director director = new Director();
                 bool selected = (bool)stayLoggedIn.IsChecked;
                 if (selected)
                 {

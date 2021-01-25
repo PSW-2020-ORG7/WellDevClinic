@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Model.Users;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,8 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using WellDevCore.Model.dtos;
-using UserInteraction_Microservice.Domain.Model;
+using PSW_Web_app.Models;
 
 namespace PSW_Web_app.Controllers
 {
@@ -21,17 +19,16 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
 
         [HttpPost]
-        public async Task<IActionResult> LoginUser([FromBody] UserLogIn user)
+        public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO user)
         {
             var content = new StringContent(JsonConvert.SerializeObject(user, Formatting.Indented), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(communicationLink + "/api/user/patient", content);
             string responseBody = await response.Content.ReadAsStringAsync();
-            //IActionResult result = JsonConvert.DeserializeObject<IActionResult>(responseBody);
             if (responseBody.Length > 0)
                 return Ok(responseBody);
             else

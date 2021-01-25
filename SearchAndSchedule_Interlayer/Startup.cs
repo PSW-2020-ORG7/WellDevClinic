@@ -1,3 +1,6 @@
+using EventSourcing;
+using EventSourcing.Repository;
+using EventSourcing.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +12,7 @@ using SearchAndSchedule_Microservice.Domain;
 using SearchAndSchedule_Microservice.Repository;
 using SearchAndSchedule_Microservice.Repository.Abstract;
 using System;
+using System.IO;
 using System.Reflection;
 
 namespace SearchAndSchedule_Interlayer
@@ -22,7 +26,14 @@ namespace SearchAndSchedule_Interlayer
 
             services.AddDbContext<MyDbContext>(opts =>
                     opts.UseMySql(CreateConnectionStringFromEnvironment(),
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+                    b => b.MigrationsAssembly("SearchAndSchedule_Microservice")).UseLazyLoadingProxies());
+
+            services.AddDbContext<EventDbContext>(opts =>
+                opts.UseMySql(CreateConnectionStringFromEnvironmentEventLogs(),
+                b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
+
+            services.AddScoped<IDomainEventRepository, DomainEventRepository>();
+            services.AddScoped<IDomainEventService, DomainEventService>();
 
             services.AddScoped<IBussinesDayAppService, BusinessDayAppService>();
             services.AddScoped<IBussinesDayRepository, BussinesDayRepository>();
@@ -38,17 +49,33 @@ namespace SearchAndSchedule_Interlayer
             services.AddScoped<ISearchPeriods, DoctorPrioritySearch>();
 
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDbContext db, EventDbContext event_db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            event_db.Database.EnsureCreated();
+
             try
             {
-                var script = db.Database.GenerateCreateScript();
-                db.Database.ExecuteSqlRaw(script);
+                using (StreamReader file = new StreamReader("DBScript.txt"))
+                {
+                    string sqlRow = "";
+                    string ln = "";
+
+                    while ((ln = file.ReadLine()) != null)
+                    {
+                        sqlRow = sqlRow + " " + ln;
+                        if (sqlRow.Contains(";"))
+                        {
+                            db.Database.ExecuteSqlCommand(sqlRow);
+                            sqlRow = "";
+                        }
+                    }
+                    file.Close();
+                }
             }
             catch
             {
@@ -69,6 +96,16 @@ namespace SearchAndSchedule_Interlayer
             string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "DbDDD";
             string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "root";
             string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "root";
+            return $"server={server};port={port};database={database};user={user};password={password};";
+        }
+
+        private string CreateConnectionStringFromEnvironmentEventLogs()
+        {
+            string server = Environment.GetEnvironmentVariable("DATABASE_HOST_EVENTS") ?? "localhost";
+            string port = Environment.GetEnvironmentVariable("DATABASE_PORT_EVENTS") ?? "3306";
+            string database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA_EVENTS") ?? "eventlogs";
+            string user = Environment.GetEnvironmentVariable("DATABASE_USERNAME_EVENTS") ?? "root";
+            string password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD_EVENTS") ?? "root";
             return $"server={server};port={port};database={database};user={user};password={password};";
         }
     }

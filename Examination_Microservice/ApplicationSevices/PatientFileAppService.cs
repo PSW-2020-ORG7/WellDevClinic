@@ -36,6 +36,11 @@ namespace Examination_Microservice.ApplicationSevices
             return _patientFileRepository.GetAll();
         }
 
+        public PatientFile GetPatientFileByPatient(long id)
+        {
+            return _patientFileRepository.GetPatientFileByPatient(id);
+        }
+
         public PatientFile Save(PatientFile entity)
         {
             return _patientFileRepository.Save(entity);

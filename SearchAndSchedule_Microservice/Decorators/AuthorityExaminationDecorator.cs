@@ -96,5 +96,10 @@ namespace SearchAndSchedule_Microservice.Decorators
         {
             throw new NotImplementedException();
         }
+
+        public void Cancel(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

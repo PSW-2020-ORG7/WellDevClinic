@@ -25,7 +25,7 @@ namespace PSW_Wpf_app.View
         public async void LoadRoom(long id)
         {
             Room room = await WpfClient.GetRoomById(id);
-            this.DgEquipment.ItemsSource = room.Equipment_inventory;
+            this.DgEquipment.ItemsSource = room.EquipmentStatistic;
         }
     }
 }

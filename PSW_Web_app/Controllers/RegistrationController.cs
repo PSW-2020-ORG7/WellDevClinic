@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Mail;
-using bolnica;
-using Model.Users;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using PSW_Web_app.Models.UserInteraction;
 
 namespace PSW_Web_app.Controllers
 {
@@ -16,7 +15,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
        

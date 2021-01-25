@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace EventSourcing.Repository
             List<DomainEvent> result = new List<DomainEvent>();
             if (eventType.ToLower().Equals("feedbacksubmittedevent"))
                 myDbContext.feedbackSubmittedEvents.ToList().ForEach(@event => result.Add(@event));
+            if (eventType.ToLower().Equals("newexaminationtimespent"))
+                myDbContext.newExaminationTimeSpent.ToList().ForEach(@event => result.Add(@event));
 
             return result;
         }
@@ -29,9 +32,29 @@ namespace EventSourcing.Repository
             {
                 myDbContext.feedbackSubmittedEvents.Add(@event);
             }
+            if (@event is NewExaminationTimeSpent)
+            {
+                myDbContext.newExaminationTimeSpent.Add(@event);
+            }
 
             myDbContext.SaveChanges();
             return domainEvent;
+        }
+
+        public long GetMax(string eventType)
+        {
+            var max = 0;
+            if (eventType.ToLower().Equals("newexaminationtimespent"))
+            {
+                int length = myDbContext.newExaminationTimeSpent.Count();
+                /*if(length == 0)
+                {
+                    return 0;
+                }*/
+                max = myDbContext.newExaminationTimeSpent.Max(x => Convert.ToInt32(x.ScheduleId));
+                max += 1;
+            }
+            return max;
         }
     }
 }

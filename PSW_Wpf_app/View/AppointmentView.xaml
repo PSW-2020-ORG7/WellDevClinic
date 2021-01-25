@@ -15,10 +15,10 @@
            
             <StackPanel Orientation="Horizontal">
                 <TextBlock Name="ChooseDoctor" Text="Choose a patient:" FontSize="20"  Margin="10" Width="150" Height="30"/>
-                <ComboBox HorizontalAlignment="Left" Margin="10"  Width="200" Height="25" Name="PatientForExaminations" ItemsSource ="{Binding Path=Patients,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Username" >
+                <ComboBox HorizontalAlignment="Left" Margin="10"  Width="200" Height="25" Name="PatientForExaminations" ItemsSource ="{Binding Path=Patients,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Person.FirstName" >
                 </ComboBox>
                 <TextBlock Name="ChoosePatient" Text="Choose a doctor:" FontSize="20"  Margin="10" Width="150" Height="30"/>
-                <ComboBox HorizontalAlignment="Left" Margin="10"  Width="200" Height="25" Name="DoctorsForExaminations" ItemsSource ="{Binding Path=Doctors,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name">
+                <ComboBox HorizontalAlignment="Left" Margin="10"  Width="200" Height="25" Name="DoctorsForExaminations" ItemsSource ="{Binding Path=Doctors,  UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Person.FirstName">
                 </ComboBox>
                 <Button Margin="10" Foreground="Black" ToolTipService.ShowOnDisabled="true" ToolTip="Average grade of doctor." FontSize="14" Name="ButtonGrade" Width="40" Height="40" IsEnabled="False"/>
 
@@ -58,7 +58,7 @@
                             </DataGrid.CellStyle>
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Binding="{Binding Doctor.FirstName}" Width="*"></DataGridTextColumn>
+                                <DataGridTextColumn  x:Name="ColumnDoctorForSchedule" Header="Doctor" Binding="{Binding Doctor.Person.FirstName}" Width="*"></DataGridTextColumn>
                                 <DataGridTextColumn x:Name="ColumnDateForSchedule" Header="Date and Time"  Binding="{Binding Period.StartDate}" Width="*"></DataGridTextColumn>
                                 <DataGridTextColumn x:Name="ColumnOrdinationForSchedule" Header="Ordination" Binding="{Binding Room.Id}" Width="*"></DataGridTextColumn>
 

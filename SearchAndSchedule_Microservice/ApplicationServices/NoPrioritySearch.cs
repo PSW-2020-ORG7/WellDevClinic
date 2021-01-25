@@ -14,7 +14,7 @@ namespace SearchAndSchedule_Microservice.ApplicationServices
 
         [Obsolete]
         public List<ExaminationDTO> Search(BusinessDayDTO businessDayDTO, List<BusinessDay> businessDayCollection)
-        {
+        {                               // businessDay napravljen, svi biznis dani lekara
             List<BusinessDay> IterationDays = DaysForExactPeriod(businessDayDTO.Period, businessDayDTO.Doctor.BussinesDays);
             if (IterationDays != null)
             {

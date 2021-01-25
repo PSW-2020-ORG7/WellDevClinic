@@ -1,4 +1,6 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
+using PSW_Wpf_app.Model.DTO;
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -29,14 +31,13 @@ namespace PSW_Wpf_app.View
                     return;
 
                 
-                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
-
+                Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+                
                 PriorityType priority = PriorityType.NoPriority;
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
-                businessDayDTO.PatientScheduling = true;
+                
                 scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
                
             }
@@ -45,15 +46,15 @@ namespace PSW_Wpf_app.View
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
 
-                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+                Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+                
 
                 PriorityType priority = PriorityType.Doctor;
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
                 period.EndDate = DateTime.Parse(Picker2.Text);
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
-                businessDayDTO.PatientScheduling = true;
+                
                 scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
 
             }
@@ -61,15 +62,15 @@ namespace PSW_Wpf_app.View
             {
                 if (Picker.SelectedDate == null || Picker2.SelectedDate == null)
                     return;
-                DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-                Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+                Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+                
 
                 PriorityType priority = PriorityType.Date;
                 Period period = new Period();
                 period.StartDate = DateTime.Parse(Picker.Text);
                 period.EndDate = DateTime.Parse(Picker2.Text);
                 BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
-                businessDayDTO.PatientScheduling = true;
+                
                 scheduleExaminationsGrid.ItemsSource = await WpfClient.FindTerms(businessDayDTO);
 
             }
@@ -93,28 +94,28 @@ namespace PSW_Wpf_app.View
             AppointmentViewModel a = new AppointmentViewModel();
             List<Patient> p = (List<Patient>)await WpfClient.GetAllPatient();
             Patient patient = (Patient)PatientForExaminations.SelectedItem;
-            
             Period period =  new Period();
             period.StartDate = scheduleExam.Period.StartDate;
             period.EndDate = scheduleExam.Period.EndDate;
 
 
-            ExaminationDTO ex = new ExaminationDTO(doctor, period, patient);
+            UpcomingExamination ex = new UpcomingExamination(doctor, period, patient);
 
-            Examination examination = (Examination)await WpfClient.NewExamination(ex);
+            UpcomingExamination examination = (UpcomingExamination)await WpfClient.NewExamination(ex);
 
             if (examination != null)
             {
                 MessageBox.Show("Appointment is scheduled!");
-                GetRoomId(doctor.Id);
+                GetRoomId(doctor, examination.Period);
 
             }
 
         }
-        private async void GetRoomId(long id)
+        private async void GetRoomId(Doctor doctor, Period period)
         {
-            BusinessDayDTO buss = await WpfClient.GetBussinessdayByDoctor(id);
-            RomId = buss.RoomId;
+            ExactDayDTO exactDay = new ExactDayDTO(doctor, period.StartDate);
+            BusinessDay buss = (BusinessDay)await WpfClient.GetExactBusinessdayByDoctor(exactDay);
+            RomId = buss.Room.Id;
         }
 
     }

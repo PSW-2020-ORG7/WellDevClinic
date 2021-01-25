@@ -9,6 +9,7 @@ namespace PSW_Wpf_app.View
     public partial class RoomStuffView : Window
     {
         FloorElement floorElement = new FloorElement();
+
         public RoomStuffView(FloorElement f)
         {
             
@@ -17,7 +18,8 @@ namespace PSW_Wpf_app.View
             userEqipmentAndDrugs.Content = new RoomOverviewView(f);
         }
 
-        private void RoomOverviewClick(object sender, RoutedEventArgs e)
+
+	    private void RoomOverviewClick(object sender, RoutedEventArgs e)
         {
             this.userEqipmentAndDrugs.Content = new RoomOverviewView(floorElement);
         }
@@ -36,5 +38,6 @@ namespace PSW_Wpf_app.View
         {
             userEqipmentAndDrugs.Content = new RoomEquipmentRelocationView(floorElement);
         }
+
     }
 }

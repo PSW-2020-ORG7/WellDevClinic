@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+WORKDIR /app
+EXPOSE 51891
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY ["DrugManipulation_Interlayer/DrugManipulation_Interlayer.csproj", "DrugManipulation_Interlayer/"]
+COPY ["DrugManipulation_Microservice/DrugManipulation_Microservice.csproj", "DrugManipulation_Microservice/"]
+COPY ["EventSourcing/EventSourcing.csproj", "EventSourcing/"]
+
+RUN dotnet restore "DrugManipulation_Interlayer/DrugManipulation_Interlayer.csproj"
+COPY . .
+WORKDIR "/src/DrugManipulation_Interlayer"
+RUN dotnet build "DrugManipulation_Interlayer.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "DrugManipulation_Interlayer.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+CMD ASPNETCORE_URLS=http://*:51891 dotnet DrugManipulation_Interlayer.dll
+
+

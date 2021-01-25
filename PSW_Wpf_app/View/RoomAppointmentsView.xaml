@@ -8,8 +8,9 @@
               d:DesignHeight="500" d:DesignWidth="710" Background="AliceBlue">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Height="33" Margin="10,32,0,0" Text="Scheduled Appointments" FontSize="22" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="279"/>
-        <DataGrid x:Name="scheduledAppointments" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="296" VerticalAlignment="Top" Width="668" CanUserAddRows="False"
-			AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" RenderTransformOrigin="0.5,0.5" Margin="10,128,0,0" >
+
+        <DataGrid x:Name="scheduledAppointments" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="230" VerticalAlignment="Center" Width="650" CanUserAddRows="False"
+			AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,0" >
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Margin" Value="0"/>
@@ -18,17 +19,12 @@
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.FirstName}"/>
+                <DataGridTextColumn Header="Doctor" Width="*" Binding="{Binding Doctor.Person.FirstName}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Term start time" Width="*" Binding="{Binding Period.StartDate}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Term end time" Width="*" Binding="{Binding Period.EndDate}"/>
-                <DataGridTextColumn x:Name="room"  Header="Ordination"  Width="*" Binding="{Binding Room.Id}"/>
-                <DataGridTemplateColumn Header="Cancle" x:Name="cancle" Width="*"  >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Width="190" Content="cancel appointment" Click="Cancel_Click"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+
+                <DataGridTextColumn x:Name="room"  Header="Ordination"  Width="*" Binding="{Binding Room.RoomCode}"/>
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

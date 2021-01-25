@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using bolnica.Service;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
-using UserInteraction_Microservice.Domain.Model;
+using PSW_Web_app.Models;
 
 namespace PSW_Web_app.Controllers
 {
@@ -15,7 +14,7 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class FeedbackController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
 
         static readonly HttpClient client = new HttpClient();
         [HttpGet]

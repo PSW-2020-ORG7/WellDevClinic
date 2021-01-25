@@ -1,4 +1,5 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using PSW_Wpf_app.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -52,8 +53,8 @@ namespace PSW_Wpf_app.View
 
         private async void SearchAvailablePeriods(PriorityType priorityType)
         {
-            DoctorDTO d = (DoctorDTO)DoctorsForExaminations.SelectedItem;
-            Doctor doctor = new Doctor() { Id = d.Id, FirstName = d.Name, LastName = d.Surname };
+            Doctor doctor = (Doctor)DoctorsForExaminations.SelectedItem;
+            
 
             PriorityType priority = priorityType;
             Period period = new Period();
@@ -61,13 +62,20 @@ namespace PSW_Wpf_app.View
             period.EndDate = DateTime.Parse(Picker2.Text);
 
             BusinessDayDTO businessDayDTO = new BusinessDayDTO(doctor, period, priority);
-            businessDayDTO.PatientScheduling = true;
             List<ExaminationDTO> exams = await WpfClient.FindTerms(businessDayDTO);
+
+            if(exams.Count == 0)
+            {
+
+                MessageBox.Show("There is no available term.Choose a priority!");
+                return;
+            
+            }
 
             List<ExaminationDTO> final = new List<ExaminationDTO>();
             foreach (ExaminationDTO item in exams)
             {
-                if (item.Room.Equipment_inventory.Find(x => x.Equipment.Name == ((Equipment)EquipmentBox.SelectedItem).Name) != null)
+                if (item.Room.EquipmentStatistic.Find(x => x.Equipment.Name == ((Equipment)EquipmentBox.SelectedItem).Name) != null)
                 {
                     final.Add(item);
                 }
@@ -124,9 +132,9 @@ namespace PSW_Wpf_app.View
             period.EndDate = scheduleExam.Period.EndDate;
 
 
-            ExaminationDTO ex = new ExaminationDTO(doctor, period, patient);
+            UpcomingExamination ex = new UpcomingExamination(doctor, period, patient);
 
-            Examination examination = (Examination)await WpfClient.NewExamination(ex);
+            UpcomingExamination examination = (UpcomingExamination)await WpfClient.NewExamination(ex);
 
             if (examination != null)
             {

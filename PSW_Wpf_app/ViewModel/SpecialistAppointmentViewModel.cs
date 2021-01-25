@@ -1,4 +1,5 @@
 ﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,14 +10,14 @@ namespace PSW_Wpf_app.ViewModel
     class SpecialistAppointmentViewModel : BindableBase
     {
 
-        BindingList<DoctorDTO> doctors = new BindingList<DoctorDTO>();
+        BindingList<Doctor> doctors = new BindingList<Doctor>();
         BindingList<Speciality> specialities = new BindingList<Speciality>();
         BindingList<Patient> patients = new BindingList<Patient>();
         BindingList<Equipment> equipments = new BindingList<Equipment>();
 
 
 
-        public BindingList<DoctorDTO> Doctors
+        public BindingList<Doctor> Doctors
         {
             get
             {
@@ -72,19 +73,6 @@ namespace PSW_Wpf_app.ViewModel
 
         }
 
-        private BindingList<string> name = new BindingList<string>();
-        public BindingList<string> Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                OnPropertyChanged("Name");
-            }
-        }
         public SpecialistAppointmentViewModel()
         {
             LoadPatients();
@@ -101,13 +89,8 @@ namespace PSW_Wpf_app.ViewModel
         }
         public async void LoadDoctors(string speciality)
         {
-            Doctors = new BindingList<DoctorDTO>(await WpfClient.GetDoctorsBySpeciality(speciality));
-            foreach (DoctorDTO d in doctors)
-            {
-
-                name.Add("dr" + d.Name + " " + d.Surname + " - " + d.Speciality);
-
-            }
+            Doctors = new BindingList<Doctor>(await WpfClient.GetDoctorsBySpeciality(speciality));
+           
         }
         private async void LoadPatients()
         {
