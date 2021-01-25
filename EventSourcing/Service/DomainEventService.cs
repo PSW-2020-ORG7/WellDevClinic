@@ -30,6 +30,11 @@ namespace EventSourcing.Service
             return _domainEventRepository.GetMax(eventType);
         }
 
+        public long GetMostVisitedRoom()
+        {
+            return _domainEventRepository.GetMostVisitedRoom();
+        }
+
         public AverageTimeDTO Initialize()
         {
             AverageTimeDTO av = new AverageTimeDTO();

@@ -269,6 +269,26 @@ namespace PSW_Wpf_app.Client
 
         }
 
+        public static async Task<long> GetMostVisitedRoom()
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/roomevent/mostVisitedRoom");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            long roomId = JsonConvert.DeserializeObject<long>(responseBody);
+
+            return roomId;
+        }
+
+        public static async Task<RoomEvent> SaveMostVisitedRoom(RoomEvent roomEvent)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(roomEvent));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:57400/api/roomevent/save/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            RoomEvent result = JsonConvert.DeserializeObject<RoomEvent>(value);
+            return result;
+        }
+
     }
 }
 

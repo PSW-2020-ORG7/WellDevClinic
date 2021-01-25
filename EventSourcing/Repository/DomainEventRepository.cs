@@ -64,10 +64,10 @@ namespace EventSourcing.Repository
             return max;
         }
 
-        public long GetMostVisitedRoom(string eventType)
+        public long GetMostVisitedRoom()
         {
-            List<RoomEvent> roomEvents = new List<RoomEvent>();
-            List<RoomEvent> mostVisitedRoom = new List<RoomEvent>();
+            List<RoomEvent> roomEvents = (List<RoomEvent>)GetAll("roomevent");
+            List <RoomEvent> mostVisitedRoom = new List<RoomEvent>();
             int days = 3;
             foreach(RoomEvent r in roomEvents)
             {
