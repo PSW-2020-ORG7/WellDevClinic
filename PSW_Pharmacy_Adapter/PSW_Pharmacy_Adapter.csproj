@@ -8,17 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Medication_Microservice\ApplicationServices\GrpcClientService.cs~RF25d1bab4.TMP\**" />
-    <Content Remove="Medication_Microservice\ApplicationServices\GrpcClientService.cs~RF25d1bab4.TMP\**" />
-    <EmbeddedResource Remove="Medication_Microservice\ApplicationServices\GrpcClientService.cs~RF25d1bab4.TMP\**" />
-    <None Remove="Medication_Microservice\ApplicationServices\GrpcClientService.cs~RF25d1bab4.TMP\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\pharmacyRegistration.html~RF18f407e0.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.12.4" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.30.0" />
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.30.0" />

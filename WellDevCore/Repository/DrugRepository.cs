@@ -1,14 +1,12 @@
-using bolnica;
 using bolnica.Model;
 using bolnica.Repository;
 using Model.PatientSecretary;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Repository
 {
-   public class DrugRepository : IDrugRepository, IEagerRepository<Drug,long>
+    public class DrugRepository : IDrugRepository, IEagerRepository<Drug,long>
    {
         private readonly IIngredientRepository _ingredientRepository;
         private readonly MyDbContext myDbContext;
@@ -16,9 +14,7 @@ namespace Repository
         public DrugRepository(IIngredientRepository ingredientRepository, MyDbContext context)
         {
             _ingredientRepository = ingredientRepository;
-
             myDbContext = context;
-
         }
 
         /*public DrugRepository(ICSVStream<Drug> stream, ISequencer<long> sequencer, IIngredientRepository ingredientRepository)
@@ -31,7 +27,7 @@ namespace Repository
         
         public IEnumerable<Drug> GetAllEager()
         {
-            IEnumerable<Drug> drugs = this.GetEager();
+            IEnumerable<Drug> drugs = GetEager();
             IEnumerable<Ingredient> ingredients = _ingredientRepository.GetEager();
             BindDrugIngredients(drugs, ingredients);
             BindAlternativeDrugs(drugs);
@@ -92,7 +88,7 @@ namespace Repository
         public List<Drug> GetNotApprovedDrugs()
         {
             List<Drug> notApprovedDrugs = new List<Drug>();
-            IEnumerable<Drug> drugs = this.GetEager();
+            IEnumerable<Drug> drugs = GetEager();
             foreach (Drug drug in drugs.ToList())
             {
                 if (drug.Approved == false)
@@ -131,6 +127,5 @@ namespace Repository
 
         public Drug Get(long id)
             => myDbContext.Drug.FirstOrDefault(drug => drug.Id == id);
-
-   }
+    }
 }

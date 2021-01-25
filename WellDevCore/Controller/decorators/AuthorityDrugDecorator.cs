@@ -1,30 +1,30 @@
 ﻿using Model.PatientSecretary;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace bolnica.Controller.decorators
 {
     public class AuthorityDrugDecorator : IDrugController
     {
         private IDrugController DrugController;
-        private String Role;
-        private Dictionary<String, List<String>> AuthorizedUsers;
+        private string Role;
+        private Dictionary<string, List<string>> AuthorizedUsers;
 
-        public AuthorityDrugDecorator(IDrugController drugController, String role)
+        public AuthorityDrugDecorator(IDrugController drugController, string role)
         {
-            this.DrugController = drugController;
-            this.Role = role;
-            AuthorizedUsers = new Dictionary<string, List<string>>();
-            AuthorizedUsers["ApproveDrug"] = new List<string>() { "Doctor" };
-            AuthorizedUsers["CheckDrugNameUnique"] = new List<string>() { "Director" };
-            AuthorizedUsers["Delete"] = new List<string>() { "Director" };
-            AuthorizedUsers["Edit"] = new List<string>() { "Director", "Doctor" };
-            AuthorizedUsers["Get"] = new List<string>() { "Director", "Doctor" };
-            AuthorizedUsers["GetAll"] = new List<string>() { "Director", "Doctor" };
-            AuthorizedUsers["GetNotApprovedDrugs"] = new List<string>() { "Doctor" };
-            AuthorizedUsers["Save"] = new List<string>() { "Director" };
+            DrugController = drugController;
+            Role = role;
+            AuthorizedUsers = new Dictionary<string, List<string>>
+            {
+                ["ApproveDrug"] = new List<string>() { "Doctor" },
+                ["CheckDrugNameUnique"] = new List<string>() { "Director" },
+                ["Delete"] = new List<string>() { "Director" },
+                ["Edit"] = new List<string>() { "Director", "Doctor" },
+                ["Get"] = new List<string>() { "Director", "Doctor" },
+                ["GetAll"] = new List<string>() { "Director", "Doctor" },
+                ["GetNotApprovedDrugs"] = new List<string>() { "Doctor" },
+                ["Save"] = new List<string>() { "Director" }
+            };
         }
 
         public bool CheckDrugNameUnique(string name)
@@ -59,7 +59,6 @@ namespace bolnica.Controller.decorators
                 return DrugController.GetAll();
             return null;
         }
-
 
         public List<Drug> GetNotApprovedDrugs()
         {

@@ -28,8 +28,9 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 
         public async Task<List<Medication>> GetAllHospitalMedications()
             => JsonConvert.DeserializeObject<List<Medication>>(
-                           (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug"))
+                           (await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug/medicationStock"))
                            .Content.ReadAsStringAsync().Result);
+            
 
         public async Task<Medication> GetHospitalMedication(long id)
             => JsonConvert.DeserializeObject<Medication>(
