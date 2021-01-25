@@ -9,8 +9,7 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
         [Key]
         public long? Id { get; set; }
         public virtual List<Medication> Medications { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public virtual Period Period { get; set;}
         public long OfferWinner { get; set; }
         public bool IsDeleted { get; set; }
 
@@ -20,8 +19,7 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
         {
             Id = id;
             Medications = medications;
-            StartDate = startDate;
-            EndDate = endDate;
+            Period = new Period(startDate, endDate);
             OfferWinner = offerWinner;
             IsDeleted = isDeleted;
         }

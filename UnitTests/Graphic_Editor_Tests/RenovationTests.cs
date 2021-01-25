@@ -104,20 +104,18 @@ namespace UnitTests.Graphic_Editor_Tests
         public void Edit_Renovation()
         {
             var stubService = new Mock<IRenovationService>();
-
             DateTime start = DateTime.Now;
             DateTime end = start.AddDays(1);
             Period period = new Period(start, end);
             Room room = new Room(901);
+
             List<Period> periods = new List<Period>();
             periods.Add(period);
-
             Renovation renovation = new Renovation(RenovationStatus.Traje, period, "masks", room);
 
             stubService.Object.Edit(renovation);
 
             stubService.Verify(x => x.Edit(It.IsAny<Renovation>()), Times.AtLeastOnce);
         }
-
     }
 }

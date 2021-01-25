@@ -7,4 +7,5 @@ import "Medication_Microservice/Protos/model.proto";
 service NetGrpcService {
   rpc transfer (ProtoAvailableMedication) returns (ProtoResponseAvailableMedication);
   rpc transferMedications (ProtoMedications) returns (ProtoResponseMedications);
+  rpc transferOrderMeds (ProtoOrderMeds) returns (ProtoResponseOrderMeds);
 }

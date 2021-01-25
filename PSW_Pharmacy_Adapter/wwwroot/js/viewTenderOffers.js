@@ -19,15 +19,21 @@ $(document).ready(function () {
                         viewAllOffers(data)
                     }
                 },
+                error: function (e) {
+                    pageInfo("Error while loading tender offer!");
+                }
             });
         },
+        error: function (e) {
+            pageInfo("Error while loading tender!");
+        }
     });
 })
 
 function viewTender(tender) {
     $("#viewTender").empty();
     var now = new Date().getTime()
-    var endDate = new Date(currTender.endDate).getTime();
+    var endDate = new Date(currTender.period.endDate).getTime();
 
     var content = '<div class="card border-info mb-3" style="width:350px; position:relative; left:40%">';
     content += '<div class="card-body">';
@@ -44,8 +50,8 @@ function viewTender(tender) {
         }
     }
     content += '</table></h5>'
-    var countDownDate = new Date(tender.endDate).getTime();
-    content += '<p style="background-color:red;font-size:40px" id="timerTender"></p>';
+    var countDownDate = new Date(tender.period.endDate).getTime();
+    content += '<p style="background-color:#17a2b8;font-size:40px" id="timerTender"></p>';
 
     if (tender.offerWinner != null && endDate < now) {
         content += '<button id="btnDeal" class="btn btn-primary btn-lg expand" data-target="#expiredActionModal"';
@@ -98,14 +104,17 @@ function viewAllOffers(offers) {
     for (let offer of offers) {
         var content = '<div class="card" style="width:350px; display:inline-block ';
 
-        if (currTender.offerWinner != null &&  offer.id == currTender.offerWinner)
-        {
+        if (currTender.offerWinner != null && offer.id == currTender.offerWinner) {
             winner = offer;
-            content += '; border: 10px solid red';
+            content += '; border: 10px solid #ffc107';
+            content += '"><div class="card-body">';
+            content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
+            content += offer.id + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🏆';
+        } else {
+            content += '"><div class="card-body">';
+            content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
+            content += offer.id;
         }
-        content += '"><div class="card-body">';
-        content += '<div class="data"> <h5 class="card-subtitle mb-2 text-muted">ID: '
-        content += offer.id;
         content += '<br>' + offer.pharmacyName;
         content += '</h5>';
         content += '<h6><table style="margin:10px">';
@@ -157,6 +166,9 @@ function deleteAction(id) {
                     window.location.reload();
                 }
             },
+            error: function (e) {
+                pageInfo("Error while deleting offer!");
+            }
         });
 
 	});
@@ -176,13 +188,16 @@ function useAction(id) {
                 });
             }
         },
+        error: function (e) {
+            pageInfo("Error while updating tender winner!");
+        }
     });
 } 
 
 function sendEmail() {
     var now = new Date().getTime()
     var endDate = new Date(currTender.endDate).getTime();
-    if (endDate < now) {
+
         console.log("curr:" + endDate + "; " + now);
         if (currTender.offerWinner != null) {
             $("#expiredAction").show();
@@ -195,6 +210,9 @@ function sendEmail() {
                         alert("Mail sent");
                         window.location.reload();
                     },
+                    error: function (e) {
+                        pageInfo("Email is not sent!");
+                    }
                 });
                 let order = [];
 
@@ -230,9 +248,15 @@ function sendEmail() {
                 });
             })
         }
-    }
+
 }
 
 function myTimer() {
     alert("Lekovi su stigli");
+}
+
+function pageInfo(text) {
+    $("#message").text(text);
+    $("#pageInfoModal").modal('toggle');
+    $("#pageInfo").show();
 }

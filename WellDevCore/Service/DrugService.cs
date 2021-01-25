@@ -1,13 +1,10 @@
-
-using bolnica.Service;
 using Model.PatientSecretary;
 using Repository;
-using System;
 using System.Collections.Generic;
 
 namespace bolnica.Service
 {
-   public class DrugService : IDrugService
+    public class DrugService : IDrugService
    {
         private readonly IDrugRepository _repository;
         public DrugService(IDrugRepository repository)
@@ -45,12 +42,11 @@ namespace bolnica.Service
             return _repository.Save(entity);
         }
 
-        public bool CheckDrugNameUnique(String name)
+        public bool CheckDrugNameUnique(string name)
         {
             foreach (Drug drug in GetAll())
                 if (drug.Name.Equals(name))
                     return false;
-
             return true;
         }
     }

@@ -1,16 +1,22 @@
-﻿var allActions;
+﻿var allSales;
 var nameList = [];
 
 $(document).ready(function () {
 	$.ajax({
 		method: "GET",
-		url: "../api/actionsandbenefits/all",
+		url: "../api/sale/all",
 		contentType: "application/json",
 		success: function (data) {
-			allActions = data;
-			viewActionsAndBenefits(allActions);
+			allSales = data;
+			if (data.length <= 0)
+				$("#noContent").removeAttr("hidden");
+			else
+				viewSales(allSales);
 			$(".loader").css("display", "none");
-			$("#viewAction").css("display", "block");
+			$("#viewSales").css("display", "block");
+		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to show all actions!");
 		}
 	});
 
@@ -20,43 +26,45 @@ $(document).ready(function () {
 })
 
 
-function viewActionsAndBenefits(data) {
-	$("#viewAction").empty();
-	for (let act of data) {
-		let content = '<div class="card">';
-		content += '<p class="card-text">';
-		content += act.messageAboutAction;
+function viewSales(data) {
+	$("#viewSales").empty();
+	for (let sale of data) {
+		let content = '<div class="card"><div class="card-body">';
+		content += '<h4 class="card-text card-subtitle mb-2">';
+		content += sale.pharmacyName;
 		content += '<span class="fa fa-star star';
-		if (act.status == 2)
+		if (sale.status == 2)
 			content += " checked";
-		content += '" onClick="toggleFav(' + act.id + ')"></span></p>';
-		content += '<div class="card-body">';
+		content += '" onClick="toggleFav(' + sale.id + ')"></span></h4>';
 		content += '<div class="data">';
+		content += '<hr color="#FFFF33">';
+		content += sale.saleMessage;
+		content += '<hr color="#FFFF33">';
 		content += '<table style="margin:10px">';
-		content += '<tr><td float="right">Pharmacy:</td><td>';
-		content += act.pharmacyName;
-		content += '</td></tr>';
-		content += '<tr><td>Start date:</td><td>';
-		content += ISOtoShort(new Date(act.startDate));
-		content += '</td></tr>';
-		content += '<tr><td>End date:</td><td>';
-		content += ISOtoShort(new Date(act.endDate));
+		let currDate = new Date(sale.valPeriod.startDate).getTime();
+		if (currDate > new Date().getTime()) {
+			content += '<tr><td class="text-muted">Starts at:</td><td>';
+			content += ISOtoShort(new Date(sale.valPeriod.startDate));
+		} else {
+			content += '<tr><td class="text-muted">Expires at:</td><td>';
+			content += ISOtoShort(new Date(sale.valPeriod.endDate));
+        }
 		content += '</td></tr>';
 		content += '</table>';
-		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteActionModal" ';
-		content += ' onclick="deleteAction(' + act.id + ')"> Discard </button > ';
+		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteSaleModal" ';
+		content += ' onclick="deleteSale(' + sale.id + ')"> Discard </button > ';
 		content += '<button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"';
-		content += ' onclick="useAction(' + act.id + ')"> Use it now </button > ';
+		content += ' onclick="useAction(' + sale.id + ')"> Use it now </button > ';
 		content += '</div></div></div>';
 		content += '</div>';
 
-		$("#viewAction").append(content);
+		$("#viewSales").append(content);
 
 		// Filter name select fill
-		if (nameList.includes(act.pharmacyName))
+		if (nameList.includes(sale.pharmacyName))
 			continue;
-		nameList.push(act.pharmacyName);
-		let nameFilter = '<option value="' + act.pharmacyName + '">' + act.pharmacyName + '</option>';
+		nameList.push(sale.pharmacyName);
+		let nameFilter = '<option value="' + sale.pharmacyName + '">' + sale.pharmacyName + '</option>';
 		$("#selectname").append(nameFilter);
 	}
 }
@@ -65,34 +73,34 @@ function sortData() {
 	let sort = $("#sort").val();
 	let order = $("#order").val();
 	sortCards(sort, order);
-	viewActionsAndBenefits(allActions);
+	viewSales(allSales);
 }
 
 // Dates are in format : yyyy-MM-dd so we can compare them as strings
 function sortCards(sort, order) {
-	for (let i = 0; i < (allActions.length - 1); i++) {
+	for (let i = 0; i < (allSales.length - 1); i++) {
 		let minIdx = i;
-		for (let j = i + 1; j < allActions.length; j++) {
+		for (let j = i + 1; j < allSales.length; j++) {
 			if (sort == "phName") {
-				if (allActions[minIdx].pharmacyName.toLowerCase() > allActions[j].pharmacyName.toLowerCase())
+				if (allSales[minIdx].pharmacyName.toLowerCase() > allSales[j].pharmacyName.toLowerCase())
 					minIdx = j;
 			} else if (sort == "start") {
-				if (allActions[minIdx].startDate > allActions[j].startDate)
+				if (allSales[minIdx].valPeriod.startDate > allSales[j].valPeriod.startDate)
 					minIdx = j;
 			} else if (sort == "expire") {
-				if (allActions[minIdx].endDate > allActions[j].endDate)
+				if (allSales[minIdx].valPeriod.endDate > allSales[j].valPeriod.endDate)
 					minIdx = j;
 			} else if (sort == "list") {
-				if (allActions[minIdx].id > allActions[j].id)
+				if (allSales[minIdx].id > allSales[j].id)
 					minIdx = j;
             }
 		}
-		let temp = allActions[i];
-		allActions[i] = allActions[minIdx];
-		allActions[minIdx] = temp;
+		let temp = allSales[i];
+		allSales[i] = allSales[minIdx];
+		allSales[minIdx] = temp;
 	}
 	if (order == 'desc')
-		allActions.reverse();
+		allSales.reverse();
 }
 
 function filter() {
@@ -107,26 +115,26 @@ function filter() {
 		return;
     }
 
-	for (let act of allActions) {
-		if (name != "all" && act.pharmacyName != name)
+	for (let sale of allSales) {
+		if (name != "all" && sale.pharmacyName != name)
 			continue;
-		if (startDate && act.startDate < startDate)
+		if (startDate && sale.valPeriod.startDate < startDate)
 			continue;
-		if (endDate && act.endDate > endDate)
+		if (endDate && sale.valPeriod.endDate > endDate)
 			continue;
-		if (act.status != 2 && fav == true)
+		if (sale.status != 2 && fav == true)
 			continue;
-		filtered.push(act);
+		filtered.push(sale);
 	}
-	viewActionsAndBenefits(filtered);
+	viewSales(filtered);
 }
 
-function deleteAction(id) {
-	$("#deleteAction").show();
+function deleteSale(id) {
+	$("#deleteSale").show();
 	$("button#btnYes1").click(function () {
 		$.ajax({
 			method: "DELETE",
-			url: "../api/actionsandbenefits/delete/" + id,
+			url: "../api/sale/delete/" + id,
 			contentType: "application/json",
 			success: function (data) {
 				if (data) {
@@ -134,31 +142,34 @@ function deleteAction(id) {
 					window.location.reload();
 				}
 			},
+			error: function (e) {
+				pageInfo("Action is not successfully deleted!");
+			}
 		});
 	});
-	
-	
 }
 
 function toggleFav(id) {
 	let newStatus;
-	for (let act of allActions)
-		if (act.id == id) {
-			if (act.status != 2)
+	for (let sale of allSales)
+		if (sale.id == id) {
+			if (sale.status != 2)
 				newStatus = 2;
 			else
 				newStatus = 1;
-
-			act.status = newStatus;
+			sale.status = newStatus;
 			break;
 		}
 
 	$.ajax({
 		method: "PUT",
-		url: "../api/actionsandbenefits/status/" + id + "/" + newStatus,
+		url: "../api/sale/status/" + id + "/" + newStatus,
 		contentType: "application/json",
 		success: function (data) {
-			viewActionsAndBenefits(allActions);
+			viewSales(allSales);
+		},
+		error: function (e) {
+			pageInfo("An error has occured while trying to update action!");
 		}
 	});
 }
@@ -184,4 +195,10 @@ function ISOtoShort(date) {
 		month = '0' + month;
 
 	return String(day + '-' + month + '-' + year);
+}
+
+function pageInfo(text) {
+	$("#message").text(text);
+	$("#pageInfoModal").modal('toggle');
+	$("#pageInfo").show();
 }

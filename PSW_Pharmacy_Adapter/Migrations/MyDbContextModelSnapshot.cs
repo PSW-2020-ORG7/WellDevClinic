@@ -2,6 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using PSW_Pharmacy_Adapter;
 
 namespace PSW_Pharmacy_Adapter.Migrations
 {
@@ -15,33 +17,7 @@ namespace PSW_Pharmacy_Adapter.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.ActionAndBenefit", b =>
-                {
-                    b.Property<long?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("MessageAboutAction")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("PharmacyName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ActionsAndBenefits");
-                });
-
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Api", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model.Api", b =>
                 {
                     b.Property<string>("NameOfPharmacy")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
@@ -49,15 +25,35 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.Property<string>("ApiKey")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("GrpcPort")
+                        .HasColumnType("int");
 
                     b.HasKey("NameOfPharmacy");
 
                     b.ToTable("ApiKeys");
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model.Sale", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("SaleMessage")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sales");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Ingredient", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +75,7 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.ToTable("Ingredient");
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Medication", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Medication", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,14 +110,22 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.ToTable("Medication");
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Pharmacy.Tender", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.PharmacyEmails", b =>
                 {
                     b.Property<long?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime(6)");
+                    b.HasKey("Id");
+
+                    b.ToTable("Email");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Tender", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
@@ -129,22 +133,16 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.Property<long>("OfferWinner")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime(6)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Tender");
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Pharmacy.TenderOffer", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.TenderOffer", b =>
                 {
                     b.Property<long?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Message")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -163,40 +161,127 @@ namespace PSW_Pharmacy_Adapter.Migrations
                     b.ToTable("TenderOffers");
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.PharmacyEmails", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model.Api", b =>
                 {
-                    b.Property<long?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                    b.OwnsOne("PSW_Pharmacy_Adapter.Users_Microservice.Domain.Model.Endpoint", "Url", b1 =>
+                        {
+                            b1.Property<string>("ApiNameOfPharmacy")
+                                .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                            b1.Property<string>("Url")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("Id");
+                            b1.HasKey("ApiNameOfPharmacy");
 
-                    b.ToTable("Email");
+                            b1.ToTable("ApiKeys");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApiNameOfPharmacy");
+                        });
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Ingredient", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model.Sale", b =>
                 {
-                    b.HasOne("PSW_Pharmacy_Adapter.Model.Medication", null)
+                    b.OwnsOne("PSW_Pharmacy_Adapter.Sale_Microservice.Domain.Model.Period", "ValPeriod", b1 =>
+                        {
+                            b1.Property<long>("SaleId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.HasKey("SaleId");
+
+                            b1.ToTable("Sales");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SaleId");
+                        });
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Ingredient", b =>
+                {
+                    b.HasOne("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Medication", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("MedicationId");
                 });
 
-            modelBuilder.Entity("PSW_Pharmacy_Adapter.Model.Medication", b =>
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Medication", b =>
                 {
-                    b.HasOne("PSW_Pharmacy_Adapter.Model.Medication", null)
+                    b.HasOne("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Medication", null)
                         .WithMany("Alternative")
                         .HasForeignKey("MedicationId");
 
-                    b.HasOne("PSW_Pharmacy_Adapter.Model.Pharmacy.Tender", null)
+                    b.HasOne("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Tender", null)
                         .WithMany("Medications")
                         .HasForeignKey("TenderId");
 
-                    b.HasOne("PSW_Pharmacy_Adapter.Model.Pharmacy.TenderOffer", null)
+                    b.HasOne("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.TenderOffer", null)
                         .WithMany("Medications")
                         .HasForeignKey("TenderOfferId");
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.PharmacyEmails", b =>
+                {
+                    b.OwnsOne("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Email", "Mail", b1 =>
+                        {
+                            b1.Property<long>("PharmacyEmailsId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Mail")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.HasKey("PharmacyEmailsId");
+
+                            b1.ToTable("Email");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PharmacyEmailsId");
+                        });
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Tender", b =>
+                {
+                    b.OwnsOne("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Period", "Period", b1 =>
+                        {
+                            b1.Property<long>("TenderId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime(6)");
+
+                            b1.HasKey("TenderId");
+
+                            b1.ToTable("Tender");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TenderId");
+                        });
+                });
+
+            modelBuilder.Entity("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.TenderOffer", b =>
+                {
+                    b.OwnsOne("PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model.Email", "Mail", b1 =>
+                        {
+                            b1.Property<long>("TenderOfferId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Mail")
+                                .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                            b1.HasKey("TenderOfferId");
+
+                            b1.ToTable("TenderOffers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TenderOfferId");
+                        });
                 });
 #pragma warning restore 612, 618
         }

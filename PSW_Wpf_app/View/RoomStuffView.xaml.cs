@@ -19,7 +19,7 @@ namespace PSW_Wpf_app.View
         }
 
 
-	      private void RoomOverviewClick(object sender, RoutedEventArgs e)
+	    private void RoomOverviewClick(object sender, RoutedEventArgs e)
         {
             this.userEqipmentAndDrugs.Content = new RoomOverviewView(floorElement);
         }
@@ -39,10 +39,5 @@ namespace PSW_Wpf_app.View
             userEqipmentAndDrugs.Content = new RoomEquipmentRelocationView(floorElement);
         }
 
-        private void BasicRenovationClick(object sender, RoutedEventArgs e)
-        {
-            BasicRenovationView basic = new BasicRenovationView(floorElement.RoomId);
-            basic.ShowDialog();
-        }
     }
 }

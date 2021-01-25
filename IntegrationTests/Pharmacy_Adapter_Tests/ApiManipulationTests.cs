@@ -12,6 +12,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         public const string TEST_NAME = "TestPharmacyName";
         public const string TEST_API = "0bs2-2s2c-78ar-qwer";
         public const string TEST_URL = "www.pharmacy.com";
+        public const int TEST_GRPC = 2222;
 
         [Fact]
         public void Add_New_Pharmacy_ApiInfo()
@@ -19,7 +20,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
             MyContextFactory cf = new MyContextFactory();
             ApiKeyService service = new ApiKeyService(new ApiKeyRepository(cf.CreateDbContext(new string[0])));
 
-            Api added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
+            Api added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_GRPC,TEST_URL));
             service.DeletePharmacy(TEST_NAME);  //rollback
 
             added.ShouldNotBeNull();
@@ -30,9 +31,9 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         {
             MyContextFactory cf = new MyContextFactory();
             ApiKeyService service = new ApiKeyService(new ApiKeyRepository(cf.CreateDbContext(new string[0])));
-            service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
+            service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_GRPC,TEST_URL));
 
-            Api added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_URL));
+            Api added = service.AddPharmacy(new Api(TEST_NAME, TEST_API, TEST_GRPC,TEST_URL));
             service.DeletePharmacy(TEST_NAME);  //rollback
 
             added.ShouldBeNull();

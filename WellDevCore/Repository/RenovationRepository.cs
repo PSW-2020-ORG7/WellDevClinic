@@ -58,7 +58,9 @@ namespace Repository
 
         public void Edit(Renovation entity)
         {
-            throw new NotImplementedException();
+            Renovation renovation = GetEager(entity.Id);
+            renovation.Status = entity.Status;
+            myDbContext.SaveChanges();
         }
 
         public void Delete(Renovation entity)

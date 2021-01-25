@@ -12,9 +12,9 @@ namespace PSW_Pharmacy_Adapter.Controllers
     public class GrpcController : ControllerBase
     {
         private readonly GrpcClientService _serviceGrpc;
-        private readonly IMedicationService _medicationService;
+        private readonly IPharmacyMedicationService _medicationService;
 
-        public GrpcController(IMedicationService medicationService) 
+        public GrpcController(IPharmacyMedicationService medicationService) 
         {
             _serviceGrpc = new GrpcClientService();
             _medicationService = medicationService;

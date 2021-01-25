@@ -20,8 +20,8 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         public void Add_Message()
         {
             MyContextFactory cf = new MyContextFactory();
-            ActionAndBenefitRepository actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
-            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, ActionStatus.pending);
+            SaleRepository actionRepository = new SaleRepository(cf.CreateDbContext(new string[0]));
+            Sale ab = new Sale(TEST_ID, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, SaleStatus.pending);
 
             actionRepository.Save(ab);
             actionRepository.Delete(TEST_ID);       //rollback
@@ -34,8 +34,8 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         public void Check_Message()
         {
             MyContextFactory cf = new MyContextFactory();
-            ActionAndBenefitRepository actionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
-            ActionAndBenefit ab = new ActionAndBenefit(TEST_ID1, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, ActionStatus.pending);
+            SaleRepository actionRepository = new SaleRepository(cf.CreateDbContext(new string[0]));
+            Sale ab = new Sale(TEST_ID1, TEST_PHARMACY, TEST_MESSAGE, TEST_START, TEST_END, SaleStatus.pending);
 
             ab = actionRepository.Get(TEST_ID1);
             ab.ShouldBeNull();

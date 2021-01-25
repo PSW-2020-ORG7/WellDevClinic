@@ -1,4 +1,8 @@
-﻿using PSW_Wpf_app.Model;
+﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PSW_Wpf_app.View
@@ -14,12 +18,39 @@ namespace PSW_Wpf_app.View
         {
             InitializeComponent();
             this.floor = floor;
+            LoadRenovations(floor.RoomId);
         }
 
-        private void AdvancedRenovation_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void AdvancedRenovation_Click(object sender, RoutedEventArgs e)
         {
             RoomAdvancedRenovationView view = new RoomAdvancedRenovationView(floor);
             view.Show();
+        }
+
+        private void BasicRenovationClick(object sender, RoutedEventArgs e)
+        {
+            BasicRenovationView basic = new BasicRenovationView(floor.RoomId);
+            basic.ShowDialog();
+        }
+
+        public async void LoadRenovations(long roomId)
+        {
+            List<Renovation> renovations = await Client.WpfClient.GetAllRenovation();
+            BindingList<Renovation> roomRenovations = new BindingList<Renovation>();
+            foreach(Renovation r in renovations)
+            {
+                if (r.Room.Id.Equals(roomId))
+                    roomRenovations.Add(r);
+            }
+            roomRenovation.ItemsSource = roomRenovations;
+        }
+
+        private async void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Renovation renovation = (Renovation)roomRenovation.SelectedItem;
+            renovation.RenovationStatus = RenovationStatus.Otkazano;
+            WpfClient.EditRenovation(renovation);
+            MessageBox.Show("You have successfully canceled renovation !");
         }
     }
 }
