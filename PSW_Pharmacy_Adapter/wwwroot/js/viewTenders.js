@@ -134,7 +134,7 @@ function viewAllTenders(tenders) {
                 content += '<button type="button" class="btn btn-danger btn-lg" onclick="deleteTender(\'' + ten.id + '\')" data-toggle="modal" data-target="#sendModal">';
                 content += 'Delete tender</button >&nbsp;&nbsp;';
             } else {
-                content += '<button type="button" class="btn btn-primary btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
+                content += '<button type="button" class="btn btn-info btn-lg" onclick="makeOffer(\'' + ten.id + '\')" id="' + ten.id + '" data-toggle="modal" data-target="#sendModal">';
                 content += 'Make offer</button >&nbsp;&nbsp;';
             }
             content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" > ';
@@ -344,7 +344,7 @@ function subscribe(e) {
             if (data) {
                 $('#message').text('Succesfully added to database.');
                 $('#inpEmail').css('borderColor', '#ffffff')
-                $('#subscribe-result').css('color', 'rgb(53, 114, 210)')
+                $('#subscribe-result').css('color', '#17a2b8')
                 $('#subscribe-result').html('<p>Thank you for subscribing. We will inform you when new tender is opened.</p>')
                 $('#inpEmail').val('')
                 $("#pageInfo").show();
