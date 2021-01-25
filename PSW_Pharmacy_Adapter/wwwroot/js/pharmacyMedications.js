@@ -31,7 +31,8 @@ function getMedicationStock() {
             $('#write').html(e.responseText);
             $("#stockAction").show();
             $("#btnOk").click(function () {
-                $("#txtResponse").val(e.status + " " + e.statusText);
+                //$("#txtResponse").val(e.status + " " + e.statusText);
+                $("#txtResponse").val("Connection failed.");
             });
         },
     });
@@ -70,7 +71,8 @@ function askPharmacy() {
             $('#write').html(e.responseText);
             $("#stockAction").show();
             $("#btnOk").click(function () {
-                $("#txtResponse").val(e.status + " " + e.statusText);
+                //$("#txtResponse").val(e.status + " " + e.statusText);
+                $("#txtResponse").val("Connection failed.");
             });
         },
     });

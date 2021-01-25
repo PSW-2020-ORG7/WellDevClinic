@@ -45,4 +45,9 @@
     <Protobuf Include="Medication_Microservice\Protos\springGrpcService.proto" GrpcServices="Client" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\images\qrCodes\" />
+  </ItemGroup>
+
 </Project>

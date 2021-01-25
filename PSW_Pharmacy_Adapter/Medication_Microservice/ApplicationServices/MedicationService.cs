@@ -183,13 +183,34 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 
         private async Task<Medication> SaveToHospitalAsync(Medication medication)
         {
-            string jsonString = JsonConvert.SerializeObject(medication);
-            using (HttpContent content = new StringContent(jsonString))
+            var foundMedicine = await _clientFactory.CreateClient().GetAsync(Global.hospitalCommunicationLink + "/api/drug/getByName/" + medication.Name);
+            if (foundMedicine.StatusCode.Equals(HttpStatusCode.OK))
             {
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var response = await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug", content);
-                return JsonConvert.DeserializeObject<Medication>(response.Content.ReadAsStringAsync().Result);
+                Medication medDb = JsonConvert.DeserializeObject<Medication>(foundMedicine.Content.ReadAsStringAsync().Result);
+                medDb.Amount += medication.Amount;
+                await UpdateMediaction(medDb);
+                return medication;
             }
+            else
+            {
+                return JsonConvert.DeserializeObject<Medication>((await SaveMedicationAsync(medication)).Content.ReadAsStringAsync().Result);
+            }
+        }
+
+        private async Task UpdateMediaction(Medication medDb)
+        {
+            string jsonString = JsonConvert.SerializeObject(medDb);
+            HttpContent content = new StringContent(jsonString);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug/update", content);
+        }
+
+        private async Task<HttpResponseMessage> SaveMedicationAsync(Medication medication)
+        {
+            string jsonString = JsonConvert.SerializeObject(medication);
+            HttpContent content = new StringContent(jsonString);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return await _clientFactory.CreateClient().PutAsync(Global.hospitalCommunicationLink + "/api/drug", content);
         }
 
         private bool CompareMedicationsStructure(Medication medication1, Medication medication2)

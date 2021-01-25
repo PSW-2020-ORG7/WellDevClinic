@@ -23,7 +23,7 @@ function viewApis(apiDb) {
         content += '</td><td>';
         content += api.apiKey;
         content += '</td><td>';
-        content += api.url;
+        content += api.url.url;
         content += '</td>';
         content += '<td><button class="btn btn-info"';
         content += ' onclick="getMedications(\'' + api.nameOfPharmacy + '\')">Medication stock</button> ';

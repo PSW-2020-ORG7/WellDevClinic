@@ -101,10 +101,10 @@ namespace PSW_Pharmacy_Adapter.Controllers
             List<Medication> orderedMedications = new List<Medication>();
             try
             {
-                orderedMedications = await _serviceGrpc.GetOrderedMeds(phName, order);
+                orderedMedications = await _medicationService.OrderMedicationsAsync(phName, order);
             }
             catch {
-                orderedMedications = await _medicationService.OrderMedicationsAsync(phName, order);
+                orderedMedications = await _serviceGrpc.GetOrderedMeds(phName, order);
             }
             if (orderedMedications != null)
                 return Ok(orderedMedications);
