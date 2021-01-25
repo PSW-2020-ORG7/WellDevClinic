@@ -1,4 +1,5 @@
 ﻿
+using EventSourcing.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace EventSourcing.Repository
                 myDbContext.feedbackSubmittedEvents.ToList().ForEach(@event => result.Add(@event));
             if (eventType.ToLower().Equals("newexaminationtimespent"))
                 myDbContext.newExaminationTimeSpent.ToList().ForEach(@event => result.Add(@event));
+            if (eventType.ToLower().Equals("roomevent"))
+                myDbContext.roomEvents.ToList().ForEach(@event => result.Add(@event));
 
             return result;
         }
@@ -35,6 +38,10 @@ namespace EventSourcing.Repository
             if (@event is NewExaminationTimeSpent)
             {
                 myDbContext.newExaminationTimeSpent.Add(@event);
+            }
+            if (@event is RoomEvent)
+            {
+                myDbContext.roomEvents.Add(@event);
             }
 
             myDbContext.SaveChanges();
@@ -55,6 +62,28 @@ namespace EventSourcing.Repository
                 max += 1;
             }
             return max;
+        }
+
+        public long GetMostVisitedRoom(string eventType)
+        {
+            List<RoomEvent> roomEvents = new List<RoomEvent>();
+            List<RoomEvent> mostVisitedRoom = new List<RoomEvent>();
+            int days = 3;
+            foreach(RoomEvent r in roomEvents)
+            {
+                if(r.TimeStamp.Day <= DateTime.Now.Day && r.TimeStamp.Day >= DateTime.Now.Day - days)
+                {
+                    mostVisitedRoom.Add(r);
+                }
+            }
+            if(mostVisitedRoom.Count == 0)
+                return 0;
+            long mostVisitedRoomId = mostVisitedRoom.GroupBy(x => x.RoomId)
+                .Select(group => new { RoomEventID = group.Key, Count = group.Count() })
+                .OrderByDescending(x => x.Count).First().RoomEventID;
+
+            return mostVisitedRoomId;
+            
         }
     }
 }
