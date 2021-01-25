@@ -198,6 +198,18 @@ namespace PSW_Wpf_app.Client
            
         }
 
+
+        public static async void CancelExamination(long id)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(id));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:62044/api/upcomingexamination/Cancel/" + id, content);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+        }
+       
+
         public static async Task<List<BusinessDay>> GetAllBusinessDay()
         {
             HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/businessday");
@@ -267,6 +279,16 @@ namespace PSW_Wpf_app.Client
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
+        }
+
+        public static async Task<Renovation> GetRenovationById(long id)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/renovation/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Renovation renovation = JsonConvert.DeserializeObject<Renovation>(responseBody);
+
+            return renovation;
         }
 
     }
