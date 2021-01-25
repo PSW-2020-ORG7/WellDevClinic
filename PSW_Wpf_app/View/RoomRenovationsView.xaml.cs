@@ -1,4 +1,5 @@
-﻿using PSW_Wpf_app.Model;
+﻿using PSW_Wpf_app.Client;
+using PSW_Wpf_app.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -42,6 +43,14 @@ namespace PSW_Wpf_app.View
                     roomRenovations.Add(r);
             }
             roomRenovation.ItemsSource = roomRenovations;
+        }
+
+        private async void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Renovation renovation = (Renovation)roomRenovation.SelectedItem;
+            renovation.RenovationStatus = RenovationStatus.Otkazano;
+            WpfClient.EditRenovation(renovation);
+            MessageBox.Show("You have successfully canceled renovation !");
         }
     }
 }
