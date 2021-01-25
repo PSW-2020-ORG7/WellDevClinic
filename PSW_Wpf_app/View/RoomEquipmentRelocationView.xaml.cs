@@ -43,28 +43,20 @@ namespace PSW_Wpf_app.View
             equipmentRelocation.ItemsSource = relocations;
         }
 
-
-        private async void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            //  Renovation renovation = (Renovation)equipmentRelocation.SelectedItem;
-            // renovation.Status = RenovationStatus.Otkazano;
-            //WpfClient.EditRenovation(renovation);
-            /*  if(scheduledAppointments.SelectedItem != null)
-              {
-                  scheduledAppointments.Items.Remove(scheduledAppointments.SelectedItem);
-              }*/
-        }
         private static RelocationEquipmentDTO FindRoomFrom(List<Renovation> renovations, Renovation r)
         {
             RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
             relocation.Room_from = r.Room.RoomCode;
             relocation.Equip_name = r.Description;
             relocation.Date = r.Period.StartDate;
+            relocation.Renovations_id.Add(r.Id);
             foreach (Renovation re in renovations)
             {
                 if (re.RenovationStatus.Equals(RenovationStatus.Traje) && re.Description.Equals(r.Id.ToString()))
-                  relocation.Room_to = re.Room.RoomCode;
-
+                {
+                    relocation.Room_to = re.Room.RoomCode;
+                    relocation.Renovations_id.Add(re.Id);
+                }
             }
 
             return relocation;
@@ -75,17 +67,32 @@ namespace PSW_Wpf_app.View
             RelocationEquipmentDTO relocation = new RelocationEquipmentDTO();
             relocation.Room_to = r.Room.RoomCode;
             relocation.Date = r.Period.StartDate;
+            relocation.Renovations_id.Add(r.Id);
             foreach (Renovation re in renovations)
             {
                 if (re.RenovationStatus.Equals(RenovationStatus.Traje) && re.Id.Equals(n))
                 {
                     relocation.Room_from = re.Room.RoomCode;
                     relocation.Equip_name = re.Description;
+                    relocation.Renovations_id.Add(re.Id);
                 }
             }
 
             return relocation;
 
+        }
+
+        private async void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            RelocationEquipmentDTO relocation = (RelocationEquipmentDTO)equipmentRelocation.SelectedItem;
+            List<Renovation> renovations = new List<Renovation>();
+            renovations.Add(await WpfClient.GetRenovationById(relocation.Renovations_id[0]));
+            renovations.Add(await WpfClient.GetRenovationById(relocation.Renovations_id[1]));
+            renovations[0].RenovationStatus = RenovationStatus.Otkazano;
+            renovations[1].RenovationStatus = RenovationStatus.Otkazano;
+            WpfClient.EditRenovation(renovations[0]);
+            WpfClient.EditRenovation(renovations[1]);
+            MessageBox.Show("You have successfully canceled equipment relocation !");
         }
     }
 }
