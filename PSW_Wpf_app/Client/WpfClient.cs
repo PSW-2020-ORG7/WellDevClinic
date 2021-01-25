@@ -29,7 +29,6 @@ namespace PSW_Wpf_app.Client
         }
     }
 
-
     static class WpfClient
     {
 
@@ -180,7 +179,7 @@ namespace PSW_Wpf_app.Client
             return rooms;
         }
         public static async Task<List<UpcomingExamination>> GetAllUpcomingExaminations()
-        {//ne vraca speciality
+        {
             HttpResponseMessage response = await client.GetAsync("http://localhost:62044/api/upcomingexamination");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
@@ -198,6 +197,18 @@ namespace PSW_Wpf_app.Client
             string responseBody = await response.Content.ReadAsStringAsync();
            
         }
+
+
+        public static async void CancelExamination(long id)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(id));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:62044/api/upcomingexamination/Cancel/" + id, content);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+        }
+       
 
         public static async Task<List<BusinessDay>> GetAllBusinessDay()
         {
@@ -259,6 +270,27 @@ namespace PSW_Wpf_app.Client
             Patient result = JsonConvert.DeserializeObject<Patient>(value);
             return result;
         }
+
+        public static async void EditRenovation(Renovation renovation)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(renovation));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PutAsync("http://localhost:57400/api/renovation/Edit", content);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+        }
+
+        public static async Task<Renovation> GetRenovationById(long id)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/renovation/" + id);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Renovation renovation = JsonConvert.DeserializeObject<Renovation>(responseBody);
+
+            return renovation;
+        }
+
     }
 }
 

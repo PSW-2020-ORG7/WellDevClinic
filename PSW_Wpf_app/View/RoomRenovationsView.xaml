@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="PSW_Wpf_app.View.RoomRenovationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PSW_Wpf_app.View"
+             mc:Ignorable="d" 
+              d:DesignHeight="500" d:DesignWidth="710" Background="AliceBlue">
+    <Grid>
+        <Button Content="Advanced renovation" VerticalAlignment="Top" HorizontalAlignment="Left" Click="AdvancedRenovation_Click" Height="40" Margin="355,65,0,0"/>
+
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="10,32,0,0" Text="Room Renovation" FontSize="22" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="279"/>
+        <DataGrid x:Name="roomRenovation" BorderBrush="CadetBlue" BorderThickness="3" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="675" CanUserAddRows="False"
+			AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" RenderTransformOrigin="0.5,0.5" Margin="10,153,0,0" >
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="ColumnDate" Header="Date and Time"  Binding="{Binding Period.StartDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="ColumnRoom1" Header="Room for renovation" Binding="{Binding Room.RoomCode}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="ColumnRoom" Header="Status" Binding="{Binding RenovationStatus}" Width="*"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Cancle" x:Name="cancle" Width="*"  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="190" Content="cancel relocation" Click="Cancel_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Basic renovation" VerticalAlignment="Top" HorizontalAlignment="Left" Click="BasicRenovationClick" Height="40" Margin="200,65,0,0"/>
+        <Label Content="Schedule renovation:" FontSize="16" HorizontalAlignment="Left" Height="32" Margin="10,70,0,0" VerticalAlignment="Top" Width="185"/>
+    </Grid>
+</UserControl>

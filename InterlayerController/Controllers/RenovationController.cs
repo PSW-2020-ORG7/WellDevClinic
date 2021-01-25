@@ -51,5 +51,13 @@ namespace InterlayerController.Controllers
             return result;
         }
 
+        [HttpPut]
+        [Route("editRenovation")]
+        public void EditRenovation(Renovation entity)
+        {
+            _renovationController.Edit(entity);
+
+        }
+
     }
 }

@@ -11,7 +11,13 @@ namespace PSW_Wpf_app.Model
         private string room_to;
         private string equip_name;
         private DateTime date;
+        private List<long> renovations_id;
 
+        public List<long> Renovations_id
+        {
+            get { return renovations_id; }
+            set { renovations_id = value; }
+        }
         public string Room_from
         {
             get { return room_from; }
@@ -38,6 +44,8 @@ namespace PSW_Wpf_app.Model
         }
 
         public RelocationEquipmentDTO()
-        { }
+        {
+            renovations_id = new List<long>();
+        }
     }
 }

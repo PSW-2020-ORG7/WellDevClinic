@@ -17,8 +17,8 @@ namespace PSW_Web_app.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        string communicationLink = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:14483";
-        string communicationLink2 = Environment.GetEnvironmentVariable("server_address") ?? "http://localhost:62044";
+        string communicationLink = Environment.GetEnvironmentVariable("userInteractionServerAddress") ?? "http://localhost:14483";
+        string communicationLink2 = Environment.GetEnvironmentVariable("searchAndScheduleServerAddress") ?? "http://localhost:62044";
 
         static readonly HttpClient client = new HttpClient();
 

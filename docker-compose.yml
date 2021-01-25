@@ -10,7 +10,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: root
       MYSQL_PASSWORD: root
-      MYSQL_DATABASE: newmydb
+      MYSQL_DATABASE: dbddd
+      MYSQL_DATABASE: eventlogs
     volumes:
       - mysql-data:/var/lib/mysql
 
@@ -20,34 +21,107 @@ services:
     container_name: webapp
     restart : always
     environment: 
-      - server_address= http://servers:51393
+      - drugManipulationServerAddress= http://drugManipulation:51891
+      - examinationServerAddress= http://examination:61089
+      - roomManipulationAddress= http://roomManipulation:57400
+      - searchAndScheduleServerAddress= http://search:62044
+      - userInteractionServerAddress= http://userInteraction:14483
     networks:
       - demo
     ports: 
       - 49153:49153
     depends_on:
-      - servers
+      - userInteraction
 
-  servers:
+  drugManipulation:
     build: .
-    image: daviddrvar/interlayer:latest
-    container_name: interlayer
-    restart : always
+    image: daviddrvar/drug-manipulation:latest
+    container_name: drugManipulation
+    restart: always
     networks:
       - demo
-    ports:
-      - 51393:51393
-    environment:
+    ports: 
+      - 51891:51891
+    environment: 
       DATABASE_USERNAME: root
       DATABASE_PASSWORD: root
       DATABASE_HOST: mysql
-      DATABASE_SCHEMA: newmydb
+      DATABASE_SCHEMA: dbddd
+    depends_on:
+      - mysql
+  
+  examination:
+    build: .
+    image: daviddrvar/examination:latest
+    container_name: examination
+    restart: always
+    networks:
+      - demo
+    ports: 
+      - 61089:61089
+    environment: 
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: dbddd
+    depends_on:
+      - drugManipulation
+
+  roomManipulation:
+    build: .
+    image: daviddrvar/room-manipulation:latest
+    container_name: roomManipulation
+    restart: always
+    networks:
+      - demo
+    ports: 
+      - 57400:57400
+    environment: 
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: dbddd
+    depends_on:
+      - examination
+
+  search:
+    build: .
+    image: daviddrvar/search-schedule:latest
+    container_name: search
+    restart: always
+    networks:
+      - demo
+    ports: 
+      - 62044:62044
+    environment: 
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: dbddd
       DATABASE_USERNAME_EVENTS: root
       DATABASE_PASSWORD_EVENTS: root
       DATABASE_HOST_EVENTS: mysql
       DATABASE_SCHEMA_EVENTS: eventlogs
-    depends_on: 
-      - mysql
+    depends_on:
+      - roomManipulation
+  
+  userInteraction:
+    build: .
+    image: daviddrvar/user-interaction:latest
+    container_name: userInteraction
+    restart: always
+    networks:
+      - demo
+    ports: 
+      - 14483:14483
+    environment: 
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_HOST: mysql
+      DATABASE_SCHEMA: dbddd
+    depends_on:
+      - search
+  
 
 volumes:
   mysql-data:

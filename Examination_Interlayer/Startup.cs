@@ -62,6 +62,7 @@ namespace Examination_Interlayer
             {
                 app.UseDeveloperExceptionPage();
             }
+
             try
             {
                 using (StreamReader file = new StreamReader("DBScript.txt"))

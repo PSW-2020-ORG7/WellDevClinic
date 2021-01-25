@@ -49,8 +49,8 @@ namespace EndToEndTests
         public void Publish_Feedback()
         {
             ViewFeedbackPage.ClickPublish();
+            Thread.Sleep(3000);
             String comment = ViewFeedbackPage.GetLastRowText();
-            //Assert.Equal(Driver.Url, ViewFeedbackAdminPage.URI + "/" + ViewFeedbackPage.GetLastRowNumber());
             Assert.True(ViewFeedbackPage.IsPublishedChecked());
             Assert.False(ViewFeedbackPage.IsPrivateChecked());
             Assert.Equal(comment, ViewFeedbackPage.GetLastRowText());

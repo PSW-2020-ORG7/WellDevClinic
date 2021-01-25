@@ -175,5 +175,14 @@ namespace InterlayerController.Controllers
             return exams;
 
         }
+
+        [HttpGet]
+        [Route("getAllExaminations")]
+        public List<Examination> GetAllExaminations()
+        {
+            List<Examination> result = (List<Examination>)_examinationController.GetAll();
+
+            return result;
+        }
     }
 }

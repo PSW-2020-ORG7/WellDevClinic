@@ -39,7 +39,7 @@ namespace EndToEndTests
             ViewFeedbackAdminPage = new ViewFeedbackAdminPage(Driver);
             ViewFeedbackAdminPage.ClickBlock();
             BlockUsersPage = new BlockUsersPage(Driver);
-            Thread.Sleep(2000);
+            Thread.Sleep(5000);
         }
 
         public void Dispose()
@@ -54,10 +54,13 @@ namespace EndToEndTests
             var id = BlockUsersPage.GetLastRowNumber();
             BlockUsersPage.ClickBlock();
             Thread.Sleep(3000);
+            BlockUsersPage.WaitForAlertDialog();
+            Assert.Equal(BlockUsersPage.GetDialogMessage(), BlockUsersPage.ALERT_MESSAGE);
+            BlockUsersPage.ResolveAlertDialog();
+            Assert.Equal(Driver.Url, BlockUsersPage.URI);
+            Thread.Sleep(5000);
             var idBlocked = BlockUsersPage.GetLastRowNumberBlocked();
-            var idForBlocking = BlockUsersPage.GetLastRowNumber();
             Assert.Equal(id, idBlocked);
-            Assert.NotEqual(id, idForBlocking);
         }
 
 
