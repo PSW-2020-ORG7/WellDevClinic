@@ -21,6 +21,7 @@ namespace PSW_Pharmacy_Adapter
             modelBuilder.Entity<Tender>().OwnsOne(t => t.Period);
             modelBuilder.Entity<PharmacyEmails>().OwnsOne(t => t.Mail);
             modelBuilder.Entity<TenderOffer>().OwnsOne(t => t.Mail);
+            modelBuilder.Entity<Api>().OwnsOne(t => t.Url);
         }
     }
 }

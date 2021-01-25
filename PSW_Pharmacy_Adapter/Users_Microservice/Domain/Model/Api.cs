@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSW_Pharmacy_Adapter.Users_Microservice.Domain.Model;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -10,8 +11,9 @@ namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model
         public string NameOfPharmacy { get;  set; }
         public string ApiKey { get; set; }
         public int GrpcPort { get; set; }
-        public string Url { get; set; }
+        public virtual Endpoint Url { get; set; }
 
+        public Api() { }
 
         public Api(string name, string api, int grpcPort, string url)
         {
@@ -20,23 +22,16 @@ namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model
             NameOfPharmacy = name;
             ApiKey = api;
             GrpcPort = grpcPort;
-            Url = url;
+            Url = new Endpoint(url);
         }
 
         public Api(string name, string api, string url)
         {
             NameOfPharmacy = name;
             ApiKey = api;
-            Url = url;
+            Url = new Endpoint(url);
         }
 
-        public void ChangeUrl(string url)
-        {
-            if (string.IsNullOrWhiteSpace(url))
-                throw new ArgumentNullException();
-            Url = url;
-        }
-
-        public Api() { }
+        
     }
 }
