@@ -7,7 +7,7 @@
 			viewNewSales(sales)
 		},
 		error: function () {
-			pageInfo("An error has occured while trying to connect with hospital server. Try again later!");
+			pageInfo("An error has occurred while trying to connect with hospital server. Try again later!");
 		}
 	});
 })

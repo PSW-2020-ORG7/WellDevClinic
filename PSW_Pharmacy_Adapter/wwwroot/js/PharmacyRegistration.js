@@ -42,7 +42,7 @@
             data: JSON.stringify({
                 NameOfPharmacy: name,
                 ApiKey: api,
- //               GrpcPort: Number(port),
+                GrpcPort: Number(port),
                 Url: url
             }),
             success: function (data) {

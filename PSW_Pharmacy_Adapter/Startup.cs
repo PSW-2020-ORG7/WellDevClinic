@@ -24,6 +24,10 @@ using PSW_Pharmacy_Adapter.Sale_Microservice.Repository;
 using PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Tender_Microservice.Repository;
 using PSW_Pharmacy_Adapter.Medication_Microservice.Protos;
+using PSW_Pharmacy_Adapter.Users_Microservice.Repository.Iabstract;
+using PSW_Pharmacy_Adapter.Users_Microservice.Repository;
+using PSW_Pharmacy_Adapter.Users_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Users_Microservice.ApplicationServices;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -55,6 +59,7 @@ namespace PSW_Pharmacy_Adapter
             services.AddScoped<ITenderOfferService, TenderOfferService>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IPharmacyEmailsService, PharmacyEmailsService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
             services.AddScoped<ISaleRepository, SaleRepository>();
