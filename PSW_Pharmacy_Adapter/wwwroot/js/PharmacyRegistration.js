@@ -3,6 +3,7 @@
         let name = $("#txtName").val();
         let api = $("#txtApi").val();
         let url = $("#txtUrl").val();
+        let port = $("#grpcPort").val();
 
         let valid = true;
 
@@ -41,7 +42,10 @@
             data: JSON.stringify({
                 NameOfPharmacy: name,
                 ApiKey: api,
-                Url: url
+                GrpcPort: Number(port),
+                Url: {
+                    Url: url
+                }
             }),
             success: function (data) {
                 if (data) {

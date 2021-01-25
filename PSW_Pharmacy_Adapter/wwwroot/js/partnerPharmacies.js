@@ -10,6 +10,9 @@
                 $("#apiTable").css("display", "table");
             }
         },
+        error: function (e) {
+            pageInfo("An error has occured while trying to load partner pharmacies!");
+        }
     });
 });
 
@@ -20,7 +23,7 @@ function viewApis(apiDb) {
         content += '</td><td>';
         content += api.apiKey;
         content += '</td><td>';
-        content += api.url;
+        content += api.url.url;
         content += '</td>';
         content += '<td><button class="btn btn-info"';
         content += ' onclick="getMedications(\'' + api.nameOfPharmacy + '\')">Medication stock</button> ';
@@ -45,6 +48,9 @@ function deleteEntry(id) {
                     window.location.reload();
                 }
             },
+            error: function (e) {
+                pageInfo("An error has occured while trying to delete partner pharmacy!");
+            }
         });
     })
 }
@@ -53,4 +59,10 @@ function getMedications(id) {
     $("#phName").html(id);
     $("#txtResponse").val("");
     $("#medModal").slideDown("fast");
+}
+
+function pageInfo(text) {
+    $("#message").text(text);
+    $("#pageInfoModal").modal('toggle');
+    $("#pageInfo").show();
 }

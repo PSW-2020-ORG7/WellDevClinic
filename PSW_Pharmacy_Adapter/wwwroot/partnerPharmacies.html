@@ -17,29 +17,31 @@
 </head>
 <body>
     <div class="topnav">
-        <label>Clinic Hello!</label>
+        <label>WellDevClinic</label>
         <a href="index.html">Home</a>
         <a href="partnerPharmacies.html" class="active">Partner Pharmacies</a>
         <a href="actionsAndBenefits.html">Actions & Benefits</a>
         <a href="viewMedications.html">Medication stock</a>
         <a href="viewPrescriptions.html">All prescriptions</a>
-        <a href="tenderOffers.html">Tender offers</a>
+        <a href="viewTenders.html">Tender offers</a>
     </div>
 
     <div>
         <form action="pharmacyRegistration.html">
-            <input type="submit" value="💊 Add new pharmacy" class="btn btn-warning expand"/>
+            <input type="submit" value="💊 Add new pharmacy" class="btn btn-warning expand" />
         </form>
     </div>
 
     <div>
         <div class="loader"></div>
         <table class="table" id="apiTable" style="display:none">
-            <tr><th>Pharmacy name</th>
-            <th>API key</th>
-            <th>Url</th>
-            <th id="btnPhStock"></th>
-            <th id="btnDelPh"></th></tr>
+            <tr>
+                <th>Pharmacy name</th>
+                <th>API key</th>
+                <th>Url</th>
+                <th id="btnPhStock"></th>
+                <th id="btnDelPh"></th>
+            </tr>
         </table>
     </div>
 
@@ -48,17 +50,22 @@
             <span class="close">&times;</span>
             <h1><span id="phName"></span> medication stock</h1>
             <br>
-            <h4>Ask for: &nbsp;
+            <h4>
+                Ask for: &nbsp;
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle"
                             id="btnMed" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">All medications</button>
+                            aria-expanded="false">
+                        All medications
+                    </button>
                     <div class="dropdown-menu" id="viewMedication">
                     </div>
                 </div>
                 &nbsp;
                 <button type="button" class="btn btn-secondary" id="btnSendMedication"
-                        data-toggle="modal" data-target="#medRequestModal">Send</button>
+                        data-toggle="modal" data-target="#medRequestModal">
+                    Send
+                </button>
             </h4>
             <br>
             <h4> Response: </h4>
@@ -72,7 +79,7 @@
                 <div class="modal-content">
                     <div class="modal-body" id="write"></div>
                     <div class="modal-footer">
-                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        <button type="button" id="btnOk" class="btn btn-info" data-dismiss="modal">OK</button>
                     </div>
                 </div>
             </div>
@@ -86,12 +93,24 @@
                     <div class="modal-body" id="writeMessage"> Do you want to end partnership with <span id="nameToDelete"></span>?</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="button" id="btnYes" class="btn btn-primary">Yes</button>
+                        <button type="button" id="btnYes" class="btn btn-info">Yes</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="message"></div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-info" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

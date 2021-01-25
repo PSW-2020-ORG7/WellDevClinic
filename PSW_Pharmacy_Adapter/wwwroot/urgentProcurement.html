@@ -18,13 +18,13 @@
 </head>
 <body>
     <div class="topnav">
-        <label>Clinic Hello!</label>
+        <label>WellDevClinic</label>
         <a href="index.html">Home</a>
         <a href="partnerPharmacies.html">Partner Pharmacies</a>
         <a href="actionsAndBenefits.html">Actions & Benefits</a>
         <a href="viewMedications.html" class="active">Medication stock</a>
         <a href="viewPrescriptions.html">All prescriptions</a>
-        <a href="tenderOffers.html">Tender offers</a>
+        <a href="viewTenders.html">Tender offers</a>
     </div>
 
     <div>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <button class="add_field_button">Add More Fields</button>
-            <button class="btn btn-primary" onclick="findMedicines()">Send</button>
+            <button class="btn btn-info" onclick="findMedicines()">Send</button>
         </div>
     </div>
 
@@ -93,7 +93,19 @@
                 <div class="modal-content">
                     <div class="modal-body" id="message"></div>
                     <div class="modal-footer">
-                        <button type="button" id="btnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        <button type="button" id="btnOk" class="btn btn-info" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="message"></div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-info" data-dismiss="modal">OK</button>
                     </div>
                 </div>
             </div>

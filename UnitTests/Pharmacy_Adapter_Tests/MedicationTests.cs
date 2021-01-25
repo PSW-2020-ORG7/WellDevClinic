@@ -1,5 +1,6 @@
 ﻿using Moq;
 using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices;
+using PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices.Iabstract;
 using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Model;
 using PSW_Pharmacy_Adapter.Pharmacy_Microservice.Repository.Iabstract;
 using Shouldly;
@@ -15,8 +16,9 @@ namespace UnitTests.Pharmacy_Adapter_Tests
         public void Compare_Equal_Medicines_Ingredients()
         {
             var client = new Mock<IHttpClientFactory>();
+            var hospitalService = new Mock<IHospitalMedicationService>();
             var keyRepo = new Mock<IApiKeyRepository>();
-            MedicationService service = new MedicationService(client.Object, keyRepo.Object);
+            PharmacyMedicationService service = new PharmacyMedicationService(client.Object, hospitalService.Object, keyRepo.Object);
 
             List<Medication> allGood = service.CheckIngredientsMatching(CreateMedicationList(), CreateMedicationList());
 
@@ -27,8 +29,9 @@ namespace UnitTests.Pharmacy_Adapter_Tests
         public void Compare_Different_Medicines_Ingredients()
         {
             var client = new Mock<IHttpClientFactory>();
+            var hospitalService = new Mock<IHospitalMedicationService>();
             var keyRepo = new Mock<IApiKeyRepository>();
-            MedicationService service = new MedicationService(client.Object, keyRepo.Object);
+            PharmacyMedicationService service = new PharmacyMedicationService(client.Object, hospitalService.Object ,keyRepo.Object);
 
             List<Medication> notEqual = service.CheckIngredientsMatching(CreateMedicationList(), CreateAnotherMedicationList());
 

@@ -7,9 +7,15 @@ $(document).ready(function () {
 		contentType: "application/json",
 		success: function (data) {
 			allPrescriptions = data;
-			$(".loader").css("display", "none");
-			viewAllPrescriptions(allPrescriptions);
+			if (data.length <= 0)
+				$("#noContent").removeAttr("hidden");
+			else
+				viewAllPrescriptions(allPrescriptions);
+			$(".loader").css("display", "none");	
 		},
+		error: function (e) {
+			pageInfo("An error has occurred while trying to connect with hospital server. Try again later!");
+		}
 	});
 
 	$(".btnFilter").click(function () {
@@ -137,7 +143,7 @@ function sendToPharmacies(id) {
             }
 			$.ajax({
 				method: "POST",
-				url: "../api/sftp/sendPrescription",
+				url: "../api/prescription/sendPrescription",
 				contentType: "application/json",
 				data: JSON.stringify({
 					PatientName: pre.patFirstName + " " + pre.patLastName,
@@ -167,7 +173,7 @@ function generateQR(pre) {
 		error: function () {
 			$.ajax({
 				method: "POST",
-				url: "../api/qrcode/eprescription",
+				url: "../api/prescription/eprescription",
 				dataType: "applocation/json",
 				contentType: "application/json",
 				data: JSON.stringify({
@@ -204,4 +210,10 @@ function ISOtoShort(date) {
 		month = '0' + month;
 
 	return String(day + '-' + month + '-' + year);
+}
+
+function pageInfo(text) {
+	$("#message").text(text);
+	$("#pageInfoModal").modal('toggle');
+	$("#pageInfo").show();
 }

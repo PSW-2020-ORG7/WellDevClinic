@@ -61,7 +61,8 @@ namespace Repository
         {
             Examination exam = Get(id);
             exam.Doctor = _doctorRepository.GetEager(exam.Doctor.GetId());
-            exam.Diagnosis = _diagnosisRepository.Get(exam.Diagnosis.GetId());
+            if(exam.Diagnosis != null)
+                exam.Diagnosis = _diagnosisRepository.Get(exam.Diagnosis.GetId());
             if (exam.Therapy != null)
                 exam.Therapy = _therapyRepository.GetEager(exam.Therapy.GetId());
             if(exam.Refferal!=null)

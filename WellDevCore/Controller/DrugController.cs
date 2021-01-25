@@ -1,7 +1,5 @@
-using bolnica.Controller;
 using bolnica.Service;
 using Model.PatientSecretary;
-using System;
 using System.Collections.Generic;
 
 namespace bolnica.Controller
@@ -15,7 +13,6 @@ namespace bolnica.Controller
         public DrugController(IDrugService service)
         {
             _drugService = service;
-
         }
 
         public void Delete(Drug entity)
@@ -48,7 +45,7 @@ namespace bolnica.Controller
             return _drugService.Save(entity);
         }
 
-        public bool CheckDrugNameUnique(String name)
+        public bool CheckDrugNameUnique(string name)
         {
             return _drugService.CheckDrugNameUnique(name);
         }

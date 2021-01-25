@@ -54,7 +54,7 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices
         {
             foreach(PharmacyEmails Emails in GetAllEmails())
             {
-                MailMessage mailMessage = createMail("integration.adapter@gmail.com", Emails.Email, "", "", "Posetite nas da biste videli nove tendere", "Posetite nas da biste videli nove tendere", false);
+                MailMessage mailMessage = createMail("integration.adapter@gmail.com", Emails.Mail.Mail, "", "", "Posetite nas da biste videli nove tendere", "Posetite nas da biste videli nove tendere", false);
                 sendMail(mailMessage);
             }
         }
@@ -63,7 +63,7 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.ApplicationServices
             TenderOffer offer = _tenderOfferService.GetOffer(id);
             if (offer == null)
                 return false;
-            MailMessage mailMessage = createMail("integration.adapter@gmail.com", offer.Email, "", "", "Pobedili ste!", "Vi ste pobednik tendera, molimo vas da nam posaljete lekove u najkracem mogucem roku!", false);
+            MailMessage mailMessage = createMail("integration.adapter@gmail.com", offer.Mail.Mail, "", "", "Pobedili ste!", "Vi ste pobednik tendera, molimo vas da nam posaljete lekove u najkracem mogucem roku!", false);
             sendMail(mailMessage);
             return true;
         }

@@ -12,7 +12,7 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
         public double Price { get; set; }
         public string Message { get; set; }
         public long TenderId { get; set; }
-        public string Email { get; set; }
+        public virtual Email Mail { get; set; }
 
         public TenderOffer() { }
 
@@ -24,7 +24,7 @@ namespace PSW_Pharmacy_Adapter.Tender_Microservice.Domain.Model
             Price = price;
             Message = message;
             TenderId = tender;
-            Email = email;
+            Mail = new Email(email);
         }
     }
 }

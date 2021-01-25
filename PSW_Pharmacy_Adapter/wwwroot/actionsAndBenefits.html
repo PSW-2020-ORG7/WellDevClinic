@@ -15,13 +15,13 @@
 </head>
 <body>
     <div class="topnav">
-        <label>Clinic Hello!</label>
+        <label>WellDevClinic</label>
         <a href="index.html">Home</a>
         <a href="partnerPharmacies.html">Partner Pharmacies</a>
         <a href="actionsAndBenefits.html" class="active">Actions & Benefits</a>
         <a href="viewMedications.html">Medication stock</a>
         <a href="viewPrescriptions.html">All prescriptions</a>
-        <a href="tenderOffers.html">Tender offers</a>
+        <a href="viewTenders.html">Tender offers</a>
     </div>
     <br>
     <div class="filter">
@@ -49,22 +49,24 @@
                                 <option value="all">All</option>
                             </select>
                         </td>
-                        <td><input type="date" id="start"/></td>
-                        <td><input type="date" id="end"/></td>
+                        <td><input type="date" id="start" /></td>
+                        <td><input type="date" id="end" /></td>
                         <td><label for="fav" style="color:black"><input type="checkbox" id="fav" /> Favourites </label></td>
-                        <td><input typeof="button" id="btnSearch" class="btn btn-primary" onclick="filter()" value="Submit"/></td>
+                        <td><input typeof="button" id="btnSearch" class="btn btn-info" onclick="filter()" value="Submit" /></td>
                     </tr>
                 </table>
             </form>
         </div>
     </div>
 
-    <div class="loader"></div>
-    <div id="viewAction" style="display:none">
+    <div class="loader" id="pageLoader"></div>
+    <div id="viewSales" style="display:none"></div>
+    <div id="noContent" class="welcome-text" hidden>
+        <h1>Nothing to show</h1>
     </div>
 
-    <div id="deleteAction" style="display:none">
-        <div class="modal fade" id="deleteActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div id="deleteSale" style="display:none">
+        <div class="modal fade" id="deleteSaleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body"> Do you want to discard this benefit? </div>
@@ -85,6 +87,19 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                         <button type="button" id="btnYes" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pageInfo" style="display:none">
+        <div class="modal fade" id="pageInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="message"></div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnOk" class="btn btn-info" data-dismiss="modal">OK</button>
                     </div>
                 </div>
             </div>

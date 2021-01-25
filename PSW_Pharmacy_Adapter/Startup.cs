@@ -24,6 +24,8 @@ using PSW_Pharmacy_Adapter.Sale_Microservice.Repository;
 using PSW_Pharmacy_Adapter.Tender_Microservice.Repository.Iabstract;
 using PSW_Pharmacy_Adapter.Tender_Microservice.Repository;
 using PSW_Pharmacy_Adapter.Medication_Microservice.Protos;
+using PSW_Pharmacy_Adapter.Users_Microservice.ApplicationServices.Iabstract;
+using PSW_Pharmacy_Adapter.Users_Microservice.ApplicationServices;
 
 namespace PSW_Pharmacy_Adapter
 {
@@ -47,17 +49,19 @@ namespace PSW_Pharmacy_Adapter
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)).UseLazyLoadingProxies());
             services.AddScoped<IApiKeyService, ApiKeyService>();
             services.AddScoped<IGreetingsService, GreetingsService>();
-            services.AddScoped<IActionsAndBenefitsService, ActionsAndBenefitsService>();
+            services.AddScoped<ISaleService, SaleService>();
             services.AddScoped<IRabbitMQService, RabbitMQService>();
-            services.AddScoped<IMedicationService, MedicationService>();
+            services.AddScoped<IPharmacyMedicationService, PharmacyMedicationService>();
+            services.AddScoped<IHospitalMedicationService, HospitalMedicationService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddScoped<IQrCodeService, QrCodeService>();
             services.AddScoped<ITenderOfferService, TenderOfferService>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IPharmacyEmailsService, PharmacyEmailsService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
-            services.AddScoped<IActionAndBenefitRepository, ActionAndBenefitRepository>();
+            services.AddScoped<ISaleRepository, SaleRepository>();
             services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<IPharmacyEmailsRepository, PharmacyEmailsRepository>();

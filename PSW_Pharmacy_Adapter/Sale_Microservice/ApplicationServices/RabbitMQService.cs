@@ -19,12 +19,12 @@ namespace PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices
         IConnection connection;
         IModel channel;
         
-        private IActionAndBenefitRepository _ActionRepository;
+        private ISaleRepository _saleRepository;
    
         public override Task StartAsync(CancellationToken cancellationToken)
         {
             MyContextFactory cf = new MyContextFactory();
-            _ActionRepository = new ActionAndBenefitRepository(cf.CreateDbContext(new string[0]));
+            _saleRepository = new SaleRepository(cf.CreateDbContext(new string[0]));
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
@@ -39,11 +39,10 @@ namespace PSW_Pharmacy_Adapter.Sale_Microservice.ApplicationServices
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                ActionAndBenefit actionAndBenefit = ActionAndBenefitMapper.MapActionAndBenefit(
-                                                     JsonConvert.DeserializeObject<ActionAndBenefitDto>(
-                                                     jsonMessage.ToString()), ActionStatus.pending);
-                Console.WriteLine(" [x] Received {0}", actionAndBenefit.PharmacyName);
-                _ActionRepository.Save(actionAndBenefit);
+                Sale sale = SaleMapper.MapSale(JsonConvert.DeserializeObject<SaleDto>(
+                                                     jsonMessage.ToString()), SaleStatus.pending);
+                Console.WriteLine(" [x] Received {0}", sale.PharmacyName);
+                _saleRepository.Save(sale);
             };
             channel.BasicConsume(queue: "pharmacy.queue",
                                     autoAck: true,
