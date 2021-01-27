@@ -44,10 +44,8 @@ function viewAllMedications(meds) {
 		if (med.ingredients.length != 0) {
 			content += '<div style="color: gray;"><h5>Ingredients:</h5>';
 
-			for (let ing of med.ingredients) {
-				content += '&nbsp;'
+			for (let ing of med.ingredients)
 				content += ing.name + ', ';				
-			}
 			content = content.slice(0, -2);
 			content += '</div><br>';
 		}

@@ -28,41 +28,37 @@ function viewAllPrescriptions(prescriptions) {
 	for (let pre of prescriptions) {
 		var content = '<div class="card">';
 		content += '<div class="card-body">';
-		content += '<div class="data">';
+		content += '<h4 class="card-subtitle mb-2 text-muted">ID: ' + pre.id + '</h4>';
 		content += '<table style="margin:10px">';
-		content += '<tr><td float="right">Id:</td><td>';
-		content += pre.id;
-		content += '</td></tr>';
 		content += '<tr><td>Patient:</td>';
 		content += '<td>' + pre.patFirstName + ' ' + pre.patLastName + '</td></tr>';
-		content += '<tr><td float="right">Start date:</td><td>';
+		content += '<tr><td>Start date:</td><td>';
 		content += ISOtoShort(new Date(pre.timePeriod.startDate));
 		content += '</td></tr>';
-		content += '<tr><td float="right">End date:</td><td>';
+		content += '<tr><td>End date:</td><td>';
 		content += ISOtoShort(new Date(pre.timePeriod.endDate));
-		content += '</td></tr>';
-		if (pre.medication != null) {
-			content += '<tr><td float="right">Prescription medicines:</td>';
-			content += '<td>';
-			for (let med of pre.medication)
-				content += med.name + '<br/>';
-			content += '</td>';
+		content += '</td></tr></table>';
+		content += '<hr color="#FFFF33">';
+		if (pre.medications != null) {
+			content += '<div style="color: gray;"><h5><b>Prescribed medicines:</b></h5>';
+			for (let med of pre.medications)
+				content += med.name + ', ';
+			content = content.slice(0, -2);
+			content += '</div><br>';
 		}
-		content += '</tr>';
-		content += '<tr><td colspan="2">';
+		content += '<table><tr><td colspan=2>';
 
 		generateQR(pre);
-		content += '<img src="images/qrCodes/pre' + pre.id + 'qr.png" style="width:170px"/>';
+		content += '<img src="images/qrCodes/pre' + pre.id + 'qr.png" style="width:200px"/>';
 		content += '</td></tr>';
-		content += '<tr></tr>';
-		content += '<tr><td colspan="2">'
-		content += '<button type="button" class="btn btn-info" onclick="sendToPharmacies(\'' + pre.id + '\')" id="' + pre.id + '" data-toggle="modal" data-target="#sendModal">';
+		content += '<tr><td>'
+		content += '<button type="button" class="btn btn-info" onclick="sendToPharmacies(\'' + pre.id + '\')">';
 		content += 'Send it to pharmacy</button > ';
 		content += '</td><td>';
-		content += '<button type="button" class="btn btn-light" style="font-size:22px;color:red" onclick="generatePDF(' + pre.id + ')"><i class="fa fa-file-pdf-o"></i></button>';
+		content += '<button type="button" class="btn" style="font-size:35px;color:red" onclick="generatePDF(' + pre.id + ')"><i class="fa fa-file-pdf-o"></i></button>';
 		content += '</td></tr> ';
 		content += '</table>';
-		content += '</div></div></div>';
+		content += '</div></div>';
 		$("#viewPrescription").append(content);
 	}
 }
@@ -110,7 +106,7 @@ function filter() {
 	let endDate = $("#end").val();
 
 	if (startDate != "" && endDate != "" && startDate > endDate) {
-		alert("Start date can't be greater than end date!")
+		pageInfo("Start date can't be greater than end date!")
 		return;
 	}
 
@@ -152,14 +148,13 @@ function sendToPharmacies(id) {
 					Medicines: medications
 				}),
 				success: function () {
-					$("#sendMessage").text(" File is succesfully sent. ");
-					$("#sentAction").show();
+					pageInfo(" File is succesfully sent. ");
 				},
 				error: function (e) {
-					if (e.status == 503) {
-						$("#sendMessage").text(e.responseText);
-						$("#sentAction").show();
-                    }
+					if (e.status == 503)
+						pageInfo(e.responseText);
+					else
+						pageInfo('An unknown error has occured.');
 				}
 			});
 		},
@@ -195,21 +190,7 @@ function generateQR(pre) {
 
 
 function generatePDF(id) {
-	alert(id);
-}
-
-
-function ISOtoShort(date) {
-	let day = date.getDate();
-	let month = (date.getMonth() + 1);
-	let year = date.getFullYear();
-
-	if (day < 10)
-		day = '0' + day;
-	if (month < 10)
-		month = '0' + month;
-
-	return String(day + '-' + month + '-' + year);
+	pageInfo("Feature isn't available. Coming soon!");
 }
 
 function pageInfo(text) {

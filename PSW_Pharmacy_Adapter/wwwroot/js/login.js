@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     $("#btnLogin").click(function (e) {
         e.preventDefault();
-        $("#responseLoad").show();
         let userInput = $("#txtUsername").val();
         let passwordInput = $("#txtPassword").val();
 
@@ -27,6 +26,7 @@
         if (!valid)
             return;
 
+        $("#responseLoad").show();
         $.ajax({
             method: "POST",
             url: "../api/user/login",
