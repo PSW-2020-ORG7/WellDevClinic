@@ -27,13 +27,14 @@ $(document).ready(function () {
 
 	$(".add_field_button").click(function (e) {
 		e.preventDefault();
-		if ($(".input_fields_wrap").children().length < 10) {
-            $(".input_fields_wrap").append('<div><div class="autocomplete">' +
-                '<input type = "text" name = "medicineName" placeholder = "Enter medicine name" class= "ac" autocomplete="off"/> ' +
-                '</div>' +
-				'<input placeholder="Enter amount" type="number" name="quantity"/> ' +
-				'<button class="btn btn-outline-danger remove_field">&times;</button>' +
-                '</div>');
+        if ($(".input_fields_wrap").children().length < 10) {
+            let fieldContent = '<div><div class="autocomplete">';
+            fieldContent += '<input type = "text" name = "medicineName" placeholder = "Enter medicine name" class= "ac" autocomplete="off"/> ';
+            fieldContent += '</div>';
+            fieldContent += '<input placeholder="Enter amount" type="number" name="quantity"/> ';
+            fieldContent += '<button class="btn btn-outline-danger remove_field">&times;</button>';
+            fieldContent += '</div>';
+            $(".input_fields_wrap").append(fieldContent);
             for (let inp of document.getElementsByName('medicineName'))
                 autocomplete(inp, allMedications.map(x => x.name));
 		}
@@ -69,13 +70,11 @@ $(document).ready(function () {
                     }
                     message = message.slice(0, -2);
                     message += '. Expect your package soon!';
-                    $("#message").text(message);
-                    $("#pageInfoModal").modal('toggle');
-                    $("#pageInfo").show();
+                    pageInfo(message);
                 }
             },
             error: function (e) {
-                alert("ERROR: " + e.status);
+                pageInfo("An unknown error has occurred.");
             }
         });
     });

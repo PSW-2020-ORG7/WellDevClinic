@@ -42,7 +42,7 @@ function viewTender(tender) {
     content += '</h4>';
     content += '<h5><table style="margin:10px">';
     if (tender.medications != null) {
-        content += '<h4>Hospital need:<h4>';
+        content += '<h4>Requirements:<h4>';
 
         for (let med of tender.medications) {
             content += '<tr><td float="right">';
@@ -194,7 +194,7 @@ function sendEmail() {
                     url: "../api/tender/email/" + currTender.offerWinner,
                     contentType: "application/json",
                     success: function (data) {
-                        alert("Mail sent");
+                        pageInfo("Mail sent");
                         window.location.reload();
                     },
                     error: function (e) {
@@ -230,12 +230,11 @@ function sendEmail() {
                         }
                     },
                     error: function (e) {
-                        alert("ERROR: " + e.status);
+                        pageInfo("An unknown error has occurred");
                     }
                 });
-            })
+            });
         }
-
 }
 
 function pageInfo(text) {

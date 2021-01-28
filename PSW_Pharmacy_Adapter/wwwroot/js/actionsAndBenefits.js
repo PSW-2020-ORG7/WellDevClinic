@@ -16,7 +16,7 @@ $(document).ready(function () {
 			$("#viewSales").css("display", "block");
 		},
 		error: function (e) {
-			pageInfo("An error has occured while trying to show all actions!");
+			pageInfo("An error has occured while trying to load sales!");
 		}
 	});
 
@@ -36,7 +36,6 @@ function viewSales(data) {
 		if (sale.status == 2)
 			content += " checked";
 		content += '" onClick="toggleFav(' + sale.id + ')"></span></h4>';
-		content += '<div class="data">';
 		content += '<hr color="#FFFF33">';
 		content += sale.saleMessage;
 		content += '<hr color="#FFFF33">';
@@ -53,10 +52,9 @@ function viewSales(data) {
 		content += '</table>';
 		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteSaleModal" ';
 		content += ' onclick="deleteSale(' + sale.id + ')"> Discard </button > ';
-		content += '<button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"';
+		content += '<button class="btn btn-success" data-toggle="modal" data-target="#useSaleModal"';
 		content += ' onclick="useAction(' + sale.id + ')"> Use it now </button > ';
-		content += '</div></div></div>';
-		content += '</div>';
+		content += '</div></div>';
 
 		$("#viewSales").append(content);
 
@@ -111,19 +109,15 @@ function filter() {
 	let fav = $("#fav").is(":checked");
 
 	if (startDate != "" && endDate != "" && startDate > endDate) {
-		alert("Start date can't be greater than end date!")
+		pageInfo("Start date can't be greater than end date!")
 		return;
     }
 
 	for (let sale of allSales) {
-		if (name != "all" && sale.pharmacyName != name)
-			continue;
-		if (startDate && sale.valPeriod.startDate < startDate)
-			continue;
-		if (endDate && sale.valPeriod.endDate > endDate)
-			continue;
-		if (sale.status != 2 && fav == true)
-			continue;
+		if (name != "all" && sale.pharmacyName != name)	continue;
+		if (startDate && sale.valPeriod.startDate < startDate)	continue;
+		if (endDate && sale.valPeriod.endDate > endDate)	continue;
+		if (sale.status != 2 && fav == true)	continue;
 		filtered.push(sale);
 	}
 	viewSales(filtered);
@@ -131,7 +125,7 @@ function filter() {
 
 function deleteSale(id) {
 	$("#deleteSale").show();
-	$("button#btnYes1").click(function () {
+	$("button#btnYesDelete").click(function () {
 		$.ajax({
 			method: "DELETE",
 			url: "../api/sale/delete/" + id,
@@ -143,7 +137,7 @@ function deleteSale(id) {
 				}
 			},
 			error: function (e) {
-				pageInfo("Action is not successfully deleted!");
+				pageInfo("An unknown error has occurred while trynig to delete sale");
 			}
 		});
 	});
@@ -169,19 +163,13 @@ function toggleFav(id) {
 			viewSales(allSales);
 		},
 		error: function (e) {
-			pageInfo("An error has occured while trying to update action!");
+			pageInfo("An unknown error has occured while trying to update action!");
 		}
 	});
 }
 
-function useAction(id) {
-	$("#useAction").show();
-
-	//$("#btnYes").click(function () {
-		//ajax pozvati da obrise akciju iz baze
-		//i da stavi lek/ove u bazu
-		//obrisati iz isa baze
-	//});
+function useSale(id) {
+	$("#useSale").show();
 }
 
 function pageInfo(text) {

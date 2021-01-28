@@ -173,7 +173,7 @@ function purchase() {
 			if (e.status == 400)
 				pageInfo(e.responseText);
 			else
-				alert('An unknown error has occured.');
+				pageInfo('An unknown error has occured.');
 		}
 	});
 }
@@ -213,7 +213,7 @@ function filter() {
 	let amountFrom = $("#amountFrom").val();
 	let amountTo = $("#amountTo").val();
 	if (amountFrom != "" && amountTo != "" && amountFrom > amountTo) {
-		alert("Parameter amount from can't be less than amount to!");
+		pageInfo("Parameter amount from can't be less than amount to!");
 		return;
 	}
 
