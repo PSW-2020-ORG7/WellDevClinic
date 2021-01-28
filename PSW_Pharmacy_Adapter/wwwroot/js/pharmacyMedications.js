@@ -28,8 +28,7 @@ function getMedicationStock() {
             }
         },
         error: function (e) {
-            $('#write').html(e.responseText);
-            $("#stockAction").show();
+            pageInfo(e.responseText);
             $("#btnOk").click(function () {
                 //$("#txtResponse").val(e.status + " " + e.statusText);
                 $("#txtResponse").val("Connection failed.");
@@ -52,8 +51,7 @@ function askPharmacy() {
         url: uri,             
         contentType: "text/plain",
         success: function (data) {
-            $('#write').html("It's sent to pharmacy. Soon you will get response.");
-            $("#stockAction").show();
+            pageInfo("It's sent to pharmacy. Soon you will get response.");
             $("#btnOk").click(function () {
                 if (Array.isArray(data)) {
                     let content = "";
@@ -68,10 +66,8 @@ function askPharmacy() {
             });
         },
         error: function (e) {
-            $('#write').html(e.responseText);
-            $("#stockAction").show();
+            pageInfo(e.responseText);
             $("#btnOk").click(function () {
-                //$("#txtResponse").val(e.status + " " + e.statusText);
                 $("#txtResponse").val("Connection failed.");
             });
         },

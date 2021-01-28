@@ -1,8 +1,4 @@
-﻿body {
-    background-repeat: repeat-y;
-    background-size: 100%;
-}
-/* Card format */
+﻿/* Card format */
 div.card {
     display: inline-block;
 }
@@ -23,7 +19,7 @@ div.card {
 
 /* Filter bar */
 .filter {
-    background: #7f7c7c;
+    background: #808080;
     margin-bottom: 10px;
     width: auto;
 }

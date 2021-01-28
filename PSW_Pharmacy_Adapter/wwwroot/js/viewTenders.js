@@ -327,11 +327,11 @@ function deleteTender(tender) {
     });
 }
 
-function subscribe(e) {
-    e.preventDefault();
+function subscribe(e) { 
     let mail = $("#inpEmail").val();
     if (!mail || !mail.includes('@'))
         return;
+    e.preventDefault();
 
     $.ajax({
         method: "POST",
@@ -342,18 +342,22 @@ function subscribe(e) {
         }),
         success: function (data) {
             if (data) {
-                $('#message').text('Succesfully added to database.');
-                $('#inpEmail').css('borderColor', '#ffffff')
-                $('#subscribe-result').css('color', '#17a2b8')
-                $('#subscribe-result').html('<p>Thank you for subscribing. We will inform you when new tender is opened.</p>')
-                $('#inpEmail').val('')
-                $("#pageInfo").show();
+                $('#subscribe-result').removeAttr('hidden');
+                $('#inpEmail').val('');
+                pageInfo('You have subscribed for tenders successfuly!');
             }
         },
         error: function (e) {
-            $("#message").empty();
-            $('#message').text('Already exists.');
-            $("#pageInfo").show();
+            if(e.status == 400)
+                pageInfo('You have already subscribed.');
+            else
+                pageInfo('An unknown error has occurred.');
         }
     });
+}
+
+function pageInfo(text) {
+    $("#message").text(text);
+    $("#pageInfoModal").modal('toggle');
+    $("#pageInfo").show();
 }

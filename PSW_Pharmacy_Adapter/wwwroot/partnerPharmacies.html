@@ -25,7 +25,7 @@
         <a href="viewPrescriptions.html">All prescriptions</a>
         <a href="viewTenders.html">Tender offers</a>
     </div>
-
+    <br />
     <div>
         <form action="pharmacyRegistration.html">
             <input type="submit" value="💊 Add new pharmacy" class="btn btn-warning expand" />
@@ -55,34 +55,16 @@
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle"
                             id="btnMed" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                        All medications
-                    </button>
+                            aria-expanded="false">All medications</button>
                     <div class="dropdown-menu" id="viewMedication">
                     </div>
                 </div>
                 &nbsp;
-                <button type="button" class="btn btn-secondary" id="btnSendMedication"
-                        data-toggle="modal" data-target="#medRequestModal">
-                    Send
-                </button>
+                <button type="button" class="btn btn-secondary" id="btnSendMedication">Send</button>
             </h4>
             <br>
             <h4> Response: </h4>
             <h5><textarea class="form-control" id="txtResponse" name="Text1" cols="40" rows="9" readonly></textarea></h5>
-        </div>
-    </div>
-
-    <div id="stockAction" style="display:none">
-        <div class="modal fade" id="medRequestModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body" id="write"></div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnOk" class="btn btn-info" data-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

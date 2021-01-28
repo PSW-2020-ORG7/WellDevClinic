@@ -86,8 +86,10 @@
         <h1>Subscribe for tenders notifications</h1>
         <form id="subscribeForm" name="subscribeForm" class="validate">
             <input id="inpEmail" type="email" name="EMAIL" class="email" placeholder="pharmacy@example.com" required>
-            <input id="btnSubscribe" type="submit" value="Subscribe" onclick="subscribe(event)">
-            <div id="subscribe-result"></div>
+            <input id="btnSubscribe" class="btn btn-primary" type="submit" value="Subscribe" onclick="subscribe(event)">
+            <div id="subscribe-result" hidden>
+                <p>Thank you for subscribing. We will inform you when new tender is opened.</p>
+            </div>
         </form>
     </div>
 
