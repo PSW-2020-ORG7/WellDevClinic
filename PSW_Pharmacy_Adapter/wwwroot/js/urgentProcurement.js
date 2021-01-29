@@ -101,7 +101,6 @@ function findMedicines() {
             $("#responseLoad").hide();
             if (data.length > 0) {
                 showUrgTable(data, n);
-                $("#urgProcurementInput").hide();
             }
         },
         error: function (e) {
