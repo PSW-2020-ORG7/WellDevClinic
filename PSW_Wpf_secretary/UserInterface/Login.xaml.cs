@@ -42,6 +42,7 @@ namespace UserInterface
                 userLogIn.Password = password.Password;
                 userLogIn.Username = username.Text;
                 Secretary user = await WpfSecretaryClient.GetUser(userLogIn);
+                user.UserLogIn = userLogIn;
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();
                 this.Close();

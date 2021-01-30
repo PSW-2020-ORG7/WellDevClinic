@@ -938,7 +938,7 @@ namespace PSW_Wpf_Patient
         }
         private void Button_Map(object sender, RoutedEventArgs e)
         {
-            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow("patient");
+            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow("patient", _patient.UserLogIn.Username);
 
             main.Show();
         }

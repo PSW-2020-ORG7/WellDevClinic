@@ -18,6 +18,7 @@ namespace PSW_Wpf_app
 
         private List<FloorElement> foundRooms = new List<FloorElement>();
         private string user;
+        private string Username { get; set; }
         public string User
         {
             get { return user; }
@@ -31,11 +32,12 @@ namespace PSW_Wpf_app
         }
 
 
-        public MainWindow(string role)
+        public MainWindow(string role, string username)
         {
 
             InitializeComponent();
             user = role;
+            Username = username;
             if (role == "patient")
             {
                 Equipment_Drugs.Visibility = Visibility.Hidden;
@@ -70,7 +72,7 @@ namespace PSW_Wpf_app
             }
             else
             {
-                this.userControl.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()), FoundRooms, user);
+                this.userControl.Content = new ChosenFloorView(((GraphicElement)buildC.SelectedItem).Name, int.Parse(floorC.SelectedItem.ToString()), FoundRooms, user, Username);
             }
         }
 
@@ -140,6 +142,20 @@ namespace PSW_Wpf_app
         {
             RelocationEquipmentView view = new RelocationEquipmentView();
             view.Show();
+        }
+
+        private async void Shortcut_Click(object sender, RoutedEventArgs e)
+        {
+            long id =  await Client.WpfClient.GetMostVisitedRoom(Username);
+            Room room = await Client.WpfClient.GetRoomById(id);
+            MessageBox.Show("The most visited room is room -> "+room.RoomCode);
+        }
+
+        private async void ShortcutFloor_Click(object sender, RoutedEventArgs e)
+        {
+            MapEvent map = await Client.WpfClient.GetMostVisitedFloor(Username);
+            
+            MessageBox.Show("The most visited building is " + map.BuildingName + " and its floor is " + map.FloorLevel);
         }
     }
     

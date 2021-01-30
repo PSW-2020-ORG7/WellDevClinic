@@ -162,12 +162,12 @@ namespace PSW_Wpf_director
                 }
             }
         }
-
+        string username = "";
         public DashboardWindow(Director director)
         {
             InitializeComponent();
             this.DataContext = this;
-
+            this.username = director.Username;
 
 
             var app = Application.Current as App;
@@ -1568,7 +1568,7 @@ namespace PSW_Wpf_director
         
         private void Button_Map(object sender, RoutedEventArgs e)
         {
-            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow("director");
+            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow("director", username);
 
             main.Show();
         }

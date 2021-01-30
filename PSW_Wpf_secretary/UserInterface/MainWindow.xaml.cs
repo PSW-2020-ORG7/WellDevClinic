@@ -569,7 +569,7 @@ namespace UserInterface
         }
         private void Button_Map(object sender, RoutedEventArgs e)
         {
-            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow("secretary");
+            PSW_Wpf_app.MainWindow main = new PSW_Wpf_app.MainWindow("secretary", Secretary.UserLogIn.Username);
             main.Show();
         }
     }

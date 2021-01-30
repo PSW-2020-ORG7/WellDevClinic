@@ -2,6 +2,7 @@
 using EventSourcing.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EventSourcing.Service
@@ -114,6 +115,50 @@ namespace EventSourcing.Service
             }
 
             return av;
+        }
+
+        public long GetMostVisitedRoom(string username)
+        {
+
+            List<DomainEvent> roomEvents = (List<DomainEvent>)GetAll("roomevent");
+            List<RoomEvent> mostVisitedRoom = new List<RoomEvent>();
+            int days = 3;
+            foreach (RoomEvent r in roomEvents)
+            {
+                if (r.TimeStamp.Day <= DateTime.Now.Day && r.TimeStamp.Day >= DateTime.Now.Day - days && r.Username.Equals(username))
+                {
+                    mostVisitedRoom.Add(r);
+                }
+            }
+            if (mostVisitedRoom.Count == 0)
+                return 0;
+            long mostVisitedRoomId = mostVisitedRoom.GroupBy(x => x.RoomId)
+                .Select(group => new { RoomEventID = group.Key, Count = group.Count() })
+                .OrderByDescending(x => x.Count).First().RoomEventID;
+
+            return mostVisitedRoomId;
+
+        }
+
+        public MapEvent GetMostVisitedFloor(string username)
+        {
+            List<DomainEvent> mapEvents = (List<DomainEvent>)GetAll("mapevent");
+            List<MapEvent> mostVisitedFloor = new List<MapEvent>();
+            int days = 3;
+            foreach (MapEvent m in mapEvents)
+            {
+                if (m.TimeStamp.Day <= DateTime.Now.Day && m.TimeStamp.Day >= DateTime.Now.Day - days && m.Username.Equals(username))
+                    mostVisitedFloor.Add(m);
+            }
+            if (mostVisitedFloor.Count == 0)
+                return null;
+            var mostVisitedFloorId = mostVisitedFloor.GroupBy(x => new { x.BuildingName, x.FloorLevel, x.Username })
+                .Select(group => new { MapEventID = group.Key, Count = group.Count() })
+                .OrderByDescending(x => x.Count).First().MapEventID;
+
+            MapEvent mapEvent = new MapEvent(mostVisitedFloorId.BuildingName, mostVisitedFloorId.FloorLevel, mostVisitedFloorId.Username);
+
+            return mapEvent;
         }
     }
 }
