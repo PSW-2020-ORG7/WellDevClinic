@@ -48,14 +48,33 @@ $(document).ready(function () {
     $("#purchase").click(function () {
         let pharmacyName = $("#phName").val();
         let medicationOrder = [];
+        let valid = true;
+
+        if (!pharmacyName) {
+            valid = false;
+            $("#phName").css("border-color", "red");
+            $("#invalidPharmacy").css("display", "inline-block");
+        } else {
+            $("#phName").css("border-color", "#ccc");
+            $("#invalidPharmacy").css("display", "none");
+        }
 
         $('span[name="medicine"]').each(function (i, el) {
+            let am = Number(document.getElementsByName('amountToBuy')[i].value);
+            if (!am || am < 1) {
+                valid = false;
+                document.getElementsByName('amountToBuy')[i].style.borderColor = "red";
+            } else {
+                document.getElementsByName('amountToBuy')[i].style.borderColor = "#ccc";
+            }
             let item = {
                 "medicineName": $(el).text(),
                 "amount": Number(document.getElementsByName('amountToBuy')[i].value)
             }
             medicationOrder.push(item);
         });
+
+        if (!valid) return;
 
         $.ajax({
             method: "POST",
@@ -101,6 +120,8 @@ function findMedicines() {
             $("#responseLoad").hide();
             if (data.length > 0) {
                 showUrgTable(data, n);
+            } else {
+                pageInfo("The medicaiton(s) that you're looking for isn't available in any partner pharmacy.");
             }
         },
         error: function (e) {
@@ -122,7 +143,7 @@ function showUrgTable(pharmacies, n) {
         content += '</tr>';
 
         $("#medTableData").find('tbody').append(content);
-
+        
         if (n > 0) {
             $('#divAmount').append('<span name="medicine">' + ph.medicine.name + '</span>: ');
             $('#divAmount').append('<input type="number" name="amountToBuy" min="1" id="' + ph.medicine.name + '" style="width:150px" />');
@@ -136,10 +157,6 @@ function showUrgTable(pharmacies, n) {
         $("#phName").append('<option value="' + ph.phName + '">' + ph.phName + '</option>');
     }
     $("#urgProcurementResponse").removeAttr("hidden");
-}
-
-function orderMedicines() {
-    
 }
 
 function pageInfo(text) {

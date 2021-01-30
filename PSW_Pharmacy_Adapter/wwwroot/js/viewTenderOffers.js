@@ -53,12 +53,8 @@ function viewTender(tender) {
     var countDownDate = new Date(tender.period.endDate).getTime();
     content += '<p style="background-color:#17a2b8;font-size:40px" id="timerTender"></p>';
 
-    if (tender.offerWinner != null && endDate < now) {
-        content += '<button id="btnDeal" class="btn btn-primary btn-lg expand" data-target="#expiredActionModal"';
-        content += 'data-toggle="modal" onclick="sendEmail()"> Accept selected offer </button > ';
-    } else if (endDate < now) {
-        content += '<p style="font-size:20px">Choose tender winner!</p>';
-    } 
+    content += '<button id="btnDeal" class="btn btn-primary btn-lg expand" data-target="#expiredActionModal"';
+    content += 'data-toggle="modal" onclick="sendEmail()"> Accept selected offer </button > ';
     content += '</div></div></div>';
     $("#viewTender").append(content);
 
@@ -81,7 +77,6 @@ function viewTender(tender) {
             document.getElementById("timerTender").innerHTML = "EXPIRED";
         }
     }, 1000);
-
 }
 
 
@@ -137,7 +132,6 @@ function viewAllOffers(offers) {
 
     if (!winner)
         $("#btnDeal").prop("disabled", true);
-
 }
 
 
@@ -149,15 +143,15 @@ function deleteAction(id) {
             url: "../api/tenderoffer/delete/" + id,
             contentType: "application/json",
             success: function (data) {
-                if (data) {
+                if (data)
                     window.location.reload();
-                }
+                else
+                    pageInfo("An unknown error has occurred. Try again later.");
             },
             error: function (e) {
                 pageInfo("Error while deleting offer!");
             }
         });
-
 	});
 }
 
@@ -183,58 +177,55 @@ function useAction(id) {
 
 function sendEmail() {
     var now = new Date().getTime()
-    var endDate = new Date(currTender.endDate).getTime();
+    var endDate = new Date(currTender.endDate).getTime();       // set enddate as today date to tender when winner is selecteds
 
-        console.log("curr:" + endDate + "; " + now);
-        if (currTender.offerWinner != null) {
-            $("#expiredAction").show();
-            $("#btnYesTender").click(function () {
-                $.ajax({
-                    method: "GET",
-                    url: "../api/tender/email/" + currTender.offerWinner,
-                    contentType: "application/json",
-                    success: function (data) {
-                        pageInfo("Mail sent");
-                        window.location.reload();
-                    },
-                    error: function (e) {
-                        pageInfo("Email is not sent!");
-                    }
-                });
-                let order = [];
+    if (currTender.offerWinner == null) return;
 
-                for (let med of winner.medications) {
-                    let item = {
-                        "medicineName": med.name,
-                        "amount": med.amount
-                    }
-                    order.push(item);
-                }
+    $("#expiredAction").show();
+    $("#btnYesTender").click(function () {
+        $.ajax({
+            method: "GET",
+            url: "../api/tender/email/" + currTender.offerWinner,
+            contentType: "application/json",
+            success: function (data) {
+                pageInfo("Mail sent");
+                window.location.reload();
+            },
+            error: function (e) {
+                pageInfo("Email is not sent!");
+            }
+        });
+        let order = [];
 
-                $.ajax({
-                    method: "POST",
-                    url: "../api/medication/orderMedicines?phName=" + winner.pharmacyName,
-                    contentType: "application/json",
-                    data: JSON.stringify(order),
-                    success: function (data) {
-                        if (data != null) {
-                            let message = 'Order: ';
-                            for (let d of data) {
-                                message += d.amount + 'x' + d.name + ', ';
-                            }
-
-                            message += '. Expect your package soon!';
-                            $("#message").text(message);
-                            $("#pageInfoModal").modal('toggle');
-                            $("#pageInfo").show();
-                        }
-                    },
-                    error: function (e) {
-                        pageInfo("An unknown error has occurred");
-                    }
-                });
-            });
+        for (let med of winner.medications) {
+            let item = {
+                "medicineName": med.name,
+                "amount": med.amount
+            }
+            order.push(item);
         }
+
+        $.ajax({
+            method: "POST",
+            url: "../api/medication/orderMedicines?phName=" + winner.pharmacyName,
+            contentType: "application/json",
+            data: JSON.stringify(order),
+            success: function (data) {
+                if (data != null) {
+                    let message = 'Order: ';
+                    for (let d of data) {
+                        message += d.amount + 'x' + d.name + ', ';
+                    }
+
+                    message += '. Expect your package soon!';
+                    pageInfo(message);
+                }
+            },
+            error: function (e) {
+                pageInfo("An unknown error has occurred");
+            }
+        });
+    });
 }
 
 function pageInfo(text) {

@@ -52,8 +52,8 @@ function viewSales(data) {
 		content += '</table>';
 		content += '<button class="btn btn-danger" data-toggle="modal" data-target="#deleteSaleModal" ';
 		content += ' onclick="deleteSale(' + sale.id + ')"> Discard </button > ';
-		content += '<button class="btn btn-success" data-toggle="modal" data-target="#useSaleModal"';
-		content += ' onclick="useAction(' + sale.id + ')"> Use it now </button > ';
+		content += '<button class="btn btn-success"';
+		content += ' onclick="useSale(' + sale.id + ')"> Use it now </button > ';
 		content += '</div></div>';
 
 		$("#viewSales").append(content);
@@ -169,7 +169,7 @@ function toggleFav(id) {
 }
 
 function useSale(id) {
-	$("#useSale").show();
+	pageInfo("Feature isn't available. Coming soon!");
 }
 
 function pageInfo(text) {

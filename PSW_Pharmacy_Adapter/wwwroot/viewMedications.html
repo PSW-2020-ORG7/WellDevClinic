@@ -64,14 +64,14 @@
     </div>
 
     <div name="mainContent">
-        <div class="loader" id="pageLoader"></div>
+        <div id="pageLoader" class="loader"></div>
         <div id="viewMedication"></div>
         <div id="noContent" class="welcome-text" hidden>
             <h1>Nothing to show</h1>
         </div>
     </div>
 
-    <div class="modalCustom" id="medAvailability">
+    <div id="medAvailability" class="modalCustom">
         <div class="modalContent">
             <span class="close">&times;</span>
             <h4 id="txtMedName"></h4>
@@ -81,7 +81,7 @@
                     <tr>
                         <th>Medicine name</th>
                         <th>Amount</th>
-                        <th>Price/piece(RSD)</th>
+                        <th>Price/piece(€)</th>
                         <th>Pharmacy</th>
                     </tr>
                 </thead>
@@ -121,45 +121,6 @@
             </div>
         </div>
     </div>
-
-    <!--<div class="modalCustom" id="modalUrgProcurement">
-        <div class="modalContent">
-            <span class="close">&times;</span>
-            <h4>Urgent procurement</h4>
-            <br>
-            <div class="input_fields_wrap">
-                <div>
-                    <div class="autocomplete">
-                        <input type="text" name="medicineName" class="ac" placeholder="Enter medicine name" autocomplete="off">
-                    </div>
-                    <input type="number" name="quantity" placeholder="Enter amount" />
-                </div>
-            </div>
-            <button class="add_field_button">Add More Fields</button>
-            <button class="btn btn-primary" onclick="findMedicines()">Send</button>
-        </div>
-    </div>
-
-    <div class="modalCustom" id="modalUrgProcurementResponse">
-        <div class="modalContent">
-            <span class="close">&times;</span>
-            <h4>Urgent procurement</h4>
-            <br>
-            <table border="1" id="medTableData" class="customTable" width="100%">
-            <thead>
-                <tr>
-                    <th>Medicine name</th>
-                    <th>Amount</th>
-                    <th>Price/piece(RSD)</th>
-                    <th>Pharmacy</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            </table>
-            <input type="button" class="btn btn-info expand" style="margin-top:15px" value="Purchase" id="purchase" />
-        </div>
-    </div>-->
 
 </body>
 </html>

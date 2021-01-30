@@ -21,8 +21,6 @@ function viewApis(apiDb) {
         let content = '<tr><td>';
         content += api.nameOfPharmacy;
         content += '</td><td>';
-        content += api.apiKey;
-        content += '</td><td>';
         content += api.url.url;
         content += '</td>';
         content += '<td><button class="btn btn-info"';
@@ -44,9 +42,10 @@ function deleteEntry(id) {
             url: "../api/apikey/delete/" + id,
             contentType: "application/json",
             success: function (data) {
-                if (data) {
+                if (data)
                     window.location.reload();
-                }
+                else
+                    pageInfo("An unknown error has occurred. Try again later.");
             },
             error: function (e) {
                 pageInfo("An error has occured while trying to delete partner pharmacy!");

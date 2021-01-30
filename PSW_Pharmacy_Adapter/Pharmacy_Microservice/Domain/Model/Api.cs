@@ -31,7 +31,5 @@ namespace PSW_Pharmacy_Adapter.Pharmacy_Microservice.Domain.Model
             ApiKey = api;
             Url = new Endpoint(url);
         }
-
-        
     }
 }

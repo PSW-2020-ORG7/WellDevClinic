@@ -86,6 +86,7 @@ function viewAllTenders(tenders) {
         if (ten.isDeleted == true) continue;
 
         let endDate = new Date(ten.period.endDate).getTime();
+        let startDate = new Date(ten.period.startDate).getTime();
         let expired = false;
 
         let content = '<div style="width:350px; display:inline-block;" class= "card';
@@ -114,15 +115,22 @@ function viewAllTenders(tenders) {
         content += ISOtoShort(new Date(ten.period.endDate));
         content += '</td></tr>';
         content += '</table><br>';
-        if (expired == true) {
+        if (expired) {
             content += '<button type="button" class="btn btn-danger btn-lg" onclick="deleteTender(\'' + ten.id + '\')">';
             content += 'Delete tender</button >&nbsp;&nbsp;';
+            content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" ';
+            content += '>View offers</button >';
         } else {
-            content += '<button type="button" class="btn btn-info btn-lg" onclick="offerForm(\'' + ten.id + '\')">';
-            content += 'Make offer</button >&nbsp;&nbsp;';
-        }
-        content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" > ';
-        content += 'View offers</button >';
+            content += '<button type="button" class="btn btn-info btn-lg" onclick="offerForm(\'' + ten.id + '\')" ';
+            if (startDate > now)
+                content += "disabled ";
+            content += '>Make offer</button >&nbsp;&nbsp;';
+            content += '<button type="button" class="btn btn-secondary btn-lg" onclick="viewOffers(\'' + ten.id + '\')" ';
+            if (startDate > now)
+                content += "disabled ";
+            content += '>View offers</button >';
+        }       
+        
         content += '</div></div></div>';
         $("#viewTender").append(content);      
     }
@@ -205,10 +213,10 @@ function offerForm(currTenderId) {
                     }),
                     success: function (data) {
                         if (data)
-                            pageInfo('Succesfully added to database.');
+                            pageInfo('Offer made succesfuly');
                     },
                     error: function (e) {
-                        pageInfo('Already exists.');
+                        pageInfo('Offer with the same id already exists!');
                     }
                 });
             });
@@ -249,38 +257,38 @@ function addTender() {
             pageInfo('Oops! Price must be a positive number.');
             return;
         } else {
-            var item = {
+            let item = {
                 "name": medName,
                 "amount": Number(medAmount)
             };
             meds.push(item);
-            
-            $.ajax({
-                method: "POST",
-                url: "../api/tender/add",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    Medications: meds,
-                    Period: {
-                        StartDate: startDate,
-                        EndDate: endDate
-                    },
-                    IsDeleted: false
-                }),
-                success: function (data) {
-                    if (data) {
-                        pageInfo('Succesfully added to database.');
-                        $("#btnOk").click(function () {
-                            window.location.reload();
-                        });
-                    }
-                },
-                error: function (e) {
-                    pageInfo('Already exists.');
-                }
-            });
         }
     }
+
+    $.ajax({
+        method: "POST",
+        url: "../api/tender/add",
+        contentType: "application/json",
+        data: JSON.stringify({
+            Medications: meds,
+            Period: {
+                StartDate: startDate,
+                EndDate: endDate
+            },
+            IsDeleted: false
+        }),
+        success: function (data) {
+            if (data) {
+                pageInfo('Succesfully added to database.');
+                $("#btnOk").click(function () {
+                    window.location.reload();
+                });
+            }
+        },
+        error: function (e) {
+            pageInfo('Tender with same id already exists!');
+        }
+    });
 }
 
 function deleteTender(tender) {
