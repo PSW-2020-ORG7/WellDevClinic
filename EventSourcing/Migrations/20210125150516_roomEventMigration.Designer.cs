@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSourcing.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20210116011641_TestMigrationTimeSpent")]
-    partial class TestMigrationTimeSpent
+    [Migration("20210125150516_roomEventMigration")]
+    partial class roomEventMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,27 +19,24 @@ namespace EventSourcing.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("EventSourcing.Events.NewExaminationTimeSpent", b =>
+            modelBuilder.Entity("EventSourcing.Events.RoomEvent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<long>("PatientId")
+                    b.Property<long>("RoomId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("StepName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<TimeSpan>("TimeSpent")
-                        .HasColumnType("time(6)");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Username")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
-                    b.ToTable("newExaminationTimeSpent");
+                    b.ToTable("roomEvents");
                 });
 
             modelBuilder.Entity("EventSourcing.FeedbackSubmittedEvent", b =>
@@ -60,6 +57,32 @@ namespace EventSourcing.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("feedbackSubmittedEvents");
+                });
+
+            modelBuilder.Entity("EventSourcing.NewExaminationTimeSpent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ScheduleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("StepId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StepType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("newExaminationTimeSpent");
                 });
 #pragma warning restore 612, 618
         }

@@ -121,6 +121,7 @@ namespace PSW_Wpf_Patient
             try
             {
                 Patient temp = await WpfPatientClient.GetUser(user);
+                temp.UserLogIn = user;
                 if (temp != null)
                 {
 

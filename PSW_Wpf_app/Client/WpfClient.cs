@@ -280,6 +280,45 @@ namespace PSW_Wpf_app.Client
             string responseBody = await response.Content.ReadAsStringAsync();
 
         }
+        public static async Task<long> GetMostVisitedRoom(string username)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/roomevent/mostVisitedRoom/" + username);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            long roomId = JsonConvert.DeserializeObject<long>(responseBody);
+
+            return roomId;
+        }
+
+        public static async Task<RoomEvent> SaveMostVisitedRoom(RoomEvent roomEvent)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(roomEvent));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:57400/api/roomevent/save/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            RoomEvent result = JsonConvert.DeserializeObject<RoomEvent>(value);
+            return result;
+        }
+
+        public static async Task<MapEvent> GetMostVisitedFloor(string username)
+        {
+            HttpResponseMessage response = await client.GetAsync("http://localhost:57400/api/mapevent/mostVisitedFloor/" + username);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            MapEvent floor = JsonConvert.DeserializeObject<MapEvent>(responseBody);
+
+            return floor;
+        }
+
+        public static async Task<MapEvent> SaveMostVisitedFloor(MapEvent mapEvent)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(mapEvent));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var responseBody = await client.PostAsync("http://localhost:57400/api/mapevent/save/", content);
+            var value = await responseBody.Content.ReadAsStringAsync();
+            MapEvent result = JsonConvert.DeserializeObject<MapEvent>(value);
+            return result;
+        }
 
         public static async Task<Renovation> GetRenovationById(long id)
         {

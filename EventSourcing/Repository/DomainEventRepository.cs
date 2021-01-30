@@ -1,4 +1,5 @@
 ﻿
+using EventSourcing.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,14 @@ namespace EventSourcing.Repository
                 myDbContext.feedbackSubmittedEvents.ToList().ForEach(@event => result.Add(@event));
             if (eventType.ToLower().Equals("newexaminationtimespent"))
                 myDbContext.newExaminationTimeSpent.ToList().ForEach(@event => result.Add(@event));
+            if (eventType.ToLower().Equals("roomevent"))
+                myDbContext.roomEvents.ToList().ForEach(@event => result.Add(@event));
+            if (eventType.ToLower().Equals("mapevent"))
+                myDbContext.mapEvent.ToList().ForEach(@event => result.Add(@event));
 
             return result;
         }
-
+        
         public DomainEvent Save(DomainEvent domainEvent)
         {
             var @event = (dynamic)domainEvent;
@@ -35,6 +40,14 @@ namespace EventSourcing.Repository
             if (@event is NewExaminationTimeSpent)
             {
                 myDbContext.newExaminationTimeSpent.Add(@event);
+            }
+            if (@event is RoomEvent)
+            {
+                myDbContext.roomEvents.Add(@event);
+            }
+            if (@event is MapEvent)
+            {
+                myDbContext.mapEvent.Add(@event);
             }
 
             myDbContext.SaveChanges();
