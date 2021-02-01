@@ -22,7 +22,7 @@ $(document).ready(function () {
 
     $(".add_field_button").click(function (e) {
         e.preventDefault();
-        skip = false;
+        let skip = false;
         if (br > 1) {
             br -= 2;
             if ($("#" + br).val() == "") {
@@ -246,9 +246,9 @@ function addTender() {
     }
 
     for (let i = 0; i < br; i++) {
-        medName = $("#" + i + "").val();
+        let medName = $("#" + i + "").val();
         i += 1;
-        medAmount = $("#" + i + "").val();
+        let medAmount = $("#" + i + "").val();
         if (medName == "" || medAmount == "") {
             pageInfo('Please fill out requested fields.');
             return;

@@ -17,7 +17,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public void Send_File_Successfully()
         {
-            SftpService service = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
+            PrescriptionTransferService service = new PrescriptionTransferService(new SftpClient("192.168.1.4", 22, "user", "password"));
             int Successfull = service.UploadFileToSftpServer(EXISTING_PATH);
 
             Successfull.ShouldBeEquivalentTo(1);
@@ -26,7 +26,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public void Send_File_Unsuccessfully()
         {
-            SftpService service = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
+            PrescriptionTransferService service = new PrescriptionTransferService(new SftpClient("192.168.1.4", 22, "user", "password"));
 
             int Unsuccessfull = service.UploadFileToSftpServer(UNEXISTING_PATH);
 
@@ -36,7 +36,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public void Send_Prescription_Successfully()
         {
-            SftpService service = new SftpService(new SftpClient("192.168.1.4", 22, "user", "password"));
+            PrescriptionTransferService service = new PrescriptionTransferService(new SftpClient("192.168.1.4", 22, "user", "password"));
 
             int Successfull = service.SendPrescriptionfile(CreatePrescription(), PRESCRIPTION_PATH);
 

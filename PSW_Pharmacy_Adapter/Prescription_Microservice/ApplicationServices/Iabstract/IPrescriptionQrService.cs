@@ -2,7 +2,7 @@
 
 namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices.Iabstract
 {
-    public interface IQrCodeService
+    public interface IPrescriptionQrService
     {
         public byte[] Generate(Prescription prescription);
     }

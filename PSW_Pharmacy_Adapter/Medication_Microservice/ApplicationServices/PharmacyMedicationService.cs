@@ -166,8 +166,6 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
                 if (!CompareMedicationsStructure(hospMeds.Find(x => x.Id == phMed.Id), phMed))
                     changedMeds.Add(phMed);
             }
-            if (changedMeds.Count == 0)
-                return null;
             return changedMeds;
         }
 

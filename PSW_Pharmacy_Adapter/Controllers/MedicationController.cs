@@ -14,13 +14,13 @@ namespace PSW_Pharmacy_Adapter.Controllers
     {
         private readonly IPharmacyMedicationService _medicationService;
         private readonly IHospitalMedicationService _hospitalService;
-        private readonly GrpcClientService _serviceGrpc;
+        private readonly GrpcMedicationService _grpcService;
 
         public MedicationController(IPharmacyMedicationService medicationService, IHospitalMedicationService hospitalService) 
         {
             _medicationService = medicationService;
             _hospitalService = hospitalService;
-            _serviceGrpc = new GrpcClientService();
+            _grpcService = new GrpcMedicationService();
         }
 
         [HttpGet]
@@ -55,7 +55,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
             List<Medication> meds = new List<Medication>();
             try
             {
-                meds = await _serviceGrpc.GetAllMedicationsAmount(pharmacyname);
+                meds = await _grpcService.GetAllMedicationsAmount(pharmacyname);
             }
             catch {
                 meds =  MedicationMapper.MapMedicationList(await _medicationService.GetAllPharmacyMedications(pharmacyname));
@@ -73,7 +73,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
             int amount = -408;
             try
             {
-                amount = await _serviceGrpc.GetMedicationAmount(medicationName, pharmacyName);
+                amount = await _grpcService.GetMedicationAmount(medicationName, pharmacyName);
             }
             catch {
                 MedicationDto med = await _medicationService.GetPharmacyMedication(pharmacyName, medicationName);
@@ -106,7 +106,7 @@ namespace PSW_Pharmacy_Adapter.Controllers
                 orderedMedications = await _medicationService.OrderMedicationsAsync(phName, order);
             }
             catch {
-                orderedMedications = await _serviceGrpc.GetOrderedMeds(phName, order);
+                orderedMedications = await _grpcService.GetOrderedMeds(phName, order);
             }
             if (orderedMedications != null)
                 return Ok(orderedMedications);

@@ -6,13 +6,13 @@ using System.Net.Sockets;
 
 namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices
 {
-    public class SftpService
+    public class PrescriptionTransferService
     {
 
         private readonly SftpClient _sftpClient;
         
 
-        public SftpService(SftpClient sftpClient)
+        public PrescriptionTransferService(SftpClient sftpClient)
         {
             _sftpClient = sftpClient;
         }

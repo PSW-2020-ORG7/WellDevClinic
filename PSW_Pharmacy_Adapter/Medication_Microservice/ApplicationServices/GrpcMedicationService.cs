@@ -5,17 +5,16 @@ using PSW_Pharmacy_Adapter.Medication_Microservice.Protos;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System;
 using PSW_Pharmacy_Adapter.Medication_Microservice.Domain.Dto;
 
 namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
 {
-    public class GrpcClientService : IHostedService
+    public class GrpcMedicationService : IHostedService
     {
         private readonly Channel _channel;
         private readonly SpringGrpcService.SpringGrpcServiceClient _client;
 
-        public GrpcClientService() 
+        public GrpcMedicationService() 
         {
             _channel = new Channel("127.0.0.1:8787", ChannelCredentials.Insecure);
             _client = new SpringGrpcService.SpringGrpcServiceClient(_channel);
@@ -32,7 +31,6 @@ namespace PSW_Pharmacy_Adapter.Medication_Microservice.ApplicationServices
                     ProtoResponseOrderMeds response = await _client.communicateOrderMedsAsync(new ProtoOrderMeds() { PharmacyName = name, MedicineName = m.medicineName, Amount = m.amount });
                     medsDto.Add(new Medication(response.MedicineName, response.Amount));
                 }
-                
                 return medsDto;
             }
             catch

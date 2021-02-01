@@ -54,7 +54,7 @@ namespace PSW_Pharmacy_Adapter
             services.AddScoped<IPharmacyMedicationService, PharmacyMedicationService>();
             services.AddScoped<IHospitalMedicationService, HospitalMedicationService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
-            services.AddScoped<IQrCodeService, QrCodeService>();
+            services.AddScoped<IPrescriptionQrService, PrescriptionQrService>();
             services.AddScoped<ITenderOfferService, TenderOfferService>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IPharmacyEmailsService, PharmacyEmailsService>();

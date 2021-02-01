@@ -13,15 +13,17 @@ namespace PSW_Pharmacy_Adapter.Controllers
     public class PrescriptionController : ControllerBase
     {
         private readonly IPrescriptionService _prescriptionService;
-        private readonly IQrCodeService _qrCodeService;
-        private readonly SftpService _sftpService;
-        private const string PRESCRIPTION_PATH = @"wwwroot/Prescription.txt";
+        private readonly IPrescriptionQrService _qrCodeService;
+        private readonly PrescriptionTransferService _prescriptionTrnasferService;
 
-        public PrescriptionController(IPrescriptionService prescriptionService, IQrCodeService qrCodeService)
+        private const string PRESCRIPTION_PATH = @"wwwroot/Prescription.txt";
+        private const string SFTP_HOST = "192.168.1.3";
+
+        public PrescriptionController(IPrescriptionService prescriptionService, IPrescriptionQrService qrCodeService)
         {
             _prescriptionService = prescriptionService;
             _qrCodeService = qrCodeService;
-            _sftpService = new SftpService(new SftpClient("192.168.1.3", 22, "user", "password"));
+            _prescriptionTrnasferService = new PrescriptionTransferService(new SftpClient(SFTP_HOST, 22, "user", "password"));
         }
 
         [HttpGet]
@@ -43,11 +45,11 @@ namespace PSW_Pharmacy_Adapter.Controllers
         [Route("sendPrescription")]
         public IActionResult SendPrescriptionFile(EPrescriptionDto prescription)
         {
-            int code = _sftpService.SendPrescriptionfile(prescription, PRESCRIPTION_PATH);
+            int code = _prescriptionTrnasferService.SendPrescriptionfile(prescription, PRESCRIPTION_PATH);
             if (code == -2)
                 return NotFound();
             else if (code == -1)
-                return StatusCode(503, Global.ErrorSftp);       //TODO A3: Srediti kodove gresaka
+                return StatusCode(503, Global.ErrorSftp);
             return Ok();
         }
     }

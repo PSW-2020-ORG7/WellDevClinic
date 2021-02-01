@@ -7,7 +7,7 @@ using QRCoder;
 
 namespace PSW_Pharmacy_Adapter.Prescription_Microservice.ApplicationServices
 {
-    public class QrCodeService : IQrCodeService
+    public class PrescriptionQrService : IPrescriptionQrService
     {
         private const string SAVE_PATH = @"wwwroot/images/qrCodes/";
         public byte[] Generate(Prescription prescription)

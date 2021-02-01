@@ -30,7 +30,6 @@ function getMedicationStock() {
         error: function (e) {
             pageInfo(e.responseText);
             $("#btnOk").click(function () {
-                //$("#txtResponse").val(e.status + " " + e.statusText);
                 $("#txtResponse").val("Connection failed.");
             });
         },

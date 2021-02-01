@@ -16,7 +16,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public async void Is_Medications_Available()
         {
-            GrpcClientService service = new GrpcClientService();
+            GrpcMedicationService service = new GrpcMedicationService();
 
             List<Medication> availableMeds = await service.GetAllMedicationsAmount(TEST_AVAILABLE_PHARMACY);
 
@@ -26,7 +26,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public async void Is_Medications_Unavailable()
         {
-            GrpcClientService service = new GrpcClientService();
+            GrpcMedicationService service = new GrpcMedicationService();
 
             List<Medication> unavailableMeds = await service.GetAllMedicationsAmount(TEST_UNAVAILABLE_MEDICATION);
 
@@ -37,7 +37,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public async void Is_Medication_Available()
         {
-            GrpcClientService service = new GrpcClientService();
+            GrpcMedicationService service = new GrpcMedicationService();
 
             int availableMed = await service.GetMedicationAmount(TEST_AVAILABLE_MEDICATION, TEST_AVAILABLE_PHARMACY);
 
@@ -47,7 +47,7 @@ namespace ServiceTests.Pharmacy_Adapter_Tests
         [Fact]
         public async void Is_Medication_Unavailable()
         {
-            GrpcClientService service = new GrpcClientService();
+            GrpcMedicationService service = new GrpcMedicationService();
 
             int availableMed = await service.GetMedicationAmount(TEST_UNAVAILABLE_MEDICATION, TEST_UNAVAILABLE_PHARMACY);
 
